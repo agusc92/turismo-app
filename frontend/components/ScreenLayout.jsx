@@ -9,9 +9,5 @@ const pagina = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'black',
-        paddingTop: 15,
-
-        paddingBottom: 10,
-
     }
 });
