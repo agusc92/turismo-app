@@ -18,7 +18,6 @@ use App\Http\Controllers\GastronomicoMenuController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::apiResource('eventos', EventoController::class);
 Route::apiResource('gastronomicos', GastronomicoController::class);
 Route::apiResource('actividades', ActividadController::class);
 Route::apiResource('alojamientos', AlojamientoController::class);
@@ -27,6 +26,10 @@ Route::apiResource('tipos', TipoController::class);
 Route::apiResource('users', UserController::class);
 Route::apiResource('info-usuarios', InfoUsuarioController::class);
 Route::apiResource('menus', MenuController::class);
+
+// Evento nested routes
+Route::get('eventos/destacados', [EventoController::class, 'destacados']);
+Route::apiResource('eventos', EventoController::class);
 
 // Gastronomico menus nested routes
 Route::get('gastronomicos/{id}/menus', [GastronomicoMenuController::class, 'index']);

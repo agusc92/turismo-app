@@ -13,6 +13,7 @@ class Evento extends Model
         'direccion',
         'descripcion',
         'imagen',
+        'destacado',
         'fecha',
         'local'
     ];

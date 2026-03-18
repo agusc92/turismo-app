@@ -1,4 +1,29 @@
 services:
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: turismo_php
+    restart: unless-stopped
+    volumes:
+      - .:/var/www/html
+    networks:
+      - turismo_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: turismo_nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    networks:
+      - turismo_network
+
   mysql:
     image: mysql:8.0
     container_name: turismo_mysql
@@ -12,6 +37,8 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - turismo_network
 
   phpmyadmin:
     image: phpmyadmin:latest
@@ -25,6 +52,12 @@ services:
       - "8080:80"
     depends_on:
       - mysql
+    networks:
+      - turismo_network
+
+networks:
+  turismo_network:
+    driver: bridge
 
 volumes:
   mysql_data:

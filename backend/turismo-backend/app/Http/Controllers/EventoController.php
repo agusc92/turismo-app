@@ -25,6 +25,13 @@ class EventoController extends Controller
         return response()->json($evento);
     }
 
+    // GET /api/eventos/destacados
+    public function destacados()
+    {
+        $destacados = Evento::where('destacado', true)->get();
+        return response()->json($destacados);
+    }
+
     // POST /api/eventos
     public function store(Request $request)
     {

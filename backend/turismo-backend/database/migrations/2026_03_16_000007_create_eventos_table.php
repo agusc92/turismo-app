@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('direccion');
             $table->string('descripcion')->nullable();
             $table->string('imagen')->nullable();
+            $table->boolean('destacado')->default(false);
             $table->dateTime('fecha');
             $table->string('local');
             $table->timestamps();
