@@ -26,7 +26,7 @@ export const eventos = [
         idEvento: 1,
         nombre: "corre caminata",
         direccion: "10 y pinolandia",
-        descripcion: "bla bla bla",
+        descripcion: "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
         imagen: "https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg",
         fecha: "2026-04-20 12:30:00",
         local: "parque Miguelillo"
@@ -35,7 +35,7 @@ export const eventos = [
         idEvento: 2,
         nombre: "corre caminata",
         direccion: "10 y pinolandia",
-        descripcion: "bla bla bla",
+        descripcion: "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
         imagen: "https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg",
         fecha: "2026-04-20 12:30:00",
         local: "parque Miguelillo"
@@ -44,7 +44,7 @@ export const eventos = [
         idEvento: 3,
         nombre: "corre caminata",
         direccion: "10 y pinolandia",
-        descripcion: "bla bla bla",
+        descripcion: "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
         imagen: "https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg",
         fecha: "2026-04-20 12:30:00",
         local: "parque Miguelillo"

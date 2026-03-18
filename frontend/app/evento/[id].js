@@ -31,9 +31,6 @@ export default function EventoDetalle() {
                     ) : (
                         <View style={styles.placeholderImage}></View>
                     )}
-                    <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-                        <Ionicons name="arrow-back" size={24} color="#555" />
-                    </TouchableOpacity>
                 </View>
                 
                 <View style={styles.contentContainer}>
@@ -66,6 +63,11 @@ export default function EventoDetalle() {
                 </View>
                 
             </ScrollView>
+
+            {/* Fixed Back Button */}
+            <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+                <Ionicons name="arrow-back" size={24} color="#555" />
+            </TouchableOpacity>
         </View>
     );
 }
