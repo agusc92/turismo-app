@@ -17,7 +17,7 @@ export default function MenuCard({ title, image }) {
 }
 const styles = StyleSheet.create({
     wrapper: {
-        width: "48%", // Toma casi la mitad del espacio disponible
+        width: "100%", // Toma casi la mitad del espacio disponible
         marginBottom: 15,
     },
     card: {
