@@ -19,6 +19,11 @@ export const eventosDestacados = [
         nombre: "Evento 4",
         imagen: "https://necochea.tur.ar/wp-content/uploads/2025/12/paris1104.jpg",
     },
+    {
+        id: 5,
+        nombre: "Evento 5",
+        imagen: "https://necochea.tur.ar/wp-content/uploads/2025/12/paris1104.jpg",
+    },
 ];
 
 export const eventos = [
@@ -206,4 +211,231 @@ export const menu = [
         idMenu: 7,
         tipo: "mariscos"
     }
+]
+
+export const ajolamientos = [
+    {
+        idAlojamiento: 1,
+        nombre: "Hotel Evita",
+        direccion: 79 - 308,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        tiendaOnline: "https:// www....,",
+        mail: "evita@gmail.com",
+        mascotas: "si pero pequeñas",
+        periodoApertura: "todo el año",
+        tipo: "3 estrellas"
+
+    },
+    {
+        idAlojamiento: 2,
+        nombre: "Hotel peruano",
+        direccion: 79 - 308,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        tiendaOnline: "https:// www....,",
+        mail: "evita@gmail.com",
+        mascotas: "si pero pequeñas",
+        periodoApertura: "todo el año",
+        tipo: "3 estrellas"
+
+    },
+    {
+        idAlojamiento: 3,
+        nombre: "Hotel facho",
+        direccion: 79 - 308,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        tiendaOnline: "https:// www....,",
+        mail: "evita@gmail.com",
+        mascotas: "si pero pequeñas",
+        periodoApertura: "todo el año",
+        tipo: "3 estrellas"
+
+    },
+    {
+        idAlojamiento: 4,
+        nombre: "Hostel machete",
+        direccion: 79 - 308,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        tiendaOnline: "https:// www....,",
+        mail: "evita@gmail.com",
+        mascotas: "si pero pequeñas",
+        periodoApertura: "todo el año",
+        tipo: "3 estrellas"
+
+    },
+    {
+        idAlojamiento: 5,
+        nombre: "apart delvalle",
+        direccion: 79 - 308,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        tiendaOnline: "https:// www....,",
+        mail: "evita@gmail.com",
+        mascotas: "si pero pequeñas",
+        periodoApertura: "todo el año",
+        tipo: "3 estrellas"
+
+    },
+    {
+        idAlojamiento: 6,
+        nombre: "Hotel Evita",
+        direccion: 79 - 308,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        tiendaOnline: "https:// www....,",
+        mail: "evita@gmail.com",
+        mascotas: "si pero pequeñas",
+        periodoApertura: "todo el año",
+        tipo: "3 estrellas"
+
+    },
+    {
+        idAlojamiento: 7,
+        nombre: "Hotel Evita",
+        direccion: 79 - 308,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        tiendaOnline: "https:// www....,",
+        mail: "evita@gmail.com",
+        mascotas: "si pero pequeñas",
+        periodoApertura: "todo el año",
+        tipo: "3 estrellas"
+
+    },
+    {
+        idAlojamiento: 8,
+        nombre: "Hotel Evita",
+        direccion: 79 - 308,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        tiendaOnline: "https:// www....,",
+        mail: "evita@gmail.com",
+        mascotas: "si pero pequeñas",
+        periodoApertura: "todo el año",
+        tipo: "3 estrellas"
+
+    },
+    {
+        idAlojamiento: 9,
+        nombre: "Hotel Evita",
+        direccion: 79 - 308,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        tiendaOnline: "https:// www....,",
+        mail: "evita@gmail.com",
+        mascotas: "si pero pequeñas",
+        periodoApertura: "todo el año",
+        tipo: "3 estrellas"
+
+    },
+    {
+        idAlojamiento: 10,
+        nombre: "Hotel Evita",
+        direccion: 79 - 308,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        tiendaOnline: "https:// www....,",
+        mail: "evita@gmail.com",
+        mascotas: "si pero pequeñas",
+        periodoApertura: "todo el año",
+        tipo: "3 estrellas"
+
+    },
+
+]
+
+export const balnearios = [
+    {
+        idBalneario: 1,
+        nombre: "poseidon",
+        direccion: 87 - 2,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
+        servicios: "kiosco | piscina | estacinamiento ",
+        mail: "poseidon@gmail.com"
+
+    },
+    {
+        idBalneario: 2,
+        nombre: "los palmeras",
+        direccion: 87 - 2,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
+        servicios: "kiosco | estacinamiento ",
+        mail: "poseidon@gmail.com"
+
+    },
+    {
+        idBalneario: 3,
+        nombre: "atlantico",
+        direccion: 87 - 2,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
+        servicios: "kiosco | silla anfibia | estacinamiento ",
+        mail: "poseidon@gmail.com"
+
+    },
+    {
+        idBalneario: 4,
+        nombre: "atlas",
+        direccion: 87 - 2,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
+        servicios: "kiosco | piscina | ",
+        mail: "poseidon@gmail.com"
+
+    },
+    {
+        idBalneario: 5,
+        nombre: "verano beach",
+        direccion: 87 - 2,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
+        servicios: "kiosco | piscina | estacinamiento ",
+        mail: "poseidon@gmail.com"
+
+    },
+    {
+        idBalneario: 6,
+        nombre: "poseidon",
+        direccion: 87 - 2,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
+        servicios: "kiosco | piscina | estacinamiento ",
+        mail: "poseidon@gmail.com"
+
+    },
+    {
+        idBalneario: 7,
+        nombre: "poseidon",
+        direccion: 87 - 2,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
+        servicios: "kiosco | piscina | estacinamiento ",
+        mail: "poseidon@gmail.com"
+
+    },
+    {
+        idBalneario: 8,
+        nombre: "poseidon",
+        direccion: 87 - 2,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
+        servicios: "kiosco | piscina | estacinamiento ",
+        mail: "poseidon@gmail.com"
+
+    },
+    {
+        idBalneario: 9,
+        nombre: "poseidon",
+        direccion: 87 - 2,
+        telefono: 2262 - 457836,
+        redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
+        servicios: "kiosco | piscina | estacinamiento ",
+        mail: "poseidon@gmail.com"
+
+    },
 ]

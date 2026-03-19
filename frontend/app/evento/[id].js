@@ -8,7 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 export default function EventoDetalle() {
     const { id } = useLocalSearchParams();
     const eventoId = parseInt(id, 10);
-    
+
     // Find the event in the mock. The mock uses idEvento
     const evento = eventos.find(e => e.idEvento === eventoId);
 
@@ -32,10 +32,10 @@ export default function EventoDetalle() {
                         <View style={styles.placeholderImage}></View>
                     )}
                 </View>
-                
+
                 <View style={styles.contentContainer}>
                     <Text style={styles.title}>{evento.nombre}</Text>
-                    
+
                     <View style={styles.dateRow}>
                         <Ionicons name="calendar-outline" size={22} color="#2C1B4D" style={styles.icon} />
                         <Text style={styles.dateLabel}>Inicio</Text>
@@ -55,18 +55,18 @@ export default function EventoDetalle() {
                 </View>
 
                 <View style={styles.mapWrap}>
-                    <Image 
+                    <Image
                         source={{ uri: 'https://necochea.tur.ar/wp-content/uploads/2021/11/necochea-mapa.jpg' }} // Placeholder genérico para el mapa visual
-                        style={styles.mapImage} 
-                        resizeMode="cover" 
+                        style={styles.mapImage}
+                        resizeMode="cover"
                     />
                 </View>
-                
+
             </ScrollView>
 
             {/* Fixed Back Button */}
             <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-                <Ionicons name="arrow-back" size={24} color="#555" />
+                <Ionicons name="arrow-back" size={24} color={Colors.textColor} />
             </TouchableOpacity>
         </View>
     );

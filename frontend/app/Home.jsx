@@ -76,7 +76,7 @@ export default function Home() {
                     )}
                 />
                 <View style={styles.menuContainer}>
-                    <MenuCard title="Alojamiento" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' />
+                    <MenuCard title="Alojamiento" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/alojamiento/alojamientos" />
                     <MenuCard title="Gastronomia" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/gastronomico/gastronomico" />
                     <MenuCard title="Balnearios" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' />
                     <MenuCard title="Actividades" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' />

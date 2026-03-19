@@ -6,7 +6,7 @@ export default function Layout() {
         <SafeAreaView style={styles.notificationBar} edges={['top']}>
             <Text>Layout</Text>
             <View style={styles.container} >
-                <StatusBar style="light" />
+                <StatusBar style="dark" />
             </View>
         </SafeAreaView>
     );

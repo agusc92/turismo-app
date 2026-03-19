@@ -3,11 +3,12 @@ import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, SafeAreaVi
 import { useLocalSearchParams, Stack, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { gastronomico } from '../../assets/mokup';
+import { Colors } from "../../constants/Styles";
 
 export default function GastronomicoDetalle() {
     const { id } = useLocalSearchParams();
     const itemId = parseInt(id, 10);
-    
+
     // As gastronomico is an array of arrays in mokup.js
     const dataGastronomica = gastronomico[0] || [];
     const item = dataGastronomica.find(g => g.idGastronomico === itemId);
@@ -25,7 +26,7 @@ export default function GastronomicoDetalle() {
     const tipos = item.tipo ? item.tipo.map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(' / ') : '';
     const menus = item.menu ? item.menu.map(m => m.charAt(0).toUpperCase() + m.slice(1)).join(', ') : '';
     const extras = item.extras ? item.extras.split('|').map(e => e.trim().charAt(0).toUpperCase() + e.trim().slice(1)).join(', ') : '';
-    
+
     // Redes parser
     let fb = '', ig = '', tw = '';
     if (item.redesSociales) {
@@ -38,8 +39,8 @@ export default function GastronomicoDetalle() {
     }
 
     // We'll trust whatever is in the image, or fallback to dummy
-    const imageUrl = item.imagen && item.imagen.startsWith('http') 
-        ? item.imagen 
+    const imageUrl = item.imagen && item.imagen.startsWith('http')
+        ? item.imagen
         : `https://dummyimage.com/600x400/2a61a3/ffffff.png&text=${encodeURIComponent(item.nombre)}`;
 
     let mapImageUrl = 'https://necochea.tur.ar/wp-content/uploads/2021/11/necochea-mapa.jpg';
@@ -47,17 +48,17 @@ export default function GastronomicoDetalle() {
     return (
         <View style={styles.container}>
             <Stack.Screen options={{ headerShown: false }} />
-            
+
             <ScrollView style={styles.pageContent} showsVerticalScrollIndicator={false} bounces={false}>
                 <View style={styles.headerImageContainer}>
                     <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
                 </View>
-                
+
                 <View style={styles.contentContainer}>
                     {/* Header Title section */}
                     <Text style={styles.title}>{item.nombre}</Text>
                     {tipos ? <Text style={styles.subtitle}>{tipos}</Text> : null}
-                    
+
                     {/* Horario */}
                     <View style={styles.section}>
                         <Text style={styles.sectionTitle}>Horario</Text>
@@ -83,7 +84,7 @@ export default function GastronomicoDetalle() {
                     {/* Contacto */}
                     <View style={styles.section}>
                         <Text style={styles.sectionTitle}>Contacto</Text>
-                        
+
                         {item.telefono ? (
                             <View style={styles.contactRow}>
                                 <Ionicons name="logo-whatsapp" size={20} color="#31204D" style={styles.contactIcon} />
@@ -126,13 +127,13 @@ export default function GastronomicoDetalle() {
                     <View style={styles.mapWrap}>
                         <Image source={{ uri: mapImageUrl }} style={styles.mapImage} resizeMode="cover" />
                     </View>
-                    
+
                 </View>
             </ScrollView>
 
             {/* Back Button floating overlay */}
             <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-                <Ionicons name="arrow-back" size={24} color="#555" />
+                <Ionicons name="arrow-back" size={24} color={Colors.textColor} />
             </TouchableOpacity>
         </View>
     );
