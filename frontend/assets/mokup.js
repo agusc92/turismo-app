@@ -124,8 +124,8 @@ export const gastronomico = [
         {
             idGastronomico: 1,
             nombre: "La vieja Estacion",
-            direccion: 87 - 308,
-            telefono: 2262 - 457836,
+            direccion: "87 - 308",
+            telefono: "2262 - 457836",
             redesSociales: "fb:viejaEstacion | ig:@laVieja | X:@estacion",
             tiendaOnline: "https:// www....",
             extras: "mascotas | wifi | estacionamiento",
@@ -137,8 +137,8 @@ export const gastronomico = [
         {
             idGastronomico: 2,
             nombre: "ibus",
-            direccion: 85 - 308,
-            telefono: 2262 - 457836,
+            direccion: "85 - 308",
+            telefono: "2262 - 457836",
             redesSociales: "fb:ibus | ig:@ibus | X:@ibus",
             tiendaOnline: "https:// www....",
             extras: "mascotas | wifi ",
@@ -150,8 +150,8 @@ export const gastronomico = [
         {
             idGastronomico: 3,
             nombre: "olders",
-            direccion: 85 - 308,
-            telefono: 2262 - 457836,
+            direccion: "85 - 308",
+            telefono: "2262 - 457836",
             redesSociales: "fb:ibus | ig:@ibus | X:@ibus",
             tiendaOnline: "https:// www....",
             extras: "mascotas | wifi ",
@@ -217,8 +217,8 @@ export const ajolamientos = [
     {
         idAlojamiento: 1,
         nombre: "Hotel Evita",
-        direccion: 79 - 308,
-        telefono: 2262 - 457836,
+        direccion: "79 - 308",
+        telefono: "2262 - 457836",
         redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
         tiendaOnline: "https:// www....,",
         mail: "evita@gmail.com",
@@ -230,8 +230,8 @@ export const ajolamientos = [
     {
         idAlojamiento: 2,
         nombre: "Hotel peruano",
-        direccion: 79 - 308,
-        telefono: 2262 - 457836,
+        direccion: "79 - 308",
+        telefono: "2262 - 457836",
         redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
         tiendaOnline: "https:// www....,",
         mail: "evita@gmail.com",
@@ -243,8 +243,8 @@ export const ajolamientos = [
     {
         idAlojamiento: 3,
         nombre: "Hotel facho",
-        direccion: 79 - 308,
-        telefono: 2262 - 457836,
+        direccion: "79 - 308",
+        telefono: "2262 - 457836",
         redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
         tiendaOnline: "https:// www....,",
         mail: "evita@gmail.com",
@@ -256,8 +256,8 @@ export const ajolamientos = [
     {
         idAlojamiento: 4,
         nombre: "Hostel machete",
-        direccion: 79 - 308,
-        telefono: 2262 - 457836,
+        direccion: "79 - 308",
+        telefono: "2262 - 457836",
         redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
         tiendaOnline: "https:// www....,",
         mail: "evita@gmail.com",
@@ -269,8 +269,8 @@ export const ajolamientos = [
     {
         idAlojamiento: 5,
         nombre: "apart delvalle",
-        direccion: 79 - 308,
-        telefono: 2262 - 457836,
+        direccion: "79 - 308",
+        telefono: "2262 - 457836",
         redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
         tiendaOnline: "https:// www....,",
         mail: "evita@gmail.com",
@@ -282,8 +282,8 @@ export const ajolamientos = [
     {
         idAlojamiento: 6,
         nombre: "Hotel Evita",
-        direccion: 79 - 308,
-        telefono: 2262 - 457836,
+        direccion: "79 - 308",
+        telefono: "2262 - 457836",
         redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
         tiendaOnline: "https:// www....,",
         mail: "evita@gmail.com",
@@ -295,8 +295,8 @@ export const ajolamientos = [
     {
         idAlojamiento: 7,
         nombre: "Hotel Evita",
-        direccion: 79 - 308,
-        telefono: 2262 - 457836,
+        direccion: "79 - 308",
+        telefono: "2262 - 457836",
         redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
         tiendaOnline: "https:// www....,",
         mail: "evita@gmail.com",
@@ -308,8 +308,8 @@ export const ajolamientos = [
     {
         idAlojamiento: 8,
         nombre: "Hotel Evita",
-        direccion: 79 - 308,
-        telefono: 2262 - 457836,
+        direccion: "79 - 308",
+        telefono: "2262 - 457836",
         redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
         tiendaOnline: "https:// www....,",
         mail: "evita@gmail.com",
@@ -321,8 +321,8 @@ export const ajolamientos = [
     {
         idAlojamiento: 9,
         nombre: "Hotel Evita",
-        direccion: 79 - 308,
-        telefono: 2262 - 457836,
+        direccion: "79 - 308",
+        telefono: "2262 - 457836",
         redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
         tiendaOnline: "https:// www....,",
         mail: "evita@gmail.com",
@@ -334,8 +334,8 @@ export const ajolamientos = [
     {
         idAlojamiento: 10,
         nombre: "Hotel Evita",
-        direccion: 79 - 308,
-        telefono: 2262 - 457836,
+        direccion: "79 - 308",
+        telefono: "2262 - 457836",
         redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
         tiendaOnline: "https:// www....,",
         mail: "evita@gmail.com",
@@ -351,8 +351,8 @@ export const balnearios = [
     {
         idBalneario: 1,
         nombre: "poseidon",
-        direccion: 87 - 2,
-        telefono: 2262 - 457836,
+        direccion: "87 y 2",
+        telefono: "2262 - 457836",
         redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
         servicios: "kiosco | piscina | estacinamiento ",
         mail: "poseidon@gmail.com"
@@ -361,8 +361,8 @@ export const balnearios = [
     {
         idBalneario: 2,
         nombre: "los palmeras",
-        direccion: 87 - 2,
-        telefono: 2262 - 457836,
+        direccion: "87 y 2",
+        telefono: "2262 - 457836",
         redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
         servicios: "kiosco | estacinamiento ",
         mail: "poseidon@gmail.com"
@@ -371,8 +371,8 @@ export const balnearios = [
     {
         idBalneario: 3,
         nombre: "atlantico",
-        direccion: 87 - 2,
-        telefono: 2262 - 457836,
+        direccion: "87 y 2",
+        telefono: "2262 - 457836",
         redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
         servicios: "kiosco | silla anfibia | estacinamiento ",
         mail: "poseidon@gmail.com"
@@ -381,8 +381,8 @@ export const balnearios = [
     {
         idBalneario: 4,
         nombre: "atlas",
-        direccion: 87 - 2,
-        telefono: 2262 - 457836,
+        direccion: "87 y 2",
+        telefono: "2262 - 457836",
         redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
         servicios: "kiosco | piscina | ",
         mail: "poseidon@gmail.com"
@@ -391,8 +391,8 @@ export const balnearios = [
     {
         idBalneario: 5,
         nombre: "verano beach",
-        direccion: 87 - 2,
-        telefono: 2262 - 457836,
+        direccion: "87 y 2",
+        telefono: "2262 - 457836",
         redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
         servicios: "kiosco | piscina | estacinamiento ",
         mail: "poseidon@gmail.com"
@@ -401,8 +401,8 @@ export const balnearios = [
     {
         idBalneario: 6,
         nombre: "poseidon",
-        direccion: 87 - 2,
-        telefono: 2262 - 457836,
+        direccion: "87 - 2",
+        telefono: "2262 - 457836",
         redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
         servicios: "kiosco | piscina | estacinamiento ",
         mail: "poseidon@gmail.com"
@@ -411,8 +411,8 @@ export const balnearios = [
     {
         idBalneario: 7,
         nombre: "poseidon",
-        direccion: 87 - 2,
-        telefono: 2262 - 457836,
+        direccion: "87 y 2",
+        telefono: "2262 - 457836",
         redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
         servicios: "kiosco | piscina | estacinamiento ",
         mail: "poseidon@gmail.com"
@@ -421,8 +421,8 @@ export const balnearios = [
     {
         idBalneario: 8,
         nombre: "poseidon",
-        direccion: 87 - 2,
-        telefono: 2262 - 457836,
+        direccion: "87 y 2",
+        telefono: "2262 - 457836",
         redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
         servicios: "kiosco | piscina | estacinamiento ",
         mail: "poseidon@gmail.com"
@@ -431,8 +431,8 @@ export const balnearios = [
     {
         idBalneario: 9,
         nombre: "poseidon",
-        direccion: 87 - 2,
-        telefono: 2262 - 457836,
+        direccion: "87 y 2",
+        telefono: "2262 - 457836",
         redesSociales: "fb:poseidon | ig:@poseidon | X:@poseidon",
         servicios: "kiosco | piscina | estacinamiento ",
         mail: "poseidon@gmail.com"
