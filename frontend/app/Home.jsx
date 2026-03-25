@@ -1,36 +1,16 @@
 import React, { useRef, useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, Image, Dimensions, FlatList } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Image, Dimensions, FlatList, TouchableOpacity } from "react-native";
 import { ScreenLayout } from "../components/ScreenLayout";
 import { Link, Stack } from 'expo-router';
 import { Colors } from "../constants/Styles";
 import HeaderPage from "../components/HeaderPage";
 import MenuCard from "../components/MenuCard";
+import { eventosDestacados } from "../assets/mokup";
 
 const { width } = Dimensions.get('window');
 
 export default function Home() {
-    const eventos = [
-        {
-            id: 1,
-            nombre: "Evento 1",
-            imagen: "https://necochea.tur.ar/wp-content/uploads/2026/03/wo2103-1.jpg",
-        },
-        {
-            id: 2,
-            nombre: "Evento 2",
-            imagen: "https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg",
-        },
-        {
-            id: 3,
-            nombre: "Evento 3",
-            imagen: "https://necochea.tur.ar/wp-content/uploads/2026/03/wo0404.jpg",
-        },
-        {
-            id: 4,
-            nombre: "Evento 4",
-            imagen: "https://necochea.tur.ar/wp-content/uploads/2025/12/paris1104.jpg",
-        },
-    ];
+
 
     const flatListRef = useRef(null);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -38,7 +18,7 @@ export default function Home() {
     useEffect(() => {
         const interval = setInterval(() => {
             let nextIndex = currentIndex + 1;
-            if (nextIndex >= eventos.length) {
+            if (nextIndex >= eventosDestacados.length) {
                 nextIndex = 0;
             }
             setCurrentIndex(nextIndex);
@@ -48,7 +28,7 @@ export default function Home() {
         }, 5000);
 
         return () => clearInterval(interval);
-    }, [currentIndex, eventos.length]);
+    }, [currentIndex, eventosDestacados.length]);
 
     const onMomentumScrollEnd = (event) => {
         const slideSize = event.nativeEvent.layoutMeasurement.width;
@@ -72,7 +52,7 @@ export default function Home() {
 
                 <FlatList
                     ref={flatListRef}
-                    data={eventos}
+                    data={eventosDestacados}
                     keyExtractor={(item) => item.id.toString()}
                     horizontal
                     pagingEnabled
@@ -80,24 +60,27 @@ export default function Home() {
                     onMomentumScrollEnd={onMomentumScrollEnd}
                     renderItem={({ item }) => (
                         <View style={styles.carouselItemContainer}>
-                            <View style={styles.carouselItem}>
-                                <Image
-                                    source={{ uri: item.imagen }}
-                                    style={styles.carouselImage}
-                                    resizeMode="cover"
-                                />
-                                <View style={styles.textContainer}>
-                                    <Text style={styles.carouselText}>{item.nombre}</Text>
-                                </View>
-                            </View>
+                            <Link href={`/evento/${item.id}`} asChild>
+                                <TouchableOpacity style={styles.carouselItem} activeOpacity={0.8}>
+                                    <Image
+                                        source={{ uri: item.imagen }}
+                                        style={styles.carouselImage}
+                                        resizeMode="cover"
+                                    />
+                                    <View style={styles.textContainer}>
+                                        <Text style={styles.carouselText}>{item.nombre}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </Link>
                         </View>
                     )}
                 />
                 <View style={styles.menuContainer}>
-                    <MenuCard title="Alojamiento" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' />
-                    <MenuCard title="Alojamiento" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' />
-                    <MenuCard title="Alojamiento" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' />
-                    <MenuCard title="Alojamiento" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' />
+                    <MenuCard title="Alojamiento" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/alojamiento/alojamientos" />
+                    <MenuCard title="Gastronomia" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/gastronomico/gastronomico" />
+                    <MenuCard title="Balnearios" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/balneario/balnearios" />
+                    <MenuCard title="Actividades" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' />
+                    <MenuCard title="Eventos" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/evento/eventos" />
                 </View>
             </ScrollView>
 

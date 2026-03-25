@@ -2,10 +2,10 @@ import { Link } from "expo-router";
 import { Image, Pressable, Text, StyleSheet, View } from "react-native";
 import { Colors } from "../constants/Styles";
 
-export default function MenuCard({ title, image }) {
+export default function MenuCard({ title, image, href }) {
     const capitalizado = title.charAt(0).toUpperCase() + title.slice(1);
     return (
-        <Link href={`/${title}`} asChild>
+        <Link href={href || `/${title}`} asChild>
             <Pressable style={styles.wrapper}>
                 <Text style={styles.title}>{capitalizado}</Text>
                 <View style={styles.card}>
@@ -17,7 +17,7 @@ export default function MenuCard({ title, image }) {
 }
 const styles = StyleSheet.create({
     wrapper: {
-        width: "48%", // Toma casi la mitad del espacio disponible
+        width: "100%", // Toma casi la mitad del espacio disponible
         marginBottom: 15,
     },
     card: {

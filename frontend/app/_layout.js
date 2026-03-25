@@ -45,4 +45,5 @@ const styles = StyleSheet.create({
     primaryText: {
         color: Colors.textColor,
     },
+
 })
