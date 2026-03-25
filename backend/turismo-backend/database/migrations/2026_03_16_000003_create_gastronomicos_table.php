@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('tiendaOnline')->nullable();
             $table->string('extras')->nullable();
             $table->string('horario')->nullable();
-            $table->string('tipo')->nullable();
             $table->timestamps();
         });
     }

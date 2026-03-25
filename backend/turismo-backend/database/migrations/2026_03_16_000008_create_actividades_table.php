@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('direccion');
+            $table->string('telefono')->nullable();
             $table->string('descripcion')->nullable();
-            $table->string('horario')->nullable();
+            $table->string('redes_sociales')->nullable();
             $table->foreignId('tipo_id')->constrained('tipos')->onDelete('cascade');
             $table->timestamps();
         });

@@ -13,6 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\InfoUsuarioController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\GastronomicoMenuController;
+use App\Http\Controllers\TipoGastronomicoController;
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -26,10 +27,16 @@ Route::apiResource('tipos', TipoController::class);
 Route::apiResource('users', UserController::class);
 Route::apiResource('info-usuarios', InfoUsuarioController::class);
 Route::apiResource('menus', MenuController::class);
+Route::apiResource('tipo-gastronomicos', TipoGastronomicoController::class);
 
 // Evento nested routes
 Route::get('eventos/destacados', [EventoController::class, 'destacados']);
 Route::apiResource('eventos', EventoController::class);
+
+// Gastronomico nested routes
+Route::get('gastronomicos/{id}/tipos', [GastronomicoController::class, 'tipos']);
+Route::post('gastronomicos/{id}/tipos', [GastronomicoController::class, 'addTipo']);
+Route::delete('gastronomicos/{id}/tipos/{tipoId}', [GastronomicoController::class, 'removeTipo']);
 
 // Gastronomico menus nested routes
 Route::get('gastronomicos/{id}/menus', [GastronomicoMenuController::class, 'index']);

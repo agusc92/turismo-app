@@ -12,8 +12,9 @@ class Actividad extends Model
     protected $fillable = [
         'nombre',
         'direccion',
+        'telefono',
         'descripcion',
-        'horario',
+        'redes_sociales',
         'tipo_id'
     ];
 

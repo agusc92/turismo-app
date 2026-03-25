@@ -9,7 +9,7 @@ class TipoController extends Controller
 {
     public function index()
     {
-        return response()->json(Tipo::all());
+        return response()->json(Tipo::pluck('tipo'));
     }
 
     public function show($id)
