@@ -439,3 +439,58 @@ export const balnearios = [
 
     },
 ]
+
+export const actividades = [
+    {
+        idActividad: 1,
+        nombre: 'Cine Ocean',
+        direccion: "87 - 308",
+        telefono: 2262 - 457836,
+        redesSociales: "http://cienciaenred.mcti.gba.gob.ar/miembro/estacion-hidrobiologica-de-puerto-quequen- // FB: Estación 			Hidrobiológica Puerto Quequén",
+        caracteristicas: "Todos los dias desde las 15:00 horas en Av 10 y Calle 117 (Parque Miguel Lillo) /  De mañana con 2 días de 			anticipación y  seña previa realizamos cabalgatas guiadas para toda la familia salimos hora 8 del establecimiento los alazanes. ",
+        tipo: ['cines y teatros'],
+
+    },
+    {
+        idActividad: 2,
+        nombre: 'botera',
+        direccion: "87 - 308",
+        telefono: 2262 - 457836,
+        redesSociales: "http://cienciaenred.mcti.gba.gob.ar/miembro/estacion-hidrobiologica-de-puerto-quequen- // FB: Estación 			Hidrobiológica Puerto Quequén",
+        caracteristicas: "Todos los dias desde las 15:00 horas en Av 10 y Calle 117 (Parque Miguel Lillo) /  De mañana con 2 días de 			anticipación y  seña previa realizamos cabalgatas guiadas para toda la familia salimos hora 8 del establecimiento los alazanes. ",
+        tipo: ['nautico'],
+
+    },
+    {
+        idActividad: 3,
+        nombre: 'carrilindos',
+        direccion: "87 - 308",
+        telefono: 2262 - 457836,
+        redesSociales: "http://cienciaenred.mcti.gba.gob.ar/miembro/estacion-hidrobiologica-de-puerto-quequen- // FB: Estación 			Hidrobiológica Puerto Quequén",
+        caracteristicas: "Todos los dias desde las 15:00 horas en Av 10 y Calle 117 (Parque Miguel Lillo) /  De mañana con 2 días de 			anticipación y  seña previa realizamos cabalgatas guiadas para toda la familia salimos hora 8 del establecimiento los alazanes. ",
+        tipo: ['paraje'],
+
+    },
+    {
+        idActividad: 4,
+        nombre: 'puente balnco',
+        direccion: "87 - 308",
+        telefono: 2262 - 457836,
+        redesSociales: "http://cienciaenred.mcti.gba.gob.ar/miembro/estacion-hidrobiologica-de-puerto-quequen- // FB: Estación 			Hidrobiológica Puerto Quequén",
+        caracteristicas: "Todos los dias desde las 15:00 horas en Av 10 y Calle 117 (Parque Miguel Lillo) /  De mañana con 2 días de 			anticipación y  seña previa realizamos cabalgatas guiadas para toda la familia salimos hora 8 del establecimiento los alazanes. ",
+        tipo: ['paraje'],
+
+    },
+    {
+        idActividad: 5,
+        nombre: 'puente balnco',
+        direccion: "87 - 308",
+        telefono: 2262 - 457836,
+        redesSociales: "http://cienciaenred.mcti.gba.gob.ar/miembro/estacion-hidrobiologica-de-puerto-quequen- // FB: Estación 			Hidrobiológica Puerto Quequén",
+        caracteristicas: "Todos los dias desde las 15:00 horas en Av 10 y Calle 117 (Parque Miguel Lillo) /  De mañana con 2 días de 			anticipación y  seña previa realizamos cabalgatas guiadas para toda la familia salimos hora 8 del establecimiento los alazanes. ",
+        tipo: ['paraje'],
+
+    },
+]
+
+export const tipoActividades = ["paraje", "nautico", "cines y teatros", "museos"];

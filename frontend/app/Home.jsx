@@ -79,7 +79,7 @@ export default function Home() {
                     <MenuCard title="Alojamiento" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/alojamiento/alojamientos" />
                     <MenuCard title="Gastronomia" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/gastronomico/gastronomico" />
                     <MenuCard title="Balnearios" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/balneario/balnearios" />
-                    <MenuCard title="Actividades" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' />
+                    <MenuCard title="Actividades" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/actividad/actividades" />
                     <MenuCard title="Eventos" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/evento/eventos" />
                 </View>
             </ScrollView>
