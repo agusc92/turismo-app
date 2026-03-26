@@ -9,7 +9,7 @@ export default function Layout() {
     return (
         // <SafeAreaView style={styles.notificationBar} edges={['top']}>
         <View style={styles.container} >
-            <StatusBar style="light" />
+            <StatusBar style="light" backgroundColor="#000000" />
             <Stack
 
                 screenOptions={{

@@ -27,6 +27,10 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       }
     },
+    "androidStatusBar": {
+      "backgroundColor": "#000000",
+      "barStyle": "light-content"
+    },
     "web": {
       "favicon": "./assets/favicon.png"
     }
