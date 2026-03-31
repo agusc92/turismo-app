@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, ActivityIn
 import { useLocalSearchParams, Stack, router } from 'expo-router';
 import { API_URL } from '../../api';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '../../constants/Styles';
+import { Colors, BackButton } from '../../constants/Styles';
 
 export default function ActividadDetalle() {
     const { id } = useLocalSearchParams();
@@ -102,7 +102,7 @@ export default function ActividadDetalle() {
                 </View>
             </ScrollView>
 
-            <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+            <TouchableOpacity style={BackButton} onPress={() => router.back()}>
                 <Ionicons name="arrow-back" size={24} color="#000" />
             </TouchableOpacity>
         </View>
@@ -135,17 +135,6 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '100%',
-    },
-    backButton: {
-        position: 'absolute',
-        top: 50,
-        left: 20,
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        backgroundColor: 'rgba(255, 255, 255, 0.7)',
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     contentContainer: {
         paddingHorizontal: 20,

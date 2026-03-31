@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, Stack, router } from 'expo-router';
 import { API_URL } from '../../api';
-import { Colors } from '../../constants/Styles';
+import { Colors, BackButton } from '../../constants/Styles';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function EventoDetalle() {
@@ -95,7 +95,7 @@ export default function EventoDetalle() {
             </ScrollView>
 
             {/* Fixed Back Button */}
-            <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+            <TouchableOpacity style={BackButton} onPress={() => router.back()}>
                 <Ionicons name="arrow-back" size={24} color={Colors.textColor} />
             </TouchableOpacity>
         </View>
@@ -133,17 +133,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         backgroundColor: '#e0e0e0',
-    },
-    backButton: {
-        position: 'absolute',
-        top: 50,
-        left: 20,
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        backgroundColor: 'rgba(255, 255, 255, 0.7)',
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     contentContainer: {
         paddingHorizontal: 20,

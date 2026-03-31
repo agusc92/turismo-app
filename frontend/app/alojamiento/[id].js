@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, ActivityIndicator } from "react-native";
 import { useLocalSearchParams, useRouter, Stack } from "expo-router";
 import { API_URL } from "../../api";
-import { Colors } from "../../constants/Styles";
+import { Colors, BackButton } from "../../constants/Styles";
 import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -138,7 +138,7 @@ export default function AlojamientoDetail() {
                     </View>
                 </View>
             </ScrollView>
-            <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+            <TouchableOpacity style={BackButton} onPress={() => router.back()}>
                 <Ionicons name="arrow-back" size={24} color={Colors.textColor} />
             </TouchableOpacity>
         </View>
@@ -173,17 +173,17 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
-    backButton: {
-        position: 'absolute',
-        top: 50,
-        left: 20,
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        backgroundColor: 'rgba(255, 255, 255, 0.7)',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
+    // backButton: {
+    //     position: 'absolute',
+    //     top: 10,
+    //     left: 10,
+    //     width: 40,
+    //     height: 40,
+    //     borderRadius: 20,
+    //     backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    // },
     contentContainer: {
         padding: 24,
     },

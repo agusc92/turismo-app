@@ -59,7 +59,7 @@ export default function Home() {
         <ScreenLayout>
             <Stack.Screen options={{
                 title: "Necochea",
-                // 👇 Sobreescribimos el header solo para esta pantalla
+                // Sobreescribimos el header solo para esta pantalla
                 headerTitle: (props) => <HeaderPage title={props.children} logo={true} />
             }} />
 
@@ -93,7 +93,7 @@ export default function Home() {
                 />
                 <View style={styles.menuContainer}>
                     <MenuCard title="Alojamiento" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/alojamiento/alojamientos" />
-                    <MenuCard title="Gastronomia" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/gastronomico/gastronomico" />
+                    <MenuCard title="Gastronomía" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/gastronomico/gastronomico" />
                     <MenuCard title="Balnearios" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/balneario/balnearios" />
                     <MenuCard title="Actividades" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/actividad/actividades" />
                     <MenuCard title="Eventos" image='https://necochea.tur.ar/wp-content/uploads/2026/03/neptuno2103.jpg' href="/evento/eventos" />
@@ -160,5 +160,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         marginTop: 10,
         marginBottom: 40,
+        gap: 18,
     }
 });

@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         resizeMode: "cover",
     },
     title: {
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: '700',
         color: Colors.textColor,
         marginBottom: 8,

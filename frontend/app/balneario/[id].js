@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, ActivityIndicator } from "react-native";
 import { useLocalSearchParams, useRouter, Stack } from "expo-router";
 import { API_URL } from "../../api";
-import { Colors } from "../../constants/Styles";
+import { Colors, BackButton } from "../../constants/Styles";
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -68,22 +68,22 @@ export default function BalnearioDetail() {
     const itemId = item.id || item.idBalneario;
     // Imagen de portada de la API si la tiene, en su defecto la temporal
     const imageUrl = item.imagen || `https://picsum.photos/seed/${itemId + 30}/800/600`;
-    const mapUrl = `https://picsum.photos/seed/map/800/400`; 
+    const mapUrl = `https://picsum.photos/seed/map/800/400`;
 
     // Formatear titulo
     const nombreC = item.nombre.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
     const displayTitle = nombreC.toLowerCase().includes('balneario') ? nombreC : `Balneario ${nombreC}`;
-    
+
     // Formatear servicios
-    const detallesStr = item.servicios 
-        ? item.servicios.split('|').map(s => s.trim().charAt(0).toUpperCase() + s.trim().slice(1)).filter(Boolean).join(', ') 
+    const detallesStr = item.servicios
+        ? item.servicios.split('|').map(s => s.trim().charAt(0).toUpperCase() + s.trim().slice(1)).filter(Boolean).join(', ')
         : '';
 
     return (
         <View style={styles.container}>
             <ScrollView
                 style={styles.pageContent} showsVerticalScrollIndicator={false} bounces={false}
-                contentContainerStyle={{ paddingTop: insets.top }} 
+                contentContainerStyle={{ paddingTop: insets.top }}
             >
                 <Stack.Screen options={{ headerShown: false }} />
 
@@ -122,7 +122,7 @@ export default function BalnearioDetail() {
                                 <Text style={styles.contactText}>{fb}</Text>
                             </View>
                         ) : null}
-                        
+
                         {item.mail ? (
                             <View style={styles.contactRow}>
                                 <Ionicons name="mail-outline" size={20} color={Colors.textColor} style={styles.contactIcon} />
@@ -141,8 +141,8 @@ export default function BalnearioDetail() {
                     </View>
                 </View>
             </ScrollView>
-            
-            <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+
+            <TouchableOpacity style={BackButton} onPress={() => router.back()}>
                 <Ionicons name="arrow-back" size={24} color={Colors.textColor} />
             </TouchableOpacity>
         </View>
@@ -176,17 +176,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
-    backButton: {
-        position: 'absolute',
-        top: 50,
-        left: 20,
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        backgroundColor: 'rgba(255, 255, 255, 0.7)',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     contentContainer: {
         padding: 24,
     },
@@ -194,7 +183,7 @@ const styles = StyleSheet.create({
         fontSize: 26,
         fontWeight: '900',
         color: Colors.textColor,
-        marginBottom: 24, 
+        marginBottom: 24,
     },
     section: {
         marginBottom: 32,

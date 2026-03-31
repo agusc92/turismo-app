@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, SafeAreaVi
 import { useLocalSearchParams, Stack, router } from 'expo-router';
 import { API_URL } from '../../api';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from "../../constants/Styles";
+import { Colors, BackButton } from "../../constants/Styles";
 
 export default function GastronomicoDetalle() {
     const { id } = useLocalSearchParams();
@@ -54,10 +54,10 @@ export default function GastronomicoDetalle() {
     // Parsers adaptados por si vienen como strings sueltos o como arreglos de un solo item
     const tiposArr = Array.isArray(item.tipo) ? item.tipo : (item.tipo ? [item.tipo] : []);
     const tipos = tiposArr.map(t => (t.nombre || t).charAt(0).toUpperCase() + (t.nombre || t).slice(1)).join(' / ');
-    
+
     const menusArr = Array.isArray(item.menu) ? item.menu : (item.menu ? [item.menu] : []);
     const menus = menusArr.map(m => (m.tipo || m).charAt(0).toUpperCase() + (m.tipo || m).slice(1)).join(', ');
-    
+
     // extras is a string delimited by |
     const extras = item.extras ? String(item.extras).split('|').map(e => e.trim().charAt(0).toUpperCase() + e.trim().slice(1)).join(', ') : '';
 
@@ -166,7 +166,7 @@ export default function GastronomicoDetalle() {
             </ScrollView>
 
             {/* Back Button floating overlay */}
-            <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+            <TouchableOpacity style={BackButton} onPress={() => router.back()}>
                 <Ionicons name="arrow-back" size={24} color={Colors.textColor} />
             </TouchableOpacity>
         </View>
@@ -199,22 +199,6 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '100%',
-    },
-    backButton: {
-        position: 'absolute',
-        top: Platform.OS === 'ios' ? 60 : 40,
-        left: 20,
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        backgroundColor: 'rgba(255, 255, 255, 0.65)',
-        justifyContent: 'center',
-        alignItems: 'center',
-        elevation: 3,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
     },
     contentContainer: {
         paddingHorizontal: 25,
