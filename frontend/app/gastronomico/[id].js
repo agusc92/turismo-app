@@ -1,17 +1,46 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, SafeAreaView, Platform } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, SafeAreaView, Platform, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, Stack, router } from 'expo-router';
+import { API_URL } from '../../api';
 import { Ionicons } from '@expo/vector-icons';
-import { gastronomico } from '../../assets/mokup';
 import { Colors } from "../../constants/Styles";
 
 export default function GastronomicoDetalle() {
     const { id } = useLocalSearchParams();
-    const itemId = parseInt(id, 10);
+    const [item, setItem] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    // As gastronomico is an array of arrays in mokup.js
-    const dataGastronomica = gastronomico[0] || [];
-    const item = dataGastronomica.find(g => g.idGastronomico === itemId);
+    useEffect(() => {
+        const fetchGastronomico = async () => {
+            try {
+                const response = await fetch(`${API_URL}/gastronomicos/${id}`);
+                const data = await response.json();
+                if (response.ok || data.id || data.idGastronomico || data.nombre) {
+                    setItem(data);
+                } else {
+                    setItem(null);
+                }
+            } catch (error) {
+                console.error("Error fetching gastronomico:", error);
+                setItem(null);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (id) {
+            fetchGastronomico();
+        }
+    }, [id]);
+
+    if (loading) {
+        return (
+            <View style={styles.errorContainer}>
+                <Stack.Screen options={{ headerShown: false }} />
+                <ActivityIndicator size="large" color="#2C1B4D" />
+            </View>
+        );
+    }
 
     if (!item) {
         return (
@@ -22,10 +51,15 @@ export default function GastronomicoDetalle() {
         );
     }
 
-    // Parsers
-    const tipos = item.tipo ? item.tipo.map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(' / ') : '';
-    const menus = item.menu ? item.menu.map(m => m.charAt(0).toUpperCase() + m.slice(1)).join(', ') : '';
-    const extras = item.extras ? item.extras.split('|').map(e => e.trim().charAt(0).toUpperCase() + e.trim().slice(1)).join(', ') : '';
+    // Parsers adaptados por si vienen como strings sueltos o como arreglos de un solo item
+    const tiposArr = Array.isArray(item.tipo) ? item.tipo : (item.tipo ? [item.tipo] : []);
+    const tipos = tiposArr.map(t => (t.nombre || t).charAt(0).toUpperCase() + (t.nombre || t).slice(1)).join(' / ');
+    
+    const menusArr = Array.isArray(item.menu) ? item.menu : (item.menu ? [item.menu] : []);
+    const menus = menusArr.map(m => (m.tipo || m).charAt(0).toUpperCase() + (m.tipo || m).slice(1)).join(', ');
+    
+    // extras is a string delimited by |
+    const extras = item.extras ? String(item.extras).split('|').map(e => e.trim().charAt(0).toUpperCase() + e.trim().slice(1)).join(', ') : '';
 
     // Redes parser
     let fb = '', ig = '', tw = '';

@@ -1,13 +1,32 @@
-import React from 'react';
-import { View, Text, StyleSheet, FlatList, Image, Pressable } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList, Image, Pressable, ActivityIndicator } from 'react-native';
 import { Link, Stack } from 'expo-router';
-import { balnearios } from '../../assets/mokup';
+import { API_URL } from '../../api';
 import { Colors } from '../../constants/Styles';
 
 export default function BalneariosList() {
+    const [balnearios, setBalnearios] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchBalnearios = async () => {
+            try {
+                const response = await fetch(`${API_URL}/balnearios`);
+                const data = await response.json();
+                setBalnearios(data);
+            } catch (error) {
+                console.error("Error fetching balnearios:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchBalnearios();
+    }, []);
+
     const renderItem = ({ item }) => {
-        // Obtenemos una imagen de ejemplo
-        const imageUrl = `https://picsum.photos/seed/${item.idBalneario + 20}/200/120`;
+        const itemId = item.id || item.idBalneario;
+        // Obtenemos una imagen de la API si existe, o una de ejemplo
+        const imageUrl = item.imagen || `https://picsum.photos/seed/${itemId + 20}/200/120`;
 
         // Capitalizar el nombre
         const nombreCapitalizado = item.nombre
@@ -16,7 +35,7 @@ export default function BalneariosList() {
             .join(' ');
 
         return (
-            <Link href={`/balneario/${item.idBalneario}`} asChild>
+            <Link href={`/balneario/${itemId}`} asChild>
                 <Pressable style={styles.cardContainer}>
                     <Image source={{ uri: imageUrl }} style={styles.image} />
                     <View style={styles.textContainer}>
@@ -28,12 +47,21 @@ export default function BalneariosList() {
         );
     };
 
+    if (loading) {
+        return (
+            <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+                <Stack.Screen options={{ title: 'Balnearios' }} />
+                <ActivityIndicator size="large" color="#2C1B4D" />
+            </View>
+        );
+    }
+
     return (
         <View style={styles.container}>
             <Stack.Screen options={{ title: 'Balnearios' }} />
             <FlatList
                 data={balnearios}
-                keyExtractor={(item) => item.idBalneario.toString()}
+                keyExtractor={(item) => (item.id || item.idBalneario || Math.random()).toString()}
                 renderItem={renderItem}
                 contentContainerStyle={styles.listContent}
                 showsVerticalScrollIndicator={false}

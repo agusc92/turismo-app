@@ -1,7 +1,7 @@
-import React from "react";
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, ActivityIndicator } from "react-native";
 import { useLocalSearchParams, useRouter, Stack } from "expo-router";
-import { balnearios } from "../../assets/mokup";
+import { API_URL } from "../../api";
 import { Colors } from "../../constants/Styles";
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -10,13 +10,45 @@ export default function BalnearioDetail() {
     const { id } = useLocalSearchParams();
     const router = useRouter();
     const insets = useSafeAreaInsets();
-    
-    // Find balneario data
-    const item = balnearios.find((b) => b.idBalneario.toString() === id);
+    const [item, setItem] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchBalneario = async () => {
+            try {
+                const response = await fetch(`${API_URL}/balnearios/${id}`);
+                const data = await response.json();
+                if (response.ok) {
+                    setItem(data);
+                } else {
+                    setItem(null);
+                }
+            } catch (error) {
+                console.error("Error fetching balneario:", error);
+                setItem(null);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (id) {
+            fetchBalneario();
+        }
+    }, [id]);
+
+    if (loading) {
+        return (
+            <View style={styles.centered}>
+                <Stack.Screen options={{ headerShown: false }} />
+                <ActivityIndicator size="large" color="#2C1B4D" />
+            </View>
+        );
+    }
 
     if (!item) {
         return (
             <View style={styles.centered}>
+                <Stack.Screen options={{ headerShown: true, title: 'No encontrado' }} />
                 <Text style={styles.errorText}>Balneario no encontrado</Text>
             </View>
         );
@@ -33,8 +65,9 @@ export default function BalnearioDetail() {
         });
     }
 
-    // Temporary mock images
-    const imageUrl = `https://picsum.photos/seed/${item.idBalneario + 30}/800/600`;
+    const itemId = item.id || item.idBalneario;
+    // Imagen de portada de la API si la tiene, en su defecto la temporal
+    const imageUrl = item.imagen || `https://picsum.photos/seed/${itemId + 30}/800/600`;
     const mapUrl = `https://picsum.photos/seed/map/800/400`; 
 
     // Formatear titulo

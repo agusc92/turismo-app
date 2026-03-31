@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, Platform } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, Platform, ActivityIndicator } from 'react-native';
 import { Stack, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { API_URL } from '../../api';
@@ -13,7 +13,7 @@ export default function EventosList() {
     const [date, setDate] = useState(new Date());
     const [showPicker, setShowPicker] = useState(false);
     const [filterActive, setFilterActive] = useState(false);
-
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchEventos = async () => {
             try {
@@ -22,6 +22,9 @@ export default function EventosList() {
                 setEventos(data);
             } catch (error) {
                 console.error("Error fetching eventos:", error);
+            }
+            finally {
+                setLoading(false);
             }
         };
         fetchEventos();
@@ -38,14 +41,14 @@ export default function EventosList() {
     // Filtro simulado, usando 'fecha' del mokup si logramos parsearla
     const filteredEventos = eventos.filter(evento => {
         if (!filterActive) return true;
-        
+
         // La fecha en mokup es "2026-04-20 12:30:00"
-        const eventDate = new Date(evento.fecha.replace(" ", "T")); 
-        
+        const eventDate = new Date(evento.fecha.replace(" ", "T"));
+
         // Solo mostramos eventos a partir de la fecha seleccionada (ignorando horas)
-        eventDate.setHours(0,0,0,0);
+        eventDate.setHours(0, 0, 0, 0);
         const selectedDate = new Date(date);
-        selectedDate.setHours(0,0,0,0);
+        selectedDate.setHours(0, 0, 0, 0);
 
         return eventDate.getTime() >= selectedDate.getTime();
     });
@@ -61,11 +64,18 @@ export default function EventosList() {
         setFilterActive(false);
         setDate(new Date());
     };
-
+    if (loading) {
+        return (
+            <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+                <Stack.Screen options={{ title: 'Eventos' }} />
+                <ActivityIndicator size="large" color="#2C1B4D" />
+            </View>
+        )
+    }
     return (
         <View style={styles.container}>
-            <Stack.Screen 
-                options={{ 
+            <Stack.Screen
+                options={{
                     headerShown: true,
                     headerTitle: 'Eventos',
                     headerTitleAlign: 'center',
@@ -86,7 +96,7 @@ export default function EventosList() {
                             <Ionicons name="filter-outline" size={24} color={filterActive ? "#007AFF" : "#2C1B4D"} />
                         </TouchableOpacity>
                     )
-                }} 
+                }}
             />
 
             {filterActive && (
@@ -111,17 +121,17 @@ export default function EventosList() {
                         const d = new Date(item.fecha.replace(" ", "T"));
                         displayDate = formatDateForUI(d);
                     } catch (e) {
-                         displayDate = "Fecha no disponible";
+                        displayDate = "Fecha no disponible";
                     }
 
                     return (
-                        <TouchableOpacity 
-                            style={styles.card} 
+                        <TouchableOpacity
+                            style={styles.card}
                             onPress={() => router.push(`/evento/${item.id || item.idEvento}`)}
                         >
-                            <Image 
-                                source={{ uri: item.imagen }} 
-                                style={styles.cardImage} 
+                            <Image
+                                source={{ uri: item.imagen }}
+                                style={styles.cardImage}
                             />
                             <View style={styles.cardInfo}>
                                 <Text style={styles.cardTitle}>{item.nombre}</Text>

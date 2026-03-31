@@ -85,6 +85,7 @@ export default function ActividadesList() {
                                         </Text>
                                         {isSelected && <Ionicons name="checkmark" size={20} color="#2C1B4D" />}
                                     </TouchableOpacity>
+
                                 );
                             }}
                         />
@@ -93,7 +94,14 @@ export default function ActividadesList() {
             </Modal>
         );
     };
-
+    if (loading) {
+        return (
+            <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+                <Stack.Screen options={{ title: 'Actividades' }} />
+                <ActivityIndicator size="large" color="#2C1B4D" />
+            </View>
+        )
+    }
     return (
         <View style={styles.container}>
             <Stack.Screen

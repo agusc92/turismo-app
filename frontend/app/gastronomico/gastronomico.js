@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, SafeAreaView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, SafeAreaView, ActivityIndicator } from 'react-native';
 import { Stack, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { gastronomico, tipoGastronomico, menu } from '../../assets/mokup';
+import { API_URL } from '../../api';
 
 export default function GastronomicoList() {
-    // Gastronomico in mokup is an array of arrays: [[{...}, {...}]]
-    const dataGastronomica = gastronomico[0] || [];
+    const [dataGastronomica, setDataGastronomica] = useState([]);
+    const [tipoGastronomico, setTipoGastronomico] = useState([]);
+    const [menu, setMenu] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const [selectedTipo, setSelectedTipo] = useState(null);
     const [selectedMenu, setSelectedMenu] = useState(null);
@@ -14,23 +16,64 @@ export default function GastronomicoList() {
     const [showTipoModal, setShowTipoModal] = useState(false);
     const [showMenuModal, setShowMenuModal] = useState(false);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [gastroRes, tiposRes, menusRes] = await Promise.all([
+                    fetch(`${API_URL}/gastronomicos`),
+                    fetch(`${API_URL}/tipo-gastronomicos`),
+                    fetch(`${API_URL}/menus`)
+                ]);
+
+                let gastroData = await gastroRes.json();
+                if (Array.isArray(gastroData) && Array.isArray(gastroData[0])) {
+                    gastroData = gastroData[0];
+                }
+                setDataGastronomica(gastroData);
+
+                const tiposData = await tiposRes.json();
+                const formatedTipos = tiposData.map((t, i) => typeof t === 'string' ? { idTipo: i, nombre: t } : t);
+                setTipoGastronomico(formatedTipos);
+
+                const menusData = await menusRes.json();
+                const formatedMenus = menusData.map((m, i) => typeof m === 'string' ? { idMenu: i, tipo: m } : m);
+                setMenu(formatedMenus);
+
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            } finally {
+                console.log(tipoGastronomico)
+                console.log(menu)
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
+
     // Filter logic
     const filteredData = dataGastronomica.filter(item => {
         let matchesTipo = true;
         let matchesMenu = true;
 
         if (selectedTipo) {
-            // El tipo en data es un array de strings (ej: ["cafe", "cerveceria"])
-            matchesTipo = item.tipo && item.tipo.includes(selectedTipo.nombre);
+            matchesTipo = item.tipo && (Array.isArray(item.tipo) ? item.tipo.includes(selectedTipo.nombre) : item.tipo === selectedTipo.nombre);
         }
 
         if (selectedMenu) {
-            // El menu es un array de strings (ej: ["vegetariano", "diabetico"])
-            matchesMenu = item.menu && item.menu.includes(selectedMenu.tipo);
+            matchesMenu = item.menu && (Array.isArray(item.menu) ? item.menu.includes(selectedMenu.tipo) : item.menu === selectedMenu.tipo);
         }
 
         return matchesTipo && matchesMenu;
     });
+
+    if (loading) {
+        return (
+            <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+                <Stack.Screen options={{ title: 'Gastronomía' }} />
+                <ActivityIndicator size="large" color="#2C1B4D" />
+            </View>
+        );
+    }
 
     const renderCustomPicker = (title, items, labelKey, valueKey, selectedItem, onSelect, onClose) => (
         <Modal visible={true} transparent={true} animationType="fade">
@@ -41,12 +84,12 @@ export default function GastronomicoList() {
                         data={[{ [labelKey]: 'Todos', isClear: true }, ...items]}
                         keyExtractor={(i, index) => index.toString()}
                         renderItem={({ item }) => {
-                            const isSelected = item.isClear 
-                                ? !selectedItem 
+                            const isSelected = item.isClear
+                                ? !selectedItem
                                 : selectedItem && selectedItem[labelKey] === item[labelKey];
 
                             return (
-                                <TouchableOpacity 
+                                <TouchableOpacity
                                     style={styles.modalItem}
                                     onPress={() => {
                                         if (item.isClear) {
@@ -72,8 +115,8 @@ export default function GastronomicoList() {
 
     return (
         <View style={styles.container}>
-            <Stack.Screen 
-                options={{ 
+            <Stack.Screen
+                options={{
                     headerShown: true,
                     headerTitle: 'Gastronomía',
                     headerTitleAlign: 'center',
@@ -89,12 +132,12 @@ export default function GastronomicoList() {
                             <Ionicons name="arrow-back" size={24} color="#2C1B4D" />
                         </TouchableOpacity>
                     ),
-                }} 
+                }}
             />
 
             <View style={styles.filtersContainer}>
-                <TouchableOpacity 
-                    style={styles.filterButton} 
+                <TouchableOpacity
+                    style={styles.filterButton}
                     onPress={() => setShowTipoModal(true)}
                 >
                     <Text style={styles.filterText}>
@@ -103,8 +146,8 @@ export default function GastronomicoList() {
                     <Ionicons name="chevron-down" size={16} color="#333" />
                 </TouchableOpacity>
 
-                <TouchableOpacity 
-                    style={styles.filterButton} 
+                <TouchableOpacity
+                    style={styles.filterButton}
                     onPress={() => setShowMenuModal(true)}
                 >
                     <Text style={styles.filterText}>
@@ -115,35 +158,39 @@ export default function GastronomicoList() {
             </View>
 
             {showTipoModal && renderCustomPicker(
-                "Seleccionar Tipo", 
-                tipoGastronomico, 
-                "nombre", 
-                "idTipo", 
-                selectedTipo, 
-                setSelectedTipo, 
+                "Seleccionar Tipo",
+                tipoGastronomico,
+                "nombre",
+                "idTipo",
+                selectedTipo,
+                setSelectedTipo,
                 () => setShowTipoModal(false)
             )}
 
             {showMenuModal && renderCustomPicker(
-                "Menús especiales", 
-                menu, 
-                "tipo", 
-                "idMenu", 
-                selectedMenu, 
-                setSelectedMenu, 
+                "Menús especiales",
+                menu,
+                "tipo",
+                "idMenu",
+                selectedMenu,
+                setSelectedMenu,
                 () => setShowMenuModal(false)
             )}
 
             <FlatList
                 data={filteredData}
-                keyExtractor={(item) => item.idGastronomico.toString()}
+                keyExtractor={(item) => (item.id || item.idGastronomico || Math.random()).toString()}
                 contentContainerStyle={styles.listContainer}
                 renderItem={({ item }) => {
                     let subtitle = 'Gastronomía';
-                    if (item.tipo && item.tipo.length > 0) {
+                    if (item.tipo && Array.isArray(item.tipo) && item.tipo.length > 0) {
                         subtitle = item.tipo.map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(' • ');
-                    } else if (item.menu && item.menu.length > 0) {
+                    } else if (item.tipo && typeof item.tipo === 'string') {
+                        subtitle = item.tipo.charAt(0).toUpperCase() + item.tipo.slice(1);
+                    } else if (item.menu && Array.isArray(item.menu) && item.menu.length > 0) {
                         subtitle = item.menu.map(m => m.charAt(0).toUpperCase() + m.slice(1)).join(' • ');
+                    } else if (item.menu && typeof item.menu === 'string') {
+                        subtitle = item.menu.charAt(0).toUpperCase() + item.menu.slice(1);
                     }
 
                     // A random image url to match the list style if the item doesn't have a specific working one
@@ -152,18 +199,18 @@ export default function GastronomicoList() {
                     const isInvalidUrl = !item.tiendaOnline && !item.extras && item.tipo; // just a rough check, or check if image starts with http
                     // Actually, the mokup items don't have an explicitly valid image URL in the code block provided, so we'll just check it.
                     let imageUrl = fallbackImageUrl;
-                    if(item.imagen && item.imagen.startsWith('http')) {
+                    if (item.imagen && item.imagen.startsWith('http')) {
                         imageUrl = item.imagen;
                     }
 
                     return (
-                        <TouchableOpacity 
-                            style={styles.card} 
-                            onPress={() => router.push(`/gastronomico/${item.idGastronomico}`)}
+                        <TouchableOpacity
+                            style={styles.card}
+                            onPress={() => router.push(`/gastronomico/${item.id || item.idGastronomico}`)}
                         >
-                            <Image 
-                                source={{ uri: imageUrl }} 
-                                style={styles.cardImage} 
+                            <Image
+                                source={{ uri: imageUrl }}
+                                style={styles.cardImage}
                             />
                             <View style={styles.cardInfo}>
                                 <Text style={styles.cardTitle}>{item.nombre}</Text>
