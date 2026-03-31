@@ -1,15 +1,46 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, Stack, router } from 'expo-router';
-import { actividades } from '../../assets/mokup';
+import { API_URL } from '../../api';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constants/Styles';
 
 export default function ActividadDetalle() {
     const { id } = useLocalSearchParams();
-    const actividadId = parseInt(id, 10);
+    const [actividad, setActividad] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    const actividad = actividades.find(a => a.idActividad === actividadId);
+    useEffect(() => {
+        const fetchActividad = async () => {
+            try {
+                const response = await fetch(`${API_URL}/actividades/${id}`);
+                const data = await response.json();
+                if (response.ok) {
+                    setActividad(data);
+                } else {
+                    setActividad(null);
+                }
+            } catch (error) {
+                console.error("Error fetching actividad:", error);
+                setActividad(null);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (id) {
+            fetchActividad();
+        }
+    }, [id]);
+
+    if (loading) {
+        return (
+            <View style={styles.errorContainer}>
+                <Stack.Screen options={{ headerShown: false }} />
+                <ActivityIndicator size="large" color="#2C1B4D" />
+            </View>
+        );
+    }
 
     if (!actividad) {
         return (
@@ -33,7 +64,7 @@ export default function ActividadDetalle() {
     return (
         <View style={styles.container}>
             <Stack.Screen options={{ headerShown: false }} />
-            
+
             <ScrollView style={styles.pageContent} showsVerticalScrollIndicator={false} bounces={false}>
                 <View style={styles.headerImageContainer}>
                     <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
@@ -43,17 +74,17 @@ export default function ActividadDetalle() {
                     <Text style={styles.title}>{actividad.nombre}</Text>
 
                     <Text style={styles.paragraphText}>
-                        {actividad.caracteristicas}
+                        {actividad.descripcion}
                     </Text>
 
                     <Text style={styles.sectionTitle}>Contacto</Text>
-                    
+
                     <Text style={styles.paragraphText}>
-                        {actividad.redesSociales}
+                        {actividad.redes_sociales}
                     </Text>
 
                     <Text style={styles.sectionTitle}>Ubicación</Text>
-                    
+
                     <View style={styles.locationContainer}>
                         <Ionicons name="location-outline" size={22} color="#2C1B4D" style={styles.iconLocation} />
                         <Text style={styles.locationText}>

@@ -1,17 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, Platform } from 'react-native';
 import { Stack, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { eventos } from '../../assets/mokup';
+import { API_URL } from '../../api';
 
 // Si logramos instalar datetimepicker, lo usamos, si no, fallará. 
 // Como alternativa, podriamos usar un mock o un select simple.
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function EventosList() {
+    const [eventos, setEventos] = useState([]);
     const [date, setDate] = useState(new Date());
     const [showPicker, setShowPicker] = useState(false);
     const [filterActive, setFilterActive] = useState(false);
+
+    useEffect(() => {
+        const fetchEventos = async () => {
+            try {
+                const response = await fetch(`${API_URL}/eventos`);
+                const data = await response.json();
+                setEventos(data);
+            } catch (error) {
+                console.error("Error fetching eventos:", error);
+            }
+        };
+        fetchEventos();
+    }, []);
 
     // Formatear fecha para validación y UI
     const formatDateForUI = (dateObj) => {
@@ -88,7 +102,7 @@ export default function EventosList() {
 
             <FlatList
                 data={filteredEventos}
-                keyExtractor={(item) => item.idEvento.toString()}
+                keyExtractor={(item) => (item.id || item.idEvento || Math.random()).toString()}
                 contentContainerStyle={styles.listContainer}
                 renderItem={({ item }) => {
                     // Si el mokup tiene fecha en formato '2026-04-20', la formateamos
@@ -103,7 +117,7 @@ export default function EventosList() {
                     return (
                         <TouchableOpacity 
                             style={styles.card} 
-                            onPress={() => router.push(`/evento/${item.idEvento}`)}
+                            onPress={() => router.push(`/evento/${item.id || item.idEvento}`)}
                         >
                             <Image 
                                 source={{ uri: item.imagen }} 

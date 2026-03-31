@@ -1,33 +1,61 @@
-import React from "react";
-import { View, Text, StyleSheet, FlatList, Image, Pressable } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, FlatList, Image, Pressable, ActivityIndicator } from "react-native";
 import { Link, Stack } from "expo-router";
-import { ajolamientos } from "../../assets/mokup";
+import { API_URL } from "../../api";
 import { Colors } from "../../constants/Styles";
 
 export default function AlojamientosList() {
+    const [alojamientos, setAlojamientos] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchAlojamientos = async () => {
+            try {
+                const response = await fetch(`${API_URL}/alojamientos`);
+                const data = await response.json();
+                setAlojamientos(data);
+            } catch (error) {
+                console.error("Error fetching alojamientos:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchAlojamientos();
+    }, []);
+
     const renderItem = ({ item }) => {
-        // Obtenemos una imagen de ejemplo ya que el mock no tiene imágenes
-        const imageUrl = `https://picsum.photos/seed/${item.idAlojamiento + 10}/200/120`;
+        const itemId = item.id || item.idAlojamiento;
+        // Obtenemos una imagen de ejemplo ya que el mock no tiene imágenes, pero si el backend la tiene, la usamos.
+        const imageUrl = item.imagen || `https://picsum.photos/seed/${itemId + 10}/200/120`; // cambiar esto
 
         return (
-            <Link href={`/alojamiento/${item.idAlojamiento}`} asChild>
+            <Link href={`/alojamiento/${itemId}`} asChild>
                 <Pressable style={styles.cardContainer}>
                     <Image source={{ uri: imageUrl }} style={styles.image} />
                     <View style={styles.textContainer}>
                         <Text style={styles.name}>{item.nombre}</Text>
-                        <Text style={styles.stars}>{item.tipo}</Text>
+                        <Text style={styles.stars}>{item.tipo || item.estrellas}</Text>
                     </View>
                 </Pressable>
             </Link>
         );
     };
 
+    if (loading) {
+        return (
+            <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+                <Stack.Screen options={{ title: 'Alojamientos' }} />
+                <ActivityIndicator size="large" color="#2C1B4D" />
+            </View>
+        );
+    }
+
     return (
         <View style={styles.container}>
             <Stack.Screen options={{ title: 'Alojamientos' }} />
             <FlatList
-                data={ajolamientos}
-                keyExtractor={(item) => item.idAlojamiento.toString()}
+                data={alojamientos}
+                keyExtractor={(item) => (item.id || item.idAlojamiento || Math.random()).toString()}
                 renderItem={renderItem}
                 contentContainerStyle={styles.listContent}
             />

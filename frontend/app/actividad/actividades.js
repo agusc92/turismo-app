@@ -1,19 +1,52 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, ActivityIndicator } from 'react-native';
 import { Stack, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { actividades, tipoActividades } from '../../assets/mokup';
+import { API_URL } from '../../api';
 
 export default function ActividadesList() {
+    const [actividades, setActividades] = useState([]);
+    const [tipoActividades, setTipoActividades] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [selectedTipo, setSelectedTipo] = useState(null);
     const [showTipoModal, setShowTipoModal] = useState(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Hacemos las dos peticiones en paralelo: a actividades y a tipos
+                const [actividadesRes, tiposRes] = await Promise.all([
+                    fetch(`${API_URL}/actividades`),
+                    fetch(`${API_URL}/tipos`)
+                ]);
+
+                const actividadesData = await actividadesRes.json();
+                const tiposData = await tiposRes.json();
+
+                setActividades(actividadesData);
+
+                // Mapeamos los tipos, tanto si la API devuelve objetos {nombre: 'Aventura'} como una lista de strings
+                const parsedTipos = tiposData.map(t => typeof t === 'object' ? (t.nombre || t.tipo) : t).filter(Boolean);
+                setTipoActividades(parsedTipos);
+
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
 
     // Filter logic
     const filteredData = actividades.filter(item => {
         let matchesTipo = true;
 
         if (selectedTipo) {
-            matchesTipo = item.tipo && item.tipo.includes(selectedTipo);
+            console.log(item.tipo.tipo);
+            console.log(selectedTipo);
+            console.log(item);
+            matchesTipo = item.tipo.tipo && item.tipo.tipo.includes(selectedTipo);
         }
 
         return matchesTipo;
@@ -31,12 +64,12 @@ export default function ActividadesList() {
                             data={[{ tipo: 'Todos', isClear: true }, ...pickerItems]}
                             keyExtractor={(i, index) => index.toString()}
                             renderItem={({ item }) => {
-                                const isSelected = item.isClear 
-                                    ? !selectedItem 
+                                const isSelected = item.isClear
+                                    ? !selectedItem
                                     : selectedItem === item.tipo;
 
                                 return (
-                                    <TouchableOpacity 
+                                    <TouchableOpacity
                                         style={styles.modalItem}
                                         onPress={() => {
                                             if (item.isClear) {
@@ -63,8 +96,8 @@ export default function ActividadesList() {
 
     return (
         <View style={styles.container}>
-            <Stack.Screen 
-                options={{ 
+            <Stack.Screen
+                options={{
                     headerShown: true,
                     headerTitle: 'Actividades',
                     headerTitleAlign: 'center',
@@ -80,12 +113,12 @@ export default function ActividadesList() {
                             <Ionicons name="arrow-back" size={24} color="#2C1B4D" />
                         </TouchableOpacity>
                     ),
-                }} 
+                }}
             />
 
             <View style={styles.filtersContainer}>
-                <TouchableOpacity 
-                    style={styles.filterButton} 
+                <TouchableOpacity
+                    style={styles.filterButton}
                     onPress={() => setShowTipoModal(true)}
                 >
                     <Text style={styles.filterText}>
@@ -96,34 +129,34 @@ export default function ActividadesList() {
             </View>
 
             {showTipoModal && renderCustomPicker(
-                "Seleccionar Tipo", 
-                tipoActividades, 
-                selectedTipo, 
-                setSelectedTipo, 
+                "Seleccionar Tipo",
+                tipoActividades,
+                selectedTipo,
+                setSelectedTipo,
                 () => setShowTipoModal(false)
             )}
 
             <FlatList
                 data={filteredData}
-                keyExtractor={(item) => item.idActividad.toString()}
+                keyExtractor={(item) => (item.id || item.idActividad || Math.random()).toString()}
                 contentContainerStyle={styles.listContainer}
                 renderItem={({ item }) => {
                     let subtitle = item.direccion ? `Calle ${item.direccion}` : 'Actividad';
 
                     const fallbackImageUrl = 'https://dummyimage.com/600x400/b3d4fc/2a61a3.png&text=' + encodeURIComponent(item.nombre);
                     let imageUrl = fallbackImageUrl;
-                    if(item.imagen && item.imagen.startsWith('http')) {
+                    if (item.imagen && item.imagen.startsWith('http')) {
                         imageUrl = item.imagen;
                     }
 
                     return (
-                        <TouchableOpacity 
-                            style={styles.card} 
-                            onPress={() => router.push(`/actividad/${item.idActividad}`)}
+                        <TouchableOpacity
+                            style={styles.card}
+                            onPress={() => router.push(`/actividad/${item.id || item.idActividad}`)}
                         >
-                            <Image 
-                                source={{ uri: imageUrl }} 
-                                style={styles.cardImage} 
+                            <Image
+                                source={{ uri: imageUrl }}
+                                style={styles.cardImage}
                             />
                             <View style={styles.cardInfo}>
                                 <Text style={styles.cardTitle}>{item.nombre}</Text>
@@ -162,7 +195,7 @@ const styles = StyleSheet.create({
     filterButton: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#F0EFFF', 
+        backgroundColor: '#F0EFFF',
         paddingHorizontal: 15,
         paddingVertical: 8,
         borderRadius: 8,

@@ -1,16 +1,46 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, Stack, router } from 'expo-router';
-import { eventos } from '../../assets/mokup';
+import { API_URL } from '../../api';
 import { Colors } from '../../constants/Styles';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function EventoDetalle() {
     const { id } = useLocalSearchParams();
-    const eventoId = parseInt(id, 10);
+    const [evento, setEvento] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    // Find the event in the mock. The mock uses idEvento
-    const evento = eventos.find(e => e.idEvento === eventoId);
+    useEffect(() => {
+        const fetchEvento = async () => {
+            try {
+                const response = await fetch(`${API_URL}/eventos/${id}`);
+                const data = await response.json();
+                if (response.ok) {
+                    setEvento(data);
+                } else {
+                    setEvento(null);
+                }
+            } catch (error) {
+                console.error("Error fetching evento:", error);
+                setEvento(null);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (id) {
+            fetchEvento();
+        }
+    }, [id]);
+
+    if (loading) {
+        return (
+            <View style={styles.errorContainer}>
+                <Stack.Screen options={{ headerShown: true, title: 'Cargando...' }} />
+                <ActivityIndicator size="large" color="#2C1B4D" />
+            </View>
+        );
+    }
 
     if (!evento) {
         return (

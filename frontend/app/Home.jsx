@@ -5,7 +5,7 @@ import { Link, Stack } from 'expo-router';
 import { Colors } from "../constants/Styles";
 import HeaderPage from "../components/HeaderPage";
 import MenuCard from "../components/MenuCard";
-import { eventosDestacados } from "../assets/mokup";
+import { API_URL } from "../api";
 
 const { width } = Dimensions.get('window');
 
@@ -14,8 +14,24 @@ export default function Home() {
 
     const flatListRef = useRef(null);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [eventosDestacados, setEventosDestacados] = useState([]);
 
     useEffect(() => {
+        const fetchEventos = async () => {
+            try {
+                const response = await fetch(`${API_URL}/eventos/destacados`);
+                const data = await response.json();
+                setEventosDestacados(data);
+            } catch (error) {
+                console.error("Error fetching eventos destacados", error);
+            }
+        };
+        fetchEventos();
+    }, []);
+
+    useEffect(() => {
+        if (eventosDestacados.length === 0) return;
+
         const interval = setInterval(() => {
             let nextIndex = currentIndex + 1;
             if (nextIndex >= eventosDestacados.length) {
@@ -28,7 +44,7 @@ export default function Home() {
         }, 5000);
 
         return () => clearInterval(interval);
-    }, [currentIndex, eventosDestacados.length]);
+    }, [currentIndex, eventosDestacados]);
 
     const onMomentumScrollEnd = (event) => {
         const slideSize = event.nativeEvent.layoutMeasurement.width;

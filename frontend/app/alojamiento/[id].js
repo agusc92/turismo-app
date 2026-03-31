@@ -1,7 +1,7 @@
-import React from "react";
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, ActivityIndicator } from "react-native";
 import { useLocalSearchParams, useRouter, Stack } from "expo-router";
-import { ajolamientos } from "../../assets/mokup";
+import { API_URL } from "../../api";
 import { Colors } from "../../constants/Styles";
 import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -10,11 +10,45 @@ export default function AlojamientoDetail() {
     const { id } = useLocalSearchParams();
     const router = useRouter();
     const insets = useSafeAreaInsets();
-    const item = ajolamientos.find((a) => a.idAlojamiento.toString() === id);
+    const [item, setItem] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchAlojamiento = async () => {
+            try {
+                const response = await fetch(`${API_URL}/alojamientos/${id}`);
+                const data = await response.json();
+                if (response.ok) {
+                    setItem(data);
+                } else {
+                    setItem(null);
+                }
+            } catch (error) {
+                console.error("Error fetching alojamiento:", error);
+                setItem(null);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (id) {
+            fetchAlojamiento();
+        }
+    }, [id]);
+
+    if (loading) {
+        return (
+            <View style={styles.centered}>
+                <Stack.Screen options={{ headerShown: false }} />
+                <ActivityIndicator size="large" color="#2C1B4D" />
+            </View>
+        );
+    }
 
     if (!item) {
         return (
             <View style={styles.centered}>
+                <Stack.Screen options={{ headerShown: true, title: 'No encontrado' }} />
                 <Text style={styles.errorText}>Alojamiento no encontrado</Text>
             </View>
         );
@@ -29,8 +63,9 @@ export default function AlojamientoDetail() {
         });
     }
 
-    // Imagen de portada temporal ya que el mock no trae imagen
-    const imageUrl = `https://picsum.photos/seed/${item.idAlojamiento + 10}/800/600`;
+    const itemId = item.id || item.idAlojamiento;
+    // Imagen de portada obtenida del backend si existe o un placeholder
+    const imageUrl = item.imagen || `https://picsum.photos/seed/${itemId + 10}/800/600`;
     // Imagen falsa para representar el mapa de ubicación como en el diseño
     const mapUrl = `https://picsum.photos/seed/map/800/400`;
 
