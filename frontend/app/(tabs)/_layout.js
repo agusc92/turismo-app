@@ -13,9 +13,9 @@ export default function TabLayout() {
                 tabBarStyle: styles.tabBar,
                 tabBarLabel: ({ focused, children }) => (
                     <View style={styles.labelWrapper}>
-                        <Text style={[styles.tabLabel, { 
-                            color: focused ? '#2C1B4D' : '#554E66', 
-                            fontWeight: focused ? '800' : '500' 
+                        <Text style={[styles.tabLabel, {
+                            color: focused ? '#2C1B4D' : '#554E66',
+                            fontWeight: focused ? '800' : '500'
                         }]}>
                             {children}
                         </Text>
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
         shadowRadius: 10,
         shadowOffset: { width: 0, height: -2 },
         height: 65,
+        marginBottom: 0,
     },
     labelWrapper: {
         alignItems: 'center',

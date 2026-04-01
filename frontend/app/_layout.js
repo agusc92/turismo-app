@@ -1,51 +1,40 @@
-import { Link, Stack } from "expo-router";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { Stack } from "expo-router";
+import { StyleSheet } from "react-native";
 import { Colors } from "../constants/Styles";
 import { StatusBar } from "expo-status-bar";
 import HeaderPage from "../components/HeaderPage";
-import { Logo } from "../assets/images";
+
 export default function Layout() {
-
     return (
-        // <SafeAreaView style={styles.notificationBar} edges={['top']}>
-        <View style={styles.container} >
-            <StatusBar style="light" backgroundColor="#000000" />
-            <Stack
+        <>
+            {/* OJO: En tu código tenías backgroundColor="#000000" (negro).
+              Si quieres que se vea como en tus capturas (blanco con letras oscuras), 
+              usa style="dark" y backgroundColor="transparent" o el color de tu fondo. 
+              Si realmente la quieres negra, usa style="light" y backgroundColor="#000000".
+            */}
+            <StatusBar style="light" />
 
+            <Stack
                 screenOptions={{
                     headerTitle: (props) => {
-                        // Puedes configurar el logo acá o desde cada vista específica con <Stack.Screen>
                         return <HeaderPage title={props.children} logo={false} />
                     },
                     headerStyle: {
                         backgroundColor: Colors.backgroundLight,
                     },
                     headerTintColor: styles.primaryText.color,
-
-                    headerShadowVisible: false, // Elimina la separación entre header y página
-                    headerTitleAlign: 'center', // Centra el texto del header
+                    headerShadowVisible: false,
+                    headerTitleAlign: 'center',
                 }}
             >
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             </Stack>
-        </View>
-        // </SafeAreaView>
-
+        </>
     );
-
-
 }
+
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-
-    },
-    notificationBar: {
-
-        flex: 1,
-    },
     primaryText: {
         color: Colors.textColor,
     },
-
-})
+});
