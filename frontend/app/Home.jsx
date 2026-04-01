@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Image, Dimensions, FlatList, TouchableOpacity } from "react-native";
 import { ScreenLayout } from "../components/ScreenLayout";
-import { Link, Stack } from 'expo-router';
+import { Link, Tabs } from 'expo-router';
 import { Colors } from "../constants/Styles";
 import HeaderPage from "../components/HeaderPage";
 import MenuCard from "../components/MenuCard";
@@ -57,10 +57,13 @@ export default function Home() {
 
     return (
         <ScreenLayout>
-            <Stack.Screen options={{
-                title: "Necochea",
-                // Sobreescribimos el header solo para esta pantalla
-                headerTitle: (props) => <HeaderPage title={props.children} logo={true} />
+            <Tabs.Screen options={{
+                title: "Inicio",
+                headerShown: true,
+                headerTitle: () => <HeaderPage title="Necochea" logo={true} />,
+                headerStyle: { backgroundColor: Colors.backgroundLight },
+                headerShadowVisible: false,
+                headerTitleAlign: 'center',
             }} />
 
             <ScrollView style={styles.pageContent} showsVerticalScrollIndicator={false}>

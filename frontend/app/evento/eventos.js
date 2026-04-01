@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, Platform, ActivityIndicator } from 'react-native';
-import { Stack, router } from 'expo-router';
+import { Tabs, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { API_URL } from '../../api';
 
@@ -67,14 +67,14 @@ export default function EventosList() {
     if (loading) {
         return (
             <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
-                <Stack.Screen options={{ title: 'Eventos' }} />
+                <Tabs.Screen options={{ title: 'Eventos', headerShown: true }} />
                 <ActivityIndicator size="large" color="#2C1B4D" />
             </View>
         )
     }
     return (
         <View style={styles.container}>
-            <Stack.Screen
+            <Tabs.Screen
                 options={{
                     headerShown: true,
                     headerTitle: 'Eventos',

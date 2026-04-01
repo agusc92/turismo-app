@@ -25,7 +25,9 @@ export default function Layout() {
                     headerShadowVisible: false, // Elimina la separación entre header y página
                     headerTitleAlign: 'center', // Centra el texto del header
                 }}
-            />
+            >
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            </Stack>
         </View>
         // </SafeAreaView>
 
