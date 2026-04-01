@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, SafeAreaView, Platform, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, Stack, router } from 'expo-router';
+import { WebView } from 'react-native-webview';
 import { API_URL } from '../../api';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, BackButton } from "../../constants/Styles";
@@ -76,8 +77,6 @@ export default function GastronomicoDetalle() {
     const imageUrl = item.imagen && item.imagen.startsWith('http')
         ? item.imagen
         : `https://dummyimage.com/600x400/2a61a3/ffffff.png&text=${encodeURIComponent(item.nombre)}`;
-
-    let mapImageUrl = 'https://necochea.tur.ar/wp-content/uploads/2021/11/necochea-mapa.jpg';
 
     return (
         <View style={styles.container}>
@@ -157,10 +156,19 @@ export default function GastronomicoDetalle() {
                         </View>
                     </View>
 
-                    {/* Mapa estático */}
-                    <View style={styles.mapWrap}>
-                        <Image source={{ uri: mapImageUrl }} style={styles.mapImage} resizeMode="cover" />
-                    </View>
+                    {/* Mapa */}
+                    {item.direccion ? (
+                        <View style={styles.mapWrap}>
+                            <WebView
+                                source={{ html: `<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /><style>body { margin: 0; padding: 0; }</style><iframe width="100%" height="100%" frameborder="0" style="border:0;" src="https://www.google.com/maps?q=${encodeURIComponent(item.direccion + ', Necochea, Argentina')}&output=embed" allowfullscreen></iframe>` }}
+                                style={styles.mapImage}
+                                scrollEnabled={false}
+                                bounces={false}
+                                showsVerticalScrollIndicator={false}
+                                showsHorizontalScrollIndicator={false}
+                            />
+                        </View>
+                    ) : null}
 
                 </View>
             </ScrollView>

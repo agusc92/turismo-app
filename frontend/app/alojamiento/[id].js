@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, ActivityIndicator } from "react-native";
 import { useLocalSearchParams, useRouter, Stack } from "expo-router";
+import { WebView } from 'react-native-webview';
 import { API_URL } from "../../api";
 import { Colors, BackButton } from "../../constants/Styles";
 import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -66,8 +67,6 @@ export default function AlojamientoDetail() {
     const itemId = item.id || item.idAlojamiento;
     // Imagen de portada obtenida del backend si existe o un placeholder
     const imageUrl = item.imagen || `https://picsum.photos/seed/${itemId + 10}/800/600`;
-    // Imagen falsa para representar el mapa de ubicación como en el diseño
-    const mapUrl = `https://picsum.photos/seed/map/800/400`;
 
     return (
         <View style={styles.container}>
@@ -132,9 +131,18 @@ export default function AlojamientoDetail() {
                         <Text style={styles.sectionTitle}>Ubicación</Text>
                         <View style={styles.contactRow}>
                             <Ionicons name="location-outline" size={20} color={Colors.textColor} style={styles.contactIcon} />
-                            <Text style={styles.contactText}>{item.direccion}</Text>
+                            <Text style={styles.contactText}>{item.direccion ? String(item.direccion) : 'No especificada'}</Text>
                         </View>
-                        <Image source={{ uri: mapUrl }} style={styles.mapImage} />
+                        {item.direccion ? (
+                            <WebView
+                                source={{ html: `<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /><style>body { margin: 0; padding: 0; }</style><iframe width="100%" height="100%" frameborder="0" style="border:0;" src="https://www.google.com/maps?q=${encodeURIComponent(item.direccion + ', Necochea, Argentina')}&output=embed" allowfullscreen></iframe>` }}
+                                style={styles.mapImage}
+                                scrollEnabled={false}
+                                bounces={false}
+                                showsVerticalScrollIndicator={false}
+                                showsHorizontalScrollIndicator={false}
+                            />
+                        ) : null}
                     </View>
                 </View>
             </ScrollView>
