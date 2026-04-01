@@ -7,12 +7,8 @@ import HeaderPage from "../components/HeaderPage";
 export default function Layout() {
     return (
         <>
-            {/* OJO: En tu código tenías backgroundColor="#000000" (negro).
-              Si quieres que se vea como en tus capturas (blanco con letras oscuras), 
-              usa style="dark" y backgroundColor="transparent" o el color de tu fondo. 
-              Si realmente la quieres negra, usa style="light" y backgroundColor="#000000".
-            */}
-            <StatusBar style="light" />
+            {/* Forzar statusBar semitransparente off para evitar que Android rompa el SafeAreaInsets al re-abrir la app */}
+            <StatusBar style="light" backgroundColor="#000000" translucent={false} />
 
             <Stack
                 screenOptions={{
