@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, Image, Pressable, ActivityIndicator }
 import { Link, Stack } from 'expo-router';
 import { API_URL } from '../../api';
 import { Colors } from '../../constants/Styles';
-
+import ItemCard from '../../components/ItemCard';
 export default function BalneariosList() {
     const [balnearios, setBalnearios] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -35,15 +35,7 @@ export default function BalneariosList() {
             .join(' ');
 
         return (
-            <Link href={`/balneario/${itemId}`} asChild>
-                <Pressable style={styles.cardContainer}>
-                    <Image source={{ uri: imageUrl }} style={styles.image} />
-                    <View style={styles.textContainer}>
-                        <Text style={styles.name}>{nombreCapitalizado}</Text>
-                        <Text style={styles.address}>{String(item.direccion)}</Text>
-                    </View>
-                </Pressable>
-            </Link>
+            <ItemCard item={item} subtitle={item.direccion} imageUrl={imageUrl} link={`/balneario/${itemId}`} />
         );
     };
 
@@ -63,7 +55,7 @@ export default function BalneariosList() {
                 data={balnearios}
                 keyExtractor={(item) => (item.id || item.idBalneario || Math.random()).toString()}
                 renderItem={renderItem}
-                contentContainerStyle={styles.listContent}
+                contentContainerStyle={styles.listContainer}
                 showsVerticalScrollIndicator={false}
             />
         </View>
@@ -75,8 +67,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.backgroundLight,
     },
-    listContent: {
-        paddingVertical: 16,
+    listContainer: {
+        padding: 20,
+        paddingTop: 15,
     },
     cardContainer: {
         flexDirection: 'row',

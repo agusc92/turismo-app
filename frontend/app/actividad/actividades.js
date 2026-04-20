@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, Activ
 import { Stack, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { API_URL } from '../../api';
+import ItemCard from '../../components/ItemCard';
 
 export default function ActividadesList() {
     const [actividades, setActividades] = useState([]);
@@ -27,6 +28,7 @@ export default function ActividadesList() {
 
                 // Mapeamos los tipos, tanto si la API devuelve objetos {nombre: 'Aventura'} como una lista de strings
                 const parsedTipos = tiposData.map(t => typeof t === 'object' ? (t.nombre || t.tipo) : t).filter(Boolean);
+
                 setTipoActividades(parsedTipos);
 
             } catch (error) {
@@ -43,9 +45,6 @@ export default function ActividadesList() {
         let matchesTipo = true;
 
         if (selectedTipo) {
-            console.log(item.tipo.tipo);
-            console.log(selectedTipo);
-            console.log(item);
             matchesTipo = item.tipo.tipo && item.tipo.tipo.includes(selectedTipo);
         }
 
@@ -158,19 +157,7 @@ export default function ActividadesList() {
                     }
 
                     return (
-                        <TouchableOpacity
-                            style={styles.card}
-                            onPress={() => router.push(`/actividad/${item.id || item.idActividad}`)}
-                        >
-                            <Image
-                                source={{ uri: imageUrl }}
-                                style={styles.cardImage}
-                            />
-                            <View style={styles.cardInfo}>
-                                <Text style={styles.cardTitle}>{item.nombre}</Text>
-                                <Text style={styles.cardSubtitle}>{subtitle}</Text>
-                            </View>
-                        </TouchableOpacity>
+                        <ItemCard item={item} subtitle={subtitle} imageUrl={imageUrl} link={`/actividad/${item.id || item.idActividad}`} />
                     );
                 }}
                 ListEmptyComponent={
@@ -218,34 +205,6 @@ const styles = StyleSheet.create({
     listContainer: {
         padding: 20,
         paddingTop: 15,
-    },
-    card: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 20,
-    },
-    cardImage: {
-        width: 100,
-        height: 70,
-        borderRadius: 8,
-        marginRight: 15,
-        backgroundColor: '#E5E5EA',
-    },
-    cardInfo: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    cardTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#2C1B4D',
-        marginBottom: 4,
-        textTransform: 'capitalize',
-    },
-    cardSubtitle: {
-        fontSize: 13,
-        color: '#8A819C',
-        marginTop: 2,
     },
     emptyContainer: {
         padding: 20,

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, Image, Pressable, ActivityIndicator }
 import { Link, Stack } from "expo-router";
 import { API_URL } from "../../api";
 import { Colors } from "../../constants/Styles";
-
+import ItemCard from "../../components/ItemCard";
 export default function AlojamientosList() {
     const [alojamientos, setAlojamientos] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -29,15 +29,7 @@ export default function AlojamientosList() {
         const imageUrl = item.imagen || `https://picsum.photos/seed/${itemId + 10}/200/120`; // cambiar esto
 
         return (
-            <Link href={`/alojamiento/${itemId}`} asChild>
-                <Pressable style={styles.cardContainer}>
-                    <Image source={{ uri: imageUrl }} style={styles.image} />
-                    <View style={styles.textContainer}>
-                        <Text style={styles.name}>{item.nombre}</Text>
-                        <Text style={styles.stars}>{item.tipo || item.estrellas}</Text>
-                    </View>
-                </Pressable>
-            </Link>
+            <ItemCard item={item} subtitle={item.tipo || item.estrellas} imageUrl={imageUrl} link={`/alojamiento/${itemId}`} />
         );
     };
 
@@ -57,7 +49,7 @@ export default function AlojamientosList() {
                 data={alojamientos}
                 keyExtractor={(item) => (item.id || item.idAlojamiento || Math.random()).toString()}
                 renderItem={renderItem}
-                contentContainerStyle={styles.listContent}
+                contentContainerStyle={styles.listContainer}
             />
         </View>
     );
@@ -68,8 +60,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.backgroundLight,
     },
-    listContent: {
-        paddingVertical: 16,
+    listContainer: {
+        padding: 20,
+        paddingTop: 15,
     },
     cardContainer: {
         flexDirection: 'row',

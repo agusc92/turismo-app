@@ -76,7 +76,7 @@ export default function GastronomicoDetalle() {
     // We'll trust whatever is in the image, or fallback to dummy
     const imageUrl = item.imagen && item.imagen.startsWith('http')
         ? item.imagen
-        : `https://dummyimage.com/600x400/2a61a3/ffffff.png&text=${encodeURIComponent(item.nombre)}`;
+        : `https://loremflickr.com/320/240/restaurant`;
 
     return (
         <View style={styles.container}>

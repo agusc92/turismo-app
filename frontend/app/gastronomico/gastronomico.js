@@ -195,7 +195,7 @@ export default function GastronomicoList() {
 
                     // A random image url to match the list style if the item doesn't have a specific working one
                     // We'll use dummy image if it's "url:xxx.com"
-                    const fallbackImageUrl = 'https://dummyimage.com/600x400/b3d4fc/2a61a3.png&text=' + encodeURIComponent(item.nombre);
+                    const fallbackImageUrl = 'https://loremflickr.com/320/240/restaurant';
                     const isInvalidUrl = !item.tiendaOnline && !item.extras && item.tipo; // just a rough check, or check if image starts with http
                     // Actually, the mokup items don't have an explicitly valid image URL in the code block provided, so we'll just check it.
                     let imageUrl = fallbackImageUrl;

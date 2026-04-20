@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, Platf
 import { Tabs, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { API_URL } from '../../api';
+import ItemCard from '../../components/ItemCard';
 
 // Si logramos instalar datetimepicker, lo usamos, si no, fallará. 
 // Como alternativa, podriamos usar un mock o un select simple.
@@ -125,20 +126,9 @@ export default function EventosList() {
                     }
 
                     return (
-                        <TouchableOpacity
-                            style={styles.card}
-                            onPress={() => router.push(`/evento/${item.id || item.idEvento}`)}
-                        >
-                            <Image
-                                source={{ uri: item.imagen }}
-                                style={styles.cardImage}
-                            />
-                            <View style={styles.cardInfo}>
-                                <Text style={styles.cardTitle}>{item.nombre}</Text>
-                                <Text style={styles.cardDate}>{displayDate}</Text>
-                            </View>
-                        </TouchableOpacity>
+                        <ItemCard item={item} subtitle={displayDate} imageUrl={item.imagen} link={`/evento/${item.id || item.idEvento}`} />
                     );
+
                 }}
                 ListEmptyComponent={
                     <View style={styles.emptyContainer}>
@@ -187,34 +177,6 @@ const styles = StyleSheet.create({
     listContainer: {
         padding: 20,
         paddingTop: 10,
-    },
-    card: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 20,
-    },
-    cardImage: {
-        width: 100,
-        height: 70,
-        borderRadius: 8,
-        marginRight: 15,
-        backgroundColor: '#ddd',
-    },
-    cardInfo: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    cardTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#2C1B4D', // Dark purple
-        marginBottom: 4,
-        textTransform: 'capitalize',
-    },
-    cardDate: {
-        fontSize: 14,
-        color: '#8A819C', // Lighter purple/gray
-        textTransform: 'capitalize',
     },
     emptyContainer: {
         padding: 20,
