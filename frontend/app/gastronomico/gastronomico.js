@@ -1,54 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, SafeAreaView, ActivityIndicator } from 'react-native';
-import { Stack, router } from 'expo-router';
+import { useState } from 'react';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, ActivityIndicator } from 'react-native';
+import { Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { API_URL } from '../../api';
+import ItemCard from '../../components/ItemCard';
+import { useGastronomiaData } from '../hooks/useGastronomiaData';
 
 export default function GastronomicoList() {
-    const [dataGastronomica, setDataGastronomica] = useState([]);
-    const [tipoGastronomico, setTipoGastronomico] = useState([]);
-    const [menu, setMenu] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const { dataGastronomica, tipoGastronomico, menu, loading } = useGastronomiaData();
 
     const [selectedTipo, setSelectedTipo] = useState(null);
     const [selectedMenu, setSelectedMenu] = useState(null);
 
     const [showTipoModal, setShowTipoModal] = useState(false);
     const [showMenuModal, setShowMenuModal] = useState(false);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [gastroRes, tiposRes, menusRes] = await Promise.all([
-                    fetch(`${API_URL}/gastronomicos`),
-                    fetch(`${API_URL}/tipo-gastronomicos`),
-                    fetch(`${API_URL}/menus`)
-                ]);
-
-                let gastroData = await gastroRes.json();
-                if (Array.isArray(gastroData) && Array.isArray(gastroData[0])) {
-                    gastroData = gastroData[0];
-                }
-                setDataGastronomica(gastroData);
-
-                const tiposData = await tiposRes.json();
-                const formatedTipos = tiposData.map((t, i) => typeof t === 'string' ? { idTipo: i, nombre: t } : t);
-                setTipoGastronomico(formatedTipos);
-
-                const menusData = await menusRes.json();
-                const formatedMenus = menusData.map((m, i) => typeof m === 'string' ? { idMenu: i, tipo: m } : m);
-                setMenu(formatedMenus);
-
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            } finally {
-                console.log(tipoGastronomico)
-                console.log(menu)
-                setLoading(false);
-            }
-        };
-        fetchData();
-    }, []);
 
     // Filter logic
     const filteredData = dataGastronomica.filter(item => {
@@ -115,25 +79,7 @@ export default function GastronomicoList() {
 
     return (
         <View style={styles.container}>
-            <Stack.Screen
-                options={{
-                    headerShown: true,
-                    headerTitle: 'Gastronomía',
-                    headerTitleAlign: 'center',
-                    headerStyle: { backgroundColor: '#F9F9F9' },
-                    headerShadowVisible: false,
-                    headerTitleStyle: {
-                        color: '#2C1B4D',
-                        fontWeight: 'bold',
-                        fontSize: 22,
-                    },
-                    headerLeft: () => (
-                        <TouchableOpacity onPress={() => router.back()} style={styles.headerIcon}>
-                            <Ionicons name="arrow-back" size={24} color="#2C1B4D" />
-                        </TouchableOpacity>
-                    ),
-                }}
-            />
+            <Stack.Screen options={{ title: 'Gastronomía' }} />
 
             <View style={styles.filtersContainer}>
                 <TouchableOpacity
@@ -182,15 +128,11 @@ export default function GastronomicoList() {
                 keyExtractor={(item) => (item.id || item.idGastronomico || Math.random()).toString()}
                 contentContainerStyle={styles.listContainer}
                 renderItem={({ item }) => {
-                    let subtitle = 'Gastronomía';
+                    let subtitle = 'Gastronomía'; //necesitamos los tipos para meterlos aca
                     if (item.tipo && Array.isArray(item.tipo) && item.tipo.length > 0) {
                         subtitle = item.tipo.map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(' • ');
                     } else if (item.tipo && typeof item.tipo === 'string') {
                         subtitle = item.tipo.charAt(0).toUpperCase() + item.tipo.slice(1);
-                    } else if (item.menu && Array.isArray(item.menu) && item.menu.length > 0) {
-                        subtitle = item.menu.map(m => m.charAt(0).toUpperCase() + m.slice(1)).join(' • ');
-                    } else if (item.menu && typeof item.menu === 'string') {
-                        subtitle = item.menu.charAt(0).toUpperCase() + item.menu.slice(1);
                     }
 
                     // A random image url to match the list style if the item doesn't have a specific working one
@@ -204,19 +146,7 @@ export default function GastronomicoList() {
                     }
 
                     return (
-                        <TouchableOpacity
-                            style={styles.card}
-                            onPress={() => router.push(`/gastronomico/${item.id || item.idGastronomico}`)}
-                        >
-                            <Image
-                                source={{ uri: imageUrl }}
-                                style={styles.cardImage}
-                            />
-                            <View style={styles.cardInfo}>
-                                <Text style={styles.cardTitle}>{item.nombre}</Text>
-                                <Text style={styles.cardSubtitle}>{subtitle}</Text>
-                            </View>
-                        </TouchableOpacity>
+                        <ItemCard item={item} subtitle={subtitle} imageUrl={imageUrl} link={`/gastronomico/${item.id}`} />
                     );
                 }}
                 ListEmptyComponent={
@@ -242,9 +172,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 20,
         paddingBottom: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#EDEDED',
-        backgroundColor: '#F9F9F9',
+
     },
     filterButton: {
         flexDirection: 'row',
@@ -264,34 +192,6 @@ const styles = StyleSheet.create({
     listContainer: {
         padding: 20,
         paddingTop: 15,
-    },
-    card: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 20,
-    },
-    cardImage: {
-        width: 100,
-        height: 70,
-        borderRadius: 8,
-        marginRight: 15,
-        backgroundColor: '#E5E5EA',
-    },
-    cardInfo: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    cardTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#2C1B4D',
-        marginBottom: 4,
-        textTransform: 'capitalize',
-    },
-    cardSubtitle: {
-        fontSize: 13,
-        color: '#8A819C',
-        marginTop: 2,
     },
     emptyContainer: {
         padding: 20,

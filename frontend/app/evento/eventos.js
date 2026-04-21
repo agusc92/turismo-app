@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, Platform, ActivityIndicator } from 'react-native';
-import { Tabs, router } from 'expo-router';
+import { Tabs, Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { API_URL } from '../../api';
 import ItemCard from '../../components/ItemCard';
@@ -75,29 +75,14 @@ export default function EventosList() {
     }
     return (
         <View style={styles.container}>
-            <Tabs.Screen
-                options={{
-                    headerShown: true,
-                    headerTitle: 'Eventos',
-                    headerTitleAlign: 'center',
-                    headerStyle: { backgroundColor: '#F9F9F9' },
-                    headerShadowVisible: false,
-                    headerTitleStyle: {
-                        color: '#2C1B4D',
-                        fontWeight: 'bold',
-                        fontSize: 22,
-                    },
-                    headerLeft: () => (
-                        <TouchableOpacity onPress={() => router.back()} style={styles.headerIcon}>
-                            <Ionicons name="arrow-back" size={24} color="#2C1B4D" />
-                        </TouchableOpacity>
-                    ),
-                    headerRight: () => (
-                        <TouchableOpacity onPress={() => setShowPicker(true)} style={styles.headerIcon}>
-                            <Ionicons name="filter-outline" size={24} color={filterActive ? "#007AFF" : "#2C1B4D"} />
-                        </TouchableOpacity>
-                    )
-                }}
+            <Stack.Screen options={{
+                title: 'Eventos',
+                headerRight: () => (
+                    <TouchableOpacity onPress={() => setShowPicker(true)} style={styles.headerIcon}>
+                        <Ionicons name="filter-outline" size={24} color={filterActive ? "#007AFF" : "#2C1B4D"} />
+                    </TouchableOpacity>
+                )
+            }}
             />
 
             {filterActive && (

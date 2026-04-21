@@ -1,27 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, Image, Pressable, ActivityIndicator } from "react-native";
-import { Link, Stack } from "expo-router";
-import { API_URL } from "../../api";
+import { View, StyleSheet, FlatList, ActivityIndicator } from "react-native";
+import { Stack } from "expo-router";
 import { Colors } from "../../constants/Styles";
 import ItemCard from "../../components/ItemCard";
-export default function AlojamientosList() {
-    const [alojamientos, setAlojamientos] = useState([]);
-    const [loading, setLoading] = useState(true);
+import { useData } from "../hooks/UseData";
 
-    useEffect(() => {
-        const fetchAlojamientos = async () => {
-            try {
-                const response = await fetch(`${API_URL}/alojamientos`);
-                const data = await response.json();
-                setAlojamientos(data);
-            } catch (error) {
-                console.error("Error fetching alojamientos:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchAlojamientos();
-    }, []);
+export default function AlojamientosList() {
+    const { data: alojamientos, loading } = useData('alojamientos');
 
     const renderItem = ({ item }) => {
         const itemId = item.id || item.idAlojamiento;
@@ -29,7 +13,7 @@ export default function AlojamientosList() {
         const imageUrl = item.imagen || `https://picsum.photos/seed/${itemId + 10}/200/120`; // cambiar esto
 
         return (
-            <ItemCard item={item} subtitle={item.tipo || item.estrellas} imageUrl={imageUrl} link={`/alojamiento/${itemId}`} />
+            <ItemCard item={item} subtitle={item.tipo} imageUrl={imageUrl} link={`/alojamiento/${itemId}`} />
         );
     };
 
@@ -47,7 +31,7 @@ export default function AlojamientosList() {
             <Stack.Screen options={{ title: 'Alojamientos' }} />
             <FlatList
                 data={alojamientos}
-                keyExtractor={(item) => (item.id || item.idAlojamiento || Math.random()).toString()}
+                keyExtractor={(item) => (item.id)}
                 renderItem={renderItem}
                 contentContainerStyle={styles.listContainer}
             />

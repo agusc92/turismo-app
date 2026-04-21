@@ -1,27 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, Pressable, ActivityIndicator } from 'react-native';
-import { Link, Stack } from 'expo-router';
-import { API_URL } from '../../api';
+import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { Stack } from 'expo-router';
 import { Colors } from '../../constants/Styles';
 import ItemCard from '../../components/ItemCard';
-export default function BalneariosList() {
-    const [balnearios, setBalnearios] = useState([]);
-    const [loading, setLoading] = useState(true);
+import { useData } from '../hooks/UseData';
 
-    useEffect(() => {
-        const fetchBalnearios = async () => {
-            try {
-                const response = await fetch(`${API_URL}/balnearios`);
-                const data = await response.json();
-                setBalnearios(data);
-            } catch (error) {
-                console.error("Error fetching balnearios:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchBalnearios();
-    }, []);
+export default function BalneariosList() {
+    const { data: balnearios, loading } = useData('balnearios');
 
     const renderItem = ({ item }) => {
         const itemId = item.id || item.idBalneario;

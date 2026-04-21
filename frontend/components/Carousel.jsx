@@ -19,7 +19,6 @@ export default function Carousel() {
         }
     };
 
-
     useEffect(() => {
         const fetchEventos = async () => {
             try {
@@ -49,6 +48,7 @@ export default function Carousel() {
 
         return () => clearInterval(interval);
     }, [currentIndex, eventosDestacados]);
+
     return (
         <FlatList
             ref={flatListRef}

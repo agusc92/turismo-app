@@ -1,44 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, ActivityIndicator } from 'react-native';
-import { Stack, router } from 'expo-router';
+import { useState } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, ActivityIndicator } from 'react-native';
+import { Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { API_URL } from '../../api';
+import { useActividadesData } from '../hooks/useActividadesData';
 import ItemCard from '../../components/ItemCard';
 
 export default function ActividadesList() {
-    const [actividades, setActividades] = useState([]);
-    const [tipoActividades, setTipoActividades] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const { actividades, tipoActividades, loading } = useActividadesData();
     const [selectedTipo, setSelectedTipo] = useState(null);
     const [showTipoModal, setShowTipoModal] = useState(false);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Hacemos las dos peticiones en paralelo: a actividades y a tipos
-                const [actividadesRes, tiposRes] = await Promise.all([
-                    fetch(`${API_URL}/actividades`),
-                    fetch(`${API_URL}/tipos`)
-                ]);
-
-                const actividadesData = await actividadesRes.json();
-                const tiposData = await tiposRes.json();
-
-                setActividades(actividadesData);
-
-                // Mapeamos los tipos, tanto si la API devuelve objetos {nombre: 'Aventura'} como una lista de strings
-                const parsedTipos = tiposData.map(t => typeof t === 'object' ? (t.nombre || t.tipo) : t).filter(Boolean);
-
-                setTipoActividades(parsedTipos);
-
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchData();
-    }, []);
 
     // Filter logic
     const filteredData = actividades.filter(item => {
@@ -103,25 +73,7 @@ export default function ActividadesList() {
     }
     return (
         <View style={styles.container}>
-            <Stack.Screen
-                options={{
-                    headerShown: true,
-                    headerTitle: 'Actividades',
-                    headerTitleAlign: 'center',
-                    headerStyle: { backgroundColor: '#F9F9F9' },
-                    headerShadowVisible: false,
-                    headerTitleStyle: {
-                        color: '#2C1B4D',
-                        fontWeight: 'bold',
-                        fontSize: 22,
-                    },
-                    headerLeft: () => (
-                        <TouchableOpacity onPress={() => router.back()} style={styles.headerIcon}>
-                            <Ionicons name="arrow-back" size={24} color="#2C1B4D" />
-                        </TouchableOpacity>
-                    ),
-                }}
-            />
+            <Stack.Screen options={{ title: 'Actividades' }} />
 
             <View style={styles.filtersContainer}>
                 <TouchableOpacity
@@ -182,10 +134,8 @@ const styles = StyleSheet.create({
     filtersContainer: {
         flexDirection: 'row',
         paddingHorizontal: 20,
-        paddingBottom: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#EDEDED',
-        backgroundColor: '#F9F9F9',
+        paddingBottom: 4,
+
     },
     filterButton: {
         flexDirection: 'row',
