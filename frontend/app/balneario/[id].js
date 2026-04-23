@@ -1,41 +1,19 @@
-import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, ActivityIndicator } from "react-native";
 import { useLocalSearchParams, useRouter, Stack } from "expo-router";
-import { WebView } from 'react-native-webview';
-import { API_URL } from "../../api";
 import { Colors, BackButton } from "../../constants/Styles";
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import SeccionDetalles from "../../components/SeccionDetalles";
+import { useFetchDetalle } from "../hooks/useFetchDetalle";
+import ContactoDetalles from "../../components/ContactoDetalles";
+import UbicacionDetalles from "../../components/UbicacionDetalles";
 
 export default function BalnearioDetail() {
     const { id } = useLocalSearchParams();
     const router = useRouter();
     const insets = useSafeAreaInsets();
-    const [item, setItem] = useState(null);
-    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchBalneario = async () => {
-            try {
-                const response = await fetch(`${API_URL}/balnearios/${id}`);
-                const data = await response.json();
-                if (response.ok) {
-                    setItem(data);
-                } else {
-                    setItem(null);
-                }
-            } catch (error) {
-                console.error("Error fetching balneario:", error);
-                setItem(null);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (id) {
-            fetchBalneario();
-        }
-    }, [id]);
+    const { data: item, loading } = useFetchDetalle('balnearios', id);
 
     if (loading) {
         return (
@@ -55,24 +33,12 @@ export default function BalnearioDetail() {
         );
     }
 
-    // Redes parser
-    let fb = '', ig = '', tw = '';
-    if (item.redesSociales) {
-        const redesList = item.redesSociales.split('|').map(r => r.trim());
-        redesList.forEach(red => {
-            if (red.toLowerCase().startsWith('fb:')) fb = red.slice(3).trim();
-            if (red.toLowerCase().startsWith('ig:')) ig = red.slice(3).trim();
-            if (red.toLowerCase().startsWith('x:')) tw = red.slice(2).trim();
-        });
-    }
-
     const itemId = item.id || item.idBalneario;
     // Imagen de portada de la API si la tiene, en su defecto la temporal
     const imageUrl = item.imagen || `https://picsum.photos/seed/${itemId + 30}/800/600`;
 
     // Formatear titulo
-    const nombreC = item.nombre.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-    const displayTitle = nombreC.toLowerCase().includes('balneario') ? nombreC : `Balneario ${nombreC}`;
+    const displayTitle = item.nombre.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
     // Formatear servicios
     const detallesStr = item.servicios
@@ -94,60 +60,13 @@ export default function BalnearioDetail() {
                 <View style={styles.contentContainer}>
                     <Text style={styles.title}>{displayTitle}</Text>
 
-                    <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>Detalles</Text>
-                        <Text style={styles.sectionText}>{detallesStr}</Text>
-                    </View>
 
-                    <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>Contacto</Text>
+                    <SeccionDetalles titulo="Detalles" subtitulo={detallesStr} />
 
-                        {item.telefono ? (
-                            <View style={styles.contactRow}>
-                                <Ionicons name="logo-whatsapp" size={20} color={Colors.textColor} style={styles.contactIcon} />
-                                <Text style={styles.contactText}>{String(item.telefono)}</Text>
-                            </View>
-                        ) : null}
 
-                        {ig ? (
-                            <View style={styles.contactRow}>
-                                <Ionicons name="logo-instagram" size={20} color={Colors.textColor} style={styles.contactIcon} />
-                                <Text style={styles.contactText}>{ig}</Text>
-                            </View>
-                        ) : null}
+                    <ContactoDetalles item={item} />
 
-                        {fb ? (
-                            <View style={styles.contactRow}>
-                                <Ionicons name="logo-facebook" size={20} color={Colors.textColor} style={styles.contactIcon} />
-                                <Text style={styles.contactText}>{fb}</Text>
-                            </View>
-                        ) : null}
-
-                        {item.mail ? (
-                            <View style={styles.contactRow}>
-                                <Ionicons name="mail-outline" size={20} color={Colors.textColor} style={styles.contactIcon} />
-                                <Text style={styles.contactText}>{String(item.mail)}</Text>
-                            </View>
-                        ) : null}
-                    </View>
-
-                    <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>Ubicación</Text>
-                        <View style={styles.contactRow}>
-                            <Ionicons name="location-outline" size={20} color={Colors.textColor} style={styles.contactIcon} />
-                            <Text style={styles.contactText}>{item.direccion ? String(item.direccion) : 'No especificada'}</Text>
-                        </View>
-                        {item.direccion ? (
-                            <WebView
-                                source={{ html: `<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /><style>body { margin: 0; padding: 0; }</style><iframe width="100%" height="100%" frameborder="0" style="border:0;" src="https://www.google.com/maps?q=${encodeURIComponent(item.direccion + ', Necochea, Argentina')}&output=embed" allowfullscreen></iframe>` }}
-                                style={styles.mapImage}
-                                scrollEnabled={false}
-                                bounces={false}
-                                showsVerticalScrollIndicator={false}
-                                showsHorizontalScrollIndicator={false}
-                            />
-                        ) : null}
-                    </View>
+                    <UbicacionDetalles direccion={item.direccion} />
                 </View>
             </ScrollView>
 
@@ -193,40 +112,5 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         color: Colors.textColor,
         marginBottom: 24,
-    },
-    section: {
-        marginBottom: 32,
-    },
-    sectionTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: Colors.textColor,
-        marginBottom: 12,
-    },
-    sectionText: {
-        fontSize: 15,
-        color: '#554E66',
-        lineHeight: 22,
-    },
-    contactRow: {
-        gap: 8,
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 16,
-    },
-    contactIcon: {
-        width: 24,
-        textAlign: 'center',
-    },
-    contactText: {
-        fontSize: 15,
-        color: '#554E66',
-        flex: 1,
-    },
-    mapImage: {
-        width: '100%',
-        height: 180,
-        borderRadius: 12,
-        marginTop: 16,
     }
 });

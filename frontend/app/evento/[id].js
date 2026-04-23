@@ -1,38 +1,13 @@
-import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, Stack, router } from 'expo-router';
-import { WebView } from 'react-native-webview';
-import { API_URL } from '../../api';
+import { useFetchDetalle } from '../hooks/useFetchDetalle';
 import { Colors, BackButton } from '../../constants/Styles';
 import { Ionicons } from '@expo/vector-icons';
+import UbicacionDetalles from '../../components/UbicacionDetalles';
 
 export default function EventoDetalle() {
     const { id } = useLocalSearchParams();
-    const [evento, setEvento] = useState(null);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchEvento = async () => {
-            try {
-                const response = await fetch(`${API_URL}/eventos/${id}`);
-                const data = await response.json();
-                if (response.ok) {
-                    setEvento(data);
-                } else {
-                    setEvento(null);
-                }
-            } catch (error) {
-                console.error("Error fetching evento:", error);
-                setEvento(null);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (id) {
-            fetchEvento();
-        }
-    }, [id]);
+    const { data: evento, loading } = useFetchDetalle('eventos', id);
 
     if (loading) {
         return (
@@ -77,27 +52,8 @@ export default function EventoDetalle() {
                         <Text style={styles.description}>{evento.descripcion}</Text>
                     </View>
 
-                    <Text style={styles.sectionTitle}>Ubicación</Text>
+                    <UbicacionDetalles direccion={evento.direccion} />
                 </View>
-
-                <View style={styles.locationContainer}>
-                    <Ionicons name="location-outline" size={22} color="#2C1B4D" style={styles.iconLocation} />
-                    <Text style={styles.locationText}>{evento.direccion ? String(evento.direccion) : 'No especificada'}</Text>
-                </View>
-
-                {evento.direccion ? (
-                    <View style={styles.mapWrap}>
-                        <WebView
-                            source={{ html: `<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /><style>body { margin: 0; padding: 0; }</style><iframe width="100%" height="100%" frameborder="0" style="border:0;" src="https://www.google.com/maps?q=${encodeURIComponent(evento.direccion + ', Necochea, Argentina')}&output=embed" allowfullscreen></iframe>` }}
-                            style={styles.mapImage}
-                            scrollEnabled={false}
-                            bounces={false}
-                            showsVerticalScrollIndicator={false}
-                            showsHorizontalScrollIndicator={false}
-                        />
-                    </View>
-                ) : null}
-
             </ScrollView>
 
             {/* Fixed Back Button */}
@@ -178,36 +134,4 @@ const styles = StyleSheet.create({
         color: '#555',
         lineHeight: 24,
     },
-    sectionTitle: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        color: '#2C1B4D',
-        marginBottom: 15,
-    },
-    locationContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 20,
-        paddingVertical: 15,
-        marginBottom: 20,
-    },
-    iconLocation: {
-        marginRight: 10,
-    },
-    locationText: {
-        fontSize: 16,
-        color: '#444',
-    },
-    mapWrap: {
-        marginHorizontal: 20,
-        marginBottom: 40,
-        height: 200,
-        borderRadius: 16,
-        overflow: 'hidden',
-    },
-    mapImage: {
-        width: '100%',
-        height: '100%',
-        backgroundColor: '#ddd',
-    }
 });
