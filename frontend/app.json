@@ -10,10 +10,10 @@
       "expo-font"
     ],
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/android-icon-foreground.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/android-icon-foreground.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,17 +23,22 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
-      }
+        "foregroundImage": "./assets/android-icon-foreground.png"
+      },
+      "package": "com.agusc92.turismoapp"
     },
     "androidStatusBar": {
       "backgroundColor": "#000000",
       "barStyle": "light-content"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/android-icon-foreground.png"
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "ec932dbc-2693-4dd6-8846-b69d258ea344"
+      }
     }
   }
 }
