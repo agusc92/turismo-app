@@ -4,6 +4,7 @@ import { Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useActividadesData } from '../hooks/useActividadesData';
 import ItemCard from '../../components/ItemCard';
+import FilterButton from '../../components/FilterButton';
 
 export default function ActividadesList() {
     const { actividades, tipoActividades, loading } = useActividadesData();
@@ -76,15 +77,10 @@ export default function ActividadesList() {
             <Stack.Screen options={{ title: 'Actividades' }} />
 
             <View style={styles.filtersContainer}>
-                <TouchableOpacity
-                    style={styles.filterButton}
+                <FilterButton
+                    label={selectedTipo ? (selectedTipo.charAt(0).toUpperCase() + selectedTipo.slice(1)) : 'Tipo'}
                     onPress={() => setShowTipoModal(true)}
-                >
-                    <Text style={styles.filterText}>
-                        {selectedTipo ? (selectedTipo.charAt(0).toUpperCase() + selectedTipo.slice(1)) : 'Tipo'}
-                    </Text>
-                    <Ionicons name="chevron-down" size={16} color="#333" />
-                </TouchableOpacity>
+                />
             </View>
 
             {showTipoModal && renderCustomPicker(
@@ -137,21 +133,6 @@ const styles = StyleSheet.create({
         paddingBottom: 4,
 
     },
-    filterButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#F0EFFF',
-        paddingHorizontal: 15,
-        paddingVertical: 8,
-        borderRadius: 8,
-        marginRight: 10,
-    },
-    filterText: {
-        fontSize: 14,
-        color: '#2C1B4D',
-        marginRight: 5,
-        fontWeight: '600',
-    },
     listContainer: {
         padding: 20,
         paddingTop: 15,
@@ -195,10 +176,11 @@ const styles = StyleSheet.create({
     },
     modalItemText: {
         fontSize: 16,
-        color: '#444',
+        color: '#2C1B4D',
+        fontFamily: 'Gotham-Book',
     },
     modalItemSelectedText: {
         color: '#2C1B4D',
-        fontWeight: 'bold',
+        fontFamily: 'Gotham-Bold',
     }
 });

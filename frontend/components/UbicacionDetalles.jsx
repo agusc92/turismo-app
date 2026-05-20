@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: 20,
-        fontWeight: 'bold',
+        fontFamily: 'Gotham-Bold',
         color: '#31204D',
         marginBottom: 10,
     },
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: '#4B465C',
         lineHeight: 24,
+        fontFamily: 'Gotham-Medium',
     },
     contactRow: {
         flexDirection: 'row',

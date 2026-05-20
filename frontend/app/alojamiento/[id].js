@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 26,
-        fontWeight: '900',
+        fontFamily: 'Gotham-Bold',
         color: Colors.textColor,
         marginBottom: 8,
     },
@@ -108,5 +108,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#7B758E',
         marginBottom: 24,
+        fontFamily: 'Gotham-Book',
     }
 });

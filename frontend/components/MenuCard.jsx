@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        fontWeight: '700',
+        fontFamily: 'Gotham-Black',
         color: Colors.textColor,
         marginBottom: 8,
         marginLeft: 4, // Para que no quede tan pegado al borde izquierdo del contenedor

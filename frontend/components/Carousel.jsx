@@ -1,5 +1,6 @@
 import { FlatList, View, Text, Image, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import { Link } from "expo-router";
+import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from "../constants/Styles";
 import { API_URL } from "../api";
 import { useEffect, useRef, useState } from "react";
@@ -67,9 +68,12 @@ export default function Carousel() {
                                 style={styles.carouselImage}
                                 resizeMode="cover"
                             />
-                            <View style={styles.textContainer}>
+                            <LinearGradient
+                                colors={['transparent', 'rgba(0,0,0,0.8)']}
+                                style={styles.gradientContainer}
+                            >
                                 <Text style={styles.carouselText}>{item.nombre}</Text>
-                            </View>
+                            </LinearGradient>
                         </TouchableOpacity>
                     </Link>
                 </View>
@@ -91,19 +95,24 @@ const styles = StyleSheet.create({
         elevation: 4, // Android shadow
         shadowColor: '#000', // iOS shadow
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
+        shadowOpacity: 0.5,
         shadowRadius: 6,
     },
     carouselImage: {
         width: '100%',
         height: 200, // Make it a bit taller since it's full width now
     },
-    textContainer: {
-        padding: 15,
+    gradientContainer: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        padding: 12,
+        paddingTop: 60, // Para un degradado más suave hacia arriba
     },
     carouselText: {
-        fontSize: 18,
-        fontWeight: '700',
-        color: Colors.textColor,
+        fontSize: 16,
+        fontFamily: 'Gotham-Medium', // Usamos la fuente que acabas de cargar
+        color: '#FFFFFF',
     },
 });

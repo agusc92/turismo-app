@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: 22,
-        fontWeight: 'bold',
+        fontFamily: 'Gotham-Black',
         color: Colors.textColor,
         marginHorizontal: 20,
         marginTop: 20,

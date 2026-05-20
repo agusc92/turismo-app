@@ -13,8 +13,12 @@ export default function ItemCard({ item, subtitle, imageUrl, link }) {
                 style={styles.cardImage}
             />
             <View style={styles.cardInfo}>
-                <Text style={styles.cardTitle}>{item.nombre}</Text>
-                <Text style={styles.cardSubtitle}>{subtitle}</Text>
+                <Text style={styles.cardTitle} numberOfLines={2} ellipsizeMode="tail">
+                    {item.nombre}
+                </Text>
+                <Text style={styles.cardSubtitle} numberOfLines={1} ellipsizeMode="tail">
+                    {subtitle}
+                </Text>
             </View>
         </TouchableOpacity>
     );
@@ -23,7 +27,7 @@ export default function ItemCard({ item, subtitle, imageUrl, link }) {
 const styles = StyleSheet.create({
     card: {
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         marginBottom: 20,
     },
     cardImage: {
@@ -39,14 +43,15 @@ const styles = StyleSheet.create({
     },
     cardTitle: {
         fontSize: 18,
-        fontWeight: 'bold',
+        fontFamily: 'Gotham-Medium',
         color: '#2C1B4D',
         marginBottom: 4,
         textTransform: 'capitalize',
     },
     cardSubtitle: {
         fontSize: 13,
-        color: '#8A819C',
+        color: '#55476eff',
         marginTop: 2,
+        fontFamily: 'Gotham-Light',
     },
 });

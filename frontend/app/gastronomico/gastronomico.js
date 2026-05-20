@@ -4,6 +4,7 @@ import { Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import ItemCard from '../../components/ItemCard';
 import { useGastronomiaData } from '../hooks/useGastronomiaData';
+import FilterButton from '../../components/FilterButton';
 
 export default function GastronomicoList() {
     const { dataGastronomica, tipoGastronomico, menu, loading } = useGastronomiaData();
@@ -82,25 +83,15 @@ export default function GastronomicoList() {
             <Stack.Screen options={{ title: 'Gastronomía' }} />
 
             <View style={styles.filtersContainer}>
-                <TouchableOpacity
-                    style={styles.filterButton}
+                <FilterButton
+                    label={selectedTipo ? (selectedTipo.nombre.charAt(0).toUpperCase() + selectedTipo.nombre.slice(1)) : 'Tipo'}
                     onPress={() => setShowTipoModal(true)}
-                >
-                    <Text style={styles.filterText}>
-                        {selectedTipo ? (selectedTipo.nombre.charAt(0).toUpperCase() + selectedTipo.nombre.slice(1)) : 'Tipo'}
-                    </Text>
-                    <Ionicons name="chevron-down" size={16} color="#333" />
-                </TouchableOpacity>
+                />
 
-                <TouchableOpacity
-                    style={styles.filterButton}
+                <FilterButton
+                    label={selectedMenu ? (selectedMenu.tipo.charAt(0).toUpperCase() + selectedMenu.tipo.slice(1)) : 'Menús especiales'}
                     onPress={() => setShowMenuModal(true)}
-                >
-                    <Text style={styles.filterText}>
-                        {selectedMenu ? (selectedMenu.tipo.charAt(0).toUpperCase() + selectedMenu.tipo.slice(1)) : 'Menús especiales'}
-                    </Text>
-                    <Ionicons name="chevron-down" size={16} color="#333" />
-                </TouchableOpacity>
+                />
             </View>
 
             {showTipoModal && renderCustomPicker(
@@ -174,21 +165,6 @@ const styles = StyleSheet.create({
         paddingBottom: 15,
 
     },
-    filterButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#F0EFFF', // Light purple/blue tint from mockup
-        paddingHorizontal: 15,
-        paddingVertical: 8,
-        borderRadius: 8,
-        marginRight: 10,
-    },
-    filterText: {
-        fontSize: 14,
-        color: '#2C1B4D',
-        marginRight: 5,
-        fontWeight: '600',
-    },
     listContainer: {
         padding: 20,
         paddingTop: 15,
@@ -232,10 +208,11 @@ const styles = StyleSheet.create({
     },
     modalItemText: {
         fontSize: 16,
-        color: '#444',
+        color: '#2C1B4D',
+        fontFamily: 'Gotham-Book',
     },
     modalItemSelectedText: {
         color: '#2C1B4D',
-        fontWeight: 'bold',
+        fontFamily: 'Gotham-Bold',
     }
 });

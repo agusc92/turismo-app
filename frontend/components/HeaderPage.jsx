@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
     },
     headerText: {
         color: Colors.textColor,
-        fontSize: 28,
-        fontWeight: 'bold',
+        fontSize: 32,
+        fontFamily: 'Gotham-Ultra',
         textTransform: 'capitalize'
     }
 });

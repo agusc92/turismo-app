@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
         marginBottom: 32,
     },
     sectionTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 20,
+        fontFamily: 'Gotham-Bold',
         color: Colors.textColor,
         marginBottom: 12,
     },
@@ -24,5 +24,6 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: '#554E66',
         lineHeight: 22,
+        fontFamily: 'Gotham-Medium',
     },
 })

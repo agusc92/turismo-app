@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 32,
-        fontWeight: '900',
+        fontFamily: 'Gotham-Bold',
         color: '#2C1B4D',
         marginBottom: 20,
         textTransform: 'capitalize',

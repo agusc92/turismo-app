@@ -117,20 +117,21 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         paddingHorizontal: 25,
-        paddingTop: 30,
+        paddingTop: 15,
         backgroundColor: '#FAFAFD',
     },
     title: {
-        fontSize: 32,
-        fontWeight: '900',
+        fontSize: 26,
+        fontFamily: 'Gotham-Bold',
         color: '#31204D',
         textTransform: 'capitalize',
-        letterSpacing: -0.5,
+        marginBottom: 32,
     },
     subtitle: {
         fontSize: 16,
-        color: '#4B465C',
+        color: Colors.textColor,
         marginTop: 5,
         marginBottom: 30,
+        fontFamily: "Gotham-Medium",
     },
 });

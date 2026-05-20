@@ -102,12 +102,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     title: {
-        fontSize: 28,
-        fontWeight: '900',
-        color: '#2C1B4D',
-        marginBottom: 25,
-        textTransform: 'capitalize',
-        letterSpacing: -0.5,
+        fontSize: 26,
+        fontFamily: "Gotham-Bold",
+        color: Colors.textColor,
+        marginBottom: 32,
     },
     dateRow: {
         flexDirection: 'row',
@@ -119,19 +117,20 @@ const styles = StyleSheet.create({
     },
     dateLabel: {
         fontSize: 16,
-        color: '#555',
+        color: Colors.textColor,
         marginRight: 10,
     },
     dateValue: {
         fontSize: 16,
-        color: '#444',
+        color: Colors.textColor,
     },
     descriptionContainer: {
         marginBottom: 30,
     },
     description: {
         fontSize: 16,
-        color: '#555',
+        color: Colors.textColor,
         lineHeight: 24,
+        fontFamily: "Gotham-Medium",
     },
 });
