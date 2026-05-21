@@ -493,4 +493,104 @@ export const actividades = [
     },
 ]
 
+export const complejos = [
+    {
+        id: 1,
+        imagen: "www.imagen.com",
+        nombre: "nahuel huapi",
+        direccion: "79 - 308",
+        mail: "evita@gmail.com",
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        telefono: "2262-457836",
+        servicio: "Salón de eventos | Alquiler de parrillas y quincho",
+        adicional: "Solo para afiliados e invitados de afiliados",
+    },
+
+    {
+        id: 2,
+        imagen: "www.imagen.com",
+        nombre: "nahuel huapi",
+        direccion: "79 - 308",
+        mail: "evita@gmail.com",
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        telefono: "2262-457836",
+        servicio: "Salón de eventos | Alquiler de parrillas y quincho",
+        adicional: "Solo para afiliados e invitados de afiliados",
+    },
+
+    {
+        id: 3,
+        imagen: "www.imagen.com",
+        nombre: "nahuel huapi",
+        direccion: "79 - 308",
+        mail: "evita@gmail.com",
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        telefono: "2262-457836",
+        servicio: "Salón de eventos | Alquiler de parrillas y quincho",
+        adicional: "Solo para afiliados e invitados de afiliados",
+    },
+
+    {
+        id: 4,
+        imagen: "www.imagen.com",
+        nombre: "nahuel huapi",
+        direccion: "79 - 308",
+        mail: "evita@gmail.com",
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        telefono: "2262-457836",
+        servicio: "Salón de eventos | Alquiler de parrillas y quincho",
+        adicional: "Solo para afiliados e invitados de afiliados",
+    },
+
+    {
+        id: 5,
+        imagen: "www.imagen.com",
+        nombre: "nahuel huapi",
+        direccion: "79 - 308",
+        mail: "evita@gmail.com",
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        telefono: "2262-457836",
+        servicio: "Salón de eventos | Alquiler de parrillas y quincho",
+        adicional: "Solo para afiliados e invitados de afiliados",
+    },
+
+    {
+        id: 6,
+        imagen: "www.imagen.com",
+        nombre: "nahuel huapi",
+        direccion: "79 - 308",
+        mail: "evita@gmail.com",
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        telefono: "2262-457836",
+        servicio: "Salón de eventos | Alquiler de parrillas y quincho",
+        adicional: "Solo para afiliados e invitados de afiliados",
+    },
+
+    {
+        id: 7,
+        imagen: "www.imagen.com",
+        nombre: "nahuel huapi",
+        direccion: "79 - 308",
+        mail: "evita@gmail.com",
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        telefono: "2262-457836",
+        servicio: "Salón de eventos | Alquiler de parrillas y quincho",
+        adicional: "Solo para afiliados e invitados de afiliados",
+    },
+
+    {
+        id: 8,
+        imagen: "www.imagen.com",
+        nombre: "nahuel huapi",
+        direccion: "79 - 308",
+        mail: "evita@gmail.com",
+        redesSociales: "fb:evita | ig:@Evita | X:@VivaPeron ...",
+        telefono: "2262-457836",
+        servicio: "Salón de eventos | Alquiler de parrillas y quincho",
+        adicional: "Solo para afiliados e invitados de afiliados",
+    },
+
+
+]
+
 export const tipoActividades = ["paraje", "nautico", "cines y teatros", "museos"];
