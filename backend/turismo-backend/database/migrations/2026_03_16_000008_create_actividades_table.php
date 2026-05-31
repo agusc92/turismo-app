@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('direccion');
-            $table->string('descripcion')->nullable();
-            $table->string('redes_sociales')->nullable();
-            $table->string('web')->nullable();
-            $table->string('mail')->nullable();
-            $table->string('telefono')->nullable();
-            $table->string('imagen')->nullable();
+            $table->text('descripcion')->nullable(); // Cambiado de string a text
+            $table->text('redes_sociales')->nullable(); // Cambiado de string a text
+            $table->text('web')->nullable(); // Cambiado de string a text
+            $table->text('mail')->nullable(); // Cambiado de string a text
+            $table->text('telefono')->nullable(); // Cambiado de string a text
+            $table->text('imagen')->nullable(); // Cambiado de string a text
             $table->foreignId('tipo_id')->constrained('tipos')->onDelete('cascade');
-            $table->string('dias_y_horarios')->nullable();
+            $table->text('dias_y_horarios')->nullable(); // Cambiado de string a text
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('actividads');
+        Schema::dropIfExists('actividades');
     }
 };

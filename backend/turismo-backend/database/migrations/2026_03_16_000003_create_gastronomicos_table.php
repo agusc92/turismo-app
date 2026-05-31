@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('direccion');
             $table->string('telefono')->nullable();
-            $table->string('redesSociales')->nullable();
-            $table->string('tiendaOnline')->nullable();
-            $table->string('extras')->nullable();
-            $table->string('horario')->nullable();
-            $table->string('imagen')->nullable();
+            $table->text('redesSociales')->nullable(); // Cambiado de string a text
+            $table->text('tiendaOnline')->nullable(); // Cambiado de string a text
+            $table->text('extras')->nullable(); // Cambiado de string a text
+            $table->text('horario')->nullable(); // Cambiado de string a text
+            $table->text('imagen')->nullable(); // Cambiado de string a text
             $table->timestamps();
         });
     }

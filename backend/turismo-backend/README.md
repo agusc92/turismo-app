@@ -1,6 +1,6 @@
 # Backend de Turismo Necochea
 
-Este repositorio contiene el código fuente del backend de la aplicación de Turismo Necochea, desarrollado con Laravel. La API RESTful gestiona la información sobre alojamientos, gastronomía, eventos, actividades, balnearios y usuarios.
+Este repositorio contiene el código fuente del backend de la aplicación de Turismo Necochea, desarrollado con Laravel. La API RESTful gestiona la información sobre alojamientos, gastronomía, eventos, actividades, balnearios, complejos y usuarios.
 
 ##  Puesta en Marcha
 
@@ -42,16 +42,12 @@ Para levantar el entorno de desarrollo completo (servidor web Nginx, PHP-FPM, ba
 
 Después de levantar los servicios y instalar las dependencias, necesitas configurar la base de datos:
 
-1.  **Ejecuta las migraciones**:
+- **Ejecuta las migraciones**:
     Esto creará las tablas en tu base de datos MySQL.
     ```bash
     docker-compose exec php php artisan migrate
     ```
 
-2.  **(Opcional) Si deseas poblar la base de datos con datos de prueba**:
-    ```bash
-    docker-compose exec php php artisan db:seed
-    ```
 
 ##  Documentación de la API (Swagger UI)
 
@@ -92,9 +88,58 @@ Se ha documentado exhaustivamente la API para las siguientes funcionalidades:
 *   **Actividades**: Gestión de actividades y sus tipos.
 *   **Balnearios**: Gestión de balnearios.
 *   **Alojamientos**: Gestión de alojamientos.
+*   **Complejos**: Gestión de complejos.
 *   **Tipos**: Gestión de tipos genéricos (usados en actividades e intereses de usuario).
 *   **Tipos de Gastronomía**: Gestión de tipos específicos para establecimientos gastronómicos.
 *   **Menús**: Gestión de tipos de menús.
+
+##  Importación Masiva de Datos (CSV)
+
+Puedes importar datos iniciales para varias entidades utilizando comandos Artisan que leen archivos CSV.
+
+### **Preparación de Archivos CSV**
+
+1.  **Ubicación**: Coloca tus archivos CSV en el directorio `database/imports/` dentro de la raíz de tu proyecto backend.
+    *   Ejemplo: `C:/Cole/Proyectos/NecocheaTurismo/turismo-app/backend/turismo-backend/database/imports/complejos.csv`
+2.  **Formato**: Asegúrate de que la primera fila del CSV contenga los encabezados de las columnas y que los datos estén correctamente delimitados por comas y, si un campo contiene comas o saltos de línea, que esté encerrado entre comillas dobles.
+
+### **Comandos de Importación**
+
+Puedes ejecutar comandos individuales o un comando maestro para importar todos los datos:
+
+*   **Importar todos los datos (recomendado)**:
+    ```bash
+    docker-compose exec php php artisan import:all
+    ```
+    Este comando ejecutará secuencialmente todos los importadores.
+
+*   **Comandos individuales**:
+    *   **Complejos**:
+        ```bash
+        docker-compose exec php php artisan import:complejos
+        ```
+    *   **Eventos**:
+        ```bash
+        docker-compose exec php php artisan import:eventos
+        ```
+    *   **Balnearios**:
+        ```bash
+        docker-compose exec php php artisan import:balnearios
+        ```
+    *   **Alojamientos**:
+        ```bash
+        docker-compose exec php php artisan import:alojamientos
+        ```
+    *   **Actividades**:
+        ```bash
+        docker-compose exec php php artisan import:actividades
+        ```
+    *   **Gastronómicos**:
+        ```bash
+        docker-compose exec php php artisan import:gastronomicos
+        ```
+
+**Nota**: Si ejecutas los comandos individuales, asegúrate de que los tipos y menús necesarios existan antes de importar actividades y gastronómicos, o que la lógica `firstOrCreate` en los comandos maneje su creación. El comando `import:all` ya considera un orden adecuado.
 
 ##  Detener los Servicios
 

@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('redesSociales')->nullable();
             $table->string('paginaWeb')->nullable();
             $table->string('mail')->nullable();
-            $table->string('mascotas')->nullable();
-            $table->string('periodoApertura')->nullable();
-            $table->string('tipo')->nullable();
+            $table->boolean('mascotas')->default(false); // Cambiado de string a boolean
+            $table->text('periodoApertura')->nullable(); // Cambiado de string a text
+            $table->text('tipo')->nullable(); // Cambiado de string a text
             $table->timestamps();
         });
     }
