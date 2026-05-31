@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use OpenApi\Attributes as OA; // Añadimos esta línea para usar atributos
+use OpenApi\Attributes as OA;
 
 #[OA\Schema(
     schema: "Evento",

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('direccion');
-            $table->string('descripcion')->nullable();
+            $table->text('descripcion')->nullable(); // Cambiado de string a text
             $table->dateTime('fecha');
             $table->string('lugar');
             $table->string('imagen')->nullable();
