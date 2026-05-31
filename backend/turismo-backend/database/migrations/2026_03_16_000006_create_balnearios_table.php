@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('redesSociales')->nullable();
             $table->string('servicios')->nullable();
             $table->string('mail')->nullable();
+            $table->string('accesibilidad')->nullable();
+            $table->string('fecha_desde_hasta')->nullable();
+            $table->string('imagen')->nullable();
             $table->timestamps();
         });
     }

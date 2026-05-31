@@ -14,6 +14,9 @@ class Balneario extends Model
         'telefono',
         'redesSociales',
         'servicios',
-        'mail'
+        'mail',
+        'accesibilidad',
+        'fecha_desde_hasta',
+        'imagen'
     ];
 }
