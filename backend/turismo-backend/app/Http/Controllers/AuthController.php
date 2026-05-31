@@ -6,9 +6,35 @@ use App\Models\User;
 use App\Models\InfoUsuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use OpenApi\Attributes as OA;
 
 class AuthController extends Controller
 {
+    #[OA\Post(
+        path: "/api/register",
+        summary: "Registrar un nuevo usuario",
+        tags: ["Autenticacion"],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(ref: "#/components/schemas/UserRegisterRequest")
+        ),
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: "Usuario registrado exitosamente",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: "user", ref: "#/components/schemas/User"),
+                        new OA\Property(property: "token", type: "string", example: "1|abcdefghijklmnopqrstuvwxyz")
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 422,
+                description: "Error de validación"
+            )
+        ]
+    )]
     public function register(Request $request)
     {
         $request->validate([
@@ -36,6 +62,35 @@ class AuthController extends Controller
         ], 201);
     }
 
+    #[OA\Post(
+        path: "/api/login",
+        summary: "Iniciar sesión de usuario",
+        tags: ["Autenticacion"],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(ref: "#/components/schemas/UserLoginRequest")
+        ),
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "Inicio de sesión exitoso",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: "user", ref: "#/components/schemas/User"),
+                        new OA\Property(property: "token", type: "string", example: "1|abcdefghijklmnopqrstuvwxyz")
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 401,
+                description: "Credenciales incorrectas"
+            ),
+            new OA\Response(
+                response: 422,
+                description: "Error de validación"
+            )
+        ]
+    )]
     public function login(Request $request)
     {
         $request->validate([
@@ -59,6 +114,25 @@ class AuthController extends Controller
         ]);
     }
 
+    #[OA\Post(
+        path: "/api/logout",
+        summary: "Cerrar sesión de usuario",
+        tags: ["Autenticacion"],
+        security: [
+            ["sanctum" => []]
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "Sesión cerrada correctamente",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: "message", type: "string", example: "Sesión cerrada correctamente")
+                    ]
+                )
+            )
+        ]
+    )]
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
