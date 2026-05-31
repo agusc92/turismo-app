@@ -12,10 +12,14 @@ class Actividad extends Model
     protected $fillable = [
         'nombre',
         'direccion',
-        'telefono',
         'descripcion',
         'redes_sociales',
-        'tipo_id'
+        'web',
+        'mail',
+        'telefono',
+        'imagen',
+        'tipo_id',
+        'dias_y_horarios'
     ];
 
     public function tipo()

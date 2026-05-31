@@ -15,10 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('direccion');
-            $table->string('telefono')->nullable();
             $table->string('descripcion')->nullable();
             $table->string('redes_sociales')->nullable();
+            $table->string('web')->nullable();
+            $table->string('mail')->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('imagen')->nullable();
             $table->foreignId('tipo_id')->constrained('tipos')->onDelete('cascade');
+            $table->string('dias_y_horarios')->nullable();
             $table->timestamps();
         });
     }
