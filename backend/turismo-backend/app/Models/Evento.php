@@ -12,9 +12,9 @@ class Evento extends Model
         'nombre',
         'direccion',
         'descripcion',
-        'imagen',
-        'destacado',
         'fecha',
-        'local'
+        'lugar',
+        'imagen',
+        'destacado'
     ];
 }

@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('direccion');
             $table->string('descripcion')->nullable();
+            $table->dateTime('fecha');
+            $table->string('lugar');
             $table->string('imagen')->nullable();
             $table->boolean('destacado')->default(false);
-            $table->dateTime('fecha');
-            $table->string('local');
             $table->timestamps();
         });
     }
