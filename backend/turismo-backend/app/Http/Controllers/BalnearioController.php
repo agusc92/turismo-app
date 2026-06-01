@@ -93,6 +93,13 @@ class BalnearioController extends Controller
         $request->validate([
             'nombre' => 'required|string',
             'direccion' => 'required|string',
+            'telefono' => 'nullable|string',
+            'redesSociales' => 'nullable|string',
+            'servicios' => 'nullable|string',
+            'mail' => 'nullable|email',
+            'accesibilidad' => 'nullable|string',
+            'fecha_desde_hasta' => 'nullable|string',
+            'imagen' => 'nullable|string',
         ]);
 
         $balneario = Balneario::create($request->all());
@@ -140,6 +147,18 @@ class BalnearioController extends Controller
         if (!$balneario) {
             return response()->json(['message' => 'Balneario no encontrado'], 404);
         }
+
+        $request->validate([
+            'nombre' => 'sometimes|required|string',
+            'direccion' => 'sometimes|required|string',
+            'telefono' => 'nullable|string',
+            'redesSociales' => 'nullable|string',
+            'servicios' => 'nullable|string',
+            'mail' => 'nullable|email',
+            'accesibilidad' => 'nullable|string',
+            'fecha_desde_hasta' => 'nullable|string',
+            'imagen' => 'nullable|string',
+        ]);
 
         $balneario->update($request->all());
 

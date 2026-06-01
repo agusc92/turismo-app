@@ -140,6 +140,10 @@ class TipoController extends Controller
             return response()->json(['message' => 'Tipo no encontrado'], 404);
         }
 
+        $request->validate([
+            'tipo' => 'sometimes|required|string',
+        ]);
+
         $tipo->update($request->all());
 
         return response()->json($tipo);

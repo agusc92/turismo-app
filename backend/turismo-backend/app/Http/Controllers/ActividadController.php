@@ -93,7 +93,14 @@ class ActividadController extends Controller
         $request->validate([
             'nombre' => 'required|string',
             'direccion' => 'required|string',
+            'descripcion' => 'nullable|string',
+            'redes_sociales' => 'nullable|string',
+            'web' => 'nullable|string',
+            'mail' => 'nullable|email',
+            'telefono' => 'nullable|string',
+            'imagen' => 'nullable|string',
             'tipo_id' => 'required|exists:tipos,id',
+            'dias_y_horarios' => 'nullable|string',
         ]);
 
         $actividad = Actividad::create($request->all());
@@ -141,6 +148,19 @@ class ActividadController extends Controller
         if (!$actividad) {
             return response()->json(['message' => 'Actividad no encontrada'], 404);
         }
+
+        $request->validate([
+            'nombre' => 'sometimes|required|string',
+            'direccion' => 'sometimes|required|string',
+            'descripcion' => 'nullable|string',
+            'redes_sociales' => 'nullable|string',
+            'web' => 'nullable|string',
+            'mail' => 'nullable|email',
+            'telefono' => 'nullable|string',
+            'imagen' => 'nullable|string',
+            'tipo_id' => 'sometimes|required|exists:tipos,id',
+            'dias_y_horarios' => 'nullable|string',
+        ]);
 
         $actividad->update($request->all());
 

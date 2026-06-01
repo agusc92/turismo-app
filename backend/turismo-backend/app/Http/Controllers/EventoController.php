@@ -119,7 +119,7 @@ class EventoController extends Controller
             'nombre' => 'required|string',
             'direccion' => 'required|string',
             'fecha' => 'required|date',
-            'local' => 'required|string',
+            'lugar' => 'required|string',
         ]);
 
         $evento = Evento::create($request->all());
@@ -167,6 +167,13 @@ class EventoController extends Controller
         if (!$evento) {
             return response()->json(['message' => 'Evento no encontrado'], 404);
         }
+
+        $request->validate([
+            'nombre' => 'sometimes|required|string',
+            'direccion' => 'sometimes|required|string',
+            'fecha' => 'sometimes|required|date',
+            'lugar' => 'sometimes|required|string',
+        ]);
 
         $evento->update($request->all());
 

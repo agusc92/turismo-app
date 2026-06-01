@@ -109,6 +109,15 @@ class InfoUsuarioController extends Controller
             return response()->json(['message' => 'InfoUsuario no encontrado'], 404);
         }
 
+        $request->validate([
+            'ciudad' => 'nullable|string',
+            'edad' => 'nullable|integer', // Añadida regla 'integer'
+            'estadia' => 'nullable|string',
+            'integrantes' => 'nullable|integer', // Añadida regla 'integer'
+            'intereses' => 'nullable|array',
+            'intereses.*' => 'exists:tipos,id', // Añadida regla 'exists' para los IDs de intereses
+        ]);
+
         $info->update($request->all());
 
         // Sync intereses if provided

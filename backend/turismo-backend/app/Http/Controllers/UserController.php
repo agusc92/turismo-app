@@ -109,6 +109,13 @@ class UserController extends Controller
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
+        $request->validate([
+            'name' => 'sometimes|required|string',
+            'email' => 'sometimes|required|email|unique:users,email,' . $id,
+            'password' => 'sometimes|required|min:6',
+            'rol' => 'sometimes|required|string',
+        ]);
+
         $user->update($request->all());
 
         return response()->json($user);

@@ -140,6 +140,10 @@ class MenuController extends Controller
             return response()->json(['message' => 'Menu no encontrado'], 404);
         }
 
+        $request->validate([
+            'tipo' => 'sometimes|required|string',
+        ]);
+
         $menu->update($request->all());
 
         return response()->json($menu);

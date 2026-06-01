@@ -93,6 +93,13 @@ class AlojamientoController extends Controller
         $request->validate([
             'nombre' => 'required|string',
             'direccion' => 'required|string',
+            'telefono' => 'nullable|string',
+            'redesSociales' => 'nullable|string',
+            'paginaWeb' => 'nullable|string',
+            'mail' => 'nullable|email',
+            'mascotas' => 'nullable|boolean',
+            'periodoApertura' => 'nullable|string',
+            'tipo' => 'required|string',
         ]);
 
         $alojamiento = Alojamiento::create($request->all());
@@ -140,6 +147,18 @@ class AlojamientoController extends Controller
         if (!$alojamiento) {
             return response()->json(['message' => 'Alojamiento no encontrado'], 404);
         }
+
+        $request->validate([
+            'nombre' => 'sometimes|required|string',
+            'direccion' => 'sometimes|required|string',
+            'telefono' => 'nullable|string',
+            'redesSociales' => 'nullable|string',
+            'paginaWeb' => 'nullable|string',
+            'mail' => 'nullable|email',
+            'mascotas' => 'nullable|boolean',
+            'periodoApertura' => 'nullable|string',
+            'tipo' => 'sometimes|required|string',
+        ]);
 
         $alojamiento->update($request->all());
 

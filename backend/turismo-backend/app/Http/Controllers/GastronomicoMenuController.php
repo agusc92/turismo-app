@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gastronomico;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 
@@ -129,7 +130,7 @@ class GastronomicoMenuController extends Controller
             ),
             new OA\Response(
                 response: 404,
-                description: "Gastronómico no encontrado"
+                description: "Gastronómico o Menú no encontrado"
             )
         ]
     )]
@@ -139,6 +140,11 @@ class GastronomicoMenuController extends Controller
 
         if (!$gastronomico) {
             return response()->json(['message' => 'Gastronomico no encontrado'], 404);
+        }
+
+        $menu = Menu::find($menuId);
+        if (!$menu) {
+            return response()->json(['message' => 'Menu no encontrado'], 404);
         }
 
         $gastronomico->menus()->detach($menuId);
