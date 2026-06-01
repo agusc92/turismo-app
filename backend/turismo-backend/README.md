@@ -42,12 +42,40 @@ Para levantar el entorno de desarrollo completo (servidor web Nginx, PHP-FPM, ba
 
 Después de levantar los servicios y instalar las dependencias, necesitas configurar la base de datos:
 
-- **Ejecuta las migraciones**:
+-   **Ejecuta las migraciones**:
     Esto creará las tablas en tu base de datos MySQL.
     ```bash
     docker-compose exec php php artisan migrate
     ```
 
+##  Testing
+
+El proyecto incluye tests unitarios y de característica para asegurar la calidad y el correcto funcionamiento de la API.
+
+### **Ejecutar Tests**
+
+Asegúrate de que tus servicios Docker estén corriendo (`docker-compose up -d`) antes de ejecutar los tests.
+
+*   **Ejecutar todos los tests (unitarios y de característica)**:
+    ```bash
+    docker-compose exec php php artisan test
+    ```
+
+*   **Ejecutar solo tests unitarios**:
+    ```bash
+    docker-compose exec php php artisan test --testsuite=Unit
+    ```
+
+*   **Ejecutar solo tests de característica**:
+    ```bash
+    docker-compose exec php php artisan test --testsuite=Feature
+    ```
+
+*   **Ejecutar un archivo de test específico**:
+    ```bash
+    docker-compose exec php php artisan test tests/Feature/ComplejoApiTest.php
+    ```
+    (Reemplaza `tests/Feature/ComplejoApiTest.php` con la ruta de tu archivo de test)
 
 ##  Documentación de la API (Swagger UI)
 
