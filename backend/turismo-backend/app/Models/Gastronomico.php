@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Menu;
 use App\Models\TipoGastronomico;
 use OpenApi\Attributes as OA;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 #[OA\Schema(
     schema: "Gastronomico",
     title: "Gastronomico",
@@ -66,6 +66,7 @@ use OpenApi\Attributes as OA;
 )]
 class Gastronomico extends Model
 {
+    use HasFactory;
     protected $table = 'gastronomicos';
 
     protected $fillable = [

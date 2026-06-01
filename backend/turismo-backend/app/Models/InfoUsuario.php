@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Tipo;
@@ -37,6 +38,8 @@ use OpenApi\Attributes as OA;
 )]
 class InfoUsuario extends Model
 {
+    use HasFactory;
+
     protected $table = 'info_usuarios';
 
     protected $fillable = [

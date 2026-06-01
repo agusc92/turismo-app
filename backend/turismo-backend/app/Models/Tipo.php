@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Actividad;
 use App\Models\InfoUsuario;
-use OpenApi\Attributes as OA; // Añadimos esta línea para usar atributos
+use OpenApi\Attributes as OA;
 
 #[OA\Schema(
     schema: "Tipo",
@@ -37,6 +38,7 @@ use OpenApi\Attributes as OA; // Añadimos esta línea para usar atributos
 )]
 class Tipo extends Model
 {
+    use HasFactory;
 
     protected $fillable = ['tipo'];
 

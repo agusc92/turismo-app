@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Tipo;
 use OpenApi\Attributes as OA;
@@ -64,6 +65,8 @@ use OpenApi\Attributes as OA;
 )]
 class Actividad extends Model
 {
+    use HasFactory;
+
     protected $table = 'actividades';
 
     protected $fillable = [

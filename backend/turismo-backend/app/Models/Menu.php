@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Gastronomico;
 use OpenApi\Attributes as OA;
@@ -36,6 +37,7 @@ use OpenApi\Attributes as OA;
 )]
 class Menu extends Model
 {
+    use HasFactory;
 
     protected $fillable = ['tipo'];
 

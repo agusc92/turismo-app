@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OpenApi\Attributes as OA;
 
@@ -53,6 +54,8 @@ use OpenApi\Attributes as OA;
 )]
 class Evento extends Model
 {
+    use HasFactory;
+
     protected $table = 'eventos';
 
     protected $fillable = [
@@ -63,5 +66,10 @@ class Evento extends Model
         'lugar',
         'imagen',
         'destacado'
+    ];
+
+    protected $casts = [
+        'destacado' => 'boolean',
+        'fecha' => 'datetime',
     ];
 }

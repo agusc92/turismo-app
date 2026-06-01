@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use OpenApi\Attributes as OA;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 #[OA\Schema(
     schema: "Balneario",
     title: "Balneario",
@@ -59,6 +59,7 @@ use OpenApi\Attributes as OA;
 )]
 class Balneario extends Model
 {
+    use HasFactory;
     protected $table = 'balnearios';
 
     protected $fillable = [
