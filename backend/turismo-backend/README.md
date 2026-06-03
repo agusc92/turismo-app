@@ -128,7 +128,7 @@ Puedes importar datos iniciales para varias entidades utilizando comandos Artisa
 ### **Preparación de Archivos CSV**
 
 1.  **Ubicación**: Coloca tus archivos CSV en el directorio `database/imports/` dentro de la raíz de tu proyecto backend.
-    *   Ejemplo: `C:/Cole/Proyectos/NecocheaTurismo/turismo-app/backend/turismo-backend/database/imports/complejos.csv`
+    *   Ejemplo: `turismo-app/backend/turismo-backend/database/imports/complejos.csv`
 2.  **Formato**: Asegúrate de que la primera fila del CSV contenga los encabezados de las columnas y que los datos estén correctamente delimitados por comas y, si un campo contiene comas o saltos de línea, que esté encerrado entre comillas dobles.
 
 ### **Comandos de Importación**
