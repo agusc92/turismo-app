@@ -14,6 +14,7 @@ use App\Http\Controllers\InfoUsuarioController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\GastronomicoMenuController;
 use App\Http\Controllers\TipoGastronomicoController;
+use App\Http\Controllers\ComplejoController;
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -28,6 +29,7 @@ Route::apiResource('users', UserController::class);
 Route::apiResource('info-usuarios', InfoUsuarioController::class);
 Route::apiResource('menus', MenuController::class);
 Route::apiResource('tipo-gastronomicos', TipoGastronomicoController::class);
+Route::apiResource('complejos', ComplejoController::class); // Añadimos esta línea
 
 // Evento nested routes
 Route::get('eventos/destacados', [EventoController::class, 'destacados']);

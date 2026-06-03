@@ -1,59 +1,184 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Backend de Turismo Necochea
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este repositorio contiene el código fuente del backend de la aplicación de Turismo Necochea, desarrollado con Laravel. La API RESTful gestiona la información sobre alojamientos, gastronomía, eventos, actividades, balnearios, complejos y usuarios.
 
-## About Laravel
+##  Puesta en Marcha
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Para levantar el entorno de desarrollo completo (servidor web Nginx, PHP-FPM, base de datos MySQL y phpMyAdmin) utilizando Docker Compose, sigue estos pasos:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1.  **Navega a la raíz del proyecto backend**:
+    ```bash
+    cd turismo-app/backend/turismo-backend
+    ```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2.  **Copia el archivo de entorno**:
+    Crea tu archivo `.env` a partir del ejemplo. Este archivo contendrá las configuraciones específicas de tu entorno (ej. credenciales de base de datos, `APP_URL`).
+    ```bash
+    cp .env.example .env
+    ```
+    **Importante**: Edita el archivo `.env` y asegúrate de que `APP_URL` esté configurado correctamente, por ejemplo:
+    ```
+    APP_URL=http://localhost:8000
+    ```
 
-## Learning Laravel
+3.  **Levanta los servicios de Docker Compose**:
+    ```bash
+    docker-compose up -d
+    ```
+    Esto construirá las imágenes (si es la primera vez) y levantará los contenedores en segundo plano.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+4.  **Instala las dependencias de Composer**:
+    Ejecuta Composer dentro del contenedor PHP para instalar todas las dependencias del proyecto.
+    ```bash
+    docker-compose exec php composer install
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+5.  **Genera la clave de la aplicación Laravel**:
+    ```bash
+    docker-compose exec php php artisan key:generate
+    ```
 
-## Laravel Sponsors
+##  Base de Datos
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Después de levantar los servicios y instalar las dependencias, necesitas configurar la base de datos:
 
-### Premium Partners
+-   **Ejecuta las migraciones**:
+    Esto creará las tablas en tu base de datos MySQL.
+    ```bash
+    docker-compose exec php php artisan migrate
+    ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+##  Testing
 
-## Contributing
+El proyecto incluye tests unitarios y de característica para asegurar la calidad y el correcto funcionamiento de la API.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### **Ejecutar Tests**
 
-## Code of Conduct
+Asegúrate de que tus servicios Docker estén corriendo (`docker-compose up -d`) antes de ejecutar los tests.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+*   **Ejecutar todos los tests (unitarios y de característica)**:
+    ```bash
+    docker-compose exec php php artisan test
+    ```
 
-## Security Vulnerabilities
+*   **Ejecutar solo tests unitarios**:
+    ```bash
+    docker-compose exec php php artisan test --testsuite=Unit
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+*   **Ejecutar solo tests de característica**:
+    ```bash
+    docker-compose exec php php artisan test --testsuite=Feature
+    ```
 
-## License
+*   **Ejecutar un archivo de test específico**:
+    ```bash
+    docker-compose exec php php artisan test tests/Feature/ComplejoApiTest.php
+    ```
+    (Reemplaza `tests/Feature/ComplejoApiTest.php` con la ruta de tu archivo de test)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+##  Documentación de la API (Swagger UI)
+
+La API está documentada utilizando Swagger/OpenAPI, y puedes acceder a una interfaz interactiva para explorarla y probarla.
+
+### **Generar la Documentación**
+
+Cada vez que se realicen cambios en las anotaciones de Swagger en el código (controladores o modelos), o después de un `git pull` que incluya cambios en la documentación, debes regenerar el archivo de documentación:
+
+1.  **Limpia la caché de configuración de Laravel**:
+    ```bash
+    docker-compose exec php php artisan config:clear
+    ```
+
+2.  **Genera el archivo de documentación Swagger**:
+    ```bash
+    docker-compose exec php php artisan l5-swagger:generate
+    ```
+
+### **Acceder a la Documentación**
+
+Una vez que la documentación ha sido generada, puedes acceder a la interfaz de Swagger UI en tu navegador:
+
+1.  Asegúrate de que tus servicios Docker estén corriendo (`docker-compose up -d`).
+2.  Abre tu navegador y navega a:
+    http://localhost:8000/api/documentation
+
+    Aquí podrás ver todos los endpoints, sus parámetros, modelos de solicitud y respuesta, y probar las llamadas a la API.
+
+### **Áreas Clave Documentadas**
+
+Se ha documentado exhaustivamente la API para las siguientes funcionalidades:
+
+*   **Autenticación**: Registro, inicio y cierre de sesión de usuarios.
+*   **Usuarios**: Gestión de usuarios y sus perfiles (`InfoUsuario`).
+*   **Gastronomía**: Gestión de establecimientos gastronómicos, sus tipos y menús asociados.
+*   **Eventos**: Gestión de eventos y eventos destacados.
+*   **Actividades**: Gestión de actividades y sus tipos.
+*   **Balnearios**: Gestión de balnearios.
+*   **Alojamientos**: Gestión de alojamientos.
+*   **Complejos**: Gestión de complejos.
+*   **Tipos**: Gestión de tipos genéricos (usados en actividades e intereses de usuario).
+*   **Tipos de Gastronomía**: Gestión de tipos específicos para establecimientos gastronómicos.
+*   **Menús**: Gestión de tipos de menús.
+
+##  Importación Masiva de Datos (CSV)
+
+Puedes importar datos iniciales para varias entidades utilizando comandos Artisan que leen archivos CSV.
+
+### **Preparación de Archivos CSV**
+
+1.  **Ubicación**: Coloca tus archivos CSV en el directorio `database/imports/` dentro de la raíz de tu proyecto backend.
+    *   Ejemplo: `turismo-app/backend/turismo-backend/database/imports/complejos.csv`
+2.  **Formato**: Asegúrate de que la primera fila del CSV contenga los encabezados de las columnas y que los datos estén correctamente delimitados por comas y, si un campo contiene comas o saltos de línea, que esté encerrado entre comillas dobles.
+
+### **Comandos de Importación**
+
+Puedes ejecutar comandos individuales o un comando maestro para importar todos los datos:
+
+*   **Importar todos los datos (recomendado)**:
+    ```bash
+    docker-compose exec php php artisan import:all
+    ```
+    Este comando ejecutará secuencialmente todos los importadores.
+
+*   **Comandos individuales**:
+    *   **Complejos**:
+        ```bash
+        docker-compose exec php php artisan import:complejos
+        ```
+    *   **Eventos**:
+        ```bash
+        docker-compose exec php php artisan import:eventos
+        ```
+    *   **Balnearios**:
+        ```bash
+        docker-compose exec php php artisan import:balnearios
+        ```
+    *   **Alojamientos**:
+        ```bash
+        docker-compose exec php php artisan import:alojamientos
+        ```
+    *   **Actividades**:
+        ```bash
+        docker-compose exec php php artisan import:actividades
+        ```
+    *   **Gastronómicos**:
+        ```bash
+        docker-compose exec php php artisan import:gastronomicos
+        ```
+
+**Nota**: Si ejecutas los comandos individuales, asegúrate de que los tipos y menús necesarios existan antes de importar actividades y gastronómicos, o que la lógica `firstOrCreate` en los comandos maneje su creación. El comando `import:all` ya considera un orden adecuado.
+
+##  Detener los Servicios
+
+Para detener y eliminar los contenedores de Docker (manteniendo los volúmenes de datos):
+
+```bash
+docker-compose down
+```
+
+Para detener y eliminar los contenedores y sus volúmenes (borrando los datos de la base de datos):
+
+```bash
+docker-compose down -v
+```

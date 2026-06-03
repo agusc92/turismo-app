@@ -11,7 +11,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+
+        if (!defined('L5_SWAGGER_CONST_HOST')) {
+            define('L5_SWAGGER_CONST_HOST', config('app.url') . '/api');
+        }
     }
 
     /**

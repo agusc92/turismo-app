@@ -1,0 +1,3711 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Turismo Necochea",
+        "description": "Documentación de la API para la aplicación de Turismo de Necochea",
+        "contact": {
+            "email": "tudai@alumnos.exa.unicen.edu.ar"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/api",
+            "description": "Servidor principal de la API"
+        }
+    ],
+    "paths": {
+        "/api/actividades": {
+            "get": {
+                "tags": [
+                    "Actividades"
+                ],
+                "summary": "Obtener todas las actividades",
+                "operationId": "3306894991c4595612edb23d6da83dd0",
+                "responses": {
+                    "200": {
+                        "description": "Lista de actividades",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Actividad"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Actividades"
+                ],
+                "summary": "Crear una nueva actividad",
+                "operationId": "bd11f26a5da95a00e27f330089df1611",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ActividadRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Actividad creada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Actividad"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/actividades/{id}": {
+            "get": {
+                "tags": [
+                    "Actividades"
+                ],
+                "summary": "Obtener una actividad por ID",
+                "operationId": "f859be40d9255231335bca8ae7975be1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la actividad",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de la actividad",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Actividad"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Actividad no encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Actividades"
+                ],
+                "summary": "Actualizar una actividad por ID",
+                "operationId": "881f76426a450ea0f6995a9f57eed89a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la actividad",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ActividadUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actividad actualizada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Actividad"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Actividad no encontrada"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Actividades"
+                ],
+                "summary": "Eliminar una actividad por ID",
+                "operationId": "8b2ddd11c7d398bed6a2f4391944071a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la actividad",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Actividad eliminada correctamente"
+                    },
+                    "404": {
+                        "description": "Actividad no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/alojamientos": {
+            "get": {
+                "tags": [
+                    "Alojamientos"
+                ],
+                "summary": "Obtener todos los alojamientos",
+                "operationId": "5a3e7174cb15d6c117ba171398cd62e1",
+                "responses": {
+                    "200": {
+                        "description": "Lista de alojamientos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Alojamiento"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Alojamientos"
+                ],
+                "summary": "Crear un nuevo alojamiento",
+                "operationId": "dff57dafa4fe7cbf4bcf339386bbdd5c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AlojamientoRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Alojamiento creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Alojamiento"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/alojamientos/{id}": {
+            "get": {
+                "tags": [
+                    "Alojamientos"
+                ],
+                "summary": "Obtener un alojamiento por ID",
+                "operationId": "955635c26c9b11f48bda4fe985036085",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del alojamiento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del alojamiento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Alojamiento"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Alojamiento no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Alojamientos"
+                ],
+                "summary": "Actualizar un alojamiento por ID",
+                "operationId": "95f1f2196ca5cec2550cd96a3154ecf1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del alojamiento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AlojamientoUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Alojamiento actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Alojamiento"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Alojamiento no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Alojamientos"
+                ],
+                "summary": "Eliminar un alojamiento por ID",
+                "operationId": "18e845b88a2155037c890f09bfc141d5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del alojamiento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Alojamiento eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Alojamiento no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Autenticacion"
+                ],
+                "summary": "Registrar un nuevo usuario",
+                "operationId": "8a56853624e025573120a09a4c75d468",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuario registrado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "1|abcdefghijklmnopqrstuvwxyz"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Autenticacion"
+                ],
+                "summary": "Iniciar sesión de usuario",
+                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserLoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Inicio de sesión exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "1|abcdefghijklmnopqrstuvwxyz"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciales incorrectas"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Autenticacion"
+                ],
+                "summary": "Cerrar sesión de usuario",
+                "operationId": "fe8f3429cd6979b3b4517e186505f9f9",
+                "responses": {
+                    "200": {
+                        "description": "Sesión cerrada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sesión cerrada correctamente"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/balnearios": {
+            "get": {
+                "tags": [
+                    "Balnearios"
+                ],
+                "summary": "Obtener todos los balnearios",
+                "operationId": "06ffd51002f94c702a7863d0c5b1e622",
+                "responses": {
+                    "200": {
+                        "description": "Lista de balnearios",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Balneario"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Balnearios"
+                ],
+                "summary": "Crear un nuevo balneario",
+                "operationId": "5f281e1e766a1cb97103db1cfeb5979d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BalnearioRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Balneario creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Balneario"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/balnearios/{id}": {
+            "get": {
+                "tags": [
+                    "Balnearios"
+                ],
+                "summary": "Obtener un balneario por ID",
+                "operationId": "0f2bc9581c4f68919c1c0b9b13891b07",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del balneario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del balneario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Balneario"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Balneario no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Balnearios"
+                ],
+                "summary": "Actualizar un balneario por ID",
+                "operationId": "282b93c19613c168bf7317033e2efdb1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del balneario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BalnearioUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Balneario actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Balneario"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Balneario no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Balnearios"
+                ],
+                "summary": "Eliminar un balneario por ID",
+                "operationId": "7cd2ca556c53ba26463a7cb438d1b50c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del balneario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Balneario eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Balneario no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/complejos": {
+            "get": {
+                "tags": [
+                    "Complejos"
+                ],
+                "summary": "Obtener todos los complejos",
+                "operationId": "31f0d6a7ad46a3451c44e14391416e90",
+                "responses": {
+                    "200": {
+                        "description": "Lista de complejos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Complejo"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Complejos"
+                ],
+                "summary": "Crear un nuevo complejo",
+                "operationId": "a3686b102094dfa5233c141d6a4e7b19",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ComplejoRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Complejo creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Complejo"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/complejos/{id}": {
+            "get": {
+                "tags": [
+                    "Complejos"
+                ],
+                "summary": "Obtener un complejo por ID",
+                "operationId": "40574db9d42ea05e60f119050bc845b3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del complejo",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del complejo",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Complejo"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Complejo no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Complejos"
+                ],
+                "summary": "Actualizar un complejo por ID",
+                "operationId": "886a2ba4a90b92e0deebee038a009f27",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del complejo",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ComplejoUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Complejo actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Complejo"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Complejo no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Complejos"
+                ],
+                "summary": "Eliminar un complejo por ID",
+                "operationId": "e6325034bc8e898e48081d678158604b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del complejo",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Complejo eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Complejo no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/eventos": {
+            "get": {
+                "tags": [
+                    "Eventos"
+                ],
+                "summary": "Obtener todos los eventos",
+                "operationId": "8df3c75a189cf773a3eb105ea46e145a",
+                "responses": {
+                    "200": {
+                        "description": "Lista de eventos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Evento"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Eventos"
+                ],
+                "summary": "Crear un nuevo evento",
+                "operationId": "4594ce682158c01a68019d32f26180e1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EventoRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Evento creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Evento"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/eventos/{id}": {
+            "get": {
+                "tags": [
+                    "Eventos"
+                ],
+                "summary": "Obtener un evento por ID",
+                "operationId": "09ec864fa45a38fe55c3078da04e8a13",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del evento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del evento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Evento"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Evento no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Eventos"
+                ],
+                "summary": "Actualizar un evento por ID",
+                "operationId": "032b9536863e8e3b817a73e44d058c1d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del evento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EventoUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Evento actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Evento"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Evento no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Eventos"
+                ],
+                "summary": "Eliminar un evento por ID",
+                "operationId": "a904dc7b49560c21fe21f57e1df8813a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del evento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Evento eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Evento no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/eventos/destacados": {
+            "get": {
+                "tags": [
+                    "Eventos"
+                ],
+                "summary": "Obtener eventos destacados",
+                "operationId": "11caa16cc782773011985daa91df9747",
+                "responses": {
+                    "200": {
+                        "description": "Lista de eventos destacados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Evento"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        },
+        "/api/gastronomicos": {
+            "get": {
+                "tags": [
+                    "Gastronomicos"
+                ],
+                "summary": "Obtener todos los establecimientos gastronómicos",
+                "operationId": "5da1ad6cc3ad6194df12fe5f00de06dd",
+                "responses": {
+                    "200": {
+                        "description": "Lista de establecimientos gastronómicos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Gastronomico"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Gastronomicos"
+                ],
+                "summary": "Crear un nuevo establecimiento gastronómico",
+                "operationId": "cc48484ec791dcacc77b9a3cea6e68b8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GastronomicoRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Establecimiento gastronómico creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Gastronomico"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/gastronomicos/{id}": {
+            "get": {
+                "tags": [
+                    "Gastronomicos"
+                ],
+                "summary": "Obtener un establecimiento gastronómico por ID",
+                "operationId": "8d699096e992b057967f711fc2764cdc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del establecimiento gastronómico",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del establecimiento gastronómico",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Gastronomico"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Gastronómico no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Gastronomicos"
+                ],
+                "summary": "Actualizar un establecimiento gastronómico por ID",
+                "operationId": "4f4dc7c2f297f37892829b60aae23707",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del establecimiento gastronómico",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GastronomicoUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Establecimiento gastronómico actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Gastronomico"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Gastronómico no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Gastronomicos"
+                ],
+                "summary": "Eliminar un establecimiento gastronómico por ID",
+                "operationId": "953fa5e922417d73e5fa274ac380a8a5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del establecimiento gastronómico",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Establecimiento gastronómico eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Gastronómico no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/gastronomicos/{id}/tipos": {
+            "get": {
+                "tags": [
+                    "Gastronomicos"
+                ],
+                "summary": "Obtener los tipos de gastronomía asociados a un establecimiento",
+                "operationId": "7d534eea27aabfdfcf72150a659437bd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del establecimiento gastronómico",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de tipos de gastronomía",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Gastronómico no encontrado"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Gastronomicos"
+                ],
+                "summary": "Asociar un tipo de gastronomía a un establecimiento",
+                "operationId": "f48727acbbcdc7e6861f65337a19ec37",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del establecimiento gastronómico",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "tipo_gastronomico_id"
+                                ],
+                                "properties": {
+                                    "tipo_gastronomico_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tipo de gastronomía asociado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Gastronomico"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Gastronómico no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/gastronomicos/{id}/tipos/{tipoId}": {
+            "delete": {
+                "tags": [
+                    "Gastronomicos"
+                ],
+                "summary": "Desasociar un tipo de gastronomía de un establecimiento",
+                "operationId": "33d6fd0465e3d16bb816058af8b02d31",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del establecimiento gastronómico",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "tipoId",
+                        "in": "path",
+                        "description": "ID del tipo de gastronomía a desasociar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tipo de gastronomía eliminado del gastronómico"
+                    },
+                    "404": {
+                        "description": "Gastronómico no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/gastronomicos/{gastronomicoId}/menus": {
+            "get": {
+                "tags": [
+                    "Gastronomicos"
+                ],
+                "summary": "Obtener los menús asociados a un establecimiento gastronómico",
+                "operationId": "7b1b1346469d9d69f02af3362b71b669",
+                "parameters": [
+                    {
+                        "name": "gastronomicoId",
+                        "in": "path",
+                        "description": "ID del establecimiento gastronómico",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de menús asociados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Menu"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Gastronómico no encontrado"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Gastronomicos"
+                ],
+                "summary": "Asociar un menú a un establecimiento gastronómico",
+                "operationId": "331c0c7ffbae562d373920d64c4f21d8",
+                "parameters": [
+                    {
+                        "name": "gastronomicoId",
+                        "in": "path",
+                        "description": "ID del establecimiento gastronómico",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "menu_id"
+                                ],
+                                "properties": {
+                                    "menu_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Menú asociado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Gastronomico"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Gastronómico no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/gastronomicos/{gastronomicoId}/menus/{menuId}": {
+            "delete": {
+                "tags": [
+                    "Gastronomicos"
+                ],
+                "summary": "Desasociar un menú de un establecimiento gastronómico",
+                "operationId": "436082d1c1694101e562a3caf877bca6",
+                "parameters": [
+                    {
+                        "name": "gastronomicoId",
+                        "in": "path",
+                        "description": "ID del establecimiento gastronómico",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "menuId",
+                        "in": "path",
+                        "description": "ID del menú a desasociar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Menú eliminado del gastronómico"
+                    },
+                    "404": {
+                        "description": "Gastronómico no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/info-usuarios": {
+            "get": {
+                "tags": [
+                    "InfoUsuario"
+                ],
+                "summary": "Obtener toda la información de perfil de usuario",
+                "operationId": "1c2af0bd3dd1250526edf1bacd3f70af",
+                "responses": {
+                    "200": {
+                        "description": "Lista de información de perfil de usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/InfoUsuario"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "InfoUsuario"
+                ],
+                "summary": "Crear nueva información de perfil de usuario (se crea automáticamente)",
+                "operationId": "dbdf0e282481e6b719dd33fe022c0226",
+                "responses": {
+                    "400": {
+                        "description": "Solicitud incorrecta. InfoUsuario se crea automáticamente al registrar un usuario."
+                    }
+                }
+            }
+        },
+        "/api/info-usuarios/{id}": {
+            "get": {
+                "tags": [
+                    "InfoUsuario"
+                ],
+                "summary": "Obtener información de perfil de usuario por ID",
+                "operationId": "ee97101d20a4af9efe8041ab0d44ae1e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la información de perfil de usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de la información de perfil de usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoUsuario"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "InfoUsuario no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "InfoUsuario"
+                ],
+                "summary": "Actualizar información de perfil de usuario por ID",
+                "operationId": "fc1b3be035d6faea074ef61bf16b7892",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la información de perfil de usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InfoUsuarioUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "InfoUsuario actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoUsuario"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "InfoUsuario no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "InfoUsuario"
+                ],
+                "summary": "Eliminar información de perfil de usuario (se elimina automáticamente)",
+                "operationId": "4c57a3bf1e107cd780fc607fc03d4c3d",
+                "responses": {
+                    "400": {
+                        "description": "Solicitud incorrecta. InfoUsuario se elimina automáticamente con el usuario."
+                    }
+                }
+            }
+        },
+        "/api/menus": {
+            "get": {
+                "tags": [
+                    "Menus"
+                ],
+                "summary": "Obtener todos los tipos de menú",
+                "operationId": "1dc6b7b84ebea40905c68ce4f844da25",
+                "responses": {
+                    "200": {
+                        "description": "Lista de tipos de menú",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Menu"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Menus"
+                ],
+                "summary": "Crear un nuevo tipo de menú",
+                "operationId": "37652f848e93b047d0f6f39cb4df6269",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MenuRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tipo de menú creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Menu"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/menus/{id}": {
+            "get": {
+                "tags": [
+                    "Menus"
+                ],
+                "summary": "Obtener un tipo de menú por ID",
+                "operationId": "358e9ead3d3f6d8fd5b51d1f0882dc83",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo de menú",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del tipo de menú",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Menu"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tipo de menú no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Menus"
+                ],
+                "summary": "Actualizar un tipo de menú por ID",
+                "operationId": "67ceffba16f3b7be4391a4d6681fa431",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo de menú",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MenuUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tipo de menú actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Menu"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tipo de menú no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Menus"
+                ],
+                "summary": "Eliminar un tipo de menú por ID",
+                "operationId": "abff8a90938116c08c448319c3dc7323",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo de menú",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tipo de menú eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Tipo de menú no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/tipos": {
+            "get": {
+                "tags": [
+                    "Tipos"
+                ],
+                "summary": "Obtener todos los tipos genéricos",
+                "operationId": "ed6150ea38454e1926202e6ae515253d",
+                "responses": {
+                    "200": {
+                        "description": "Lista de tipos genéricos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tipos"
+                ],
+                "summary": "Crear un nuevo tipo genérico",
+                "operationId": "66d9955b9219dc3770fedc979ea05af8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TipoRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tipo genérico creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tipo"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/tipos/{id}": {
+            "get": {
+                "tags": [
+                    "Tipos"
+                ],
+                "summary": "Obtener un tipo genérico por ID",
+                "operationId": "2f7bbf172dc04c0ba03cf815198fd708",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo genérico",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del tipo genérico",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tipo"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tipo genérico no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tipos"
+                ],
+                "summary": "Actualizar un tipo genérico por ID",
+                "operationId": "f188186cef82f62d673a9633beba996c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo genérico",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TipoUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tipo genérico actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tipo"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tipo genérico no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tipos"
+                ],
+                "summary": "Eliminar un tipo genérico por ID",
+                "operationId": "378a94fdd0fc70f233c83e387a0721b4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo genérico",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tipo genérico eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Tipo genérico no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/tipo-gastronomicos": {
+            "get": {
+                "tags": [
+                    "Tipos de Gastronomia"
+                ],
+                "summary": "Obtener todos los tipos de gastronomía",
+                "operationId": "50afc32ad03ed2a2255986bd6e55306c",
+                "responses": {
+                    "200": {
+                        "description": "Lista de tipos de gastronomía",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tipos de Gastronomia"
+                ],
+                "summary": "Crear un nuevo tipo de gastronomía",
+                "operationId": "04a558c24060a43e9582998f186718ef",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TipoGastronomicoRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tipo de gastronomía creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TipoGastronomico"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/tipo-gastronomicos/{id}": {
+            "get": {
+                "tags": [
+                    "Tipos de Gastronomia"
+                ],
+                "summary": "Obtener un tipo de gastronomía por ID",
+                "operationId": "10e6ae6a92f807a814a1b7d906a7a802",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo de gastronomía",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del tipo de gastronomía",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TipoGastronomico"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tipo de gastronomía no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tipos de Gastronomia"
+                ],
+                "summary": "Actualizar un tipo de gastronomía por ID",
+                "operationId": "10457ab018a4130c1b453694e6c01c60",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo de gastronomía",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TipoGastronomicoUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tipo de gastronomía actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TipoGastronomico"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tipo de gastronomía no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tipos de Gastronomia"
+                ],
+                "summary": "Eliminar un tipo de gastronomía por ID",
+                "operationId": "4f7b2f0873436ec37c4e12bbf49cac2d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo de gastronomía",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tipo de gastronomía eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Tipo de gastronomía no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Obtener todos los usuarios con su información de perfil",
+                "operationId": "c457726701591d1183b53aa71fc13441",
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuarios",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Crear un nuevo usuario (usar /register en su lugar)",
+                "operationId": "592819a0265360b2014512d6dbfaf0e7",
+                "responses": {
+                    "400": {
+                        "description": "Solicitud incorrecta. Use /register para crear un usuario."
+                    }
+                }
+            }
+        },
+        "/api/users/{id}": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Obtener un usuario por ID con su información de perfil",
+                "operationId": "36a33ff774d5cba33c039dec2c3e0287",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Actualizar un usuario por ID",
+                "operationId": "b9091397c8b25f12c6adb74be6ce3a5a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuario actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Eliminar un usuario por ID",
+                "operationId": "fa56cffde745d3f152f95cbacd936c0b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Actividad": {
+                "title": "Actividad",
+                "description": "Modelo de una actividad",
+                "properties": {
+                    "id": {
+                        "description": "ID único de la actividad",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "nombre": {
+                        "description": "Nombre de la actividad",
+                        "type": "string"
+                    },
+                    "direccion": {
+                        "description": "Dirección de la actividad",
+                        "type": "string"
+                    },
+                    "descripcion": {
+                        "description": "Descripción de la actividad",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "redes_sociales": {
+                        "description": "URL de redes sociales",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "web": {
+                        "description": "Sitio web de la actividad",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "mail": {
+                        "description": "Correo electrónico de contacto",
+                        "type": "string",
+                        "format": "email",
+                        "nullable": true
+                    },
+                    "telefono": {
+                        "description": "Número de teléfono de contacto",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "imagen": {
+                        "description": "URL de la imagen de la actividad",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "tipo_id": {
+                        "description": "ID del tipo de actividad",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "dias_y_horarios": {
+                        "description": "Días y horarios de la actividad",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "description": "Fecha de creación",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Fecha de última actualización",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "tipo": {
+                        "$ref": "#/components/schemas/Tipo"
+                    }
+                },
+                "type": "object"
+            },
+            "ActividadRequest": {
+                "title": "ActividadRequest",
+                "description": "Esquema para la creación de una actividad",
+                "required": [
+                    "nombre",
+                    "direccion",
+                    "tipo_id"
+                ],
+                "properties": {
+                    "nombre": {
+                        "type": "string",
+                        "example": "Clases de Surf"
+                    },
+                    "direccion": {
+                        "type": "string",
+                        "example": "Playa Grande"
+                    },
+                    "descripcion": {
+                        "type": "string",
+                        "example": "Clases para todos los niveles",
+                        "nullable": true
+                    },
+                    "redes_sociales": {
+                        "type": "string",
+                        "example": "http://instagram.com/surf",
+                        "nullable": true
+                    },
+                    "web": {
+                        "type": "string",
+                        "example": "http://surfnecochea.com",
+                        "nullable": true
+                    },
+                    "mail": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "info@surfnecochea.com",
+                        "nullable": true
+                    },
+                    "telefono": {
+                        "type": "string",
+                        "example": "2262123456",
+                        "nullable": true
+                    },
+                    "imagen": {
+                        "type": "string",
+                        "example": "http://imagen.com/surf.jpg",
+                        "nullable": true
+                    },
+                    "tipo_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "dias_y_horarios": {
+                        "type": "string",
+                        "example": "L-V 10:00-18:00",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ActividadUpdateRequest": {
+                "title": "ActividadUpdateRequest",
+                "description": "Esquema para la actualización de una actividad",
+                "properties": {
+                    "nombre": {
+                        "type": "string",
+                        "example": "Clases de Kitesurf",
+                        "nullable": true
+                    },
+                    "direccion": {
+                        "type": "string",
+                        "example": "Playa del Medio",
+                        "nullable": true
+                    },
+                    "descripcion": {
+                        "type": "string",
+                        "example": "Clases avanzadas",
+                        "nullable": true
+                    },
+                    "redes_sociales": {
+                        "type": "string",
+                        "example": "http://instagram.com/kitesurf",
+                        "nullable": true
+                    },
+                    "web": {
+                        "type": "string",
+                        "example": "http://kitesurfnecochea.com",
+                        "nullable": true
+                    },
+                    "mail": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "contacto@kitesurfnecochea.com",
+                        "nullable": true
+                    },
+                    "telefono": {
+                        "type": "string",
+                        "example": "2262987654",
+                        "nullable": true
+                    },
+                    "imagen": {
+                        "type": "string",
+                        "example": "http://imagen.com/kitesurf.jpg",
+                        "nullable": true
+                    },
+                    "tipo_id": {
+                        "type": "integer",
+                        "example": 2,
+                        "nullable": true
+                    },
+                    "dias_y_horarios": {
+                        "type": "string",
+                        "example": "S-D 11:00-19:00",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Alojamiento": {
+                "title": "Alojamiento",
+                "description": "Modelo de un alojamiento",
+                "properties": {
+                    "id": {
+                        "description": "ID único del alojamiento",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "nombre": {
+                        "description": "Nombre del alojamiento",
+                        "type": "string"
+                    },
+                    "direccion": {
+                        "description": "Dirección del alojamiento",
+                        "type": "string"
+                    },
+                    "telefono": {
+                        "description": "Número de teléfono",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "redesSociales": {
+                        "description": "URL de redes sociales",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "paginaWeb": {
+                        "description": "Página web del alojamiento",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "mail": {
+                        "description": "Correo electrónico de contacto",
+                        "type": "string",
+                        "format": "email",
+                        "nullable": true
+                    },
+                    "mascotas": {
+                        "description": "Indica si se permiten mascotas",
+                        "type": "boolean"
+                    },
+                    "periodoApertura": {
+                        "description": "Período de apertura (ej. 'Todo el año', 'Temporada alta')",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "tipo": {
+                        "description": "Tipo de alojamiento (ej. 'Hotel', 'Cabaña')",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Fecha de creación",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Fecha de última actualización",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "AlojamientoRequest": {
+                "title": "AlojamientoRequest",
+                "description": "Esquema para la creación de un alojamiento",
+                "required": [
+                    "nombre",
+                    "direccion",
+                    "mascotas",
+                    "tipo"
+                ],
+                "properties": {
+                    "nombre": {
+                        "type": "string",
+                        "example": "Hotel Central"
+                    },
+                    "direccion": {
+                        "type": "string",
+                        "example": "Calle 10 N° 500"
+                    },
+                    "telefono": {
+                        "type": "string",
+                        "example": "2262554433",
+                        "nullable": true
+                    },
+                    "redesSociales": {
+                        "type": "string",
+                        "example": "http://instagram.com/hotelcentral",
+                        "nullable": true
+                    },
+                    "paginaWeb": {
+                        "type": "string",
+                        "example": "http://hotelcentral.com",
+                        "nullable": true
+                    },
+                    "mail": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "reservas@hotelcentral.com",
+                        "nullable": true
+                    },
+                    "mascotas": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "periodoApertura": {
+                        "type": "string",
+                        "example": "Todo el año",
+                        "nullable": true
+                    },
+                    "tipo": {
+                        "type": "string",
+                        "example": "Hotel"
+                    }
+                },
+                "type": "object"
+            },
+            "AlojamientoUpdateRequest": {
+                "title": "AlojamientoUpdateRequest",
+                "description": "Esquema para la actualización de un alojamiento",
+                "properties": {
+                    "nombre": {
+                        "type": "string",
+                        "example": "Hotel del Parque",
+                        "nullable": true
+                    },
+                    "direccion": {
+                        "type": "string",
+                        "example": "Av. 79 N° 1200",
+                        "nullable": true
+                    },
+                    "telefono": {
+                        "type": "string",
+                        "example": "2262778899",
+                        "nullable": true
+                    },
+                    "redesSociales": {
+                        "type": "string",
+                        "example": "http://facebook.com/hoteldelparque",
+                        "nullable": true
+                    },
+                    "paginaWeb": {
+                        "type": "string",
+                        "example": "http://hoteldelparque.com",
+                        "nullable": true
+                    },
+                    "mail": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "info@hoteldelparque.com",
+                        "nullable": true
+                    },
+                    "mascotas": {
+                        "type": "boolean",
+                        "example": true,
+                        "nullable": true
+                    },
+                    "periodoApertura": {
+                        "type": "string",
+                        "example": "Temporada alta",
+                        "nullable": true
+                    },
+                    "tipo": {
+                        "type": "string",
+                        "example": "Cabaña",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Balneario": {
+                "title": "Balneario",
+                "description": "Modelo de un balneario",
+                "properties": {
+                    "id": {
+                        "description": "ID único del balneario",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "nombre": {
+                        "description": "Nombre del balneario",
+                        "type": "string"
+                    },
+                    "direccion": {
+                        "description": "Dirección del balneario",
+                        "type": "string"
+                    },
+                    "telefono": {
+                        "description": "Número de teléfono",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "redesSociales": {
+                        "description": "URL de redes sociales",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "servicios": {
+                        "description": "Servicios ofrecidos",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "mail": {
+                        "description": "Correo electrónico de contacto",
+                        "type": "string",
+                        "format": "email",
+                        "nullable": true
+                    },
+                    "accesibilidad": {
+                        "description": "Información de accesibilidad",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "fecha_desde_hasta": {
+                        "description": "Fechas de operación (ej. 'Diciembre a Marzo')",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "imagen": {
+                        "description": "URL de la imagen del balneario",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "description": "Fecha de creación",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Fecha de última actualización",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "BalnearioRequest": {
+                "title": "BalnearioRequest",
+                "description": "Esquema para la creación de un balneario",
+                "required": [
+                    "nombre",
+                    "direccion"
+                ],
+                "properties": {
+                    "nombre": {
+                        "type": "string",
+                        "example": "Balneario Neptuno"
+                    },
+                    "direccion": {
+                        "type": "string",
+                        "example": "Av. 2 y Calle 87"
+                    },
+                    "telefono": {
+                        "type": "string",
+                        "example": "2262112233",
+                        "nullable": true
+                    },
+                    "redesSociales": {
+                        "type": "string",
+                        "example": "http://instagram.com/neptuno",
+                        "nullable": true
+                    },
+                    "servicios": {
+                        "type": "string",
+                        "example": "Carpa, sombrillas, restaurante",
+                        "nullable": true
+                    },
+                    "mail": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "info@neptuno.com",
+                        "nullable": true
+                    },
+                    "accesibilidad": {
+                        "type": "string",
+                        "example": "Rampas de acceso",
+                        "nullable": true
+                    },
+                    "fecha_desde_hasta": {
+                        "type": "string",
+                        "example": "Diciembre a Marzo",
+                        "nullable": true
+                    },
+                    "imagen": {
+                        "type": "string",
+                        "example": "http://imagen.com/neptuno.jpg",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "BalnearioUpdateRequest": {
+                "title": "BalnearioUpdateRequest",
+                "description": "Esquema para la actualización de un balneario",
+                "properties": {
+                    "nombre": {
+                        "type": "string",
+                        "example": "Balneario Poseidon",
+                        "nullable": true
+                    },
+                    "direccion": {
+                        "type": "string",
+                        "example": "Av. 2 y Calle 90",
+                        "nullable": true
+                    },
+                    "telefono": {
+                        "type": "string",
+                        "example": "2262445566",
+                        "nullable": true
+                    },
+                    "redesSociales": {
+                        "type": "string",
+                        "example": "http://facebook.com/poseidon",
+                        "nullable": true
+                    },
+                    "servicios": {
+                        "type": "string",
+                        "example": "Pileta, spa",
+                        "nullable": true
+                    },
+                    "mail": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "contacto@poseidon.com",
+                        "nullable": true
+                    },
+                    "accesibilidad": {
+                        "type": "string",
+                        "example": "Sillas anfibias",
+                        "nullable": true
+                    },
+                    "fecha_desde_hasta": {
+                        "type": "string",
+                        "example": "Noviembre a Abril",
+                        "nullable": true
+                    },
+                    "imagen": {
+                        "type": "string",
+                        "example": "http://imagen.com/poseidon.jpg",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Complejo": {
+                "title": "Complejo",
+                "description": "Modelo de un complejo",
+                "properties": {
+                    "id": {
+                        "description": "ID único del complejo",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "nombre": {
+                        "description": "Nombre del complejo",
+                        "type": "string"
+                    },
+                    "direccion": {
+                        "description": "Dirección del complejo",
+                        "type": "string"
+                    },
+                    "mail": {
+                        "description": "Correo electrónico de contacto",
+                        "type": "string",
+                        "format": "email",
+                        "nullable": true
+                    },
+                    "redesSociales": {
+                        "description": "URL de redes sociales",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "telefono": {
+                        "description": "Número de teléfono de contacto",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "servicio": {
+                        "description": "Descripción de los servicios ofrecidos",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "adicional": {
+                        "description": "Información adicional del complejo",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "description": "Fecha de creación",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Fecha de última actualización",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "ComplejoRequest": {
+                "title": "ComplejoRequest",
+                "description": "Esquema para la creación de un complejo",
+                "required": [
+                    "nombre",
+                    "direccion"
+                ],
+                "properties": {
+                    "nombre": {
+                        "type": "string",
+                        "example": "Complejo Las Dunas"
+                    },
+                    "direccion": {
+                        "type": "string",
+                        "example": "Av. Costanera 1000"
+                    },
+                    "mail": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "info@lasdunas.com",
+                        "nullable": true
+                    },
+                    "redesSociales": {
+                        "type": "string",
+                        "example": "http://instagram.com/lasdunas",
+                        "nullable": true
+                    },
+                    "telefono": {
+                        "type": "string",
+                        "example": "2262123456",
+                        "nullable": true
+                    },
+                    "servicio": {
+                        "type": "string",
+                        "example": "Canchas de tenis, piscina, restaurante",
+                        "nullable": true
+                    },
+                    "adicional": {
+                        "type": "string",
+                        "example": "Abierto todo el año",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ComplejoUpdateRequest": {
+                "title": "ComplejoUpdateRequest",
+                "description": "Esquema para la actualización de un complejo",
+                "properties": {
+                    "nombre": {
+                        "type": "string",
+                        "example": "Complejo El Faro",
+                        "nullable": true
+                    },
+                    "direccion": {
+                        "type": "string",
+                        "example": "Calle 4 N° 200",
+                        "nullable": true
+                    },
+                    "mail": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "contacto@elfaro.com",
+                        "nullable": true
+                    },
+                    "redesSociales": {
+                        "type": "string",
+                        "example": "http://facebook.com/elfaro",
+                        "nullable": true
+                    },
+                    "telefono": {
+                        "type": "string",
+                        "example": "2262987654",
+                        "nullable": true
+                    },
+                    "servicio": {
+                        "type": "string",
+                        "example": "Spa, gimnasio",
+                        "nullable": true
+                    },
+                    "adicional": {
+                        "type": "string",
+                        "example": "Eventos corporativos",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Evento": {
+                "title": "Evento",
+                "description": "Modelo de un evento",
+                "properties": {
+                    "id": {
+                        "description": "ID único del evento",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "nombre": {
+                        "description": "Nombre del evento",
+                        "type": "string"
+                    },
+                    "direccion": {
+                        "description": "Dirección del evento",
+                        "type": "string"
+                    },
+                    "descripcion": {
+                        "description": "Descripción del evento",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "fecha": {
+                        "description": "Fecha del evento (YYYY-MM-DD)",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "lugar": {
+                        "description": "Lugar donde se realiza el evento",
+                        "type": "string"
+                    },
+                    "imagen": {
+                        "description": "URL de la imagen del evento",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "destacado": {
+                        "description": "Indica si el evento es destacado",
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "description": "Fecha de creación",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Fecha de última actualización",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "EventoRequest": {
+                "title": "EventoRequest",
+                "description": "Esquema para la creación de un evento",
+                "required": [
+                    "nombre",
+                    "direccion",
+                    "fecha",
+                    "lugar"
+                ],
+                "properties": {
+                    "nombre": {
+                        "type": "string",
+                        "example": "Concierto de Verano"
+                    },
+                    "direccion": {
+                        "type": "string",
+                        "example": "Parque Miguel Lillo"
+                    },
+                    "descripcion": {
+                        "type": "string",
+                        "example": "Música en vivo al aire libre",
+                        "nullable": true
+                    },
+                    "fecha": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2024-12-31"
+                    },
+                    "lugar": {
+                        "type": "string",
+                        "example": "Anfiteatro"
+                    },
+                    "imagen": {
+                        "type": "string",
+                        "example": "http://imagen.com/concierto.jpg",
+                        "nullable": true
+                    },
+                    "destacado": {
+                        "type": "boolean",
+                        "example": false
+                    }
+                },
+                "type": "object"
+            },
+            "EventoUpdateRequest": {
+                "title": "EventoUpdateRequest",
+                "description": "Esquema para la actualización de un evento",
+                "properties": {
+                    "nombre": {
+                        "type": "string",
+                        "example": "Festival de Jazz",
+                        "nullable": true
+                    },
+                    "direccion": {
+                        "type": "string",
+                        "example": "Centro Cultural",
+                        "nullable": true
+                    },
+                    "descripcion": {
+                        "type": "string",
+                        "example": "Noche de jazz y blues",
+                        "nullable": true
+                    },
+                    "fecha": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-01-15",
+                        "nullable": true
+                    },
+                    "lugar": {
+                        "type": "string",
+                        "example": "Teatro Municipal",
+                        "nullable": true
+                    },
+                    "imagen": {
+                        "type": "string",
+                        "example": "http://imagen.com/jazz.jpg",
+                        "nullable": true
+                    },
+                    "destacado": {
+                        "type": "boolean",
+                        "example": true,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Gastronomico": {
+                "title": "Gastronomico",
+                "description": "Modelo de un establecimiento gastronómico",
+                "properties": {
+                    "id": {
+                        "description": "ID único del establecimiento",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "nombre": {
+                        "description": "Nombre del establecimiento",
+                        "type": "string"
+                    },
+                    "direccion": {
+                        "description": "Dirección del establecimiento",
+                        "type": "string"
+                    },
+                    "telefono": {
+                        "description": "Número de teléfono",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "redesSociales": {
+                        "description": "URL de redes sociales",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "horario": {
+                        "description": "Horario de atención",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "tiendaOnline": {
+                        "description": "URL de la tienda online",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "extras": {
+                        "description": "Información extra",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "imagen": {
+                        "description": "URL de la imagen principal",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "description": "Fecha de creación",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Fecha de última actualización",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "tipo": {
+                        "description": "Tipos de gastronomía asociados (solo nombres)",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "menu": {
+                        "description": "Menús especiales asociados (solo nombres)",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "menus": {
+                        "description": "Lista completa de objetos de menú asociados",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Menu"
+                        }
+                    },
+                    "tipos": {
+                        "description": "Lista completa de objetos de tipo gastronómico asociados",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TipoGastronomico"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "GastronomicoRequest": {
+                "title": "GastronomicoRequest",
+                "description": "Esquema para la creación de un establecimiento gastronómico",
+                "required": [
+                    "nombre",
+                    "direccion"
+                ],
+                "properties": {
+                    "nombre": {
+                        "type": "string",
+                        "example": "Restaurante Nuevo"
+                    },
+                    "direccion": {
+                        "type": "string",
+                        "example": "Av. Principal 789"
+                    },
+                    "telefono": {
+                        "type": "string",
+                        "example": "1122334455",
+                        "nullable": true
+                    },
+                    "redesSociales": {
+                        "type": "string",
+                        "example": "http://instagram.com/nuevo",
+                        "nullable": true
+                    },
+                    "tiendaOnline": {
+                        "type": "string",
+                        "example": "http://nuevo.com/tienda",
+                        "nullable": true
+                    },
+                    "extras": {
+                        "type": "string",
+                        "example": "Zona de juegos para niños",
+                        "nullable": true
+                    },
+                    "horario": {
+                        "type": "string",
+                        "example": "L-V 08:00-20:00",
+                        "nullable": true
+                    },
+                    "imagen": {
+                        "type": "string",
+                        "example": "http://imagen.com/nuevo.jpg",
+                        "nullable": true
+                    },
+                    "tipo_ids": {
+                        "description": "IDs de los tipos de gastronomía a asociar",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "example": [
+                            1,
+                            3
+                        ],
+                        "nullable": true
+                    },
+                    "menu_ids": {
+                        "description": "IDs de los menús a asociar",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "example": [
+                            2
+                        ],
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "GastronomicoUpdateRequest": {
+                "title": "GastronomicoUpdateRequest",
+                "description": "Esquema para la actualización de un establecimiento gastronómico",
+                "properties": {
+                    "nombre": {
+                        "type": "string",
+                        "example": "Restaurante Actualizado",
+                        "nullable": true
+                    },
+                    "direccion": {
+                        "type": "string",
+                        "example": "Nueva Dirección 456",
+                        "nullable": true
+                    },
+                    "telefono": {
+                        "type": "string",
+                        "example": "987654321",
+                        "nullable": true
+                    },
+                    "redesSociales": {
+                        "type": "string",
+                        "example": "http://facebook.com/ejemplo-actualizado",
+                        "nullable": true
+                    },
+                    "tiendaOnline": {
+                        "type": "string",
+                        "example": "http://tienda.com/ejemplo-actualizado",
+                        "nullable": true
+                    },
+                    "extras": {
+                        "type": "string",
+                        "example": "Terraza exterior",
+                        "nullable": true
+                    },
+                    "horario": {
+                        "type": "string",
+                        "example": "M-S 10:00-23:00",
+                        "nullable": true
+                    },
+                    "imagen": {
+                        "type": "string",
+                        "example": "http://imagen.com/ejemplo-actualizado.jpg",
+                        "nullable": true
+                    },
+                    "tipo_ids": {
+                        "description": "IDs de los tipos de gastronomía a sincronizar",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "example": [
+                            1
+                        ],
+                        "nullable": true
+                    },
+                    "menu_ids": {
+                        "description": "IDs de los menús a sincronizar",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "example": [
+                            2
+                        ],
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "InfoUsuario": {
+                "title": "InfoUsuario",
+                "description": "Modelo de información de perfil de usuario",
+                "properties": {
+                    "id": {
+                        "description": "ID único de la información de usuario",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "ciudad": {
+                        "description": "Ciudad de residencia del usuario",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "edad": {
+                        "description": "Edad del usuario",
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "estadia": {
+                        "description": "Duración de la estadía del usuario",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "integrantes": {
+                        "description": "Número de integrantes del grupo del usuario",
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "user_id": {
+                        "description": "ID del usuario asociado",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "created_at": {
+                        "description": "Fecha de creación",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Fecha de última actualización",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "intereses": {
+                        "description": "Lista de intereses del usuario",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Tipo"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "InfoUsuarioUpdateRequest": {
+                "title": "InfoUsuarioUpdateRequest",
+                "description": "Esquema para la actualización de la información de perfil de usuario",
+                "properties": {
+                    "ciudad": {
+                        "type": "string",
+                        "example": "Mar del Plata",
+                        "nullable": true
+                    },
+                    "edad": {
+                        "type": "integer",
+                        "example": 30,
+                        "nullable": true
+                    },
+                    "estadia": {
+                        "type": "string",
+                        "example": "1 semana",
+                        "nullable": true
+                    },
+                    "integrantes": {
+                        "type": "integer",
+                        "example": 2,
+                        "nullable": true
+                    },
+                    "intereses": {
+                        "description": "IDs de los intereses a sincronizar",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "example": [
+                            1,
+                            3
+                        ],
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Menu": {
+                "title": "Menu",
+                "description": "Modelo de un tipo de menú",
+                "properties": {
+                    "id": {
+                        "description": "ID único del menú",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "tipo": {
+                        "description": "Tipo de menú (ej. 'Desayuno', 'Almuerzo')",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Fecha de creación",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Fecha de última actualización",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "MenuRequest": {
+                "title": "MenuRequest",
+                "description": "Esquema para la creación de un tipo de menú",
+                "required": [
+                    "tipo"
+                ],
+                "properties": {
+                    "tipo": {
+                        "type": "string",
+                        "example": "Desayuno"
+                    }
+                },
+                "type": "object"
+            },
+            "MenuUpdateRequest": {
+                "title": "MenuUpdateRequest",
+                "description": "Esquema para la actualización de un tipo de menú",
+                "properties": {
+                    "tipo": {
+                        "type": "string",
+                        "example": "Almuerzo",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Tipo": {
+                "title": "Tipo",
+                "description": "Modelo de un tipo genérico",
+                "properties": {
+                    "id": {
+                        "description": "ID único del tipo",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "tipo": {
+                        "description": "Nombre del tipo (ej. 'Aventura', 'Cultural')",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Fecha de creación",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Fecha de última actualización",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "TipoRequest": {
+                "title": "TipoRequest",
+                "description": "Esquema para la creación de un tipo genérico",
+                "required": [
+                    "tipo"
+                ],
+                "properties": {
+                    "tipo": {
+                        "type": "string",
+                        "example": "Aventura"
+                    }
+                },
+                "type": "object"
+            },
+            "TipoUpdateRequest": {
+                "title": "TipoUpdateRequest",
+                "description": "Esquema para la actualización de un tipo genérico",
+                "properties": {
+                    "tipo": {
+                        "type": "string",
+                        "example": "Cultural"
+                    }
+                },
+                "type": "object"
+            },
+            "TipoGastronomico": {
+                "title": "TipoGastronomico",
+                "description": "Modelo de un tipo de gastronomía",
+                "properties": {
+                    "id": {
+                        "description": "ID único del tipo de gastronomía",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "tipo": {
+                        "description": "Nombre del tipo de gastronomía (ej. 'Restaurante', 'Bar')",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Fecha de creación",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Fecha de última actualización",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "TipoGastronomicoRequest": {
+                "title": "TipoGastronomicoRequest",
+                "description": "Esquema para la creación de un tipo de gastronomía",
+                "required": [
+                    "tipo"
+                ],
+                "properties": {
+                    "tipo": {
+                        "type": "string",
+                        "example": "Restaurante"
+                    }
+                },
+                "type": "object"
+            },
+            "TipoGastronomicoUpdateRequest": {
+                "title": "TipoGastronomicoUpdateRequest",
+                "description": "Esquema para la actualización de un tipo de gastronomía",
+                "properties": {
+                    "tipo": {
+                        "type": "string",
+                        "example": "Bar",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "title": "User",
+                "description": "Modelo de usuario",
+                "properties": {
+                    "id": {
+                        "description": "ID único del usuario",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "description": "Nombre del usuario",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Correo electrónico del usuario",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "rol": {
+                        "description": "Rol del usuario (ej. 'admin', 'turista')",
+                        "type": "string",
+                        "example": "turista"
+                    },
+                    "created_at": {
+                        "description": "Fecha de creación",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Fecha de última actualización",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "info_usuario": {
+                        "$ref": "#/components/schemas/InfoUsuario"
+                    }
+                },
+                "type": "object"
+            },
+            "UserRegisterRequest": {
+                "title": "UserRegisterRequest",
+                "description": "Esquema para el registro de un nuevo usuario",
+                "required": [
+                    "name",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "john.doe@example.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password",
+                        "example": "password123"
+                    }
+                },
+                "type": "object"
+            },
+            "UserLoginRequest": {
+                "title": "UserLoginRequest",
+                "description": "Esquema para el inicio de sesión de usuario",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "john.doe@example.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password",
+                        "example": "password123"
+                    }
+                },
+                "type": "object"
+            },
+            "UserUpdateRequest": {
+                "title": "UserUpdateRequest",
+                "description": "Esquema para la actualización de un usuario",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Jane Doe",
+                        "nullable": true
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "jane.doe@example.com",
+                        "nullable": true
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password",
+                        "example": "newpassword456",
+                        "nullable": true
+                    },
+                    "rol": {
+                        "type": "string",
+                        "example": "admin",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Actividades",
+            "description": "Actividades"
+        },
+        {
+            "name": "Alojamientos",
+            "description": "Alojamientos"
+        },
+        {
+            "name": "Autenticacion",
+            "description": "Autenticacion"
+        },
+        {
+            "name": "Balnearios",
+            "description": "Balnearios"
+        },
+        {
+            "name": "Complejos",
+            "description": "Complejos"
+        },
+        {
+            "name": "Eventos",
+            "description": "Eventos"
+        },
+        {
+            "name": "Gastronomicos",
+            "description": "Gastronomicos"
+        },
+        {
+            "name": "InfoUsuario",
+            "description": "InfoUsuario"
+        },
+        {
+            "name": "Menus",
+            "description": "Menus"
+        },
+        {
+            "name": "Tipos",
+            "description": "Tipos"
+        },
+        {
+            "name": "Tipos de Gastronomia",
+            "description": "Tipos de Gastronomia"
+        },
+        {
+            "name": "Usuarios",
+            "description": "Usuarios"
+        }
+    ]
+}

@@ -17,8 +17,11 @@ return new class extends Migration
             $table->string('direccion');
             $table->string('telefono')->nullable();
             $table->string('redesSociales')->nullable();
-            $table->string('servicios')->nullable();
+            $table->text('servicios')->nullable();
             $table->string('mail')->nullable();
+            $table->text('accesibilidad')->nullable();
+            $table->string('fecha_desde_hasta')->nullable();
+            $table->text('imagen')->nullable(); // Cambiado de string a text
             $table->timestamps();
         });
     }
