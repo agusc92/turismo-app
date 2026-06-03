@@ -44,11 +44,11 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="eventos"
+                name="contacto"
                 options={{
-                    title: 'Eventos',
+                    title: 'Contacto',
                     tabBarIcon: ({ focused }) => (
-                        <Ionicons name={focused ? 'calendar' : 'calendar-outline'} size={24} color={focused ? '#2C1B4D' : '#554E66'} />
+                        <Ionicons name={focused ? 'chatbubbles' : 'chatbubbles-outline'} size={24} color={focused ? '#2C1B4D' : '#554E66'} />
                     ),
                 }}
             />
