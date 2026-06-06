@@ -98,6 +98,7 @@ class ComplejoController extends Controller
             'telefono' => 'nullable|string',
             'servicio' => 'nullable|string',
             'adicional' => 'nullable|string',
+            'imagen' => 'nullable|string',
         ]);
 
         $complejo = Complejo::create($request->all());
@@ -154,6 +155,7 @@ class ComplejoController extends Controller
             'telefono' => 'nullable|string',
             'servicio' => 'nullable|string',
             'adicional' => 'nullable|string',
+            'imagen' => 'nullable|string',
         ]);
 
         $complejo->update($request->all());

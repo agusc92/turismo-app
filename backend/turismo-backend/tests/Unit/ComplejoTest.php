@@ -20,6 +20,7 @@ class ComplejoTest extends TestCase
             'telefono' => '123456789',
             'servicio' => 'Piscina, Gimnasio',
             'adicional' => 'Wifi gratis',
+            'imagen' => 'http://imagen.com/complejo.jpg',
         ];
 
         $complejo = new Complejo();
@@ -32,6 +33,7 @@ class ComplejoTest extends TestCase
         $this->assertEquals($data['telefono'], $complejo->telefono);
         $this->assertEquals($data['servicio'], $complejo->servicio);
         $this->assertEquals($data['adicional'], $complejo->adicional);
+        $this->assertEquals($data['imagen'], $complejo->imagen);
 
         $this->assertNull($complejo->id);
     }

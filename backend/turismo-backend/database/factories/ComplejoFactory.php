@@ -29,6 +29,7 @@ class ComplejoFactory extends Factory
             'telefono' => $this->faker->phoneNumber,
             'servicio' => $this->faker->sentence(5),
             'adicional' => $this->faker->paragraph(1),
+            'imagen' => $this->faker->imageUrl(),
         ];
     }
 }

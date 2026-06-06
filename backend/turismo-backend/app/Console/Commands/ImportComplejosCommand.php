@@ -64,6 +64,7 @@ class ImportComplejosCommand extends Command
                     'telefono' => $row['telefono'] ?? null,
                     'servicio' => $row['servicio'] ?? null,
                     'adicional' => $row['adicional'] ?? null,
+                    'imagen' => $row['imagen'] ?? null,
                 ]);
                 $importedCount++;
             } catch (\Exception $e) {

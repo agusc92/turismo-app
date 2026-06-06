@@ -1444,7 +1444,7 @@
                         "description": "Menú eliminado del gastronómico"
                     },
                     "404": {
-                        "description": "Gastronómico no encontrado"
+                        "description": "Gastronómico o Menú no encontrado"
                     }
                 }
             }
@@ -2485,6 +2485,11 @@
                         "description": "Tipo de alojamiento (ej. 'Hotel', 'Cabaña')",
                         "type": "string"
                     },
+                    "imagen": {
+                        "description": "URL de la imagen del alojamiento",
+                        "type": "string",
+                        "nullable": true
+                    },
                     "created_at": {
                         "description": "Fecha de creación",
                         "type": "string",
@@ -2549,6 +2554,11 @@
                     "tipo": {
                         "type": "string",
                         "example": "Hotel"
+                    },
+                    "imagen": {
+                        "type": "string",
+                        "example": "http://imagen.com/hotel.jpg",
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -2601,6 +2611,11 @@
                     "tipo": {
                         "type": "string",
                         "example": "Cabaña",
+                        "nullable": true
+                    },
+                    "imagen": {
+                        "type": "string",
+                        "example": "http://imagen.com/cabaña.jpg",
                         "nullable": true
                     }
                 },
@@ -2823,6 +2838,11 @@
                         "type": "string",
                         "nullable": true
                     },
+                    "imagen": {
+                        "description": "URL de la imagen del complejo",
+                        "type": "string",
+                        "nullable": true
+                    },
                     "created_at": {
                         "description": "Fecha de creación",
                         "type": "string",
@@ -2870,12 +2890,17 @@
                     },
                     "servicio": {
                         "type": "string",
-                        "example": "Canchas de tenis, piscina, restaurante",
+                        "example": "Piscina, Gimnasio",
                         "nullable": true
                     },
                     "adicional": {
                         "type": "string",
-                        "example": "Abierto todo el año",
+                        "example": "Estacionamiento",
+                        "nullable": true
+                    },
+                    "imagen": {
+                        "type": "string",
+                        "example": "http://imagen.com/complejo.jpg",
                         "nullable": true
                     }
                 },
@@ -2919,6 +2944,11 @@
                     "adicional": {
                         "type": "string",
                         "example": "Eventos corporativos",
+                        "nullable": true
+                    },
+                    "imagen": {
+                        "type": "string",
+                        "example": "http://imagen.com/complejo_update.jpg",
                         "nullable": true
                     }
                 },
