@@ -68,6 +68,7 @@ class ImportAlojamientosCommand extends Command
             $mascotas = (isset($row['mascotas']) && strtolower($row['mascotas']) === 'si');
             $periodoApertura = $row['periodoApertura'] ?? null;
             $tipo = $row['tipo'] ?? null;
+            $imagen = $row['imagen'] ?? null;
 
             try {
                 Alojamiento::create([
@@ -80,6 +81,7 @@ class ImportAlojamientosCommand extends Command
                     'mascotas' => $mascotas,
                     'periodoApertura' => $periodoApertura,
                     'tipo' => $tipo,
+                    'imagen' => $imagen,
                 ]);
                 $importedCount++;
             } catch (\Exception $e) {

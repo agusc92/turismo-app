@@ -22,6 +22,7 @@ class AlojamientoTest extends TestCase
             'mascotas' => true,
             'periodoApertura' => 'Todo el año',
             'tipo' => 'Hotel',
+            'imagen' => 'http://imagen.com/hotel.jpg',
         ];
 
         $alojamiento = new Alojamiento();
@@ -36,6 +37,7 @@ class AlojamientoTest extends TestCase
         $this->assertEquals($data['mascotas'], $alojamiento->mascotas);
         $this->assertEquals($data['periodoApertura'], $alojamiento->periodoApertura);
         $this->assertEquals($data['tipo'], $alojamiento->tipo);
+        $this->assertEquals($data['imagen'], $alojamiento->imagen);
         $this->assertNull($alojamiento->id);
     }
 

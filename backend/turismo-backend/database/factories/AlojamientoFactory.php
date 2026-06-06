@@ -31,6 +31,7 @@ class AlojamientoFactory extends Factory
             'mascotas' => $this->faker->boolean(),
             'periodoApertura' => $this->faker->randomElement(['Todo el año', 'Temporada alta', 'Verano']),
             'tipo' => $this->faker->randomElement(['Hotel', 'Cabaña', 'Hostel', 'Apart Hotel']),
+            'imagen' => $this->faker->imageUrl(),
         ];
     }
 }
