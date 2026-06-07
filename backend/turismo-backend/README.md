@@ -32,6 +32,7 @@ Para levantar el entorno de desarrollo completo (servidor web Nginx, PHP-FPM, ba
     ```bash
     docker-compose exec php composer install
     ```
+    **Nota**: Si se han añadido o modificado dependencias en `composer.json` (ej. después de un `git pull`), es recomendable ejecutar `docker-compose exec php composer install` nuevamente para asegurar que todas las dependencias estén actualizadas.
 
 5.  **Genera la clave de la aplicación Laravel**:
     ```bash
