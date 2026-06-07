@@ -21,6 +21,8 @@ class GastronomicoTest extends TestCase
             'extras' => 'Wifi, estacionamiento',
             'horario' => 'L-D 09:00-23:00',
             'imagen' => 'http://imagen.com/restaurante.jpg',
+            'latitud' => -38.555,
+            'longitud' => -58.777,
         ];
 
         $gastronomico = new Gastronomico();
@@ -34,6 +36,8 @@ class GastronomicoTest extends TestCase
         $this->assertEquals($data['extras'], $gastronomico->extras);
         $this->assertEquals($data['horario'], $gastronomico->horario);
         $this->assertEquals($data['imagen'], $gastronomico->imagen);
+        $this->assertEquals($data['latitud'], $gastronomico->latitud);
+        $this->assertEquals($data['longitud'], $gastronomico->longitud);
         $this->assertNull($gastronomico->id);
     }
 

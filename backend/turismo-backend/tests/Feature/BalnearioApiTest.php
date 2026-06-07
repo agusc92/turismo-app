@@ -23,7 +23,7 @@ class BalnearioApiTest extends TestCase
         $response->assertStatus(200)
                  ->assertJsonCount(3)
                  ->assertJsonStructure([
-                     '*' => ['id', 'nombre', 'direccion', 'telefono', 'redesSociales', 'servicios', 'mail', 'accesibilidad', 'fecha_desde_hasta', 'imagen', 'created_at', 'updated_at']
+                     '*' => ['id', 'nombre', 'direccion', 'telefono', 'redesSociales', 'servicios', 'mail', 'accesibilidad', 'fecha_desde_hasta', 'imagen', 'latitud', 'longitud', 'created_at', 'updated_at']
                  ]);
     }
 
@@ -40,6 +40,9 @@ class BalnearioApiTest extends TestCase
                  ->assertJson([
                      'id' => $balneario->id,
                      'nombre' => $balneario->nombre,
+                     'imagen' => $balneario->imagen,
+                     'latitud' => $balneario->latitud,
+                     'longitud' => $balneario->longitud,
                  ]);
     }
 
@@ -58,6 +61,8 @@ class BalnearioApiTest extends TestCase
             'accesibilidad' => 'Accesibilidad de prueba',
             'fecha_desde_hasta' => 'Enero a Febrero',
             'imagen' => 'http://nuevo.com/imagen.jpg',
+            'latitud' => -38.555,
+            'longitud' => -58.777,
         ];
 
         $response = $this->postJson('/api/balnearios', $balnearioData);
@@ -65,9 +70,17 @@ class BalnearioApiTest extends TestCase
         $response->assertStatus(201)
                  ->assertJsonFragment([
                      'nombre' => 'Nuevo Balneario',
+                     'imagen' => 'http://nuevo.com/imagen.jpg',
+                     'latitud' => -38.555,
+                     'longitud' => -58.777,
                  ]);
 
-        $this->assertDatabaseHas('balnearios', ['nombre' => 'Nuevo Balneario']);
+        $this->assertDatabaseHas('balnearios', [
+            'nombre' => 'Nuevo Balneario',
+            'imagen' => 'http://nuevo.com/imagen.jpg',
+            'latitud' => -38.555,
+            'longitud' => -58.777,
+        ]);
     }
 
     /**
@@ -80,6 +93,9 @@ class BalnearioApiTest extends TestCase
         $updatedData = [
             'nombre' => 'Balneario Actualizado',
             'direccion' => 'Direccion Actualizada Balneario',
+            'imagen' => 'http://actualizada.com/imagen.jpg',
+            'latitud' => -38.666,
+            'longitud' => -58.888,
         ];
 
         $response = $this->putJson('/api/balnearios/' . $balneario->id, $updatedData);
@@ -87,9 +103,18 @@ class BalnearioApiTest extends TestCase
         $response->assertStatus(200)
                  ->assertJsonFragment([
                      'nombre' => 'Balneario Actualizado',
+                     'imagen' => 'http://actualizada.com/imagen.jpg',
+                     'latitud' => -38.666,
+                     'longitud' => -58.888,
                  ]);
 
-        $this->assertDatabaseHas('balnearios', ['id' => $balneario->id, 'nombre' => 'Balneario Actualizado']);
+        $this->assertDatabaseHas('balnearios', [
+            'id' => $balneario->id,
+            'nombre' => 'Balneario Actualizado',
+            'imagen' => 'http://actualizada.com/imagen.jpg',
+            'latitud' => -38.666,
+            'longitud' => -58.888,
+        ]);
     }
 
     /**

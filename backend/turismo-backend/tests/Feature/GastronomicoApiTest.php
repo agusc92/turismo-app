@@ -25,7 +25,7 @@ class GastronomicoApiTest extends TestCase
         $response->assertStatus(200)
                  ->assertJsonCount(3)
                  ->assertJsonStructure([
-                     '*' => ['id', 'nombre', 'direccion', 'telefono', 'redesSociales', 'tiendaOnline', 'extras', 'horario', 'imagen', 'created_at', 'updated_at', 'tipo', 'menu', 'menus', 'tipos']
+                     '*' => ['id', 'nombre', 'direccion', 'telefono', 'redesSociales', 'tiendaOnline', 'extras', 'horario', 'imagen', 'latitud', 'longitud', 'created_at', 'updated_at', 'tipo', 'menu', 'menus', 'tipos']
                  ]);
     }
 
@@ -46,6 +46,9 @@ class GastronomicoApiTest extends TestCase
                  ->assertJson([
                      'id' => $gastronomico->id,
                      'nombre' => $gastronomico->nombre,
+                     'imagen' => $gastronomico->imagen,
+                     'latitud' => $gastronomico->latitud,
+                     'longitud' => $gastronomico->longitud,
                  ])
                  ->assertJsonFragment(['tipo' => 'Restaurante'])
                  ->assertJsonFragment(['tipo' => 'Vegano']);
@@ -68,6 +71,8 @@ class GastronomicoApiTest extends TestCase
             'extras' => 'WiFi',
             'horario' => 'L-V 09-18',
             'imagen' => 'http://nuevo.com/imagen.jpg',
+            'latitud' => -38.555,
+            'longitud' => -58.777,
             'tipo_ids' => [$tipo->id],
             'menu_ids' => [$menu->id],
         ];
@@ -77,9 +82,17 @@ class GastronomicoApiTest extends TestCase
         $response->assertStatus(201)
                  ->assertJsonFragment([
                      'nombre' => 'Nuevo Gastronomico',
+                     'imagen' => 'http://nuevo.com/imagen.jpg',
+                     'latitud' => -38.555,
+                     'longitud' => -58.777,
                  ]);
 
-        $this->assertDatabaseHas('gastronomicos', ['nombre' => 'Nuevo Gastronomico']);
+        $this->assertDatabaseHas('gastronomicos', [
+            'nombre' => 'Nuevo Gastronomico',
+            'imagen' => 'http://nuevo.com/imagen.jpg',
+            'latitud' => -38.555,
+            'longitud' => -58.777,
+        ]);
         $this->assertDatabaseHas('gastronomico_tipo_gastronomico', ['gastronomico_id' => $response->json('id'), 'tipo_gastronomico_id' => $tipo->id]);
         $this->assertDatabaseHas('gastronomico_menus', ['gastronomico_id' => $response->json('id'), 'menu_id' => $menu->id]);
     }
@@ -99,6 +112,9 @@ class GastronomicoApiTest extends TestCase
         $updatedData = [
             'nombre' => 'Gastronomico Actualizado',
             'direccion' => 'Direccion Actualizada 456',
+            'imagen' => 'http://actualizada.com/imagen.jpg',
+            'latitud' => -38.666,
+            'longitud' => -58.888,
             'tipo_ids' => [$tipo2->id], // Sincronizar a un nuevo tipo
             'menu_ids' => [], // Eliminar menús
         ];
@@ -108,9 +124,18 @@ class GastronomicoApiTest extends TestCase
         $response->assertStatus(200)
                  ->assertJsonFragment([
                      'nombre' => 'Gastronomico Actualizado',
+                     'imagen' => 'http://actualizada.com/imagen.jpg',
+                     'latitud' => -38.666,
+                     'longitud' => -58.888,
                  ]);
 
-        $this->assertDatabaseHas('gastronomicos', ['id' => $gastronomico->id, 'nombre' => 'Gastronomico Actualizado']);
+        $this->assertDatabaseHas('gastronomicos', [
+            'id' => $gastronomico->id,
+            'nombre' => 'Gastronomico Actualizado',
+            'imagen' => 'http://actualizada.com/imagen.jpg',
+            'latitud' => -38.666,
+            'longitud' => -58.888,
+        ]);
         $this->assertDatabaseHas('gastronomico_tipo_gastronomico', ['gastronomico_id' => $gastronomico->id, 'tipo_gastronomico_id' => $tipo2->id]);
         $this->assertDatabaseMissing('gastronomico_tipo_gastronomico', ['gastronomico_id' => $gastronomico->id, 'tipo_gastronomico_id' => $tipo1->id]);
         $this->assertDatabaseMissing('gastronomico_menus', ['gastronomico_id' => $gastronomico->id, 'menu_id' => $menu1->id]);
@@ -142,7 +167,7 @@ class GastronomicoApiTest extends TestCase
      */
     public function test_create_gastronomico_validation_fails_without_required_fields(): void
     {
-        $response = $this->postJson('/api/gastronomicos', ['direccion' => 'Solo direccion']); // Falta nombre
+        $response = $this->postJson('/api/gastronomicos', ['direccion' => 'Solo direccion']);
 
         $response->assertStatus(422)
                  ->assertJsonValidationErrors(['nombre']);

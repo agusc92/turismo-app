@@ -73,6 +73,8 @@ class ImportGastronomicosCommand extends Command
                 $tiendaOnline = trim($row['tiendaOnline'] ?? '');
                 $extras = trim($row['extras'] ?? '');
                 $imagen = trim($row['imagen'] ?? '');
+                $latitud = isset($row['latitud']) && is_numeric($row['latitud']) ? (float)$row['latitud'] : null;
+                $longitud = isset($row['longitud']) && is_numeric($row['longitud']) ? (float)$row['longitud'] : null;
 
                 if (empty($nombre)) {
                     $this->warn("Línea " . ($lineNumber + 2) . " omitida: nombre vacío.");
@@ -89,6 +91,8 @@ class ImportGastronomicosCommand extends Command
                     'tiendaOnline' => $tiendaOnline ?: null,
                     'extras' => $extras ?: null,
                     'imagen' => $imagen ?: null,
+                    'latitud' => $latitud,
+                    'longitud' => $longitud,
                 ]);
 
                 // =========================

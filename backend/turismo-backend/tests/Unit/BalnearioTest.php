@@ -22,6 +22,8 @@ class BalnearioTest extends TestCase
             'accesibilidad' => 'Rampas de acceso',
             'fecha_desde_hasta' => 'Diciembre a Marzo',
             'imagen' => 'http://imagen.com/balneario.jpg',
+            'latitud' => -38.555,
+            'longitud' => -58.777,
         ];
 
         $balneario = new Balneario();
@@ -36,6 +38,8 @@ class BalnearioTest extends TestCase
         $this->assertEquals($data['accesibilidad'], $balneario->accesibilidad);
         $this->assertEquals($data['fecha_desde_hasta'], $balneario->fecha_desde_hasta);
         $this->assertEquals($data['imagen'], $balneario->imagen);
+        $this->assertEquals($data['latitud'], $balneario->latitud);
+        $this->assertEquals($data['longitud'], $balneario->longitud);
         $this->assertNull($balneario->id);
     }
 

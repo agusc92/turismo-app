@@ -21,6 +21,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
         new OA\Property(property: "tiendaOnline", type: "string", nullable: true, description: "URL de la tienda online"),
         new OA\Property(property: "extras", type: "string", nullable: true, description: "Información extra"),
         new OA\Property(property: "imagen", type: "string", nullable: true, description: "URL de la imagen principal"),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, description: "Latitud del establecimiento"),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, description: "Longitud del establecimiento"),
         new OA\Property(property: "created_at", type: "string", format: "date-time", description: "Fecha de creación"),
         new OA\Property(property: "updated_at", type: "string", format: "date-time", description: "Fecha de última actualización"),
         new OA\Property(property: "tipo", type: "array", items: new OA\Items(type: "string"), description: "Tipos de gastronomía asociados (solo nombres)"),
@@ -43,6 +45,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
         new OA\Property(property: "extras", type: "string", nullable: true, example: "Zona de juegos para niños"),
         new OA\Property(property: "horario", type: "string", nullable: true, example: "L-V 08:00-20:00"),
         new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/nuevo.jpg"),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.555),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.777),
         new OA\Property(property: "tipo_ids", type: "array", items: new OA\Items(type: "integer"), nullable: true, description: "IDs de los tipos de gastronomía a asociar", example: [1, 3]),
         new OA\Property(property: "menu_ids", type: "array", items: new OA\Items(type: "integer"), nullable: true, description: "IDs de los menús a asociar", example: [2])
     ]
@@ -60,6 +64,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
         new OA\Property(property: "extras", type: "string", nullable: true, example: "Terraza exterior"),
         new OA\Property(property: "horario", type: "string", nullable: true, example: "M-S 10:00-23:00"),
         new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/ejemplo-actualizado.jpg"),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.666),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.888),
         new OA\Property(property: "tipo_ids", type: "array", items: new OA\Items(type: "integer"), nullable: true, description: "IDs de los tipos de gastronomía a sincronizar", example: [1]),
         new OA\Property(property: "menu_ids", type: "array", items: new OA\Items(type: "integer"), nullable: true, description: "IDs de los menús a sincronizar", example: [2])
     ]
@@ -77,10 +83,17 @@ class Gastronomico extends Model
         'horario',
         'tiendaOnline',
         'extras',
-        'imagen'
+        'imagen',
+        'latitud',
+        'longitud'
     ];
 
     protected $appends = ['tipo', 'menu'];
+
+    protected $casts = [
+        'latitud' => 'float',
+        'longitud' => 'float',
+    ];
 
     public function menus()
     {

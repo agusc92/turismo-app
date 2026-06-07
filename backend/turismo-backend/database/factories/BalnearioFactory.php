@@ -31,6 +31,8 @@ class BalnearioFactory extends Factory
             'accesibilidad' => $this->faker->sentence(3),
             'fecha_desde_hasta' => 'Diciembre a Marzo',
             'imagen' => $this->faker->imageUrl(),
+            'latitud' => $this->faker->latitude(-38.7, -38.5),
+            'longitud' => $this->faker->longitude(-58.9, -58.6),
         ];
     }
 }

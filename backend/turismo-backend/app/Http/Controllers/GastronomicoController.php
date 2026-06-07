@@ -100,6 +100,8 @@ class GastronomicoController extends Controller
             'extras' => 'nullable|string',
             'horario' => 'nullable|string',
             'imagen' => 'nullable|string',
+            'latitud' => 'nullable|numeric',
+            'longitud' => 'nullable|numeric',
             'tipo_ids' => 'nullable|array',
             'tipo_ids.*' => 'exists:tipo_gastronomicos,id',
             'menu_ids' => 'nullable|array',
@@ -168,6 +170,8 @@ class GastronomicoController extends Controller
             'extras' => 'nullable|string',
             'horario' => 'nullable|string',
             'imagen' => 'nullable|string',
+            'latitud' => 'nullable|numeric',
+            'longitud' => 'nullable|numeric',
             'tipo_ids' => 'nullable|array',
             'tipo_ids.*' => 'exists:tipo_gastronomicos,id',
             'menu_ids' => 'nullable|array',
@@ -327,13 +331,6 @@ class GastronomicoController extends Controller
                 in: "path",
                 required: true,
                 description: "ID del establecimiento gastronómico",
-                schema: new OA\Schema(type: "integer", format: "int64")
-            ),
-            new OA\Parameter(
-                name: "tipoId",
-                in: "path",
-                required: true,
-                description: "ID del tipo de gastronomía a desasociar",
                 schema: new OA\Schema(type: "integer", format: "int64")
             )
         ],
