@@ -18,7 +18,10 @@ class InfoUsuarioApiTest extends TestCase
      */
     public function test_can_retrieve_list_of_info_usuarios(): void
     {
-        User::factory()->count(3)->create();
+        // Crear usuarios y sus InfoUsuarios asociados explícitamente
+        User::factory()->count(3)->create()->each(function ($user) {
+            InfoUsuario::factory()->create(['user_id' => $user->id]);
+        });
 
         $response = $this->getJson('/api/info-usuarios');
 
@@ -35,7 +38,7 @@ class InfoUsuarioApiTest extends TestCase
     public function test_can_retrieve_single_info_usuario(): void
     {
         $user = User::factory()->create();
-        $infoUsuario = InfoUsuario::where('user_id', $user->id)->first();
+        $infoUsuario = InfoUsuario::factory()->create(['user_id' => $user->id]); // Crear InfoUsuario explícitamente
         $tipo = Tipo::factory()->create();
         $infoUsuario->intereses()->attach($tipo->id);
 
@@ -56,7 +59,7 @@ class InfoUsuarioApiTest extends TestCase
     public function test_can_update_info_usuario(): void
     {
         $user = User::factory()->create();
-        $infoUsuario = InfoUsuario::where('user_id', $user->id)->first();
+        $infoUsuario = InfoUsuario::factory()->create(['user_id' => $user->id]); // Crear InfoUsuario explícitamente
         $tipo1 = Tipo::factory()->create();
         $tipo2 = Tipo::factory()->create();
         $infoUsuario->intereses()->attach($tipo1->id);
@@ -104,12 +107,14 @@ class InfoUsuarioApiTest extends TestCase
     public function test_cannot_delete_info_usuario_via_endpoint(): void
     {
         $user = User::factory()->create();
-        $infoUsuario = InfoUsuario::where('user_id', $user->id)->first();
+        $infoUsuario = InfoUsuario::factory()->create(['user_id' => $user->id]); // Crear InfoUsuario explícitamente
 
         $response = $this->deleteJson('/api/info-usuarios/' . $infoUsuario->id);
 
         $response->assertStatus(400)
                  ->assertJson(['message' => 'InfoUsuario is deleted automatically with user']);
+
+        $this->assertDatabaseHas('info_usuarios', ['id' => $infoUsuario->id]); // Asegurarse de que no se borra
     }
 
     /**
@@ -118,7 +123,7 @@ class InfoUsuarioApiTest extends TestCase
     public function test_update_info_usuario_validation_fails_with_invalid_data(): void
     {
         $user = User::factory()->create();
-        $infoUsuario = InfoUsuario::where('user_id', $user->id)->first();
+        $infoUsuario = InfoUsuario::factory()->create(['user_id' => $user->id]); // Crear InfoUsuario explícitamente
 
         $response = $this->putJson('/api/info-usuarios/' . $infoUsuario->id, ['edad' => 'not-a-number']);
 
@@ -132,7 +137,7 @@ class InfoUsuarioApiTest extends TestCase
     public function test_update_info_usuario_validation_fails_with_invalid_interests(): void
     {
         $user = User::factory()->create();
-        $infoUsuario = InfoUsuario::where('user_id', $user->id)->first();
+        $infoUsuario = InfoUsuario::factory()->create(['user_id' => $user->id]); // Crear InfoUsuario explícitamente
 
         $response = $this->putJson('/api/info-usuarios/' . $infoUsuario->id, ['intereses' => [999]]); // ID de tipo que no existe
 
