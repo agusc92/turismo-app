@@ -2,11 +2,15 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Menu;
+use App\Models\Gastronomico;
 
 class MenuTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * Test that a Menu instance can be created and has correct attributes.
      */
@@ -30,5 +34,23 @@ class MenuTest extends TestCase
     {
         $menu = new Menu();
         $this->assertInstanceOf(Menu::class, $menu);
+    }
+
+    /**
+     * Test that the 'gastronomicos' relationship works correctly.
+     */
+    public function test_gastronomicos_relationship_works(): void
+    {
+        $menu = Menu::factory()->create();
+        $gastronomico1 = Gastronomico::factory()->create();
+        $gastronomico2 = Gastronomico::factory()->create();
+        $menu->gastronomicos()->attach([$gastronomico1->id, $gastronomico2->id]);
+
+        $menu->load('gastronomicos');
+
+        $this->assertCount(2, $menu->gastronomicos);
+        $this->assertTrue($menu->gastronomicos->contains($gastronomico1));
+        $this->assertTrue($menu->gastronomicos->contains($gastronomico2));
+        $this->assertInstanceOf(Gastronomico::class, $menu->gastronomicos->first());
     }
 }

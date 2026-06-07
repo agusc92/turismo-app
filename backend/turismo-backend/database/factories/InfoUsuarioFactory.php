@@ -28,6 +28,7 @@ class InfoUsuarioFactory extends Factory
             'edad' => $this->faker->numberBetween(18, 90),
             'estadia' => $this->faker->randomElement(['1 día', '3 días', '1 semana', '2 semanas']),
             'integrantes' => $this->faker->numberBetween(1, 5),
+            'user_id' => User::factory(), // Asegurar que siempre haya un user_id asociado
         ];
     }
 
@@ -36,12 +37,6 @@ class InfoUsuarioFactory extends Factory
      */
     public function configure(): static
     {
-        return $this->afterCreating(function (InfoUsuario $infoUsuario) {
-            if (Tipo::count() === 0) {
-                Tipo::factory()->create();
-            }
-            $intereses = Tipo::inRandomOrder()->limit($this->faker->numberBetween(0, 3))->pluck('id');
-            $infoUsuario->intereses()->attach($intereses);
-        });
+        return $this;
     }
 }

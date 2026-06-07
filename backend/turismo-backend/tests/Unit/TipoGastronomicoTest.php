@@ -2,11 +2,15 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\TipoGastronomico;
+use App\Models\Gastronomico;
 
 class TipoGastronomicoTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * Test that a TipoGastronomico instance can be created and has correct attributes.
      */
@@ -30,5 +34,23 @@ class TipoGastronomicoTest extends TestCase
     {
         $tipoGastronomico = new TipoGastronomico();
         $this->assertInstanceOf(TipoGastronomico::class, $tipoGastronomico);
+    }
+
+    /**
+     * Test that the 'gastronomicos' relationship works correctly.
+     */
+    public function test_gastronomicos_relationship_works(): void
+    {
+        $tipoGastronomico = TipoGastronomico::factory()->create();
+        $gastronomico1 = Gastronomico::factory()->create();
+        $gastronomico2 = Gastronomico::factory()->create();
+        $tipoGastronomico->gastronomicos()->attach([$gastronomico1->id, $gastronomico2->id]);
+
+        $tipoGastronomico->load('gastronomicos');
+
+        $this->assertCount(2, $tipoGastronomico->gastronomicos);
+        $this->assertTrue($tipoGastronomico->gastronomicos->contains($gastronomico1));
+        $this->assertTrue($tipoGastronomico->gastronomicos->contains($gastronomico2));
+        $this->assertInstanceOf(Gastronomico::class, $tipoGastronomico->gastronomicos->first());
     }
 }

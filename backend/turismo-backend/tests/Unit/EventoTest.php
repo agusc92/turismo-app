@@ -3,11 +3,17 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+// Importar el trait
 use App\Models\Evento;
 use Carbon\Carbon;
 
 class EventoTest extends TestCase
 {
+    use RefreshDatabase;
+
+    // Usar el trait RefreshDatabase
 
     /**
      * Test that an Evento instance can be created and has correct attributes.
@@ -48,5 +54,81 @@ class EventoTest extends TestCase
     {
         $evento = new Evento();
         $this->assertInstanceOf(Evento::class, $evento);
+    }
+
+    /**
+     * Test that 'destacado' attribute is correctly cast to boolean.
+     */
+    public function test_destacado_attribute_is_boolean(): void
+    {
+        $evento = new Evento();
+
+        // Test true values
+        $evento->destacado = '1';
+        $this->assertTrue($evento->destacado);
+        $evento->destacado = 'true';
+        $this->assertTrue($evento->destacado);
+        $evento->destacado = 1;
+        $this->assertTrue($evento->destacado);
+
+        // Test false values
+        $evento->destacado = '0';
+        $this->assertFalse($evento->destacado);
+
+        $evento->destacado = 0;
+        $this->assertFalse($evento->destacado);
+
+        $evento->destacado = null;
+        $this->assertNull($evento->destacado);
+
+        $evento->destacado = '';
+        $this->assertFalse($evento->destacado);
+    }
+
+    /**
+     * Test that 'fecha' attribute is correctly cast to Carbon instance.
+     */
+    public function test_fecha_attribute_is_carbon_instance(): void
+    {
+        $evento = new Evento();
+        $dateString = '2025-01-01 10:00:00';
+        $evento->fecha = $dateString;
+
+        $this->assertInstanceOf(Carbon::class, $evento->fecha);
+        $this->assertEquals(Carbon::parse($dateString), $evento->fecha);
+    }
+
+    /**
+     * Test that 'latitud' attribute is correctly cast to float.
+     */
+    public function test_latitud_attribute_is_float(): void
+    {
+        $evento = new Evento();
+
+        $evento->latitud = "-38.555";
+        $this->assertIsFloat($evento->latitud);
+        $this->assertEquals(-38.555, $evento->latitud);
+
+        $evento->latitud = -38.12345678; // Más decimales de los que soporta el DB
+        $this->assertIsFloat($evento->latitud);
+        // Laravel y la DB pueden redondear, así que comparamos con un delta
+        $this->assertEqualsWithDelta(-38.1234568, $evento->latitud, 0.0000001);
+    }
+
+    /**
+     * Test that 'longitud' attribute is correctly cast to float.
+     */
+    public function test_longitud_attribute_is_float(): void
+    {
+        $evento = new Evento();
+
+        $evento->longitud = "-58.777";
+        $this->assertIsFloat($evento->longitud);
+        $this->assertEquals(-58.777, $evento->longitud);
+
+        $evento->longitud = -58.98765432; // Más decimales de los que soporta el DB
+        $this->assertIsFloat($evento->longitud);
+        // Laravel y la DB pueden redondear, así que comparamos con un delta
+        $this->assertEqualsWithDelta(-58.9876543, $evento->longitud, 0.0000001);
     }
 }
