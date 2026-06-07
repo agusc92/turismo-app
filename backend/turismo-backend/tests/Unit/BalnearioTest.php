@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 use App\Models\Balneario;
 
 class BalnearioTest extends TestCase
@@ -50,5 +50,39 @@ class BalnearioTest extends TestCase
     {
         $balneario = new Balneario();
         $this->assertInstanceOf(Balneario::class, $balneario);
+    }
+
+    /**
+     * Test that 'latitud' attribute is correctly cast to float.
+     */
+    public function test_latitud_attribute_is_float(): void
+    {
+        $balneario = new Balneario();
+
+        $balneario->latitud = "-38.555";
+        $this->assertIsFloat($balneario->latitud);
+        $this->assertEquals(-38.555, $balneario->latitud);
+
+        $balneario->latitud = -38.12345678; // Más decimales de los que soporta el DB
+        $this->assertIsFloat($balneario->latitud);
+        // Laravel y la DB pueden redondear, así que comparamos con un delta
+        $this->assertEqualsWithDelta(-38.1234568, $balneario->latitud, 0.0000001);
+    }
+
+    /**
+     * Test that 'longitud' attribute is correctly cast to float.
+     */
+    public function test_longitud_attribute_is_float(): void
+    {
+        $balneario = new Balneario();
+
+        $balneario->longitud = "-58.777";
+        $this->assertIsFloat($balneario->longitud);
+        $this->assertEquals(-58.777, $balneario->longitud);
+
+        $balneario->longitud = -58.98765432; // Más decimales de los que soporta el DB
+        $this->assertIsFloat($balneario->longitud);
+        // Laravel y la DB pueden redondear, así que comparamos con un delta
+        $this->assertEqualsWithDelta(-58.9876543, $balneario->longitud, 0.0000001);
     }
 }

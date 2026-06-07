@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 use App\Models\Alojamiento;
 
 class AlojamientoTest extends TestCase
@@ -51,6 +51,72 @@ class AlojamientoTest extends TestCase
     public function test_alojamiento_can_be_instantiated(): void
     {
         $alojamiento = new Alojamiento();
+
         $this->assertInstanceOf(Alojamiento::class, $alojamiento);
+    }
+
+    /**
+     * Test that 'mascotas' attribute is correctly cast to boolean.
+     */
+    public function test_mascotas_attribute_is_boolean(): void
+    {
+        $alojamiento = new Alojamiento();
+
+        // Test true values
+        $alojamiento->mascotas = '1';
+        $this->assertTrue($alojamiento->mascotas);
+
+        $alojamiento->mascotas = 'true';
+        $this->assertTrue($alojamiento->mascotas);
+
+        $alojamiento->mascotas = 1;
+        $this->assertTrue($alojamiento->mascotas);
+
+        // Test false values
+        $alojamiento->mascotas = '0';
+        $this->assertFalse($alojamiento->mascotas);
+
+        $alojamiento->mascotas = 0;
+        $this->assertFalse($alojamiento->mascotas);
+
+        $alojamiento->mascotas = null;
+        $this->assertNull($alojamiento->mascotas);
+
+        $alojamiento->mascotas = '';
+        $this->assertFalse($alojamiento->mascotas);
+    }
+
+    /**
+     * Test that 'latitud' attribute is correctly cast to float.
+     */
+    public function test_latitud_attribute_is_float(): void
+    {
+        $alojamiento = new Alojamiento();
+
+        $alojamiento->latitud = "-38.555";
+        $this->assertIsFloat($alojamiento->latitud);
+        $this->assertEquals(-38.555, $alojamiento->latitud);
+
+        $alojamiento->latitud = -38.12345678;
+        $this->assertIsFloat($alojamiento->latitud);
+
+        $this->assertEqualsWithDelta(-38.1234568, $alojamiento->latitud, 0.0000001);
+    }
+
+    /**
+     * Test that 'longitud' attribute is correctly cast to float.
+     */
+    public function test_longitud_attribute_is_float(): void
+    {
+        $alojamiento = new Alojamiento();
+
+        $alojamiento->longitud = "-58.777";
+        $this->assertIsFloat($alojamiento->longitud);
+        $this->assertEquals(-58.777, $alojamiento->longitud);
+
+        $alojamiento->longitud = -58.98765432;
+        $this->assertIsFloat($alojamiento->longitud);
+
+        $this->assertEqualsWithDelta(-58.9876543, $alojamiento->longitud, 0.0000001);
     }
 }
