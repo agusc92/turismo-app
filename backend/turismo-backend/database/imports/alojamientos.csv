@@ -1,80 +1,80 @@
-nombre,direccion,telefono,redesSociales,web,mail,mascotas,periodoApertura,tipo,imagen
-ÑIKEN,Calle 87 Nº 335,(02262) 43-2323 | 43-2929,FB: niken_neco IG: hotel.niken,www.niken.com,reservas@niken.com.ar / nikenrecepcion@gmail.com,NO,Todo el año,4 estrellas,https://example.com/niken.jpg
-PRESIDENTE,Calle 4 Nº 4040,(02262) 423800,FB: hotel presidente necochea,www.presinec.com.ar,info@presinec.com.ar,NO,Diembre a Marzo,4 estrellas,https://example.com/presidente.jpg
-BAHIA,Diagonal San Martin Nº 731,(02262) 15558749,,www.necocheanet.com.ar/hotelbahia,hotelbahia@necocheanet.com.ar,SI. Pequeñas,Diciembre a febrero,3 estrellas,https://example.com/bahia.jpg
-ESPAÑA,Calle 89 Nº 215,(02262) 422896,FB: hotel españa necochea IG: espana_hotel,www.hotel-espana.com.ar,info.hotel.espana@gmail.com,NO,Todo el año,3 estrellas,https://example.com/espana.jpg
-HORIZONTE,Calle 85 Nº 383,(02262) 423344 | 430254,FB: hotel horizonte necochea,www.hotelhorizontenecochea.com,hhorizonte@hotmail.com,NO,Noviembre a marzo,3 estrellas,https://example.com/horizonte.jpg
-LEON,Av. 59 Nº 229,(02262) 424800 | 430254,FB: hotel leon necochea / IG: hotelleon.necochea,www.hotel-leon.com.ar,consultashotel.leon@gmail.com,Solo si es por una discacidad,Todo el año,3 estrellas,https://example.com/leon.jpg
-LOS MIRASOLES,Calle 4 Nº 3943,(02262) 521832,,,mirasoles.necocehea@gmail.com,NO,Todo el año,3 estrellas,https://example.com/losmirasoles.jpg
-MAR Y CIELO,Av. 79 Nº 369,(02262) 15633580,FB: hotel mar y cielo necochea / IG: hotelmarycielonecochea,www.hotelmarycielo.com.ar,consultas@hotelmarycielo.com.ar / hotelmarycielonecochea@gmail.com,SI ,Todo el año,3 estrellas,https://example.com/marycielo.jpg
-MILESI,Av. 79 Nº 373,(02262) 425387 | 15547157,IG: hotelmilesi,,milesihotel@gmail.com,NO,Diciembre a marzo,3 estrellas,https://example.com/milesi.jpg
-MODERNO,Av. 79 Nº 311,(02262) 522049 | 15580730,IG: hotelmodernonecochea,www.hotel-moderno.com.ar,info@hotel-moderno.com.ar,NO,Todo el año,3 estrellas,https://example.com/moderno.jpg
-PERUGIA,Calle 81 Nº 288,(02262) 15303380,IG: perugiahotel,,hotelperugianecochea@gmail.com,NO,Todo el año,3 estrellas,https://example.com/perugia.jpg
-SAN MARTIN,Calle 6 Nº 4198,(02262) 15482785,FB: hotel san martin neco | IG: hotelsanmartinneco,,hotelsanmartinneco@gmail.com,NO,Todo el año,3 estrellas,https://example.com/sanmartin.jpg
-TROCADERO,Calle 81 Nº 279,(02262) 422589,,www.presinec.com.ar,trocadero@presinec.com.ar,NO,Diembre a Marzo,3 estrellas,https://example.com/trocadero.jpg
-ARENAS,Calle 8 Nº 4036,(02262) 434500,,http://www.presinec.com.ar/,arenas@presinec.com.ar,NO,Diembre a Marzo,2 estrellas,https://example.com/arenas.jpg
-ARENAS DEL SOL,Av. 2 Nº 4270,(02262) 422141 | 01154008312,FB: arenas del sol / IG: hotelarenasdelsol,www.arenasdelsol.com.ar,complejoarenasdelsol@gmail.com,NO,Diembre a Marzo,2 estrellas,https://example.com/arenasdelsol.jpg
-CARAMA,Calle 77 Nº 237,(02262) 425540 | 01127947168,FB: carama necochea,www.hotelcarama.com.ar,hotel_carama@hotmail.com,NO,Diembre a Marzo,2 estrellas,https://example.com/carama.jpg
-CELESTE,Diagonal San Martin Nº 696,(02262) 15493369,FB: hotel celeste | IG: hotelcelestenecochea,,hotelcelestenecochea@gmail.com,SI,Diembre a Marzo,2 estrellas,https://example.com/celeste.jpg
-COMPOSTELA,Av. 75 Nº 374,(02262) 1563847,FB: hotel compostela necochea | IG: hotelcompostelanecochea,,hotelcompostela.2016@gmail.com,SI (pequeñas),Noviembre a Marzo,2 estrellas,https://example.com/compostela.jpg
-DERUHÁ,Calle 79 Nº 831,(02262) 15421137,FB: hotel deruha | IG: hotelderuha | X: hotel deruha,www.hotelderuha.com,hotelderuha@hotmail.com,SI,Todo el año,2 estrellas,https://example.com/deruha.jpg
-D Y D,Calle 77 Nº 314 e/ 6 y 8,(02262) 15414141,FB: hotel dyd,,doloresbarbalarga@hotmail.com,NO,Diembre a Marzo,2 estrellas,https://example.com/dyd.jpg
-EL FARO,Calle 8 Nº 3935,(02262) 15368171,IG: elfaro_hotel,,elfarohotel@outlook.com / anabel_coria_@hotmail.com,,Diembre a Marzo,2 estrellas,https://example.com/elfaro.jpg
-EMPERADOR,Calle 6 Nº 4052,(02262) 15422421,,,marielashumacher@hotmail.com,SI,Diembre a Marzo,2 estrellas,https://example.com/emperador.jpg
-FLAMINGO,Calle 83 Nº 333,(02262) 15237677,FB: hotel flamingo,,flamingonecochea@gmail.com,NO,Todo el año,2 estrellas,https://example.com/flamingo.jpg
-GRAN AVENIDA,Av. 79 Nº 386,(02262) 15608855,IG: grupohoteleropalikao,www.hotelpalikao.com.ar,granhotelavenida@gmail.com,SI,Diembre a Marzo,2 estrellas,https://example.com/granavenida.jpg
-HOTEL PARQUE,Calle 8 Nº 4365,(02262) 15535321,IG: hotelparquenecochea,www.hoteldelparquenecochea.com,infohotelparque@gmail.com,NO,,2 estrellas,https://example.com/hotelparque.jpg
-HOSTAL DEL REY,Calle 81 Nº 335,(02262) 15410114,FB: hotel hostal del rey | IG: hostaldelrey,,hostaldelrey@live.com,NO,Diembre a Marzo,2 estrellas,https://example.com/hostaldelrey.jpg
-INTERNACIONAL,Calle 81 Nº 232,(02262) 15424587 | 15226126,IG: hotelinternacional.necochea,www.hotelinternacionalnecochea.com,reservas@hotelinternacionalnecochea.com,NO,Diembre a Marzo,2 estrellas,https://example.com/internacional.jpg
-LAS BRISAS,Calle 83 Nº 374,(02262) 15524856 | 15526231,FB: hotel las brisas,www.hotellasbrisas.com.ar,informes@hotellasbrisas.com.ar,NO,Diembre a Marzo,2 estrellas,https://example.com/lasbrisas.jpg
-LAS VEGAS,Av. 79 Nº 247,(02262) 15482785,,www.hotel-lasvegas.com.ar,lasvegas@ladulce.com.ar,NO,,2 estrellas,https://example.com/lasvegas.jpg
-LOBO HOTEL,Calle 83 Nº 877,(02262) 15355265,,,lucianoringa_85@hotmail.com,NO,Diembre a Marzo,2 estrellas,https://example.com/lobohotel.jpg
-MIAMI,Calle 85 Nº 233,(02262) 15423275,FB: hotel miami necochea | IG: hotelmiaminecochea,www.hotelmiaminecochea.com,info@hotelmiaminecochea.com,NO,Diembre a Marzo,2 estrellas,https://example.com/miami.jpg
-PLAZA,Calle 85 Nº 269,(02262) 15514111,,,susanafaidella@gmail.com,NO,Diembre a Marzo,2 estrellas,https://example.com/plaza.jpg
-REAL,Av. 79 Nº 264,(02262) 15422656 | 15502820,,,info@realhotel.com.ar,NO,Todo el año,2 estrellas,https://example.com/real.jpg
-SARIMAR,Calle 8 Nº 4351,(02262) 1542-4381 | 1556-2722,,www.hotelsarimar.com.ar,silvinabrusca@hotmail.com,NO,Diembre a Marzo,2 estrellas,https://example.com/sarimar.jpg
-SOLCHAGA,Calle 62 Nº 2822,(02262) 1542-5584,FB: hotel restaurant solchaga - necochea / IG: hotelsolchaganecochea,,hotelsolchaga@hotmail.com,NO,Todo el año,2 estrellas,https://example.com/solchaga.jpg
-SUR,Calle 85 Nº 372,(02262) 1550-1435,IG: sur.hotel,www.sur-hotel.com.ar,surhotelnecochea@gmail.com,NO,Todo el año,2 estrellas,https://example.com/sur.jpg
-TRES ARROYOS,Av. 79 Nº 231,(02262) 1564-7535,IG: hoteltarroyos,,zulmafloro@hotmail.com,NO,Diembre a Marzo,2 estrellas,https://example.com/tresarroyos.jpg
-TRIERS,Calle 8 Nº 3825,(02262) 1565-2681,,,,NO,,2 estrellas,https://example.com/triers.jpg
-WINDSOR,Calle 4 Nº 3957,1171113197,,www.windsornecochea.com,hotelwindsor.necochea@gmail.com,NO,Diembre a Marzo,2 estrellas,https://example.com/windsor.jpg
-BRISAMAR,Calle 83 Nº 336,(02262) 424909 | 15303757,,www.necocheanet.com.ar,brisamarhotel@hotmaiil.com.ar,NO,Diembre a Marzo,1 estrella,https://example.com/brisamar.jpg
-CHE MAR,Av. 79 Nº 364,(02262) 15478899,IG: hotelchemarnecochea,,hotelchemar@gmail.com,SI,,1 estrella,https://example.com/chemar.jpg
-CHE NECO,Calle 4 N° 4335,(02262) 15639449,IG: che.neco,www.cheneco.com.ar,infocheneco@gmail.com / info@cheneco.com.ar,SI,,1 estrella,https://example.com/cheneco.jpg
-COLON,Calle 62 Nº 3034,(02262) 15528926,FB: hotel colon,,hotelcolon62@hotmail.com,NO,Diembre a Marzo,1 estrella,https://example.com/colon.jpg
-FUERTEVENTURA,Calle 81 Nº 230,(02262) 15353725,FB: hotel fuerteventura | IG: hotelfuerteventura_necochea,,,SI,Diembre a Marzo,1 estrella,https://example.com/fuerteventura.jpg
-HOSPEDAJE NECO,Calle 87 Nº 338,(02262) 425191 | 15637085,IG: hospedajeneco | FB: hospedaje neco,www.hospedajeneco.com.ar,hospedajeneco@yahoo.com.ar,NO,,1 estrella,https://example.com/hospedajeneco.jpg
-MIRASOL,Calle 4 bis Nº 4133,(02262) 15525158 | 15485972,FB: liliana sainz | IG: hotel.mirasol,,hotelmirasol.necochea@gmail.com,SI,,1 estrella,https://example.com/mirasol.jpg
-VALLE VERDE,Diagonal San Martin Nº 656,(02262) 423760,,,,NO,Todo el año,1 estrella,https://example.com/valleverde.jpg
-EL AMANECER,Calle 24 Nº 3802,(02262) 15353844,IG: elamanecerhosteria | FB: catalina mancino (hotel el amanecer),,,SI,Diembre a Marzo,hosteria,https://example.com/elamanecer.jpg
-HOSTERIA DEL BOSQUE,Calle 89 Nº 350,(02262) 15530002,,www.hosteriadelbosque.com,hosteriadelbosquenecochea@gmail.com,NO,Todo el año,hosteria,https://example.com/hosteriadelbosque.jpg
-FLORENCIA,Av. 10 Nº 4365,(02262) 438845,FB: hotel florencia necochea | IG: hotelflorencia_necochea,www.florenciahotel.com.ar,hotelflorencianecochea@yahoo.com.ar,SI,Todo el año,hosteria,https://example.com/florencia.jpg
-FIRENZE,Calle 4 Nº 4356,(02262) 15521114 | 15498913,FB: hotel firenze necochea,,hotelfirenzenecochea@hotmaill.com.ar,Si. Pequeñas,Todo el año,hosteria,https://example.com/firenze.jpg
-POSTA CARRETA,Calle 73 bis Nº 319,(02262) 15320285,IG: hotelpostacarretanecochea,,hosteriapostacarreta@gmail.com,Si. Pequeñas,Todo el año,hosteria,https://example.com/postacarreta.jpg
-RIO COLORADO,Calle 4 Nº 3855,(02262) 15557870,,,,NO,Diembre a Marzo,hosteria,https://example.com/riocolorado.jpg
-LO DE SARITA ,Calle 81 Nº 261,(02262) 15324227,IG: lodesaritahosteria,https://lodesaritahosteria.com.ar/,lodesaritahosteria@gmail.com,NO,,hosteria,https://example.com/lodesarita.jpg
-TRES REYES,Calle 4 bis Nº 4123,(02262) 334272,IG: tresreyesnecochea,,naloria400@hotmail.com,NO,Diciembre a marzo,bed & breakfast,https://example.com/tresreyes.jpg
-PLENOMAR,Calle 87 Nº 230,(02262) 485287 | 15422674,,,,SI,Diciembre a marzo,bed & breakfast,https://example.com/plenomar.jpg
-QUEQUEN LODGE,Calle 533 Nº 154,(02262) 15577265,FB: lodge quequen pablo | IG: quequen lodge,www.quequenlodge.com.ar,quequenloge@hotmail.com,NO,Diciembre a marzo,bed & breakfast,https://example.com/quequenlodge.jpg
-CITY,Calle 81 Nº 237,(02262) 15649775,IG: hotelcity_necochea,,,NO,Diciembre a marzo,hospedaje,https://example.com/city.jpg
-APARTS DEL LAGO,Av. 2 y calle 103,(011) 68308460,IG: apartslagodeloscisnes,www.lagodeloscisnes.com,,NO,Todo el año,apart hotel,https://example.com/apartsdelago.jpg
-BARRANCAS APART DEPORTIVO Y SPA,RP 86 y calle 66,(02262) 15497259,FB: las barrancas apart deportivo & spa | IG:  lasbarrancasapartyspa,www.apartlasbarrancas.com,lasbarrancasapart@gmail.com,NO,Todo el año,apart hotel,https://example.com/barrancas.jpg
-COMPLEJO DE MAR MIGUEL LILLO,Av. 2 Nº 5757,(02262) 15632626,FB: camping miguel lillo | IG: campingmiguellillo,www.campinglillo.com.ar,,SI,Todo el año,hostel,https://example.com/complejodemar.jpg
-LA CASA DE AL LADO,Calle 506 Nº 1160,(02262) 15557619 | 15242288,IG: lacasadeallado,,lacasadeallado2020@hotmail.com,NO,Diciembre a marzo,hostel,https://example.com/lacasadeallado.jpg
-MONTE PASUBIO COMUNIDAD,Av. 502 Nº 1160,(02262) 15600919,FB: monte pasubio - comunidad | IG: montepasubio,www.motepasubio.com,complejomontepasubio@gmail.com,NO,Todo el año,hostel,https://example.com/montepasubio.jpg
-VERONA,Calle 83 Nº767,(02262) 15486913,FB: verona hostel necochea | IG: veronahostel,,veronahostel@hotmail.com,NO,Diciembre a marzo,hostel,https://example.com/verona.jpg
-ASIMRA 1º DE MAYO,Calle 77 Nº 237,(02262) 15468779,IG: hotel.asimra necochea | FB: asimra oficial,,necochea@hotelasimra.com.ar,NO,Diciembre a marzo,dominio sindical,https://example.com/asimra.jpg
-EVITA,Av. 79 Nº 533,(02262) 437013,,www.sutaca.com,,NO,Diciembre a marzo,dominio sindical,https://example.com/evita.jpg
-MEDANO BLANCO,Calle 85 Nº 704,(02262) 423394,,,hotelmedanoblanco@uatre.org.ar,NO,Octubre a marzo,dominio sindical,https://example.com/medanoblanco.jpg
-8 DE octubre,Calle 83 Nº 601,(02262) 438278,,,hotel8deoctubre@uatre.org.ar,NO,Todo el año,dominio sindical,https://example.com/8deoctubre.jpg
-SUTEP,Av. 10 Nº 3757,(02262) 15307861,,,,NO,Diciembre a marzo,dominio sindical,https://example.com/sutep.jpg
-CABAÑAS DEL PINAR,Calle 123 Nº 1402,(02262) 15538349,FB: cabañas del pinar | IG: cabañasdelpinar,www.cabañasdelpinar.com.ar,info@cabañasdelpinar.com.ar,NO,Todo el año,complejo de cabañas,https://example.com/cabañasdelpinar.jpg
-EL GRINGO,Calle 519 Nº 901,(02262) 425429 | 15540194,"FB: cabañas camping "" el gringo""",,dmp1972@hotmail.com,En carpas si / cabañas no,,complejo de cabañas,https://example.com/elgringo.jpg
-COMPLEJO DE MAR CAMPING MIGUEL LILLO,Av. 2 Nº 5757,(02262) 15632626,FB: camping miguel lillo | IG: campingmiguellillo,www.campinglillo.com.ar,,SI,Todo el año,complejo de cabañas,https://example.com/campingmiguellillo.jpg
-MONTE PASUBIO COMUNIDAD,Av. 502 Nº 1160,(02262) 15600919,FB: monte pasubio - comunidad | IG: montepasubio,www.montepasubio.com,complejomontepasubio@gmail.com,NO,Todo el año,complejo de cabañas,https://example.com/montepasubio_comunidad.jpg
-CABAÑAS RIO QUEQUEN,Calle 22 y Ribera del Rio Quequén,(02262) 15620080,FB: cabañas rio quequen necochea | IG: cabanisrioquequen,www.cabaniarioquequen.com,cabaniarioquequen@gmail.com,SI,Todo el año,complejo de cabañas,https://example.com/rioquequen.jpg
-AEFIP,Av. 10 y calle 195,(02324) 15463775,,,,NO,,dominio sindical,https://example.com/aefip.jpg
-COMPLEJO 15 DE DICIEMBRE ASOC. MUTUAL CAMIONEROS,Calle 187 Nº 2380,(02262) 15600241 ,,www.mutualcamioneros.org.ar,campingcamioneronec@yahoo.com.ar,Si. Pequeñas,,dominio sindical,https://example.com/camioneros.jpg
-ATSA,Av. 10 y calle 189,(02213) 15615863,,www.atsalaplata.org.ar,maxibati@hotmail.com,SI,Todo el año,dominio sindical,https://example.com/atsa.jpg
-SUPARA COMPLEJO 1º DE JUNIO,Av. 10 y calle 195,(02262) 15543916,FB: supara necochea,www.supara-necochea.com.ar,complejoprimerodejunio@gmail.com,NO,Todo el año,dominio sindical,https://example.com/supara.jpg
-"SUTEBA ""CAMPING TODOS JUNTOS""",Calle 187 entre Av. 2 y Av. 10,(02262) 420107,,www.suteba.org.ar,tereneco@gmail.com,NO,Todo el año,dominio sindical,https://example.com/suteba.jpg
+nombre,direccion,telefono,redesSociales,web,mail,mascotas,periodoApertura,tipo,imagen,latitud,longitud
+ÑIKEN,Calle 87 Nº 335,(02262) 43-2323 | 43-2929,FB: niken_neco IG: hotel.niken,www.niken.com,reservas@niken.com.ar / nikenrecepcion@gmail.com,NO,Todo el año,4 estrellas,https://example.com/niken.jpg,-38.58100539211659, -58.73337473645911
+PRESIDENTE,Calle 4 Nº 4040,(02262) 423800,FB: hotel presidente necochea,www.presinec.com.ar,info@presinec.com.ar,NO,Diembre a Marzo,4 estrellas,https://example.com/presidente.jpg,-38.5750000,-58.7350000
+BAHIA,Diagonal San Martin Nº 731,(02262) 15558749,,www.necocheanet.com.ar/hotelbahia,hotelbahia@necocheanet.com.ar,SI. Pequeñas,Diciembre a febrero,3 estrellas,https://example.com/bahia.jpg,-38.5720000,-58.7320000
+ESPAÑA,Calle 89 Nº 215,(02262) 422896,FB: hotel españa necochea IG: espana_hotel,www.hotel-espana.com.ar,info.hotel.espana@gmail.com,NO,Todo el año,3 estrellas,https://example.com/espana.jpg,-38.5710000,-58.7310000
+HORIZONTE,Calle 85 Nº 383,(02262) 423344 | 430254,FB: hotel horizonte necochea,www.hotelhorizontenecochea.com,hhorizonte@hotmail.com,NO,Noviembre a marzo,3 estrellas,https://example.com/horizonte.jpg,-38.5730000,-58.7330000
+LEON,Av. 59 Nº 229,(02262) 424800 | 430254,FB: hotel leon necochea / IG: hotelleon.necochea,www.hotel-leon.com.ar,consultashotel.leon@gmail.com,Solo si es por una discacidad,Todo el año,3 estrellas,https://example.com/leon.jpg,-38.5740000,-58.7340000
+LOS MIRASOLES,Calle 4 Nº 3943,(02262) 521832,,,mirasoles.necocehea@gmail.com,NO,Todo el año,3 estrellas,https://example.com/losmirasoles.jpg,-38.5760000,-58.7360000
+MAR Y CIELO,Av. 79 Nº 369,(02262) 15633580,FB: hotel mar y cielo necochea | IG: hotelmarycielonecochea,www.hotelmarycielo.com.ar,consultas@hotelmarycielo.com.ar / hotelmarycielonecochea@gmail.com,SI ,Todo el año,3 estrellas,https://example.com/marycielo.jpg,-38.5770000,-58.7370000
+MILESI,Av. 79 Nº 373,(02262) 425387 | 15547157,IG: hotelmilesi,,milesihotel@gmail.com,NO,Diciembre a marzo,3 estrellas,https://example.com/milesi.jpg,-38.5780000,-58.7380000
+MODERNO,Av. 79 Nº 311,(02262) 522049 | 15580730,IG: hotelmodernonecochea,www.hotel-moderno.com.ar,info@hotel-moderno.com.ar,NO,Todo el año,3 estrellas,https://example.com/moderno.jpg,-38.5790000,-58.7390000
+PERUGIA,Calle 81 Nº 288,(02262) 15303380,IG: perugiahotel,,hotelperugianecochea@gmail.com,NO,Todo el año,3 estrellas,https://example.com/perugia.jpg,-38.5800000,-58.7400000
+SAN MARTIN,Calle 6 Nº 4198,(02262) 15482785,FB: hotel san martin neco | IG: hotelsanmartinneco,,hotelsanmartinneco@gmail.com,NO,Todo el año,3 estrellas,https://example.com/sanmartin.jpg,-38.5810000,-58.7410000
+TROCADERO,Calle 81 Nº 279,(02262) 422589,,www.presinec.com.ar,trocadero@presinec.com.ar,NO,Diembre a Marzo,3 estrellas,https://example.com/trocadero.jpg,-38.5820000,-58.7420000
+ARENAS,Calle 8 Nº 4036,(02262) 434500,,http://www.presinec.com.ar/,arenas@presinec.com.ar,NO,Diembre a Marzo,2 estrellas,https://example.com/arenas.jpg,-38.5830000,-58.7430000
+ARENAS DEL SOL,Av. 2 Nº 4270,(02262) 422141 | 01154008312,FB: arenas del sol / IG: hotelarenasdelsol,www.arenasdelsol.com.ar,complejoarenasdelsol@gmail.com,NO,Diembre a Marzo,2 estrellas,https://example.com/arenasdelsol.jpg,-38.5840000,-58.7440000
+CARAMA,Calle 77 Nº 237,(02262) 425540 | 01127947168,FB: carama necochea,www.hotelcarama.com.ar,hotel_carama@hotmail.com,NO,Diembre a Marzo,2 estrellas,https://example.com/carama.jpg,-38.5850000,-58.7450000
+CELESTE,Diagonal San Martin Nº 696,(02262) 15493369,FB: hotel celeste | IG: hotelcelestenecochea,,hotelcelestenecochea@gmail.com,SI,Diembre a Marzo,2 estrellas,https://example.com/celeste.jpg,-38.5860000,-58.7460000
+COMPOSTELA,Av. 75 Nº 374,(02262) 1563847,FB: hotel compostela necochea | IG: hotelcompostelanecochea,,hotelcompostela.2016@gmail.com,SI (pequeñas),Noviembre a Marzo,2 estrellas,https://example.com/compostela.jpg,-38.5870000,-58.7470000
+DERUHÁ,Calle 79 Nº 831,(02262) 15421137,FB: hotel deruha | IG: hotelderuha | X: hotel deruha,www.hotelderuha.com,hotelderuha@hotmail.com,SI,Todo el año,2 estrellas,https://example.com/deruha.jpg,-38.5880000,-58.7480000
+D Y D,Calle 77 Nº 314 e/ 6 y 8,(02262) 15414141,FB: hotel dyd,,doloresbarbalarga@hotmail.com,NO,Diembre a Marzo,2 estrellas,https://example.com/dyd.jpg,-38.5890000,-58.7490000
+EL FARO,Calle 8 Nº 3935,(02262) 15368171,IG: elfaro_hotel,,elfarohotel@outlook.com / anabel_coria_@hotmail.com,,Diembre a Marzo,2 estrellas,https://example.com/elfaro.jpg,-38.5900000,-58.7500000
+EMPERADOR,Calle 6 Nº 4052,(02262) 15422421,,,marielashumacher@hotmail.com,SI,Diembre a Marzo,2 estrellas,https://example.com/emperador.jpg,-38.5910000,-58.7510000
+FLAMINGO,Calle 83 Nº 333,(02262) 15237677,FB: hotel flamingo,,flamingonecochea@gmail.com,NO,Todo el año,2 estrellas,https://example.com/flamingo.jpg,-38.5920000,-58.7520000
+GRAN AVENIDA,Av. 79 Nº 386,(02262) 15608855,IG: grupohoteleropalikao,www.hotelpalikao.com.ar,granhotelavenida@gmail.com,SI,Diembre a Marzo,2 estrellas,https://example.com/granavenida.jpg,-38.5930000,-58.7530000
+HOTEL PARQUE,Calle 8 Nº 4365,(02262) 15535321,IG: hotelparquenecochea,www.hoteldelparquenecochea.com,infohotelparque@gmail.com,NO,,2 estrellas,https://example.com/hotelparque.jpg,-38.5940000,-58.7540000
+HOSTAL DEL REY,Calle 81 Nº 335,(02262) 15410114,FB: hotel hostal del rey | IG: hostaldelrey,,hostaldelrey@live.com,NO,Diembre a Marzo,2 estrellas,https://example.com/hostaldelrey.jpg,-38.5950000,-58.7550000
+INTERNACIONAL,Calle 81 Nº 232,(02262) 15424587 | 15226126,IG: hotelinternacional.necochea,www.hotelinternacionalnecochea.com,reservas@hotelinternacionalnecochea.com,NO,Diembre a Marzo,2 estrellas,https://example.com/internacional.jpg,-38.5960000,-58.7560000
+LAS BRISAS,Calle 83 Nº 374,(02262) 15524856 | 15526231,FB: hotel las brisas,www.hotellasbrisas.com.ar,informes@hotellasbrisas.com.ar,NO,Diembre a Marzo,2 estrellas,https://example.com/lasbrisas.jpg,-38.5970000,-58.7570000
+LAS VEGAS,Av. 79 Nº 247,(02262) 15482785,,www.hotel-lasvegas.com.ar,lasvegas@ladulce.com.ar,NO,,2 estrellas,https://example.com/lasvegas.jpg,-38.5980000,-58.7580000
+LOBO HOTEL,Calle 83 Nº 877,(02262) 15355265,,,lucianoringa_85@hotmail.com,NO,Diembre a Marzo,2 estrellas,https://example.com/lobohotel.jpg,-38.5990000,-58.7590000
+MIAMI,Calle 85 Nº 233,(02262) 15423275,FB: hotel miami necochea | IG: hotelmiaminecochea,www.hotelmiaminecochea.com,info@hotelmiaminecochea.com,NO,Diembre a Marzo,2 estrellas,https://example.com/miami.jpg,-38.6000000,-58.7600000
+PLAZA,Calle 85 Nº 269,(02262) 15514111,,,susanafaidella@gmail.com,NO,Diembre a Marzo,2 estrellas,https://example.com/plaza.jpg,-38.6010000,-58.7610000
+REAL,Av. 79 Nº 264,(02262) 15422656 | 15502820,,,info@realhotel.com.ar,NO,Todo el año,2 estrellas,https://example.com/real.jpg,-38.6020000,-58.7620000
+SARIMAR,Calle 8 Nº 4351,(02262) 1542-4381 | 1556-2722,,www.hotelsarimar.com.ar,silvinabrusca@hotmail.com,NO,Diembre a Marzo,2 estrellas,https://example.com/sarimar.jpg,-38.6030000,-58.7630000
+SOLCHAGA,Calle 62 Nº 2822,(02262) 1542-5584,FB: hotel restaurant solchaga - necochea / IG: hotelsolchaganecochea,,hotelsolchaga@hotmail.com,NO,Todo el año,2 estrellas,https://example.com/solchaga.jpg,-38.6040000,-58.7640000
+SUR,Calle 85 Nº 372,(02262) 1550-1435,IG: sur.hotel,www.sur-hotel.com.ar,surhotelnecochea@gmail.com,NO,Todo el año,2 estrellas,https://example.com/sur.jpg,-38.6050000,-58.7650000
+TRES ARROYOS,Av. 79 Nº 231,(02262) 1564-7535,IG: hoteltarroyos,,zulmafloro@hotmail.com,NO,Diembre a Marzo,2 estrellas,https://example.com/tresarroyos.jpg,-38.6060000,-58.7660000
+TRIERS,Calle 8 Nº 3825,(02262) 1565-2681,,,,NO,,2 estrellas,https://example.com/triers.jpg,-38.6070000,-58.7670000
+WINDSOR,Calle 4 Nº 3957,1171113197,,www.windsornecochea.com,hotelwindsor.necochea@gmail.com,NO,Diembre a Marzo,2 estrellas,https://example.com/windsor.jpg,-38.6080000,-58.7680000
+BRISAMAR,Calle 83 Nº 336,(02262) 424909 | 15303757,,www.necocheanet.com.ar,brisamarhotel@hotmaiil.com.ar,NO,Diembre a Marzo,1 estrella,https://example.com/brisamar.jpg,-38.6090000,-58.7690000
+CHE MAR,Av. 79 Nº 364,(02262) 15478899,IG: hotelchemarnecochea,,hotelchemar@gmail.com,SI,,1 estrella,https://example.com/chemar.jpg,-38.6100000,-58.7700000
+CHE NECO,Calle 4 N° 4335,(02262) 15639449,IG: che.neco,www.cheneco.com.ar,infocheneco@gmail.com / info@cheneco.com.ar,SI,,1 estrella,https://example.com/cheneco.jpg,-38.6110000,-58.7710000
+COLON,Calle 62 Nº 3034,(02262) 15528926,FB: hotel colon,,hotelcolon62@hotmail.com,NO,Diembre a Marzo,1 estrella,https://example.com/colon.jpg,-38.6120000,-58.7720000
+FUERTEVENTURA,Calle 81 Nº 230,(02262) 15353725,FB: hotel fuerteventura | IG: hotelfuerteventura_necochea,,,SI,Diembre a Marzo,1 estrella,https://example.com/fuerteventura.jpg,-38.6130000,-58.7730000
+HOSPEDAJE NECO,Calle 87 Nº 338,(02262) 425191 | 15637085,IG: hospedajeneco | FB: hospedaje neco,www.hospedajeneco.com.ar,hospedajeneco@yahoo.com.ar,NO,,1 estrella,https://example.com/hospedajeneco.jpg,-38.6140000,-58.7740000
+MIRASOL,Calle 4 bis Nº 4133,(02262) 15525158 | 15485972,FB: liliana sainz | IG: hotel.mirasol,,hotelmirasol.necochea@gmail.com,SI,,1 estrella,https://example.com/mirasol.jpg,-38.6150000,-58.7750000
+VALLE VERDE,Diagonal San Martin Nº 656,(02262) 423760,,,,NO,Todo el año,1 estrella,https://example.com/valleverde.jpg,-38.6160000,-58.7760000
+EL AMANECER,Calle 24 Nº 3802,(02262) 15353844,IG: elamanecerhosteria | FB: catalina mancino (hotel el amanecer),,,SI,Diembre a Marzo,hosteria,https://example.com/elamanecer.jpg,-38.6170000,-58.7770000
+HOSTERIA DEL BOSQUE,Calle 89 Nº 350,(02262) 15530002,,www.hosteriadelbosque.com,hosteriadelbosquenecochea@gmail.com,NO,Todo el año,hosteria,https://example.com/hosteriadelbosque.jpg,-38.6180000,-58.7780000
+FLORENCIA,Av. 10 Nº 4365,(02262) 438845,FB: hotel florencia necochea | IG: hotelflorencia_necochea,www.florenciahotel.com.ar,hotelflorencianecochea@yahoo.com.ar,SI,Todo el año,hosteria,https://example.com/florencia.jpg,-38.6190000,-58.7790000
+FIRENZE,Calle 4 Nº 4356,(02262) 15521114 | 15498913,FB: hotel firenze necochea,,hotelfirenzenecochea@hotmaill.com.ar,Si. Pequeñas,Todo el año,hosteria,https://example.com/firenze.jpg,-38.6200000,-58.7800000
+POSTA CARRETA,Calle 73 bis Nº 319,(02262) 15320285,IG: hotelpostacarretanecochea,,hosteriapostacarreta@gmail.com,Si. Pequeñas,Todo el año,hosteria,https://example.com/postacarreta.jpg,-38.6210000,-58.7810000
+RIO COLORADO,Calle 4 Nº 3855,(02262) 15557870,,,,NO,Diembre a Marzo,hosteria,https://example.com/riocolorado.jpg,-38.6220000,-58.7820000
+LO DE SARITA ,Calle 81 Nº 261,(02262) 15324227,IG: lodesaritahosteria,https://lodesaritahosteria.com.ar/,lodesaritahosteria@gmail.com,NO,,hosteria,https://example.com/lodesarita.jpg,-38.6230000,-58.7830000
+TRES REYES,Calle 4 bis Nº 4123,(02262) 334272,IG: tresreyesnecochea,,naloria400@hotmail.com,NO,Diciembre a marzo,bed & breakfast,https://example.com/tresreyes.jpg,-38.6240000,-58.7840000
+PLENOMAR,Calle 87 Nº 230,(02262) 485287 | 15422674,,,,SI,Diciembre a marzo,bed & breakfast,https://example.com/plenomar.jpg,-38.6250000,-58.7850000
+QUEQUEN LODGE,Calle 533 Nº 154,(02262) 15577265,FB: lodge quequen pablo | IG: quequen lodge,www.quequenlodge.com.ar,quequenloge@hotmail.com,NO,Diciembre a marzo,bed & breakfast,https://example.com/quequenlodge.jpg,-38.6260000,-58.7860000
+CITY,Calle 81 Nº 237,(02262) 15649775,IG: hotelcity_necochea,,,NO,Diciembre a marzo,hospedaje,https://example.com/city.jpg,-38.6270000,-58.7870000
+APARTS DEL LAGO,Av. 2 y calle 103,(011) 68308460,IG: apartslagodeloscisnes,www.lagodeloscisnes.com,,NO,Todo el año,apart hotel,https://example.com/apartsdelago.jpg,-38.6280000,-58.7880000
+BARRANCAS APART DEPORTIVO Y SPA,RP 86 y calle 66,(02262) 15497259,FB: las barrancas apart deportivo & spa | IG:  lasbarrancasapartyspa,www.apartlasbarrancas.com,lasbarrancasapart@gmail.com,NO,Todo el año,apart hotel,https://example.com/barrancas.jpg,-38.6290000,-58.7890000
+COMPLEJO DE MAR MIGUEL LILLO,Av. 2 Nº 5757,(02262) 15632626,FB: camping miguel lillo | IG: campingmiguellillo,www.campinglillo.com.ar,,SI,Todo el año,hostel,https://example.com/complejodemar.jpg,-38.6300000,-58.7900000
+LA CASA DE AL LADO,Calle 506 Nº 1160,(02262) 15557619 | 15242288,IG: lacasadeallado,,lacasadeallado2020@hotmail.com,NO,Diciembre a marzo,hostel,https://example.com/lacasadeallado.jpg,-38.6310000,-58.7910000
+MONTE PASUBIO COMUNIDAD,Av. 502 Nº 1160,(02262) 15600919,FB: monte pasubio - comunidad | IG: montepasubio,www.motepasubio.com,complejomontepasubio@gmail.com,NO,Todo el año,hostel,https://example.com/montepasubio.jpg,-38.6320000,-58.7920000
+VERONA,Calle 83 Nº767,(02262) 15486913,FB: verona hostel necochea | IG: veronahostel,,veronahostel@hotmail.com,NO,Diciembre a marzo,hostel,https://example.com/verona.jpg,-38.6330000,-58.7930000
+ASIMRA 1º DE MAYO,Calle 77 Nº 237,(02262) 15468779,IG: hotel.asimra necochea | FB: asimra oficial,,necochea@hotelasimra.com.ar,NO,Diciembre a marzo,dominio sindical,https://example.com/asimra.jpg,-38.6340000,-58.7940000
+EVITA,Av. 79 Nº 533,(02262) 437013,,www.sutaca.com,,NO,Diciembre a marzo,dominio sindical,https://example.com/evita.jpg,-38.6350000,-58.7950000
+MEDANO BLANCO,Calle 85 Nº 704,(02262) 423394,,,hotelmedanoblanco@uatre.org.ar,NO,Octubre a marzo,dominio sindical,https://example.com/medanoblanco.jpg,-38.6360000,-58.7960000
+8 DE octubre,Calle 83 Nº 601,(02262) 438278,,,hotel8deoctubre@uatre.org.ar,NO,Todo el año,dominio sindical,https://example.com/8deoctubre.jpg,-38.6370000,-58.7970000
+SUTEP,Av. 10 Nº 3757,(02262) 15307861,,,,NO,Diciembre a marzo,dominio sindical,https://example.com/sutep.jpg,-38.6380000,-58.7980000
+CABAÑAS DEL PINAR,Calle 123 Nº 1402,(02262) 15538349,FB: cabañas del pinar | IG: cabañasdelpinar,www.cabañasdelpinar.com.ar,info@cabañasdelpinar.com.ar,NO,Todo el año,complejo de cabañas,https://example.com/cabañasdelpinar.jpg,-38.6390000,-58.7990000
+EL GRINGO,Calle 519 Nº 901,(02262) 425429 | 15540194,"FB: cabañas camping "" el gringo""",,dmp1972@hotmail.com,En carpas si / cabañas no,,complejo de cabañas,https://example.com/elgringo.jpg,-38.6400000,-58.8000000
+COMPLEJO DE MAR MIGUEL LILLO,Av. 2 Nº 5757,(02262) 15632626,FB: camping miguel lillo | IG: campingmiguellillo,www.campinglillo.com.ar,,SI,Todo el año,complejo de cabañas,https://example.com/campingmiguellillo.jpg,-38.6410000,-58.8010000
+MONTE PASUBIO COMUNIDAD,Av. 502 Nº 1160,(02262) 15600919,FB: monte pasubio - comunidad | IG: montepasubio,www.motepasubio.com,complejomontepasubio@gmail.com,NO,Todo el año,complejo de cabañas,https://example.com/montepasubio_comunidad.jpg,-38.6420000,-58.8020000
+CABAÑAS RIO QUEQUEN,Calle 22 y Ribera del Rio Quequén,(02262) 15620080,FB: cabañas rio quequen necochea | IG: cabanisrioquequen,www.cabaniarioquequen.com,cabaniarioquequen@gmail.com,SI,Todo el año,complejo de cabañas,https://example.com/rioquequen.jpg,-38.6430000,-58.8030000
+AEFIP,Av. 10 y calle 195,(02324) 15463775,,,,NO,,dominio sindical,https://example.com/aefip.jpg,-38.6440000,-58.8040000
+COMPLEJO 15 DE DICIEMBRE ASOC. MUTUAL CAMIONEROS,Calle 187 Nº 2380,(02262) 15600241 ,,www.mutualcamioneros.org.ar,campingcamioneronec@yahoo.com.ar,Si. Pequeñas,,dominio sindical,https://example.com/camioneros.jpg,-38.6450000,-58.8050000
+ATSA,Av. 10 y calle 189,(02213) 15615863,,www.atsalaplata.org.ar,maxibati@hotmail.com,SI,Todo el año,dominio sindical,https://example.com/atsa.jpg,-38.6460000,-58.8060000
+SUPARA COMPLEJO 1º DE JUNIO,Av. 10 y calle 195,(02262) 15543916,FB: supara necochea,www.supara-necochea.com.ar,complejoprimerodejunio@gmail.com,NO,Todo el año,dominio sindical,https://example.com/supara.jpg,-38.6470000,-58.8070000
+"SUTEBA ""CAMPING TODOS JUNTOS""",Calle 187 entre Av. 2 y Av. 10,(02262) 420107,,www.suteba.org.ar,tereneco@gmail.com,NO,Todo el año,dominio sindical,https://example.com/suteba.jpg,-38.6480000,-58.8080000

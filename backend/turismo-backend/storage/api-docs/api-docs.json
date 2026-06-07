@@ -154,9 +154,6 @@
                     },
                     "404": {
                         "description": "Actividad no encontrada"
-                    },
-                    "422": {
-                        "description": "Error de validación"
                     }
                 }
             },
@@ -1293,16 +1290,6 @@
                             "type": "integer",
                             "format": "int64"
                         }
-                    },
-                    {
-                        "name": "tipoId",
-                        "in": "path",
-                        "description": "ID del tipo de gastronomía a desasociar",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
                     }
                 ],
                 "responses": {
@@ -2290,6 +2277,18 @@
                         "type": "string",
                         "nullable": true
                     },
+                    "latitud": {
+                        "description": "Latitud de la actividad",
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "description": "Longitud de la actividad",
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
                     "tipo_id": {
                         "description": "ID del tipo de actividad",
                         "type": "integer",
@@ -2364,6 +2363,18 @@
                         "example": "http://imagen.com/surf.jpg",
                         "nullable": true
                     },
+                    "latitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -38.555,
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -58.777,
+                        "nullable": true
+                    },
                     "tipo_id": {
                         "type": "integer",
                         "example": 1
@@ -2419,6 +2430,18 @@
                     "imagen": {
                         "type": "string",
                         "example": "http://imagen.com/kitesurf.jpg",
+                        "nullable": true
+                    },
+                    "latitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -38.666,
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -58.888,
                         "nullable": true
                     },
                     "tipo_id": {
@@ -2490,6 +2513,18 @@
                         "type": "string",
                         "nullable": true
                     },
+                    "latitud": {
+                        "description": "Latitud del alojamiento",
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "description": "Longitud del alojamiento",
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
                     "created_at": {
                         "description": "Fecha de creación",
                         "type": "string",
@@ -2559,6 +2594,18 @@
                         "type": "string",
                         "example": "http://imagen.com/hotel.jpg",
                         "nullable": true
+                    },
+                    "latitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -38.555,
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -58.777,
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -2617,6 +2664,18 @@
                         "type": "string",
                         "example": "http://imagen.com/cabaña.jpg",
                         "nullable": true
+                    },
+                    "latitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -38.666,
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -58.888,
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -2672,6 +2731,18 @@
                     "imagen": {
                         "description": "URL de la imagen del balneario",
                         "type": "string",
+                        "nullable": true
+                    },
+                    "latitud": {
+                        "description": "Latitud del balneario",
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "description": "Longitud del balneario",
+                        "type": "number",
+                        "format": "float",
                         "nullable": true
                     },
                     "created_at": {
@@ -2738,6 +2809,18 @@
                         "type": "string",
                         "example": "http://imagen.com/neptuno.jpg",
                         "nullable": true
+                    },
+                    "latitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -38.555,
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -58.777,
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -2791,6 +2874,18 @@
                         "type": "string",
                         "example": "http://imagen.com/poseidon.jpg",
                         "nullable": true
+                    },
+                    "latitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -38.666,
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -58.888,
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -2841,6 +2936,18 @@
                     "imagen": {
                         "description": "URL de la imagen del complejo",
                         "type": "string",
+                        "nullable": true
+                    },
+                    "latitud": {
+                        "description": "Latitud del complejo",
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "description": "Longitud del complejo",
+                        "type": "number",
+                        "format": "float",
                         "nullable": true
                     },
                     "created_at": {
@@ -2902,6 +3009,18 @@
                         "type": "string",
                         "example": "http://imagen.com/complejo.jpg",
                         "nullable": true
+                    },
+                    "latitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -38.555,
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -58.777,
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -2917,7 +3036,7 @@
                     },
                     "direccion": {
                         "type": "string",
-                        "example": "Calle 4 N° 200",
+                        "example": "Av. 79 N° 1200",
                         "nullable": true
                     },
                     "mail": {
@@ -2949,6 +3068,18 @@
                     "imagen": {
                         "type": "string",
                         "example": "http://imagen.com/complejo_update.jpg",
+                        "nullable": true
+                    },
+                    "latitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -38.666,
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -58.888,
                         "nullable": true
                     }
                 },
@@ -2993,6 +3124,18 @@
                     "destacado": {
                         "description": "Indica si el evento es destacado",
                         "type": "boolean"
+                    },
+                    "latitud": {
+                        "description": "Latitud del evento",
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "description": "Longitud del evento",
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
                     },
                     "created_at": {
                         "description": "Fecha de creación",
@@ -3047,6 +3190,18 @@
                     "destacado": {
                         "type": "boolean",
                         "example": false
+                    },
+                    "latitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -38.555,
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -58.777,
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -3089,6 +3244,18 @@
                     "destacado": {
                         "type": "boolean",
                         "example": true,
+                        "nullable": true
+                    },
+                    "latitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -38.666,
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -58.888,
                         "nullable": true
                     }
                 },
@@ -3139,6 +3306,18 @@
                     "imagen": {
                         "description": "URL de la imagen principal",
                         "type": "string",
+                        "nullable": true
+                    },
+                    "latitud": {
+                        "description": "Latitud del establecimiento",
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "description": "Longitud del establecimiento",
+                        "type": "number",
+                        "format": "float",
                         "nullable": true
                     },
                     "created_at": {
@@ -3228,6 +3407,18 @@
                         "example": "http://imagen.com/nuevo.jpg",
                         "nullable": true
                     },
+                    "latitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -38.555,
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -58.777,
+                        "nullable": true
+                    },
                     "tipo_ids": {
                         "description": "IDs de los tipos de gastronomía a asociar",
                         "type": "array",
@@ -3296,6 +3487,18 @@
                     "imagen": {
                         "type": "string",
                         "example": "http://imagen.com/ejemplo-actualizado.jpg",
+                        "nullable": true
+                    },
+                    "latitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -38.666,
+                        "nullable": true
+                    },
+                    "longitud": {
+                        "type": "number",
+                        "format": "float",
+                        "example": -58.888,
                         "nullable": true
                     },
                     "tipo_ids": {

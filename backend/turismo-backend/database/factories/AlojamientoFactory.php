@@ -32,6 +32,8 @@ class AlojamientoFactory extends Factory
             'periodoApertura' => $this->faker->randomElement(['Todo el año', 'Temporada alta', 'Verano']),
             'tipo' => $this->faker->randomElement(['Hotel', 'Cabaña', 'Hostel', 'Apart Hotel']),
             'imagen' => $this->faker->imageUrl(),
+            'latitud' => $this->faker->latitude(-38.7, -38.5),
+            'longitud' => $this->faker->longitude(-58.9, -58.6),
         ];
     }
 }

@@ -69,6 +69,8 @@ class ImportAlojamientosCommand extends Command
             $periodoApertura = $row['periodoApertura'] ?? null;
             $tipo = $row['tipo'] ?? null;
             $imagen = $row['imagen'] ?? null;
+            $latitud = isset($row['latitud']) && is_numeric($row['latitud']) ? (float)$row['latitud'] : null;
+            $longitud = isset($row['longitud']) && is_numeric($row['longitud']) ? (float)$row['longitud'] : null;
 
             try {
                 Alojamiento::create([
@@ -82,6 +84,8 @@ class ImportAlojamientosCommand extends Command
                     'periodoApertura' => $periodoApertura,
                     'tipo' => $tipo,
                     'imagen' => $imagen,
+                    'latitud' => $latitud,
+                    'longitud' => $longitud,
                 ]);
                 $importedCount++;
             } catch (\Exception $e) {

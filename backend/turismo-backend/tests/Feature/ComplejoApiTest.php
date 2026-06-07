@@ -23,7 +23,7 @@ class ComplejoApiTest extends TestCase
         $response->assertStatus(200)
                  ->assertJsonCount(3)
                  ->assertJsonStructure([
-                     '*' => ['id', 'nombre', 'direccion', 'mail', 'redesSociales', 'telefono', 'servicio', 'adicional', 'imagen', 'created_at', 'updated_at']
+                     '*' => ['id', 'nombre', 'direccion', 'mail', 'redesSociales', 'telefono', 'servicio', 'adicional', 'imagen', 'latitud', 'longitud', 'created_at', 'updated_at']
                  ]);
     }
 
@@ -41,6 +41,8 @@ class ComplejoApiTest extends TestCase
                      'id' => $complejo->id,
                      'nombre' => $complejo->nombre,
                      'imagen' => $complejo->imagen,
+                     'latitud' => $complejo->latitud,
+                     'longitud' => $complejo->longitud,
                  ]);
     }
 
@@ -58,6 +60,8 @@ class ComplejoApiTest extends TestCase
             'servicio' => 'Piscina, Gimnasio',
             'adicional' => 'Estacionamiento',
             'imagen' => 'http://imagen.com/nuevo_complejo.jpg',
+            'latitud' => -38.555,
+            'longitud' => -58.777,
         ];
 
         $response = $this->postJson('/api/complejos', $complejoData);
@@ -66,9 +70,16 @@ class ComplejoApiTest extends TestCase
                  ->assertJsonFragment([
                      'nombre' => 'Nuevo Complejo',
                      'imagen' => 'http://imagen.com/nuevo_complejo.jpg',
+                     'latitud' => -38.555,
+                     'longitud' => -58.777,
                  ]);
 
-        $this->assertDatabaseHas('complejos', ['nombre' => 'Nuevo Complejo', 'imagen' => 'http://imagen.com/nuevo_complejo.jpg']);
+        $this->assertDatabaseHas('complejos', [
+            'nombre' => 'Nuevo Complejo',
+            'imagen' => 'http://imagen.com/nuevo_complejo.jpg',
+            'latitud' => -38.555,
+            'longitud' => -58.777,
+        ]);
     }
 
     /**
@@ -82,6 +93,8 @@ class ComplejoApiTest extends TestCase
             'nombre' => 'Complejo Actualizado',
             'direccion' => 'Direccion Actualizada 456',
             'imagen' => 'http://imagen.com/complejo_actualizado.jpg',
+            'latitud' => -38.666,
+            'longitud' => -58.888,
         ];
 
         $response = $this->putJson('/api/complejos/' . $complejo->id, $updatedData);
@@ -90,9 +103,17 @@ class ComplejoApiTest extends TestCase
                  ->assertJsonFragment([
                      'nombre' => 'Complejo Actualizado',
                      'imagen' => 'http://imagen.com/complejo_actualizado.jpg',
+                     'latitud' => -38.666,
+                     'longitud' => -58.888,
                  ]);
 
-        $this->assertDatabaseHas('complejos', ['id' => $complejo->id, 'nombre' => 'Complejo Actualizado', 'imagen' => 'http://imagen.com/complejo_actualizado.jpg']);
+        $this->assertDatabaseHas('complejos', [
+            'id' => $complejo->id,
+            'nombre' => 'Complejo Actualizado',
+            'imagen' => 'http://imagen.com/complejo_actualizado.jpg',
+            'latitud' => -38.666,
+            'longitud' => -58.888,
+        ]);
     }
 
     /**

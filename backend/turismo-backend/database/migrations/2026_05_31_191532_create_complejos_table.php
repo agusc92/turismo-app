@@ -21,6 +21,8 @@ return new class extends Migration
             $table->text('servicio')->nullable();
             $table->text('adicional')->nullable();
             $table->string('imagen')->nullable();
+            $table->decimal('latitud', 10, 7)->nullable();
+            $table->decimal('longitud', 10, 7)->nullable();
             $table->timestamps();
         });
     }

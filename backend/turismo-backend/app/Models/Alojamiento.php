@@ -22,6 +22,8 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "periodoApertura", type: "string", nullable: true, description: "Período de apertura (ej. 'Todo el año', 'Temporada alta')"),
         new OA\Property(property: "tipo", type: "string", description: "Tipo de alojamiento (ej. 'Hotel', 'Cabaña')"),
         new OA\Property(property: "imagen", type: "string", nullable: true, description: "URL de la imagen del alojamiento"),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, description: "Latitud del alojamiento"),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, description: "Longitud del alojamiento"),
         new OA\Property(property: "created_at", type: "string", format: "date-time", description: "Fecha de creación"),
         new OA\Property(property: "updated_at", type: "string", format: "date-time", description: "Fecha de última actualización")
     ]
@@ -41,7 +43,9 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "mascotas", type: "boolean", example: false),
         new OA\Property(property: "periodoApertura", type: "string", nullable: true, example: "Todo el año"),
         new OA\Property(property: "tipo", type: "string", example: "Hotel"),
-        new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/hotel.jpg")
+        new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/hotel.jpg"),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.555),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.777)
     ]
 )]
 #[OA\Schema(
@@ -58,7 +62,9 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "mascotas", type: "boolean", nullable: true, example: true),
         new OA\Property(property: "periodoApertura", type: "string", nullable: true, example: "Temporada alta"),
         new OA\Property(property: "tipo", type: "string", nullable: true, example: "Cabaña"),
-        new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/cabaña.jpg")
+        new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/cabaña.jpg"),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.666),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.888)
     ]
 )]
 class Alojamiento extends Model
@@ -77,6 +83,14 @@ class Alojamiento extends Model
         'mascotas',
         'periodoApertura',
         'tipo',
-        'imagen'
+        'imagen',
+        'latitud',
+        'longitud'
+    ];
+
+    protected $casts = [
+        'mascotas' => 'boolean',
+        'latitud' => 'float',
+        'longitud' => 'float',
     ];
 }

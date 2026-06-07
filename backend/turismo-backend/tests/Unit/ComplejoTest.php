@@ -21,6 +21,8 @@ class ComplejoTest extends TestCase
             'servicio' => 'Piscina, Gimnasio',
             'adicional' => 'Wifi gratis',
             'imagen' => 'http://imagen.com/complejo.jpg',
+            'latitud' => -38.555,
+            'longitud' => -58.777,
         ];
 
         $complejo = new Complejo();
@@ -34,6 +36,8 @@ class ComplejoTest extends TestCase
         $this->assertEquals($data['servicio'], $complejo->servicio);
         $this->assertEquals($data['adicional'], $complejo->adicional);
         $this->assertEquals($data['imagen'], $complejo->imagen);
+        $this->assertEquals($data['latitud'], $complejo->latitud);
+        $this->assertEquals($data['longitud'], $complejo->longitud);
 
         $this->assertNull($complejo->id);
     }

@@ -23,6 +23,8 @@ return new class extends Migration
             $table->text('periodoApertura')->nullable();
             $table->text('tipo')->nullable();
             $table->string('imagen')->nullable();
+            $table->decimal('latitud', 10, 7)->nullable();
+            $table->decimal('longitud', 10, 7)->nullable();
             $table->timestamps();
         });
     }
