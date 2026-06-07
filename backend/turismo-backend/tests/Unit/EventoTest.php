@@ -22,6 +22,8 @@ class EventoTest extends TestCase
             'lugar' => 'Anfiteatro Municipal',
             'imagen' => 'http://imagen.com/concierto.jpg',
             'destacado' => true,
+            'latitud' => -38.555,
+            'longitud' => -58.777,
         ];
 
         $evento = new Evento();
@@ -34,6 +36,8 @@ class EventoTest extends TestCase
         $this->assertEquals($data['lugar'], $evento->lugar);
         $this->assertEquals($data['imagen'], $evento->imagen);
         $this->assertEquals($data['destacado'], $evento->destacado);
+        $this->assertEquals($data['latitud'], $evento->latitud);
+        $this->assertEquals($data['longitud'], $evento->longitud);
         $this->assertNull($evento->id);
     }
 

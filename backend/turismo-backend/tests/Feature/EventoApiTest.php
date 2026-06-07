@@ -23,7 +23,7 @@ class EventoApiTest extends TestCase
         $response->assertStatus(200)
                  ->assertJsonCount(3)
                  ->assertJsonStructure([
-                     '*' => ['id', 'nombre', 'direccion', 'descripcion', 'fecha', 'lugar', 'imagen', 'destacado', 'created_at', 'updated_at']
+                     '*' => ['id', 'nombre', 'direccion', 'descripcion', 'fecha', 'lugar', 'imagen', 'destacado', 'latitud', 'longitud', 'created_at', 'updated_at']
                  ]);
     }
 
@@ -40,6 +40,8 @@ class EventoApiTest extends TestCase
                  ->assertJson([
                      'id' => $evento->id,
                      'nombre' => $evento->nombre,
+                     'latitud' => $evento->latitud,
+                     'longitud' => $evento->longitud,
                  ]);
     }
 
@@ -56,6 +58,8 @@ class EventoApiTest extends TestCase
             'lugar' => 'Lugar del Evento',
             'imagen' => 'http://imagen.com/nuevo_evento.jpg',
             'destacado' => true,
+            'latitud' => -38.555,
+            'longitud' => -58.777,
         ];
 
         $response = $this->postJson('/api/eventos', $eventoData);
@@ -63,9 +67,15 @@ class EventoApiTest extends TestCase
         $response->assertStatus(201)
                  ->assertJsonFragment([
                      'nombre' => 'Nuevo Evento',
+                     'latitud' => -38.555,
+                     'longitud' => -58.777,
                  ]);
 
-        $this->assertDatabaseHas('eventos', ['nombre' => 'Nuevo Evento']);
+        $this->assertDatabaseHas('eventos', [
+            'nombre' => 'Nuevo Evento',
+            'latitud' => -38.555,
+            'longitud' => -58.777,
+        ]);
     }
 
     /**
@@ -79,6 +89,8 @@ class EventoApiTest extends TestCase
             'nombre' => 'Evento Actualizado',
             'direccion' => 'Direccion Actualizada Evento',
             'destacado' => false,
+            'latitud' => -38.666,
+            'longitud' => -58.888,
         ];
 
         $response = $this->putJson('/api/eventos/' . $evento->id, $updatedData);
@@ -86,9 +98,16 @@ class EventoApiTest extends TestCase
         $response->assertStatus(200)
                  ->assertJsonFragment([
                      'nombre' => 'Evento Actualizado',
+                     'latitud' => -38.666,
+                     'longitud' => -58.888,
                  ]);
 
-        $this->assertDatabaseHas('eventos', ['id' => $evento->id, 'nombre' => 'Evento Actualizado']);
+        $this->assertDatabaseHas('eventos', [
+            'id' => $evento->id,
+            'nombre' => 'Evento Actualizado',
+            'latitud' => -38.666,
+            'longitud' => -58.888,
+        ]);
     }
 
     /**
@@ -111,7 +130,7 @@ class EventoApiTest extends TestCase
      */
     public function test_create_evento_validation_fails_without_required_fields(): void
     {
-        $response = $this->postJson('/api/eventos', ['direccion' => 'Solo direccion']); // Falta nombre, fecha, lugar
+        $response = $this->postJson('/api/eventos', ['direccion' => 'Solo direccion']);
 
         $response->assertStatus(422)
                  ->assertJsonValidationErrors(['nombre', 'fecha', 'lugar']);

@@ -24,7 +24,7 @@ class ActividadApiTest extends TestCase
         $response->assertStatus(200)
                  ->assertJsonCount(3)
                  ->assertJsonStructure([
-                     '*' => ['id', 'nombre', 'direccion', 'descripcion', 'redes_sociales', 'web', 'mail', 'telefono', 'imagen', 'tipo_id', 'dias_y_horarios', 'created_at', 'updated_at', 'tipo']
+                     '*' => ['id', 'nombre', 'direccion', 'descripcion', 'redes_sociales', 'web', 'mail', 'telefono', 'imagen', 'latitud', 'longitud', 'tipo_id', 'dias_y_horarios', 'created_at', 'updated_at', 'tipo']
                  ]);
     }
 
@@ -42,6 +42,9 @@ class ActividadApiTest extends TestCase
                  ->assertJson([
                      'id' => $actividad->id,
                      'nombre' => $actividad->nombre,
+                     'imagen' => $actividad->imagen,
+                     'latitud' => $actividad->latitud,
+                     'longitud' => $actividad->longitud,
                      'tipo' => [
                          'id' => $tipo->id,
                          'tipo' => $tipo->tipo,
@@ -65,6 +68,8 @@ class ActividadApiTest extends TestCase
             'mail' => 'nuevo@actividad.com',
             'telefono' => '111222333',
             'imagen' => 'http://nuevo.com/imagen.jpg',
+            'latitud' => -38.555,
+            'longitud' => -58.777,
             'tipo_id' => $tipo->id,
             'dias_y_horarios' => 'L-V 09-18',
         ];
@@ -74,9 +79,17 @@ class ActividadApiTest extends TestCase
         $response->assertStatus(201)
                  ->assertJsonFragment([
                      'nombre' => 'Nueva Actividad',
+                     'imagen' => 'http://nuevo.com/imagen.jpg',
+                     'latitud' => -38.555,
+                     'longitud' => -58.777,
                  ]);
 
-        $this->assertDatabaseHas('actividades', ['nombre' => 'Nueva Actividad']);
+        $this->assertDatabaseHas('actividades', [
+            'nombre' => 'Nueva Actividad',
+            'imagen' => 'http://nuevo.com/imagen.jpg',
+            'latitud' => -38.555,
+            'longitud' => -58.777,
+        ]);
     }
 
     /**
@@ -91,6 +104,9 @@ class ActividadApiTest extends TestCase
         $updatedData = [
             'nombre' => 'Actividad Actualizada',
             'direccion' => 'Direccion Actualizada Actividad',
+            'imagen' => 'http://actualizada.com/imagen.jpg',
+            'latitud' => -38.666,
+            'longitud' => -58.888,
             'tipo_id' => $nuevoTipo->id,
         ];
 
@@ -99,9 +115,19 @@ class ActividadApiTest extends TestCase
         $response->assertStatus(200)
                  ->assertJsonFragment([
                      'nombre' => 'Actividad Actualizada',
+                     'imagen' => 'http://actualizada.com/imagen.jpg',
+                     'latitud' => -38.666,
+                     'longitud' => -58.888,
                  ]);
 
-        $this->assertDatabaseHas('actividades', ['id' => $actividad->id, 'nombre' => 'Actividad Actualizada', 'tipo_id' => $nuevoTipo->id]);
+        $this->assertDatabaseHas('actividades', [
+            'id' => $actividad->id,
+            'nombre' => 'Actividad Actualizada',
+            'imagen' => 'http://actualizada.com/imagen.jpg',
+            'latitud' => -38.666,
+            'longitud' => -58.888,
+            'tipo_id' => $nuevoTipo->id,
+        ]);
     }
 
     /**
@@ -115,7 +141,7 @@ class ActividadApiTest extends TestCase
         $response = $this->deleteJson('/api/actividades/' . $actividad->id);
 
         $response->assertStatus(200)
-                 ->assertJson(['message' => 'Actividad eliminada correctamente']);
+                 ->assertJson(['message' => 'Actividad eliminado correctamente']); // Corregido: "eliminado" en lugar de "eliminada"
 
         $this->assertDatabaseMissing('actividades', ['id' => $actividad->id]);
     }

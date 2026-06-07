@@ -19,6 +19,8 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "lugar", type: "string", description: "Lugar donde se realiza el evento"),
         new OA\Property(property: "imagen", type: "string", nullable: true, description: "URL de la imagen del evento"),
         new OA\Property(property: "destacado", type: "boolean", description: "Indica si el evento es destacado"),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, description: "Latitud del evento"),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, description: "Longitud del evento"),
         new OA\Property(property: "created_at", type: "string", format: "date-time", description: "Fecha de creación"),
         new OA\Property(property: "updated_at", type: "string", format: "date-time", description: "Fecha de última actualización")
     ]
@@ -35,7 +37,9 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "fecha", type: "string", format: "date", example: "2024-12-31"),
         new OA\Property(property: "lugar", type: "string", example: "Anfiteatro"),
         new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/concierto.jpg"),
-        new OA\Property(property: "destacado", type: "boolean", example: false)
+        new OA\Property(property: "destacado", type: "boolean", example: false),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.555),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.777)
     ]
 )]
 #[OA\Schema(
@@ -49,7 +53,9 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "fecha", type: "string", format: "date", nullable: true, example: "2025-01-15"),
         new OA\Property(property: "lugar", type: "string", nullable: true, example: "Teatro Municipal"),
         new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/jazz.jpg"),
-        new OA\Property(property: "destacado", type: "boolean", nullable: true, example: true)
+        new OA\Property(property: "destacado", type: "boolean", nullable: true, example: true),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.666),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.888)
     ]
 )]
 class Evento extends Model
@@ -65,11 +71,15 @@ class Evento extends Model
         'fecha',
         'lugar',
         'imagen',
-        'destacado'
+        'destacado',
+        'latitud',
+        'longitud'
     ];
 
     protected $casts = [
         'destacado' => 'boolean',
         'fecha' => 'datetime',
+        'latitud' => 'float',
+        'longitud' => 'float',
     ];
 }

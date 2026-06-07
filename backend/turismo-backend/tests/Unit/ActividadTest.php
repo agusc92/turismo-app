@@ -22,6 +22,8 @@ class ActividadTest extends TestCase
             'mail' => 'info@surfescuela.com',
             'telefono' => '1122334455',
             'imagen' => 'http://imagen.com/surf.jpg',
+            'latitud' => -38.555,
+            'longitud' => -58.777,
             'tipo_id' => 1,
             'dias_y_horarios' => 'Lunes a Viernes de 10:00 a 18:00',
         ];
@@ -37,6 +39,8 @@ class ActividadTest extends TestCase
         $this->assertEquals($data['mail'], $actividad->mail);
         $this->assertEquals($data['telefono'], $actividad->telefono);
         $this->assertEquals($data['imagen'], $actividad->imagen);
+        $this->assertEquals($data['latitud'], $actividad->latitud);
+        $this->assertEquals($data['longitud'], $actividad->longitud);
         $this->assertEquals($data['tipo_id'], $actividad->tipo_id);
         $this->assertEquals($data['dias_y_horarios'], $actividad->dias_y_horarios);
         $this->assertNull($actividad->id);

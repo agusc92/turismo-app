@@ -15,11 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('direccion');
-            $table->text('descripcion')->nullable(); // Cambiado de string a text
+            $table->text('descripcion')->nullable();
             $table->dateTime('fecha');
             $table->string('lugar');
             $table->string('imagen')->nullable();
             $table->boolean('destacado')->default(false);
+            $table->decimal('latitud', 10, 7)->nullable();
+            $table->decimal('longitud', 10, 7)->nullable();
             $table->timestamps();
         });
     }

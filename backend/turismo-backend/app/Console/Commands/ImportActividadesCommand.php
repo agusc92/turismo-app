@@ -46,7 +46,7 @@ class ImportActividadesCommand extends Command
         $importedCount = 0;
         $skippedCount = 0;
 
-        foreach ($lines as $line) {
+        foreach ($lines as $lineNumber => $line) {
             if (empty(trim($line))) {
                 continue;
             }
@@ -69,6 +69,8 @@ class ImportActividadesCommand extends Command
             $telefono = $row['telefono'] ?? null;
             $imagen = $row['imagen'] ?? null;
             $diasYHorarios = $row['diasYHorarios'] ?? null;
+            $latitud = isset($row['latitud']) && is_numeric($row['latitud']) ? (float)$row['latitud'] : null;
+            $longitud = isset($row['longitud']) && is_numeric($row['longitud']) ? (float)$row['longitud'] : null;
 
             $tipoId = null;
             if (isset($row['tipo']) && !empty($row['tipo'])) {
@@ -87,6 +89,8 @@ class ImportActividadesCommand extends Command
                     'mail' => $mail,
                     'telefono' => $telefono,
                     'imagen' => $imagen,
+                    'latitud' => $latitud,
+                    'longitud' => $longitud,
                     'tipo_id' => $tipoId,
                     'dias_y_horarios' => $diasYHorarios,
                 ]);
