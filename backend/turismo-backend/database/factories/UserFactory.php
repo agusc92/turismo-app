@@ -36,12 +36,13 @@ class UserFactory extends Factory
 
     /**
      * Configure the model factory.
+     *
+     * Eliminado el afterCreating para crear InfoUsuario,
+     * ya que esto debe ser controlado explícitamente en los tests.
      */
     public function configure(): static
     {
-        return $this->afterCreating(function (User $user) {
-            InfoUsuario::factory()->create(['user_id' => $user->id]);
-        });
+        return $this; // No hacer nada después de crear
     }
 
     /**
