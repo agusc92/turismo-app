@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { API_URL } from '../../api';
 
-export const useGastronomiaData = () => {
+export  const useGastronomiaData = () => {
     const [dataGastronomica, setDataGastronomica] = useState([]);
     const [tipoGastronomico, setTipoGastronomico] = useState([]);
     const [menu, setMenu] = useState([]);
