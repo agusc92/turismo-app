@@ -29,6 +29,9 @@ class ComplejoFactory extends Factory
             'telefono' => $this->faker->phoneNumber,
             'servicio' => $this->faker->sentence(5),
             'adicional' => $this->faker->paragraph(1),
+            'imagen' => $this->faker->imageUrl(),
+            'latitud' => $this->faker->latitude(-38.7, -38.5),
+            'longitud' => $this->faker->longitude(-58.9, -58.6),
         ];
     }
 }

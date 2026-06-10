@@ -33,6 +33,8 @@ class ActividadFactory extends Factory
             'imagen' => $this->faker->imageUrl(),
             'tipo_id' => Tipo::factory(),
             'dias_y_horarios' => $this->faker->sentence(4),
+            'latitud' => $this->faker->latitude(-38.7, -38.5),
+            'longitud' => $this->faker->longitude(-58.9, -58.6),
         ];
     }
 }

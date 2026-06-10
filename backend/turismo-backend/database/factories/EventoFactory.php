@@ -29,6 +29,8 @@ class EventoFactory extends Factory
             'lugar' => $this->faker->city,
             'imagen' => $this->faker->imageUrl(),
             'destacado' => $this->faker->boolean(),
+            'latitud' => $this->faker->latitude(-38.7, -38.5),
+            'longitud' => $this->faker->longitude(-58.9, -58.6),
         ];
     }
 }

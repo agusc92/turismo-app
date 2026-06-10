@@ -55,6 +55,9 @@ class ImportComplejosCommand extends Command
 
             $row = array_combine($header, $data);
 
+            $latitud = isset($row['latitud']) && is_numeric($row['latitud']) ? (float)$row['latitud'] : null;
+            $longitud = isset($row['longitud']) && is_numeric($row['longitud']) ? (float)$row['longitud'] : null;
+
             try {
                 Complejo::create([
                     'nombre' => $row['nombre'],
@@ -64,6 +67,9 @@ class ImportComplejosCommand extends Command
                     'telefono' => $row['telefono'] ?? null,
                     'servicio' => $row['servicio'] ?? null,
                     'adicional' => $row['adicional'] ?? null,
+                    'imagen' => $row['imagen'] ?? null,
+                    'latitud' => $latitud,
+                    'longitud' => $longitud,
                 ]);
                 $importedCount++;
             } catch (\Exception $e) {

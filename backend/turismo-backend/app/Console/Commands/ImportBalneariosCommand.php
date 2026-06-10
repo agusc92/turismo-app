@@ -68,6 +68,8 @@ class ImportBalneariosCommand extends Command
             $accesibilidad = $row['accesibilidad'] ?? null;
             $fechaDesdeHasta = $row['fecha_desde_hasta'] ?? null;
             $imagen = $row['imagen'] ?? null;
+            $latitud = isset($row['latitud']) && is_numeric($row['latitud']) ? (float)$row['latitud'] : null;
+            $longitud = isset($row['longitud']) && is_numeric($row['longitud']) ? (float)$row['longitud'] : null;
 
             try {
                 Balneario::create([
@@ -80,6 +82,8 @@ class ImportBalneariosCommand extends Command
                     'accesibilidad' => $accesibilidad,
                     'fecha_desde_hasta' => $fechaDesdeHasta,
                     'imagen' => $imagen,
+                    'latitud' => $latitud,
+                    'longitud' => $longitud,
                 ]);
                 $importedCount++;
             } catch (\Exception $e) {

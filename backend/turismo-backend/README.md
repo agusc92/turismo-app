@@ -1,3 +1,15 @@
+<p align="center">
+  <img src="public/dark.png#gh-dark-mode-only" width="400">
+  <img src="public/light.png#gh-light-mode-only" width="400">
+</p>
+
+[![Laravel](https://img.shields.io/badge/Laravel-^10.0-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://www.php.net/)
+[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![Docker](https://img.shields.io/badge/Docker-20.10+-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Tests](https://img.shields.io/badge/Tests-PHPUnit-6C5293?style=for-the-badge&logo=phpunit&logoColor=white)](https://phpunit.de/)
+[![Swagger](https://img.shields.io/badge/API%20Docs-Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=white)](http://localhost:8000/api/documentation)
+
 # Backend de Turismo Necochea
 
 Este repositorio contiene el código fuente del backend de la aplicación de Turismo Necochea, desarrollado con Laravel. La API RESTful gestiona la información sobre alojamientos, gastronomía, eventos, actividades, balnearios, complejos y usuarios.
@@ -32,6 +44,7 @@ Para levantar el entorno de desarrollo completo (servidor web Nginx, PHP-FPM, ba
     ```bash
     docker-compose exec php composer install
     ```
+    **Nota**: Si se han añadido o modificado dependencias en `composer.json` (ej. después de un `git pull`), es recomendable ejecutar `docker-compose exec php composer install` nuevamente para asegurar que todas las dependencias estén actualizadas.
 
 5.  **Genera la clave de la aplicación Laravel**:
     ```bash
@@ -65,6 +78,7 @@ Asegúrate de que tus servicios Docker estén corriendo (`docker-compose up -d`)
     ```bash
     docker-compose exec php php artisan test --testsuite=Unit
     ```
+    **Nota**: Los tests unitarios incluyen verificaciones detalladas para los casts de atributos (booleanos, floats, datetimes, hashed passwords), accesores y relaciones en los modelos.
 
 *   **Ejecutar solo tests de característica**:
     ```bash
@@ -168,6 +182,27 @@ Puedes ejecutar comandos individuales o un comando maestro para importar todos l
         ```
 
 **Nota**: Si ejecutas los comandos individuales, asegúrate de que los tipos y menús necesarios existan antes de importar actividades y gastronómicos, o que la lógica `firstOrCreate` en los comandos maneje su creación. El comando `import:all` ya considera un orden adecuado.
+
+##  Diagramas del Proyecto
+
+Para una comprensión visual de la estructura y las relaciones del proyecto, consulta los diagramas ubicados en la carpeta `docs/diagrams/`.
+
+**Es fundamental mantener estos diagramas actualizados.** Si se modifica la estructura de la base de datos, la arquitectura de los componentes o los flujos de negocio, los diagramas deben reflejar esos cambios.
+
+### Tipos de Diagramas Incluidos:
+
+*   **Diagrama Entidad-Relación (ERD)**: Muestra las tablas de la base de datos y sus relaciones.
+*   **Diagrama de Arquitectura / Componentes**: Ilustra la interconexión de los servicios del backend.
+*   **Diagrama de Clases**: Representa la estructura de las clases y sus relaciones.
+
+Los archivos fuente (`.drawio`) y sus exportaciones en imagen (`.png`) se encuentran en la carpeta `docs/diagrams/`.
+
+##  Documentación Adicional
+
+Para una comprensión más profunda del proyecto, consulta los siguientes documentos:
+
+*   [**Arquitectura del Proyecto**](docs/ARCHITECTURE.md): Detalles sobre la estructura de carpetas, convenciones de nombres y patrones de diseño.
+*   [**Guía de Contribución**](docs/CONTRIBUTING.md): Información sobre cómo contribuir, flujo de trabajo de Git y estándares de código.
 
 ##  Detener los Servicios
 

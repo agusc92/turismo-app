@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
         new OA\Property(property: "accesibilidad", type: "string", nullable: true, description: "Información de accesibilidad"),
         new OA\Property(property: "fecha_desde_hasta", type: "string", nullable: true, description: "Fechas de operación (ej. 'Diciembre a Marzo')"),
         new OA\Property(property: "imagen", type: "string", nullable: true, description: "URL de la imagen del balneario"),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, description: "Latitud del balneario"),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, description: "Longitud del balneario"),
         new OA\Property(property: "created_at", type: "string", format: "date-time", description: "Fecha de creación"),
         new OA\Property(property: "updated_at", type: "string", format: "date-time", description: "Fecha de última actualización")
     ]
@@ -38,7 +40,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
         new OA\Property(property: "mail", type: "string", format: "email", nullable: true, example: "info@neptuno.com"),
         new OA\Property(property: "accesibilidad", type: "string", nullable: true, example: "Rampas de acceso"),
         new OA\Property(property: "fecha_desde_hasta", type: "string", nullable: true, example: "Diciembre a Marzo"),
-        new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/neptuno.jpg")
+        new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/neptuno.jpg"),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.555),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.777)
     ]
 )]
 #[OA\Schema(
@@ -54,7 +58,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
         new OA\Property(property: "mail", type: "string", format: "email", nullable: true, example: "contacto@poseidon.com"),
         new OA\Property(property: "accesibilidad", type: "string", nullable: true, example: "Sillas anfibias"),
         new OA\Property(property: "fecha_desde_hasta", type: "string", nullable: true, example: "Noviembre a Abril"),
-        new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/poseidon.jpg")
+        new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/poseidon.jpg"),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.666),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.888)
     ]
 )]
 class Balneario extends Model
@@ -71,6 +77,13 @@ class Balneario extends Model
         'mail',
         'accesibilidad',
         'fecha_desde_hasta',
-        'imagen'
+        'imagen',
+        'latitud',
+        'longitud'
+    ];
+
+    protected $casts = [
+        'latitud' => 'float',
+        'longitud' => 'float',
     ];
 }

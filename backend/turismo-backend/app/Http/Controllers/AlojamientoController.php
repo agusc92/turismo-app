@@ -100,6 +100,9 @@ class AlojamientoController extends Controller
             'mascotas' => 'nullable|boolean',
             'periodoApertura' => 'nullable|string',
             'tipo' => 'required|string',
+            'imagen' => 'nullable|string',
+            'latitud' => 'nullable|numeric',
+            'longitud' => 'nullable|numeric',
         ]);
 
         $alojamiento = Alojamiento::create($request->all());
@@ -158,6 +161,9 @@ class AlojamientoController extends Controller
             'mascotas' => 'nullable|boolean',
             'periodoApertura' => 'nullable|string',
             'tipo' => 'sometimes|required|string',
+            'imagen' => 'nullable|string',
+            'latitud' => 'nullable|numeric',
+            'longitud' => 'nullable|numeric',
         ]);
 
         $alojamiento->update($request->all());

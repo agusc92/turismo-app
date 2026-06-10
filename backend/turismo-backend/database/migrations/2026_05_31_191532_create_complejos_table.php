@@ -18,8 +18,11 @@ return new class extends Migration
             $table->string('mail')->nullable();
             $table->string('redesSociales')->nullable();
             $table->string('telefono')->nullable();
-            $table->text('servicio')->nullable(); // Usamos text para servicios que pueden ser más largos
-            $table->text('adicional')->nullable(); // Usamos text para información adicional
+            $table->text('servicio')->nullable();
+            $table->text('adicional')->nullable();
+            $table->string('imagen')->nullable();
+            $table->decimal('latitud', 10, 7)->nullable();
+            $table->decimal('longitud', 10, 7)->nullable();
             $table->timestamps();
         });
     }

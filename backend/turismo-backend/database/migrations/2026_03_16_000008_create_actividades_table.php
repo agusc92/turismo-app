@@ -15,14 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('direccion');
-            $table->text('descripcion')->nullable(); // Cambiado de string a text
-            $table->text('redes_sociales')->nullable(); // Cambiado de string a text
-            $table->text('web')->nullable(); // Cambiado de string a text
-            $table->text('mail')->nullable(); // Cambiado de string a text
-            $table->text('telefono')->nullable(); // Cambiado de string a text
-            $table->text('imagen')->nullable(); // Cambiado de string a text
+            $table->text('descripcion')->nullable();
+            $table->text('redes_sociales')->nullable();
+            $table->text('web')->nullable();
+            $table->text('mail')->nullable();
+            $table->text('telefono')->nullable();
+            $table->text('imagen')->nullable();
             $table->foreignId('tipo_id')->constrained('tipos')->onDelete('cascade');
-            $table->text('dias_y_horarios')->nullable(); // Cambiado de string a text
+            $table->text('dias_y_horarios')->nullable();
+            $table->decimal('latitud', 10, 7)->nullable();
+            $table->decimal('longitud', 10, 7)->nullable();
             $table->timestamps();
         });
     }

@@ -120,6 +120,10 @@ class EventoController extends Controller
             'direccion' => 'required|string',
             'fecha' => 'required|date',
             'lugar' => 'required|string',
+            'imagen' => 'nullable|string',
+            'destacado' => 'nullable|boolean',
+            'latitud' => 'nullable|numeric',
+            'longitud' => 'nullable|numeric',
         ]);
 
         $evento = Evento::create($request->all());
@@ -173,6 +177,10 @@ class EventoController extends Controller
             'direccion' => 'sometimes|required|string',
             'fecha' => 'sometimes|required|date',
             'lugar' => 'sometimes|required|string',
+            'imagen' => 'nullable|string',
+            'destacado' => 'nullable|boolean',
+            'latitud' => 'nullable|numeric',
+            'longitud' => 'nullable|numeric',
         ]);
 
         $evento->update($request->all());

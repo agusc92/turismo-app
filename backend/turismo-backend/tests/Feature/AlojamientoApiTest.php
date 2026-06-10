@@ -23,7 +23,7 @@ class AlojamientoApiTest extends TestCase
         $response->assertStatus(200)
                  ->assertJsonCount(3)
                  ->assertJsonStructure([
-                     '*' => ['id', 'nombre', 'direccion', 'telefono', 'redesSociales', 'paginaWeb', 'mail', 'mascotas', 'periodoApertura', 'tipo', 'created_at', 'updated_at']
+                     '*' => ['id', 'nombre', 'direccion', 'telefono', 'redesSociales', 'paginaWeb', 'mail', 'mascotas', 'periodoApertura', 'tipo', 'imagen', 'latitud', 'longitud', 'created_at', 'updated_at']
                  ]);
     }
 
@@ -40,6 +40,9 @@ class AlojamientoApiTest extends TestCase
                  ->assertJson([
                      'id' => $alojamiento->id,
                      'nombre' => $alojamiento->nombre,
+                     'imagen' => $alojamiento->imagen,
+                     'latitud' => $alojamiento->latitud,
+                     'longitud' => $alojamiento->longitud,
                  ]);
     }
 
@@ -58,6 +61,9 @@ class AlojamientoApiTest extends TestCase
             'mascotas' => true,
             'periodoApertura' => 'Todo el año',
             'tipo' => 'Hotel',
+            'imagen' => 'http://nuevo.com/imagen.jpg',
+            'latitud' => -38.555,
+            'longitud' => -58.777,
         ];
 
         $response = $this->postJson('/api/alojamientos', $alojamientoData);
@@ -65,9 +71,17 @@ class AlojamientoApiTest extends TestCase
         $response->assertStatus(201)
                  ->assertJsonFragment([
                      'nombre' => 'Nuevo Alojamiento',
+                     'imagen' => 'http://nuevo.com/imagen.jpg',
+                     'latitud' => -38.555,
+                     'longitud' => -58.777,
                  ]);
 
-        $this->assertDatabaseHas('alojamientos', ['nombre' => 'Nuevo Alojamiento']);
+        $this->assertDatabaseHas('alojamientos', [
+            'nombre' => 'Nuevo Alojamiento',
+            'imagen' => 'http://nuevo.com/imagen.jpg',
+            'latitud' => -38.555,
+            'longitud' => -58.777,
+        ]);
     }
 
     /**
@@ -81,6 +95,9 @@ class AlojamientoApiTest extends TestCase
             'nombre' => 'Alojamiento Actualizado',
             'direccion' => 'Direccion Actualizada Alojamiento',
             'mascotas' => false,
+            'imagen' => 'http://actualizada.com/imagen.jpg',
+            'latitud' => -38.666,
+            'longitud' => -58.888,
         ];
 
         $response = $this->putJson('/api/alojamientos/' . $alojamiento->id, $updatedData);
@@ -88,9 +105,18 @@ class AlojamientoApiTest extends TestCase
         $response->assertStatus(200)
                  ->assertJsonFragment([
                      'nombre' => 'Alojamiento Actualizado',
+                     'imagen' => 'http://actualizada.com/imagen.jpg',
+                     'latitud' => -38.666,
+                     'longitud' => -58.888,
                  ]);
 
-        $this->assertDatabaseHas('alojamientos', ['id' => $alojamiento->id, 'nombre' => 'Alojamiento Actualizado']);
+        $this->assertDatabaseHas('alojamientos', [
+            'id' => $alojamiento->id,
+            'nombre' => 'Alojamiento Actualizado',
+            'imagen' => 'http://actualizada.com/imagen.jpg',
+            'latitud' => -38.666,
+            'longitud' => -58.888,
+        ]);
     }
 
     /**

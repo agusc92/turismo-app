@@ -100,6 +100,8 @@ class BalnearioController extends Controller
             'accesibilidad' => 'nullable|string',
             'fecha_desde_hasta' => 'nullable|string',
             'imagen' => 'nullable|string',
+            'latitud' => 'nullable|numeric',
+            'longitud' => 'nullable|numeric',
         ]);
 
         $balneario = Balneario::create($request->all());
@@ -158,6 +160,8 @@ class BalnearioController extends Controller
             'accesibilidad' => 'nullable|string',
             'fecha_desde_hasta' => 'nullable|string',
             'imagen' => 'nullable|string',
+            'latitud' => 'nullable|numeric',
+            'longitud' => 'nullable|numeric',
         ]);
 
         $balneario->update($request->all());

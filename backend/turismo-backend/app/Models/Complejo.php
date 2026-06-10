@@ -19,6 +19,9 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "telefono", type: "string", nullable: true, description: "Número de teléfono de contacto"),
         new OA\Property(property: "servicio", type: "string", nullable: true, description: "Descripción de los servicios ofrecidos"),
         new OA\Property(property: "adicional", type: "string", nullable: true, description: "Información adicional del complejo"),
+        new OA\Property(property: "imagen", type: "string", nullable: true, description: "URL de la imagen del complejo"),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, description: "Latitud del complejo"),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, description: "Longitud del complejo"),
         new OA\Property(property: "created_at", type: "string", format: "date-time", description: "Fecha de creación"),
         new OA\Property(property: "updated_at", type: "string", format: "date-time", description: "Fecha de última actualización")
     ]
@@ -34,8 +37,11 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "mail", type: "string", format: "email", nullable: true, example: "info@lasdunas.com"),
         new OA\Property(property: "redesSociales", type: "string", nullable: true, example: "http://instagram.com/lasdunas"),
         new OA\Property(property: "telefono", type: "string", nullable: true, example: "2262123456"),
-        new OA\Property(property: "servicio", type: "string", nullable: true, example: "Canchas de tenis, piscina, restaurante"),
-        new OA\Property(property: "adicional", type: "string", nullable: true, example: "Abierto todo el año")
+        new OA\Property(property: "servicio", type: "string", nullable: true, example: "Piscina, Gimnasio"),
+        new OA\Property(property: "adicional", type: "string", nullable: true, example: "Estacionamiento"),
+        new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/complejo.jpg"),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.555),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.777)
     ]
 )]
 #[OA\Schema(
@@ -44,12 +50,15 @@ use OpenApi\Attributes as OA;
     description: "Esquema para la actualización de un complejo",
     properties: [
         new OA\Property(property: "nombre", type: "string", nullable: true, example: "Complejo El Faro"),
-        new OA\Property(property: "direccion", type: "string", nullable: true, example: "Calle 4 N° 200"),
+        new OA\Property(property: "direccion", type: "string", nullable: true, example: "Av. 79 N° 1200"),
         new OA\Property(property: "mail", type: "string", format: "email", nullable: true, example: "contacto@elfaro.com"),
         new OA\Property(property: "redesSociales", type: "string", nullable: true, example: "http://facebook.com/elfaro"),
         new OA\Property(property: "telefono", type: "string", nullable: true, example: "2262987654"),
         new OA\Property(property: "servicio", type: "string", nullable: true, example: "Spa, gimnasio"),
-        new OA\Property(property: "adicional", type: "string", nullable: true, example: "Eventos corporativos")
+        new OA\Property(property: "adicional", type: "string", nullable: true, example: "Eventos corporativos"),
+        new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/complejo_update.jpg"),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.666),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.888)
     ]
 )]
 class Complejo extends Model
@@ -65,6 +74,14 @@ class Complejo extends Model
         'redesSociales',
         'telefono',
         'servicio',
-        'adicional'
+        'adicional',
+        'imagen',
+        'latitud',
+        'longitud'
+    ];
+
+    protected $casts = [
+        'latitud' => 'float',
+        'longitud' => 'float',
     ];
 }

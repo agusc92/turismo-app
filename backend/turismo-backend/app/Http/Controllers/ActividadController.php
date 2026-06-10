@@ -99,6 +99,8 @@ class ActividadController extends Controller
             'mail' => 'nullable|email',
             'telefono' => 'nullable|string',
             'imagen' => 'nullable|string',
+            'latitud' => 'nullable|numeric',
+            'longitud' => 'nullable|numeric',
             'tipo_id' => 'required|exists:tipos,id',
             'dias_y_horarios' => 'nullable|string',
         ]);
@@ -134,10 +136,6 @@ class ActividadController extends Controller
             new OA\Response(
                 response: 404,
                 description: "Actividad no encontrada"
-            ),
-            new OA\Response(
-                response: 422,
-                description: "Error de validación"
             )
         ]
     )]
@@ -158,6 +156,8 @@ class ActividadController extends Controller
             'mail' => 'nullable|email',
             'telefono' => 'nullable|string',
             'imagen' => 'nullable|string',
+            'latitud' => 'nullable|numeric',
+            'longitud' => 'nullable|numeric',
             'tipo_id' => 'sometimes|required|exists:tipos,id',
             'dias_y_horarios' => 'nullable|string',
         ]);
@@ -201,6 +201,6 @@ class ActividadController extends Controller
 
         $actividad->delete();
 
-        return response()->json(['message' => 'Actividad eliminada correctamente']);
+        return response()->json(['message' => 'Actividad eliminado correctamente']);
     }
 }

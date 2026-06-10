@@ -21,7 +21,9 @@ return new class extends Migration
             $table->string('mail')->nullable();
             $table->text('accesibilidad')->nullable();
             $table->string('fecha_desde_hasta')->nullable();
-            $table->text('imagen')->nullable(); // Cambiado de string a text
+            $table->text('imagen')->nullable();
+            $table->decimal('latitud', 10, 7)->nullable();
+            $table->decimal('longitud', 10, 7)->nullable();
             $table->timestamps();
         });
     }
