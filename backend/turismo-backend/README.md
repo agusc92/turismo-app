@@ -3,14 +3,14 @@
   <img src="public/light.png#gh-light-mode-only" width="400">
 </p>
 
-# Backend de Turismo Necochea
-
 [![Laravel](https://img.shields.io/badge/Laravel-^10.0-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
 [![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://www.php.net/)
 [![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![Docker](https://img.shields.io/badge/Docker-20.10+-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Tests](https://img.shields.io/badge/Tests-PHPUnit-6C5293?style=for-the-badge&logo=phpunit&logoColor=white)](https://phpunit.de/)
 [![Swagger](https://img.shields.io/badge/API%20Docs-Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=white)](http://localhost:8000/api/documentation)
+
+# Backend de Turismo Necochea
 
 Este repositorio contiene el código fuente del backend de la aplicación de Turismo Necochea, desarrollado con Laravel. La API RESTful gestiona la información sobre alojamientos, gastronomía, eventos, actividades, balnearios, complejos y usuarios.
 
