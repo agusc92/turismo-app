@@ -1,15 +1,18 @@
 import { Stack } from "expo-router";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Colors } from "../constants/Styles";
 import { StatusBar } from "expo-status-bar";
 import HeaderPage from "../components/HeaderPage";
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Previene que la pantalla de carga se oculte antes de que se carguen las fuentes
 SplashScreen.preventAutoHideAsync();
 export default function Layout() {
+    const insets = useSafeAreaInsets();
+
     const [loaded, error] = useFonts({
         'Gotham-Black': require('../assets/fuentes/Gotham-Black.otf'),
         'Gotham-Bold': require('../assets/fuentes/GOTHMBOL.ttf'),
@@ -30,9 +33,10 @@ export default function Layout() {
     }
 
     return (
-        <>
+
+        <View style={{ flex: 1, paddingBottom: insets.bottom, paddingTop: 5 }}>
             {/* Forzar statusBar semitransparente off para evitar que Android rompa el SafeAreaInsets al re-abrir la app */}
-            <StatusBar style="light" backgroundColor="#000000" translucent={false} />
+
 
             <Stack
                 screenOptions={{
@@ -50,7 +54,7 @@ export default function Layout() {
             >
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             </Stack>
-        </>
+        </View>
     );
 }
 
