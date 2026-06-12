@@ -1,10 +1,11 @@
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { useLocalSearchParams, Stack, router } from 'expo-router';
+import { useLocalSearchParams, Stack } from 'expo-router';
 import { useFetchDetalle } from '../hooks/useFetchDetalle';
 import { Ionicons } from '@expo/vector-icons';
-import { BackButton } from '../../constants/Styles';
 import UbicacionDetalles from '../../components/UbicacionDetalles';
 import ContactoDetalles from '../../components/ContactoDetalles';
+import TransparentHeader from "../../components/TransparentHeader";
+
 export default function ActividadDetalle() {
     const { id } = useLocalSearchParams();
     const { data: actividad, loading } = useFetchDetalle('actividades', id);
@@ -39,7 +40,7 @@ export default function ActividadDetalle() {
 
     return (
         <View style={styles.container}>
-            <Stack.Screen options={{ headerShown: false }} />
+            <TransparentHeader />
 
             <ScrollView style={styles.pageContent} showsVerticalScrollIndicator={false} bounces={false}>
                 <View style={styles.headerImageContainer}>
@@ -58,12 +59,8 @@ export default function ActividadDetalle() {
                     <UbicacionDetalles direccion={actividad.direccion} />
                 </View>
 
-
             </ScrollView>
 
-            <TouchableOpacity style={BackButton} onPress={() => router.back()}>
-                <Ionicons name="arrow-back" size={24} color="#000" />
-            </TouchableOpacity>
         </View>
     );
 }

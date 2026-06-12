@@ -7,6 +7,7 @@ import HeaderPage from "../components/HeaderPage";
 import MenuCard from "../components/MenuCard";
 
 import Carousel from "../components/Carousel";
+
 const { width } = Dimensions.get('window');
 
 export default function Home() {
@@ -16,10 +17,12 @@ export default function Home() {
             <Tabs.Screen options={{
                 title: "Inicio",
                 headerShown: true,
-                headerTitle: () => <HeaderPage title="Necochea" logo={true} />,
-                headerStyle: { backgroundColor: Colors.backgroundLight },
-                headerShadowVisible: false,
-                headerTitleAlign: 'center',
+                
+                header: () => (
+                    <View style={styles.customHeaderContainer}>
+                        <HeaderPage title="Necochea" logo={true} />
+                    </View>
+                ),
             }} />
 
             <ScrollView style={styles.pageContent} showsVerticalScrollIndicator={false}>
@@ -42,14 +45,18 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
+    customHeaderContainer: {
+        backgroundColor: Colors.backgroundLight,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: Colors.backgroundLight,
-    },
-    primaryText: {
-        color: Colors.textColor,
     },
     pageContent: {
         backgroundColor: Colors.backgroundLight,
@@ -62,33 +69,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginTop: 20,
         marginBottom: 15,
-    },
-    carouselItemContainer: {
-        width: width, // Full screen width to allow paging snapping
-        paddingHorizontal: 20, // Inner padding so it doesn't touch the screen borders
-        paddingBottom: 20,
-    },
-    carouselItem: {
-        borderRadius: 16,
-        overflow: 'hidden',
-        backgroundColor: '#fff',
-        elevation: 4, // Android shadow
-        shadowColor: '#000', // iOS shadow
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 6,
-    },
-    carouselImage: {
-        width: '100%',
-        height: 200, // Make it a bit taller since it's full width now
-    },
-    textContainer: {
-        padding: 15,
-    },
-    carouselText: {
-        fontSize: 18,
-        fontWeight: '700',
-        color: Colors.textColor,
     },
     menuContainer: {
         flexDirection: 'row',

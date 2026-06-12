@@ -1,15 +1,15 @@
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, ActivityIndicator } from "react-native";
-import { useLocalSearchParams, useRouter, Stack } from "expo-router";
+import { useLocalSearchParams, Stack } from "expo-router";
 import { useFetchDetalle } from '../hooks/useFetchDetalle';
-import { Colors, BackButton } from "../../constants/Styles";
+import { Colors } from "../../constants/Styles";
 import { Ionicons } from '@expo/vector-icons';
 import SeccionDetalles from "../../components/SeccionDetalles";
 import UbicacionDetalles from "../../components/UbicacionDetalles";
 import ContactoDetalles from "../../components/ContactoDetalles";
+import TransparentHeader from "../../components/TransparentHeader";
 
 export default function AlojamientoDetail() {
     const { id } = useLocalSearchParams();
-    const router = useRouter();
     const { data: item, loading } = useFetchDetalle('alojamientos', id);
 
     if (loading) {
@@ -36,11 +36,11 @@ export default function AlojamientoDetail() {
 
     return (
         <View style={styles.container}>
+            <TransparentHeader />
+
             <ScrollView
                 style={styles.pageContent} showsVerticalScrollIndicator={false} bounces={false}
             >
-                {/* Ocultamos el header estándar para poner un botón de atrás encima de la imagen */}
-                <Stack.Screen options={{ headerShown: false }} />
 
                 <View style={styles.imageContainer}>
                     <Image source={{ uri: imageUrl }} style={styles.headerImage} />
@@ -60,9 +60,6 @@ export default function AlojamientoDetail() {
                     <UbicacionDetalles direccion={item.direccion} />
                 </View>
             </ScrollView>
-            <TouchableOpacity style={BackButton} onPress={() => router.back()}>
-                <Ionicons name="arrow-back" size={24} color={Colors.textColor} />
-            </TouchableOpacity>
         </View>
 
     );
@@ -109,5 +106,14 @@ const styles = StyleSheet.create({
         color: '#7B758E',
         marginBottom: 24,
         fontFamily: 'Gotham-Book',
+    },
+    transparentHeaderContainer: {
+        backgroundColor: 'transparent', // Sin fondo para que se vea la foto
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+        // 💡 NO lleva padding top. Al ser un 'header' real de React Navigation, 
+        // el sistema operativo ya le calcula automáticamente el espacio de la StatusBar.
+        paddingBottom: 14,
     }
 });

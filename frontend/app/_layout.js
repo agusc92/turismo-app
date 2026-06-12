@@ -6,12 +6,11 @@ import HeaderPage from "../components/HeaderPage";
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-// Previene que la pantalla de carga se oculte antes de que se carguen las fuentes
 SplashScreen.preventAutoHideAsync();
+
 export default function Layout() {
-    const insets = useSafeAreaInsets();
 
     const [loaded, error] = useFonts({
         'Gotham-Black': require('../assets/fuentes/Gotham-Black.otf'),
@@ -33,33 +32,47 @@ export default function Layout() {
     }
 
     return (
-
-        <View style={{ flex: 1, paddingBottom: insets.bottom, paddingTop: 5 }}>
-            {/* Forzar statusBar semitransparente off para evitar que Android rompa el SafeAreaInsets al re-abrir la app */}
-
+        <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backgroundLight }}>
 
             <Stack
                 screenOptions={{
-                    headerTitle: (props) => {
-                        return <HeaderPage title={props.children} logo={false} />
+                    header: (props) => {
+                        const currentTitle = props.options.title || props.route.name;
+
+                        // 💡 Detectamos si hay una pantalla antes en el Stack
+                        const hasBackButton = props.back ? true : false;
+
+                        // 💡 Si no hay botón de atrás, asumimos que es la Home de las Tabs y mostramos el Logo
+                        const showLogo = !hasBackButton;
+
+                        return (
+                            <View style={[
+                                styles.customHeaderContainer
+                            ]}>
+                                <HeaderPage
+                                    title={currentTitle}
+                                    logo={showLogo} // 👈 Automático: Logo en Home, Flecha en las sub-pantallas
+                                    canGoBack={hasBackButton} // 👈 Le avisa si debe renderizar la flecha
+                                    onBackPress={() => props.navigation.goBack()} // 👈 Acción nativa para ir atrás
+                                />
+                            </View>
+                        );
                     },
-                    headerStyle: {
-                        backgroundColor: Colors.backgroundLight,
-                        fontFamily: 'Gotham-Ultra',
-                    },
-                    headerTintColor: styles.primaryText.color,
-                    headerShadowVisible: false,
-                    headerTitleAlign: 'center',
+                    contentStyle: { backgroundColor: Colors.backgroundLight },
                 }}
             >
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             </Stack>
-        </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    primaryText: {
-        color: Colors.textColor,
+    customHeaderContainer: {
+        backgroundColor: Colors.backgroundLight,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
     },
 });

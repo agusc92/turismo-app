@@ -1,11 +1,12 @@
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { useLocalSearchParams, Stack, router } from 'expo-router';
+import { useLocalSearchParams, Stack } from 'expo-router';
 import { useFetchDetalle } from '../hooks/useFetchDetalle';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors, BackButton } from "../../constants/Styles";
+import { Colors } from "../../constants/Styles";
 import ContactoDetalles from '../../components/ContactoDetalles';
 import UbicacionDetalles from '../../components/UbicacionDetalles';
 import SeccionDetalles from '../../components/SeccionDetalles';
+import TransparentHeader from "../../components/TransparentHeader";
 
 export default function GastronomicoDetalle() {
     const { id } = useLocalSearchParams();
@@ -46,7 +47,7 @@ export default function GastronomicoDetalle() {
 
     return (
         <View style={styles.container}>
-            <Stack.Screen options={{ headerShown: false }} />
+            <TransparentHeader />
 
             <ScrollView style={styles.pageContent} showsVerticalScrollIndicator={false} bounces={false}>
                 <View style={styles.headerImageContainer}>
@@ -80,10 +81,6 @@ export default function GastronomicoDetalle() {
                 </View>
             </ScrollView>
 
-            {/* Back Button floating overlay */}
-            <TouchableOpacity style={BackButton} onPress={() => router.back()}>
-                <Ionicons name="arrow-back" size={24} color={Colors.textColor} />
-            </TouchableOpacity>
         </View>
     );
 }

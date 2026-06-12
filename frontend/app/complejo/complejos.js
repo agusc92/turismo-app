@@ -1,21 +1,36 @@
-import { View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList, ActivityIndicator } from "react-native";
 import { Stack } from "expo-router";
 import { Colors } from "../../constants/Styles";
 import ItemCard from "../../components/ItemCard";
-import { complejos } from "../../assets/mokup";
+import { useData } from '../hooks/UseData';
 
 export default function ComplejosList() {
+    const { data: complejos, loading } = useData('complejos');
+
     const renderItem = ({ item }) => {
         const itemId = item.id || item.idComplejo;
+        // Obtenemos una imagen de la API si existe, o una de ejemplo
+        const imageUrl = item.imagen || `https://picsum.photos/seed/${itemId + 20}/200/120`;
+
+        // Capitalizar el nombre
+        const nombreCapitalizado = item.nombre
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+
         return (
-            <ItemCard 
-                item={item} 
-                subtitle={item.direccion} 
-                imageUrl={item.imagen} 
-                link={`/complejo/${itemId}`} 
-            />
+            <ItemCard item={item} subtitle={item.direccion} imageUrl={imageUrl} link={`/complejo/${itemId}`} />
         );
     };
+
+    if (loading) {
+        return (
+            <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+                <Stack.Screen options={{ title: 'Complejos' }} />
+                <ActivityIndicator size="large" color="#2C1B4D" />
+            </View>
+        );
+    }
 
     return (
         <View style={styles.container}>

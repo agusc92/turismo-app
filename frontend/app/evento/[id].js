@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { useLocalSearchParams, Stack, router } from 'expo-router';
+import { useLocalSearchParams, Stack } from 'expo-router';
 import { useFetchDetalle } from '../hooks/useFetchDetalle';
-import { Colors, BackButton } from '../../constants/Styles';
+import { Colors } from '../../constants/Styles';
 import { Ionicons } from '@expo/vector-icons';
 import UbicacionDetalles from '../../components/UbicacionDetalles';
+import TransparentHeader from "../../components/TransparentHeader";
 
 export default function EventoDetalle() {
     const { id } = useLocalSearchParams();
@@ -29,7 +30,8 @@ export default function EventoDetalle() {
 
     return (
         <View style={styles.container}>
-            <Stack.Screen options={{ headerShown: false }} />
+            <TransparentHeader />
+
             <ScrollView style={styles.pageContent} showsVerticalScrollIndicator={false} bounces={false}>
                 <View style={styles.headerImageContainer}>
                     {evento.imagen ? (
@@ -56,10 +58,6 @@ export default function EventoDetalle() {
                 </View>
             </ScrollView>
 
-            {/* Fixed Back Button */}
-            <TouchableOpacity style={BackButton} onPress={() => router.back()}>
-                <Ionicons name="arrow-back" size={24} color={Colors.textColor} />
-            </TouchableOpacity>
         </View>
     );
 }
