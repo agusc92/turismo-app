@@ -2,6 +2,7 @@ import { View, StyleSheet, FlatList, ActivityIndicator } from "react-native";
 import { Stack } from "expo-router";
 import { Colors } from "../../constants/Styles";
 import ItemCard from "../../components/ItemCard";
+import { getResourceImage } from '../../assets/images';
 import { useData } from "../hooks/UseData";
 
 export default function AlojamientosList() {
@@ -9,11 +10,10 @@ export default function AlojamientosList() {
 
     const renderItem = ({ item }) => {
         const itemId = item.id || item.idAlojamiento;
-        // Obtenemos una imagen de ejemplo ya que el mock no tiene imágenes, pero si el backend la tiene, la usamos.
-        const imageUrl = item.imagen || `https://picsum.photos/seed/${itemId + 10}/200/120`; // cambiar esto
+        const imageSource = getResourceImage('alojamiento', item);
 
         return (
-            <ItemCard item={item} subtitle={item.tipo} imageUrl={imageUrl} link={`/alojamiento/${itemId}`} />
+            <ItemCard item={item} subtitle={item.tipo} imageSource={imageSource} link={`/alojamiento/${itemId}`} />
         );
     };
 

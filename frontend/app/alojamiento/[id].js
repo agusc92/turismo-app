@@ -7,6 +7,7 @@ import SeccionDetalles from "../../components/SeccionDetalles";
 import UbicacionDetalles from "../../components/UbicacionDetalles";
 import ContactoDetalles from "../../components/ContactoDetalles";
 import TransparentHeader from "../../components/TransparentHeader";
+import { getResourceImage } from '../../assets/images';
 
 export default function AlojamientoDetail() {
     const { id } = useLocalSearchParams();
@@ -31,8 +32,7 @@ export default function AlojamientoDetail() {
     }
 
     const itemId = item.id || item.idAlojamiento;
-    // Imagen de portada obtenida del backend si existe o un placeholder
-    const imageUrl = item.imagen || `https://picsum.photos/seed/${itemId + 10}/800/600`;
+    const imageSource = getResourceImage('alojamiento', item);
 
     return (
         <View style={styles.container}>
@@ -43,7 +43,7 @@ export default function AlojamientoDetail() {
             >
 
                 <View style={styles.imageContainer}>
-                    <Image source={{ uri: imageUrl }} style={styles.headerImage} />
+                    <Image source={imageSource} style={styles.headerImage} />
 
                 </View>
 

@@ -7,6 +7,7 @@ import { useFetchDetalle } from "../hooks/useFetchDetalle";
 import ContactoDetalles from "../../components/ContactoDetalles";
 import UbicacionDetalles from "../../components/UbicacionDetalles";
 import TransparentHeader from "../../components/TransparentHeader";
+import { getResourceImage } from '../../assets/images';
 
 export default function BalnearioDetail() {
     const { id } = useLocalSearchParams();
@@ -32,8 +33,7 @@ export default function BalnearioDetail() {
     }
 
     const itemId = item.id || item.idBalneario;
-    // Imagen de portada de la API si la tiene, en su defecto la temporal
-    const imageUrl = item.imagen || `https://picsum.photos/seed/${itemId + 30}/800/600`;
+    const imageSource = getResourceImage('balneario', item);
 
     // Formatear titulo
     const displayTitle = item.nombre.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
@@ -50,7 +50,7 @@ export default function BalnearioDetail() {
             <ScrollView style={styles.pageContent} showsVerticalScrollIndicator={false} bounces={false}>
 
                 <View style={styles.imageContainer}>
-                    <Image source={{ uri: imageUrl }} style={styles.headerImage} resizeMode="cover" />
+                    <Image source={imageSource} style={styles.headerImage} resizeMode="cover" />
                 </View>
 
                 <View style={styles.contentContainer}>

@@ -4,6 +4,7 @@ import { Tabs, Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { API_URL } from '../../api';
 import ItemCard from '../../components/ItemCard';
+import { getResourceImage } from '../../assets/images';
 
 // Si logramos instalar datetimepicker, lo usamos, si no, fallará. 
 // Como alternativa, podriamos usar un mock o un select simple.
@@ -111,7 +112,7 @@ export default function EventosList() {
                     }
 
                     return (
-                        <ItemCard item={item} subtitle={displayDate} imageUrl={item.imagen} link={`/evento/${item.id || item.idEvento}`} />
+                        <ItemCard item={item} subtitle={displayDate} imageSource={getResourceImage('evento', item)} link={`/evento/${item.id || item.idEvento}`} />
                     );
 
                 }}

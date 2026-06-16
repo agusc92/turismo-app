@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import UbicacionDetalles from '../../components/UbicacionDetalles';
 import ContactoDetalles from '../../components/ContactoDetalles';
 import TransparentHeader from "../../components/TransparentHeader";
+import { getResourceImage } from '../../assets/images';
 
 export default function ActividadDetalle() {
     const { id } = useLocalSearchParams();
@@ -28,12 +29,7 @@ export default function ActividadDetalle() {
         );
     }
 
-    // Usamos una imagen genérica si no tiene URL propia
-    const fallbackImageUrl = 'https://dummyimage.com/1000x800/ffb347/ffffff.png&text=' + encodeURIComponent(actividad.nombre);
-    let imageUrl = fallbackImageUrl;
-    if (actividad.imagen && actividad.imagen.startsWith('http')) {
-        imageUrl = actividad.imagen;
-    }
+    const imageSource = getResourceImage('actividad', actividad);
 
     // Helper para formatear la dirección
     const direccionText = actividad.direccion ? `Calle ${actividad.direccion}` : 'Dirección no disponible';
@@ -44,7 +40,7 @@ export default function ActividadDetalle() {
 
             <ScrollView style={styles.pageContent} showsVerticalScrollIndicator={false} bounces={false}>
                 <View style={styles.headerImageContainer}>
-                    <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
+                    <Image source={imageSource} style={styles.image} resizeMode="cover" />
                 </View>
 
                 <View style={styles.contentContainer}>

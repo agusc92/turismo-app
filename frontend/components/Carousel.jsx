@@ -3,6 +3,7 @@ import { Link } from "expo-router";
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from "../constants/Styles";
 import { API_URL } from "../api";
+import { getResourceImage } from "../assets/images";
 import { useEffect, useRef, useState } from "react";
 const { width } = Dimensions.get('window');
 
@@ -64,7 +65,7 @@ export default function Carousel() {
                     <Link href={`/evento/${item.id}`} asChild>
                         <TouchableOpacity style={styles.carouselItem} activeOpacity={0.8}>
                             <Image
-                                source={{ uri: item.imagen }}
+                                source={getResourceImage('evento', item)}
                                 style={styles.carouselImage}
                                 resizeMode="cover"
                             />

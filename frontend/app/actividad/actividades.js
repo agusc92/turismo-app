@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, ActivityIndi
 import { Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useActividadesData } from '../hooks/useActividadesData';
-import ItemCard from '../../components/ItemCard';
+import ItemCard from "../../components/ItemCard";
+import { getResourceImage } from '../../assets/images';
 import FilterButton from '../../components/FilterButton';
 
 export default function ActividadesList() {
@@ -98,14 +99,10 @@ export default function ActividadesList() {
                 renderItem={({ item }) => {
                     let subtitle = item.direccion ? `Calle ${item.direccion}` : 'Actividad';
 
-                    const fallbackImageUrl = 'https://dummyimage.com/600x400/b3d4fc/2a61a3.png&text=' + encodeURIComponent(item.nombre);
-                    let imageUrl = fallbackImageUrl;
-                    if (item.imagen && item.imagen.startsWith('http')) {
-                        imageUrl = item.imagen;
-                    }
+                    const imageSource = getResourceImage('actividad', item);
 
                     return (
-                        <ItemCard item={item} subtitle={subtitle} imageUrl={imageUrl} link={`/actividad/${item.id || item.idActividad}`} />
+                        <ItemCard item={item} subtitle={subtitle} imageSource={imageSource} link={`/actividad/${item.id || item.idActividad}`} />
                     );
                 }}
                 ListEmptyComponent={

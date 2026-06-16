@@ -7,6 +7,7 @@ import ContactoDetalles from '../../components/ContactoDetalles';
 import UbicacionDetalles from '../../components/UbicacionDetalles';
 import SeccionDetalles from '../../components/SeccionDetalles';
 import TransparentHeader from "../../components/TransparentHeader";
+import { getResourceImage } from '../../assets/images';
 
 export default function GastronomicoDetalle() {
     const { id } = useLocalSearchParams();
@@ -40,10 +41,7 @@ export default function GastronomicoDetalle() {
     // extras is a string delimited by |
     const extras = item.extras ? String(item.extras).split('|').map(e => e.trim().charAt(0).toUpperCase() + e.trim().slice(1)).join(', ') : '';
 
-    // We'll trust whatever is in the image, or fallback to dummy
-    const imageUrl = item.imagen && item.imagen.startsWith('http')
-        ? item.imagen
-        : `https://loremflickr.com/320/240/restaurant`;
+    const imageSource = getResourceImage('gastronomico', item);
 
     return (
         <View style={styles.container}>
@@ -51,7 +49,7 @@ export default function GastronomicoDetalle() {
 
             <ScrollView style={styles.pageContent} showsVerticalScrollIndicator={false} bounces={false}>
                 <View style={styles.headerImageContainer}>
-                    <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
+                    <Image source={imageSource} style={styles.image} resizeMode="cover" />
                 </View>
 
                 <View style={styles.contentContainer}>

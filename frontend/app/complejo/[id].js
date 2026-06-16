@@ -7,6 +7,7 @@ import UbicacionDetalles from "../../components/UbicacionDetalles";
 import ContactoDetalles from "../../components/ContactoDetalles";
 import { useFetchDetalle } from "../hooks/useFetchDetalle";
 import TransparentHeader from "../../components/TransparentHeader";
+import { getResourceImage } from '../../assets/images';
 
 export default function ComplejoDetail() {
     const { id } = useLocalSearchParams();
@@ -33,7 +34,7 @@ export default function ComplejoDetail() {
             >
 
                 <View style={styles.imageContainer}>
-                    <Image source={{ uri: item.imagen }} style={styles.headerImage} />
+                    <Image source={getResourceImage('complejo', item)} style={styles.headerImage} />
                 </View>
 
                 <View style={styles.contentContainer}>

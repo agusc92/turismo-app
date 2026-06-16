@@ -2,14 +2,14 @@ import { TouchableOpacity, Image, Text, StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 
 
-export default function ItemCard({ item, subtitle, imageUrl, link }) {
+export default function ItemCard({ item, subtitle, imageUrl, imageSource, link }) {
     return (
         <TouchableOpacity
             style={styles.card}
             onPress={() => router.push(link)}
         >
             <Image
-                source={{ uri: imageUrl }}
+                source={imageSource || { uri: imageUrl }}
                 style={styles.cardImage}
             />
             <View style={styles.cardInfo}>

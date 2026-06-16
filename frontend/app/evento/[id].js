@@ -5,6 +5,7 @@ import { Colors } from '../../constants/Styles';
 import { Ionicons } from '@expo/vector-icons';
 import UbicacionDetalles from '../../components/UbicacionDetalles';
 import TransparentHeader from "../../components/TransparentHeader";
+import { getResourceImage } from '../../assets/images';
 
 export default function EventoDetalle() {
     const { id } = useLocalSearchParams();
@@ -34,11 +35,7 @@ export default function EventoDetalle() {
 
             <ScrollView style={styles.pageContent} showsVerticalScrollIndicator={false} bounces={false}>
                 <View style={styles.headerImageContainer}>
-                    {evento.imagen ? (
-                        <Image source={{ uri: evento.imagen }} style={styles.image} resizeMode="cover" />
-                    ) : (
-                        <View style={styles.placeholderImage}></View>
-                    )}
+                    <Image source={getResourceImage('evento', evento)} style={styles.image} resizeMode="cover" />
                 </View>
 
                 <View style={styles.contentContainer}>

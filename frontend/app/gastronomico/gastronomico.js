@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, Activ
 import { Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import ItemCard from '../../components/ItemCard';
+import { getResourceImage } from '../../assets/images';
 import { useGastronomiaData } from '../hooks/useGastronomiaData';
 import FilterButton from '../../components/FilterButton';
 
@@ -126,18 +127,10 @@ export default function GastronomicoList() {
                         subtitle = item.tipo.charAt(0).toUpperCase() + item.tipo.slice(1);
                     }
 
-                    // A random image url to match the list style if the item doesn't have a specific working one
-                    // We'll use dummy image if it's "url:xxx.com"
-                    const fallbackImageUrl = 'https://loremflickr.com/320/240/restaurant';
-                    const isInvalidUrl = !item.tiendaOnline && !item.extras && item.tipo; // just a rough check, or check if image starts with http
-                    // Actually, the mokup items don't have an explicitly valid image URL in the code block provided, so we'll just check it.
-                    let imageUrl = fallbackImageUrl;
-                    if (item.imagen && item.imagen.startsWith('http')) {
-                        imageUrl = item.imagen;
-                    }
+                    const imageSource = getResourceImage('gastronomico', item);
 
                     return (
-                        <ItemCard item={item} subtitle={subtitle} imageUrl={imageUrl} link={`/gastronomico/${item.id}`} />
+                        <ItemCard item={item} subtitle={subtitle} imageSource={imageSource} link={`/gastronomico/${item.id}`} />
                     );
                 }}
                 ListEmptyComponent={

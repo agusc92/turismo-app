@@ -2,6 +2,7 @@ import { View, StyleSheet, FlatList, ActivityIndicator } from "react-native";
 import { Stack } from "expo-router";
 import { Colors } from "../../constants/Styles";
 import ItemCard from "../../components/ItemCard";
+import { getResourceImage } from '../../assets/images';
 import { useData } from '../hooks/UseData';
 
 export default function ComplejosList() {
@@ -9,8 +10,7 @@ export default function ComplejosList() {
 
     const renderItem = ({ item }) => {
         const itemId = item.id || item.idComplejo;
-        // Obtenemos una imagen de la API si existe, o una de ejemplo
-        const imageUrl = item.imagen || `https://picsum.photos/seed/${itemId + 20}/200/120`;
+        const imageSource = getResourceImage('complejo', item);
 
         // Capitalizar el nombre
         const nombreCapitalizado = item.nombre
@@ -19,7 +19,7 @@ export default function ComplejosList() {
             .join(' ');
 
         return (
-            <ItemCard item={item} subtitle={item.direccion} imageUrl={imageUrl} link={`/complejo/${itemId}`} />
+            <ItemCard item={item} subtitle={item.direccion} imageSource={imageSource} link={`/complejo/${itemId}`} />
         );
     };
 
