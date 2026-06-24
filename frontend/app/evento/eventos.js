@@ -5,7 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { API_URL } from '../../api';
 import ItemCard from '../../components/ItemCard';
 import { getResourceImage } from '../../assets/images';
-
+import HeaderPage from '../../components/HeaderPage';
+import { router } from 'expo-router';
 // Si logramos instalar datetimepicker, lo usamos, si no, fallará. 
 // Como alternativa, podriamos usar un mock o un select simple.
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -75,16 +76,27 @@ export default function EventosList() {
         )
     }
     return (
-        <View style={styles.container}>
-            <Stack.Screen options={{
-                title: 'Eventos',
-                headerRight: () => (
-                    <TouchableOpacity onPress={() => setShowPicker(true)} style={styles.headerIcon}>
-                        <Ionicons name="filter-outline" size={24} color={filterActive ? "#007AFF" : "#2C1B4D"} />
-                    </TouchableOpacity>
-                )
-            }}
+        <View style={{ height: 'fit-content' }}>
+            <Stack.Screen
+                options={{
+                    headerShown: true,
+                    headerShadowVisible: false,
+                    header: () => (
+                        <View style={styles.headerContainer}>
+                            <HeaderPage
+                                title="Eventos"
+                                logo={false}
+                                canGoBack={true}
+                                onBackPress={() => router.back()}
+                                filter={true}
+                                setShowPicker={setShowPicker}
+                                filterActive={filterActive}
+                            />
+                        </View>
+                    )
+                }}
             />
+
 
             {filterActive && (
                 <View style={styles.activeFilterContainer}>

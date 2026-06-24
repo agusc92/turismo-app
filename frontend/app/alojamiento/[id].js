@@ -53,8 +53,11 @@ export default function AlojamientoDetail() {
 
                     <SeccionDetalles titulo="Periodo de Apertura" subtitulo={item.periodoApertura} />
 
-                    <SeccionDetalles titulo="Mascotas" subtitulo={item.mascotas} />
+                    {item.mascotas ? (
+                        <SeccionDetalles titulo="Mascotas" subtitulo={item.mascotas} />
+                    ) : null}
 
+                    {item.mapaLink && <UbicacionDetalles direccion={item.mapaLink} />}
                     <ContactoDetalles item={item} />
 
                     <UbicacionDetalles direccion={item.direccion} />

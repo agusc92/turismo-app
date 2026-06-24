@@ -3,10 +3,10 @@ import { Logo } from "../assets/images";
 import { Colors } from "../constants/Styles";
 import { Ionicons } from '@expo/vector-icons';
 
-export default function HeaderPage({ title, logo = false, canGoBack = false, onBackPress }) {
+export default function HeaderPage({ title, logo = false, canGoBack = false, onBackPress, filter = false, setShowPicker = null, filterActive = false }) {
     return (
         <View style={styles.headerWrapper}>
-            
+
             {/* 1. COLUMNA IZQUIERDA: Botón de atrás (o caja vacía para mantener el equilibrio) */}
             <View style={styles.columnLeft}>
                 {canGoBack ? (
@@ -28,9 +28,14 @@ export default function HeaderPage({ title, logo = false, canGoBack = false, onB
                 </Text>
             </View>
 
-            {/* 3. COLUMNA DERECHA: Caja fantasma para hacer el contrapeso Flex */}
-            <View style={styles.columnRight} />
-
+            {/* 3. COLUMNA DERECHA: Botón de filtro si aplica, o caja vacía para contrapeso Flex */}
+            <View style={styles.columnRight}>
+                {filter && setShowPicker && (
+                    <TouchableOpacity onPress={() => setShowPicker(true)} style={styles.headerIcon}>
+                        <Ionicons name="filter-outline" size={24} color={filterActive ? "#007AFF" : "#2C1B4D"} />
+                    </TouchableOpacity>
+                )}
+            </View>
         </View>
     );
 }
