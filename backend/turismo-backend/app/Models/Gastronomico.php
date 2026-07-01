@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Menu;
 use App\Models\TipoGastronomico;
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
         new OA\Property(property: "imagen", type: "string", nullable: true, description: "URL de la imagen principal"),
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, description: "Latitud del establecimiento"),
         new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, description: "Longitud del establecimiento"),
+        new OA\Property(property: "habilitado", type: "boolean", description: "Indica si el establecimiento está habilitado/visible", example: true),
         new OA\Property(property: "created_at", type: "string", format: "date-time", description: "Fecha de creación"),
         new OA\Property(property: "updated_at", type: "string", format: "date-time", description: "Fecha de última actualización"),
         new OA\Property(property: "tipo", type: "array", items: new OA\Items(type: "string"), description: "Tipos de gastronomía asociados (solo nombres)"),
@@ -47,6 +49,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
         new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/nuevo.jpg"),
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.555),
         new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.777),
+        new OA\Property(property: "habilitado", type: "boolean", nullable: true, example: true),
         new OA\Property(property: "tipo_ids", type: "array", items: new OA\Items(type: "integer"), nullable: true, description: "IDs de los tipos de gastronomía a asociar", example: [1, 3]),
         new OA\Property(property: "menu_ids", type: "array", items: new OA\Items(type: "integer"), nullable: true, description: "IDs de los menús a asociar", example: [2])
     ]
@@ -66,6 +69,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
         new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/ejemplo-actualizado.jpg"),
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.666),
         new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.888),
+        new OA\Property(property: "habilitado", type: "boolean", nullable: true, example: false),
         new OA\Property(property: "tipo_ids", type: "array", items: new OA\Items(type: "integer"), nullable: true, description: "IDs de los tipos de gastronomía a sincronizar", example: [1]),
         new OA\Property(property: "menu_ids", type: "array", items: new OA\Items(type: "integer"), nullable: true, description: "IDs de los menús a sincronizar", example: [2])
     ]
@@ -85,7 +89,8 @@ class Gastronomico extends Model
         'extras',
         'imagen',
         'latitud',
-        'longitud'
+        'longitud',
+        'habilitado'
     ];
 
     protected $appends = ['tipo', 'menu'];
@@ -95,6 +100,13 @@ class Gastronomico extends Model
         'longitud' => 'float',
     ];
 
+    protected function habilitado(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN),
+            set: fn($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN)
+        );
+    }
     public function menus()
     {
         return $this->belongsToMany(Menu::class, 'gastronomico_menus', 'gastronomico_id', 'menu_id');

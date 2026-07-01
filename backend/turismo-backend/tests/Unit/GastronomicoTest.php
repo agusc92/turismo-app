@@ -28,6 +28,7 @@ class GastronomicoTest extends TestCase
             'imagen' => 'http://imagen.com/restaurante.jpg',
             'latitud' => -38.555,
             'longitud' => -58.777,
+            'habilitado' => true,
         ];
 
         $gastronomico = new Gastronomico();
@@ -43,6 +44,7 @@ class GastronomicoTest extends TestCase
         $this->assertEquals($data['imagen'], $gastronomico->imagen);
         $this->assertEquals($data['latitud'], $gastronomico->latitud);
         $this->assertEquals($data['longitud'], $gastronomico->longitud);
+        $this->assertEquals($data['habilitado'], $gastronomico->habilitado);
         $this->assertNull($gastronomico->id);
     }
 
@@ -60,7 +62,8 @@ class GastronomicoTest extends TestCase
      */
     public function test_latitud_attribute_is_float(): void
     {
-        $gastronomico = new Gastronomico();
+        // Crear el modelo a través del factory para asegurar que los casts se apliquen correctamente
+        $gastronomico = Gastronomico::factory()->make();
 
         $gastronomico->latitud = "-38.555";
         $this->assertIsFloat($gastronomico->latitud);
@@ -77,7 +80,8 @@ class GastronomicoTest extends TestCase
      */
     public function test_longitud_attribute_is_float(): void
     {
-        $gastronomico = new Gastronomico();
+        // Crear el modelo a través del factory para asegurar que los casts se apliquen correctamente
+        $gastronomico = Gastronomico::factory()->make();
 
         $gastronomico->longitud = "-58.777";
         $this->assertIsFloat($gastronomico->longitud);
@@ -119,5 +123,34 @@ class GastronomicoTest extends TestCase
 
         $expectedMenus = ['Vegano', 'Sin TACC'];
         $this->assertEquals($expectedMenus, $gastronomico->menu);
+    }
+
+    /**
+     * Test that 'habilitado' attribute is correctly cast to boolean.
+     */
+    public function test_habilitado_attribute_is_boolean(): void
+    {
+        // Crear el modelo y luego refrescarlo para asegurar que los casts se apliquen correctamente
+        $gastronomico = Gastronomico::factory()->create(['habilitado' => true])->refresh();
+
+        // Test true values
+        $gastronomico->habilitado = '1';
+        $this->assertTrue($gastronomico->habilitado);
+        $gastronomico->habilitado = 'true';
+        $this->assertTrue($gastronomico->habilitado);
+        $gastronomico->habilitado = 1;
+        $this->assertTrue($gastronomico->habilitado);
+
+        // Test false values
+        $gastronomico->habilitado = '0';
+        $this->assertFalse($gastronomico->habilitado);
+        $gastronomico->habilitado = 'false';
+        $this->assertFalse($gastronomico->habilitado);
+        $gastronomico->habilitado = 0;
+        $this->assertFalse($gastronomico->habilitado);
+        $gastronomico->habilitado = null;
+        $this->assertFalse($gastronomico->habilitado); // Laravel casts null to false for boolean
+        $gastronomico->habilitado = '';
+        $this->assertFalse($gastronomico->habilitado);
     }
 }
