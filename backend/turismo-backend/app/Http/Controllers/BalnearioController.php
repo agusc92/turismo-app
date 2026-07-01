@@ -10,12 +10,12 @@ class BalnearioController extends Controller
 {
     #[OA\Get(
         path: "/api/balnearios",
-        summary: "Obtener todos los balnearios",
+        summary: "Obtener todos los balnearios habilitados",
         tags: ["Balnearios"],
         responses: [
             new OA\Response(
                 response: 200,
-                description: "Lista de balnearios",
+                description: "Lista de balnearios habilitados",
                 content: new OA\JsonContent(
                     type: "array",
                     items: new OA\Items(ref: "#/components/schemas/Balneario")
@@ -29,7 +29,7 @@ class BalnearioController extends Controller
     )]
     public function index()
     {
-        return response()->json(Balneario::all());
+        return response()->json(Balneario::where('habilitado', true)->get());
     }
 
     #[OA\Get(
@@ -102,6 +102,7 @@ class BalnearioController extends Controller
             'imagen' => 'nullable|string',
             'latitud' => 'nullable|numeric',
             'longitud' => 'nullable|numeric',
+            'habilitado' => 'nullable|boolean',
         ]);
 
         $balneario = Balneario::create($request->all());
@@ -162,6 +163,7 @@ class BalnearioController extends Controller
             'imagen' => 'nullable|string',
             'latitud' => 'nullable|numeric',
             'longitud' => 'nullable|numeric',
+            'habilitado' => 'nullable|boolean',
         ]);
 
         $balneario->update($request->all());
