@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('destacado')->default(false);
             $table->decimal('latitud', 10, 7)->nullable();
             $table->decimal('longitud', 10, 7)->nullable();
+            $table->boolean('habilitado')->default(true);
             $table->timestamps();
         });
     }

@@ -10,12 +10,12 @@ class EventoController extends Controller
 {
     #[OA\Get(
         path: "/api/eventos",
-        summary: "Obtener todos los eventos",
+        summary: "Obtener todos los eventos habilitados",
         tags: ["Eventos"],
         responses: [
             new OA\Response(
                 response: 200,
-                description: "Lista de eventos",
+                description: "Lista de eventos habilitados",
                 content: new OA\JsonContent(
                     type: "array",
                     items: new OA\Items(ref: "#/components/schemas/Evento")
@@ -29,7 +29,7 @@ class EventoController extends Controller
     )]
     public function index()
     {
-        return response()->json(Evento::all());
+        return response()->json(Evento::where('habilitado', true)->get());
     }
 
     #[OA\Get(
@@ -89,8 +89,7 @@ class EventoController extends Controller
     )]
     public function destacados()
     {
-        $destacados = Evento::where('destacado', true)->get();
-        return response()->json($destacados);
+        return Evento::where('destacado', true)->where('habilitado', true)->get();
     }
 
     #[OA\Post(
@@ -124,6 +123,7 @@ class EventoController extends Controller
             'destacado' => 'nullable|boolean',
             'latitud' => 'nullable|numeric',
             'longitud' => 'nullable|numeric',
+            'habilitado' => 'nullable|boolean',
         ]);
 
         $evento = Evento::create($request->all());
@@ -181,6 +181,7 @@ class EventoController extends Controller
             'destacado' => 'nullable|boolean',
             'latitud' => 'nullable|numeric',
             'longitud' => 'nullable|numeric',
+            'habilitado' => 'nullable|boolean',
         ]);
 
         $evento->update($request->all());
