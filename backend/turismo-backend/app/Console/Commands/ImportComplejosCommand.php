@@ -57,6 +57,7 @@ class ImportComplejosCommand extends Command
 
             $latitud = isset($row['latitud']) && is_numeric($row['latitud']) ? (float)$row['latitud'] : null;
             $longitud = isset($row['longitud']) && is_numeric($row['longitud']) ? (float)$row['longitud'] : null;
+            $habilitado = filter_var($row['habilitado'] ?? true, FILTER_VALIDATE_BOOLEAN);
 
             try {
                 Complejo::create([
@@ -70,6 +71,7 @@ class ImportComplejosCommand extends Command
                     'imagen' => $row['imagen'] ?? null,
                     'latitud' => $latitud,
                     'longitud' => $longitud,
+                    'habilitado' => $habilitado,
                 ]);
                 $importedCount++;
             } catch (\Exception $e) {

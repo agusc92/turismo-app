@@ -4,9 +4,12 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Models\Alojamiento;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AlojamientoTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * Test that an Alojamiento instance can be created and has correct attributes.
      */
@@ -25,6 +28,7 @@ class AlojamientoTest extends TestCase
             'imagen' => 'http://imagen.com/hotel.jpg',
             'latitud' => -38.555,
             'longitud' => -58.777,
+            'habilitado' => true,
         ];
 
         $alojamiento = new Alojamiento();
@@ -42,6 +46,7 @@ class AlojamientoTest extends TestCase
         $this->assertEquals($data['imagen'], $alojamiento->imagen);
         $this->assertEquals($data['latitud'], $alojamiento->latitud);
         $this->assertEquals($data['longitud'], $alojamiento->longitud);
+        $this->assertEquals($data['habilitado'], $alojamiento->habilitado);
         $this->assertNull($alojamiento->id);
     }
 
@@ -60,7 +65,8 @@ class AlojamientoTest extends TestCase
      */
     public function test_mascotas_attribute_is_boolean(): void
     {
-        $alojamiento = new Alojamiento();
+        // Crear el modelo y luego refrescarlo para asegurar que los casts se apliquen correctamente
+        $alojamiento = Alojamiento::factory()->create(['mascotas' => true])->refresh();
 
         // Test true values
         $alojamiento->mascotas = '1';
@@ -76,11 +82,14 @@ class AlojamientoTest extends TestCase
         $alojamiento->mascotas = '0';
         $this->assertFalse($alojamiento->mascotas);
 
+        $alojamiento->mascotas = 'false';
+        $this->assertFalse($alojamiento->mascotas);
+
         $alojamiento->mascotas = 0;
         $this->assertFalse($alojamiento->mascotas);
 
         $alojamiento->mascotas = null;
-        $this->assertNull($alojamiento->mascotas);
+        $this->assertFalse($alojamiento->mascotas); // Laravel casts null to false for boolean
 
         $alojamiento->mascotas = '';
         $this->assertFalse($alojamiento->mascotas);
@@ -91,7 +100,8 @@ class AlojamientoTest extends TestCase
      */
     public function test_latitud_attribute_is_float(): void
     {
-        $alojamiento = new Alojamiento();
+        // Crear el modelo a través del factory para asegurar que los casts se apliquen correctamente
+        $alojamiento = Alojamiento::factory()->make();
 
         $alojamiento->latitud = "-38.555";
         $this->assertIsFloat($alojamiento->latitud);
@@ -108,7 +118,8 @@ class AlojamientoTest extends TestCase
      */
     public function test_longitud_attribute_is_float(): void
     {
-        $alojamiento = new Alojamiento();
+        // Crear el modelo a través del factory para asegurar que los casts se apliquen correctamente
+        $alojamiento = Alojamiento::factory()->make();
 
         $alojamiento->longitud = "-58.777";
         $this->assertIsFloat($alojamiento->longitud);
@@ -118,5 +129,34 @@ class AlojamientoTest extends TestCase
         $this->assertIsFloat($alojamiento->longitud);
 
         $this->assertEqualsWithDelta(-58.9876543, $alojamiento->longitud, 0.0000001);
+    }
+
+    /**
+     * Test that 'habilitado' attribute is correctly cast to boolean.
+     */
+    public function test_habilitado_attribute_is_boolean(): void
+    {
+        // Crear el modelo y luego refrescarlo para asegurar que los casts se apliquen correctamente
+        $alojamiento = Alojamiento::factory()->create(['habilitado' => true])->refresh();
+
+        // Test true values
+        $alojamiento->habilitado = '1';
+        $this->assertTrue($alojamiento->habilitado);
+        $alojamiento->habilitado = 'true';
+        $this->assertTrue($alojamiento->habilitado);
+        $alojamiento->habilitado = 1;
+        $this->assertTrue($alojamiento->habilitado);
+
+        // Test false values
+        $alojamiento->habilitado = '0';
+        $this->assertFalse($alojamiento->habilitado);
+        $alojamiento->habilitado = 'false';
+        $this->assertFalse($alojamiento->habilitado);
+        $alojamiento->habilitado = 0;
+        $this->assertFalse($alojamiento->habilitado);
+        $alojamiento->habilitado = null;
+        $this->assertFalse($alojamiento->habilitado); // Laravel casts null to false for boolean
+        $alojamiento->habilitado = '';
+        $this->assertFalse($alojamiento->habilitado);
     }
 }

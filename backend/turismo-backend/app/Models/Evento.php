@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OpenApi\Attributes as OA;
@@ -21,6 +22,7 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "destacado", type: "boolean", description: "Indica si el evento es destacado"),
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, description: "Latitud del evento"),
         new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, description: "Longitud del evento"),
+        new OA\Property(property: "habilitado", type: "boolean", description: "Indica si el evento está habilitado/visible", example: true),
         new OA\Property(property: "created_at", type: "string", format: "date-time", description: "Fecha de creación"),
         new OA\Property(property: "updated_at", type: "string", format: "date-time", description: "Fecha de última actualización")
     ]
@@ -39,7 +41,8 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/concierto.jpg"),
         new OA\Property(property: "destacado", type: "boolean", example: false),
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.555),
-        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.777)
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.777),
+        new OA\Property(property: "habilitado", type: "boolean", nullable: true, example: true)
     ]
 )]
 #[OA\Schema(
@@ -55,7 +58,8 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/jazz.jpg"),
         new OA\Property(property: "destacado", type: "boolean", nullable: true, example: true),
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.666),
-        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.888)
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.888),
+        new OA\Property(property: "habilitado", type: "boolean", nullable: true, example: false)
     ]
 )]
 class Evento extends Model
@@ -73,13 +77,27 @@ class Evento extends Model
         'imagen',
         'destacado',
         'latitud',
-        'longitud'
+        'longitud',
+        'habilitado'
     ];
 
     protected $casts = [
-        'destacado' => 'boolean',
         'fecha' => 'datetime',
         'latitud' => 'float',
         'longitud' => 'float',
     ];
+    protected function habilitado(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN),
+            set: fn($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN)
+        );
+    }
+    protected function destacado(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN),
+            set: fn ($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN)
+        );
+    }
 }

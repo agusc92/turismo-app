@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OpenApi\Attributes as OA;
@@ -22,6 +23,7 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "imagen", type: "string", nullable: true, description: "URL de la imagen del complejo"),
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, description: "Latitud del complejo"),
         new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, description: "Longitud del complejo"),
+        new OA\Property(property: "habilitado", type: "boolean", description: "Indica si el complejo está habilitado/visible", example: true),
         new OA\Property(property: "created_at", type: "string", format: "date-time", description: "Fecha de creación"),
         new OA\Property(property: "updated_at", type: "string", format: "date-time", description: "Fecha de última actualización")
     ]
@@ -41,7 +43,9 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "adicional", type: "string", nullable: true, example: "Estacionamiento"),
         new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/complejo.jpg"),
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.555),
-        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.777)
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.777),
+        new OA\Property(property: "habilitado", type: "boolean", nullable: true, example: true)
+
     ]
 )]
 #[OA\Schema(
@@ -58,7 +62,8 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "adicional", type: "string", nullable: true, example: "Eventos corporativos"),
         new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/complejo_update.jpg"),
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.666),
-        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.888)
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.888),
+        new OA\Property(property: "habilitado", type: "boolean", nullable: true, example: false)
     ]
 )]
 class Complejo extends Model
@@ -77,11 +82,19 @@ class Complejo extends Model
         'adicional',
         'imagen',
         'latitud',
-        'longitud'
+        'longitud',
+        'habilitado'
     ];
 
     protected $casts = [
         'latitud' => 'float',
         'longitud' => 'float',
     ];
+    protected function habilitado(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN),
+            set: fn ($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN)
+        );
+    }
 }

@@ -10,12 +10,12 @@ class AlojamientoController extends Controller
 {
     #[OA\Get(
         path: "/api/alojamientos",
-        summary: "Obtener todos los alojamientos",
+        summary: "Obtener todos los alojamientos habilitados",
         tags: ["Alojamientos"],
         responses: [
             new OA\Response(
                 response: 200,
-                description: "Lista de alojamientos",
+                description: "Lista de alojamientos habilitados",
                 content: new OA\JsonContent(
                     type: "array",
                     items: new OA\Items(ref: "#/components/schemas/Alojamiento")
@@ -29,7 +29,7 @@ class AlojamientoController extends Controller
     )]
     public function index()
     {
-        return response()->json(Alojamiento::all());
+        return response()->json(Alojamiento::where('habilitado', true)->get());
     }
 
     #[OA\Get(
@@ -103,6 +103,7 @@ class AlojamientoController extends Controller
             'imagen' => 'nullable|string',
             'latitud' => 'nullable|numeric',
             'longitud' => 'nullable|numeric',
+            'habilitado' => 'nullable|boolean',
         ]);
 
         $alojamiento = Alojamiento::create($request->all());
@@ -136,10 +137,6 @@ class AlojamientoController extends Controller
             new OA\Response(
                 response: 404,
                 description: "Alojamiento no encontrado"
-            ),
-            new OA\Response(
-                response: 422,
-                description: "Error de validación"
             )
         ]
     )]
@@ -154,7 +151,7 @@ class AlojamientoController extends Controller
         $request->validate([
             'nombre' => 'sometimes|required|string',
             'direccion' => 'sometimes|required|string',
-            'telefono' => 'nullable|string',
+            'telefono' => 'sometimes|nullable|string',
             'redesSociales' => 'nullable|string',
             'paginaWeb' => 'nullable|string',
             'mail' => 'nullable|email',
@@ -164,6 +161,7 @@ class AlojamientoController extends Controller
             'imagen' => 'nullable|string',
             'latitud' => 'nullable|numeric',
             'longitud' => 'nullable|numeric',
+            'habilitado' => 'nullable|boolean',
         ]);
 
         $alojamiento->update($request->all());

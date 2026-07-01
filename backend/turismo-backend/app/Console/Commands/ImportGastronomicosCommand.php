@@ -75,6 +75,7 @@ class ImportGastronomicosCommand extends Command
                 $imagen = trim($row['imagen'] ?? '');
                 $latitud = isset($row['latitud']) && is_numeric($row['latitud']) ? (float)$row['latitud'] : null;
                 $longitud = isset($row['longitud']) && is_numeric($row['longitud']) ? (float)$row['longitud'] : null;
+                $habilitado = filter_var($row['habilitado'] ?? true, FILTER_VALIDATE_BOOLEAN);
 
                 if (empty($nombre)) {
                     $this->warn("Línea " . ($lineNumber + 2) . " omitida: nombre vacío.");
@@ -93,6 +94,7 @@ class ImportGastronomicosCommand extends Command
                     'imagen' => $imagen ?: null,
                     'latitud' => $latitud,
                     'longitud' => $longitud,
+                    'habilitado' => $habilitado,
                 ]);
 
                 // =========================

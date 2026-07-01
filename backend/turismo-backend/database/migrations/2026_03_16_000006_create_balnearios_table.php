@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('imagen')->nullable();
             $table->decimal('latitud', 10, 7)->nullable();
             $table->decimal('longitud', 10, 7)->nullable();
+            $table->boolean('habilitado')->default(true);
             $table->timestamps();
         });
     }

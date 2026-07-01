@@ -4,16 +4,12 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-
-// Importar el trait
 use App\Models\Evento;
 use Carbon\Carbon;
 
 class EventoTest extends TestCase
 {
     use RefreshDatabase;
-
-    // Usar el trait RefreshDatabase
 
     /**
      * Test that an Evento instance can be created and has correct attributes.
@@ -30,6 +26,7 @@ class EventoTest extends TestCase
             'destacado' => true,
             'latitud' => -38.555,
             'longitud' => -58.777,
+            'habilitado' => true,
         ];
 
         $evento = new Evento();
@@ -44,6 +41,7 @@ class EventoTest extends TestCase
         $this->assertEquals($data['destacado'], $evento->destacado);
         $this->assertEquals($data['latitud'], $evento->latitud);
         $this->assertEquals($data['longitud'], $evento->longitud);
+        $this->assertEquals($data['habilitado'], $evento->habilitado);
         $this->assertNull($evento->id);
     }
 
@@ -61,7 +59,8 @@ class EventoTest extends TestCase
      */
     public function test_destacado_attribute_is_boolean(): void
     {
-        $evento = new Evento();
+        // Crear el modelo y luego refrescarlo para asegurar que los casts se apliquen correctamente
+        $evento = Evento::factory()->create(['destacado' => true])->refresh();
 
         // Test true values
         $evento->destacado = '1';
@@ -74,13 +73,12 @@ class EventoTest extends TestCase
         // Test false values
         $evento->destacado = '0';
         $this->assertFalse($evento->destacado);
-
+        $evento->destacado = 'false';
+        $this->assertFalse($evento->destacado);
         $evento->destacado = 0;
         $this->assertFalse($evento->destacado);
-
         $evento->destacado = null;
-        $this->assertNull($evento->destacado);
-
+        $this->assertFalse($evento->destacado); // Laravel casts null to false for boolean
         $evento->destacado = '';
         $this->assertFalse($evento->destacado);
     }
@@ -103,7 +101,8 @@ class EventoTest extends TestCase
      */
     public function test_latitud_attribute_is_float(): void
     {
-        $evento = new Evento();
+        // Crear el modelo a través del factory para asegurar que los casts se apliquen correctamente
+        $evento = Evento::factory()->make();
 
         $evento->latitud = "-38.555";
         $this->assertIsFloat($evento->latitud);
@@ -120,7 +119,8 @@ class EventoTest extends TestCase
      */
     public function test_longitud_attribute_is_float(): void
     {
-        $evento = new Evento();
+        // Crear el modelo a través del factory para asegurar que los casts se apliquen correctamente
+        $evento = Evento::factory()->make();
 
         $evento->longitud = "-58.777";
         $this->assertIsFloat($evento->longitud);
@@ -130,5 +130,34 @@ class EventoTest extends TestCase
         $this->assertIsFloat($evento->longitud);
         // Laravel y la DB pueden redondear, así que comparamos con un delta
         $this->assertEqualsWithDelta(-58.9876543, $evento->longitud, 0.0000001);
+    }
+
+    /**
+     * Test that 'habilitado' attribute is correctly cast to boolean.
+     */
+    public function test_habilitado_attribute_is_boolean(): void
+    {
+        // Crear el modelo y luego refrescarlo para asegurar que los casts se apliquen correctamente
+        $evento = Evento::factory()->create(['habilitado' => true])->refresh();
+
+        // Test true values
+        $evento->habilitado = '1';
+        $this->assertTrue($evento->habilitado);
+        $evento->habilitado = 'true';
+        $this->assertTrue($evento->habilitado);
+        $evento->habilitado = 1;
+        $this->assertTrue($evento->habilitado);
+
+        // Test false values
+        $evento->habilitado = '0';
+        $this->assertFalse($evento->habilitado);
+        $evento->habilitado = 'false';
+        $this->assertFalse($evento->habilitado);
+        $evento->habilitado = 0;
+        $this->assertFalse($evento->habilitado);
+        $evento->habilitado = null;
+        $this->assertFalse($evento->habilitado); // Laravel casts null to false for boolean
+        $evento->habilitado = '';
+        $this->assertFalse($evento->habilitado);
     }
 }

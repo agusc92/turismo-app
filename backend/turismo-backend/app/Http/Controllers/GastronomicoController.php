@@ -11,12 +11,12 @@ class GastronomicoController extends Controller
 {
     #[OA\Get(
         path: "/api/gastronomicos",
-        summary: "Obtener todos los establecimientos gastronómicos",
+        summary: "Obtener todos los establecimientos gastronómicos habilitados",
         tags: ["Gastronomicos"],
         responses: [
             new OA\Response(
                 response: 200,
-                description: "Lista de establecimientos gastronómicos",
+                description: "Lista de establecimientos gastronómicos habilitados",
                 content: new OA\JsonContent(
                     type: "array",
                     items: new OA\Items(ref: "#/components/schemas/Gastronomico")
@@ -30,7 +30,7 @@ class GastronomicoController extends Controller
     )]
     public function index()
     {
-        return response()->json(Gastronomico::with(['menus', 'tipos'])->get());
+        return response()->json(Gastronomico::with(['menus', 'tipos'])->where('habilitado', true)->get());
     }
 
     #[OA\Get(
@@ -102,6 +102,7 @@ class GastronomicoController extends Controller
             'imagen' => 'nullable|string',
             'latitud' => 'nullable|numeric',
             'longitud' => 'nullable|numeric',
+            'habilitado' => 'nullable|boolean',
             'tipo_ids' => 'nullable|array',
             'tipo_ids.*' => 'exists:tipo_gastronomicos,id',
             'menu_ids' => 'nullable|array',
@@ -172,6 +173,7 @@ class GastronomicoController extends Controller
             'imagen' => 'nullable|string',
             'latitud' => 'nullable|numeric',
             'longitud' => 'nullable|numeric',
+            'habilitado' => 'nullable|boolean',
             'tipo_ids' => 'nullable|array',
             'tipo_ids.*' => 'exists:tipo_gastronomicos,id',
             'menu_ids' => 'nullable|array',

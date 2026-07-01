@@ -24,11 +24,11 @@
                 "tags": [
                     "Actividades"
                 ],
-                "summary": "Obtener todas las actividades",
+                "summary": "Obtener todas las actividades habilitadas",
                 "operationId": "3306894991c4595612edb23d6da83dd0",
                 "responses": {
                     "200": {
-                        "description": "Lista de actividades",
+                        "description": "Lista de actividades habilitadas",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -190,11 +190,11 @@
                 "tags": [
                     "Alojamientos"
                 ],
-                "summary": "Obtener todos los alojamientos",
+                "summary": "Obtener todos los alojamientos habilitados",
                 "operationId": "5a3e7174cb15d6c117ba171398cd62e1",
                 "responses": {
                     "200": {
-                        "description": "Lista de alojamientos",
+                        "description": "Lista de alojamientos habilitados",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -320,9 +320,6 @@
                     },
                     "404": {
                         "description": "Alojamiento no encontrado"
-                    },
-                    "422": {
-                        "description": "Error de validación"
                     }
                 }
             },
@@ -480,11 +477,11 @@
                 "tags": [
                     "Balnearios"
                 ],
-                "summary": "Obtener todos los balnearios",
+                "summary": "Obtener todos los balnearios habilitados",
                 "operationId": "06ffd51002f94c702a7863d0c5b1e622",
                 "responses": {
                     "200": {
-                        "description": "Lista de balnearios",
+                        "description": "Lista de balnearios habilitados",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -649,11 +646,11 @@
                 "tags": [
                     "Complejos"
                 ],
-                "summary": "Obtener todos los complejos",
+                "summary": "Obtener todos los complejos habilitados",
                 "operationId": "31f0d6a7ad46a3451c44e14391416e90",
                 "responses": {
                     "200": {
-                        "description": "Lista de complejos",
+                        "description": "Lista de complejos habilitados",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1014,11 +1011,11 @@
                 "tags": [
                     "Gastronomicos"
                 ],
-                "summary": "Obtener todos los establecimientos gastronómicos",
+                "summary": "Obtener todos los establecimientos gastronómicos habilitados",
                 "operationId": "5da1ad6cc3ad6194df12fe5f00de06dd",
                 "responses": {
                     "200": {
-                        "description": "Lista de establecimientos gastronómicos",
+                        "description": "Lista de establecimientos gastronómicos habilitados",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2299,6 +2296,11 @@
                         "type": "string",
                         "nullable": true
                     },
+                    "habilitado": {
+                        "description": "Indica si la actividad está habilitada/visible",
+                        "type": "boolean",
+                        "example": true
+                    },
                     "created_at": {
                         "description": "Fecha de creación",
                         "type": "string",
@@ -2383,6 +2385,11 @@
                         "type": "string",
                         "example": "L-V 10:00-18:00",
                         "nullable": true
+                    },
+                    "habilitado": {
+                        "type": "boolean",
+                        "example": true,
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -2453,6 +2460,11 @@
                         "type": "string",
                         "example": "S-D 11:00-19:00",
                         "nullable": true
+                    },
+                    "habilitado": {
+                        "type": "boolean",
+                        "example": false,
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -2500,38 +2512,37 @@
                         "type": "boolean"
                     },
                     "periodoApertura": {
-                        "description": "Período de apertura (ej. 'Todo el año', 'Temporada alta')",
+                        "description": "Período de apertura",
                         "type": "string",
                         "nullable": true
                     },
                     "tipo": {
-                        "description": "Tipo de alojamiento (ej. 'Hotel', 'Cabaña')",
+                        "description": "Tipo de alojamiento",
                         "type": "string"
                     },
                     "imagen": {
-                        "description": "URL de la imagen del alojamiento",
                         "type": "string",
                         "nullable": true
                     },
                     "latitud": {
-                        "description": "Latitud del alojamiento",
                         "type": "number",
                         "format": "float",
                         "nullable": true
                     },
                     "longitud": {
-                        "description": "Longitud del alojamiento",
                         "type": "number",
                         "format": "float",
                         "nullable": true
                     },
+                    "habilitado": {
+                        "description": "Indica si el alojamiento está habilitado",
+                        "type": "boolean"
+                    },
                     "created_at": {
-                        "description": "Fecha de creación",
                         "type": "string",
                         "format": "date-time"
                     },
                     "updated_at": {
-                        "description": "Fecha de última actualización",
                         "type": "string",
                         "format": "date-time"
                     }
@@ -2549,62 +2560,54 @@
                 ],
                 "properties": {
                     "nombre": {
-                        "type": "string",
-                        "example": "Hotel Central"
+                        "type": "string"
                     },
                     "direccion": {
-                        "type": "string",
-                        "example": "Calle 10 N° 500"
+                        "type": "string"
                     },
                     "telefono": {
                         "type": "string",
-                        "example": "2262554433",
                         "nullable": true
                     },
                     "redesSociales": {
                         "type": "string",
-                        "example": "http://instagram.com/hotelcentral",
                         "nullable": true
                     },
                     "paginaWeb": {
                         "type": "string",
-                        "example": "http://hotelcentral.com",
                         "nullable": true
                     },
                     "mail": {
                         "type": "string",
                         "format": "email",
-                        "example": "reservas@hotelcentral.com",
                         "nullable": true
                     },
                     "mascotas": {
-                        "type": "boolean",
-                        "example": false
+                        "type": "boolean"
                     },
                     "periodoApertura": {
                         "type": "string",
-                        "example": "Todo el año",
                         "nullable": true
                     },
                     "tipo": {
-                        "type": "string",
-                        "example": "Hotel"
+                        "type": "string"
                     },
                     "imagen": {
                         "type": "string",
-                        "example": "http://imagen.com/hotel.jpg",
                         "nullable": true
                     },
                     "latitud": {
                         "type": "number",
                         "format": "float",
-                        "example": -38.555,
                         "nullable": true
                     },
                     "longitud": {
                         "type": "number",
                         "format": "float",
-                        "example": -58.777,
+                        "nullable": true
+                    },
+                    "habilitado": {
+                        "type": "boolean",
                         "nullable": true
                     }
                 },
@@ -2616,65 +2619,57 @@
                 "properties": {
                     "nombre": {
                         "type": "string",
-                        "example": "Hotel del Parque",
                         "nullable": true
                     },
                     "direccion": {
                         "type": "string",
-                        "example": "Av. 79 N° 1200",
                         "nullable": true
                     },
                     "telefono": {
                         "type": "string",
-                        "example": "2262778899",
                         "nullable": true
                     },
                     "redesSociales": {
                         "type": "string",
-                        "example": "http://facebook.com/hoteldelparque",
                         "nullable": true
                     },
                     "paginaWeb": {
                         "type": "string",
-                        "example": "http://hoteldelparque.com",
                         "nullable": true
                     },
                     "mail": {
                         "type": "string",
                         "format": "email",
-                        "example": "info@hoteldelparque.com",
                         "nullable": true
                     },
                     "mascotas": {
                         "type": "boolean",
-                        "example": true,
                         "nullable": true
                     },
                     "periodoApertura": {
                         "type": "string",
-                        "example": "Temporada alta",
                         "nullable": true
                     },
                     "tipo": {
                         "type": "string",
-                        "example": "Cabaña",
                         "nullable": true
                     },
                     "imagen": {
                         "type": "string",
-                        "example": "http://imagen.com/cabaña.jpg",
                         "nullable": true
                     },
                     "latitud": {
                         "type": "number",
                         "format": "float",
-                        "example": -38.666,
                         "nullable": true
                     },
                     "longitud": {
                         "type": "number",
                         "format": "float",
-                        "example": -58.888,
+                        "nullable": true
+                    },
+                    "habilitado": {
+                        "type": "boolean",
                         "nullable": true
                     }
                 },
@@ -2744,6 +2739,11 @@
                         "type": "number",
                         "format": "float",
                         "nullable": true
+                    },
+                    "habilitado": {
+                        "description": "Indica si el balneario está habilitado/visible",
+                        "type": "boolean",
+                        "example": true
                     },
                     "created_at": {
                         "description": "Fecha de creación",
@@ -2821,6 +2821,11 @@
                         "format": "float",
                         "example": -58.777,
                         "nullable": true
+                    },
+                    "habilitado": {
+                        "type": "boolean",
+                        "example": true,
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -2886,6 +2891,11 @@
                         "format": "float",
                         "example": -58.888,
                         "nullable": true
+                    },
+                    "habilitado": {
+                        "type": "boolean",
+                        "example": false,
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -2949,6 +2959,11 @@
                         "type": "number",
                         "format": "float",
                         "nullable": true
+                    },
+                    "habilitado": {
+                        "description": "Indica si el complejo está habilitado/visible",
+                        "type": "boolean",
+                        "example": true
                     },
                     "created_at": {
                         "description": "Fecha de creación",
@@ -3021,6 +3036,11 @@
                         "format": "float",
                         "example": -58.777,
                         "nullable": true
+                    },
+                    "habilitado": {
+                        "type": "boolean",
+                        "example": true,
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -3080,6 +3100,11 @@
                         "type": "number",
                         "format": "float",
                         "example": -58.888,
+                        "nullable": true
+                    },
+                    "habilitado": {
+                        "type": "boolean",
+                        "example": false,
                         "nullable": true
                     }
                 },
@@ -3320,6 +3345,11 @@
                         "format": "float",
                         "nullable": true
                     },
+                    "habilitado": {
+                        "description": "Indica si el establecimiento está habilitado/visible",
+                        "type": "boolean",
+                        "example": true
+                    },
                     "created_at": {
                         "description": "Fecha de creación",
                         "type": "string",
@@ -3419,6 +3449,11 @@
                         "example": -58.777,
                         "nullable": true
                     },
+                    "habilitado": {
+                        "type": "boolean",
+                        "example": true,
+                        "nullable": true
+                    },
                     "tipo_ids": {
                         "description": "IDs de los tipos de gastronomía a asociar",
                         "type": "array",
@@ -3499,6 +3534,11 @@
                         "type": "number",
                         "format": "float",
                         "example": -58.888,
+                        "nullable": true
+                    },
+                    "habilitado": {
+                        "type": "boolean",
+                        "example": false,
                         "nullable": true
                     },
                     "tipo_ids": {

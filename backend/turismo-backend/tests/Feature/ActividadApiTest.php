@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Actividad;
 use App\Models\Tipo;
+
 class ActividadApiTest extends TestCase
 {
     use RefreshDatabase;
@@ -16,16 +17,18 @@ class ActividadApiTest extends TestCase
      */
     public function test_can_retrieve_list_of_actividades(): void
     {
-        Tipo::factory()->count(2)->create();
-        Actividad::factory()->count(3)->create();
+        Tipo::factory()->count(2)->create(); // Asegurar que hay tipos para las actividades
+        Actividad::factory()->count(2)->create(['habilitado' => true]);
+        Actividad::factory()->create(['habilitado' => false]); // Una actividad deshabilitada
 
         $response = $this->getJson('/api/actividades');
 
         $response->assertStatus(200)
-                 ->assertJsonCount(3)
+                 ->assertJsonCount(2) // Solo 2 habilitadas
                  ->assertJsonStructure([
-                     '*' => ['id', 'nombre', 'direccion', 'descripcion', 'redes_sociales', 'web', 'mail', 'telefono', 'imagen', 'latitud', 'longitud', 'tipo_id', 'dias_y_horarios', 'created_at', 'updated_at', 'tipo']
+                     '*' => ['id', 'nombre', 'direccion', 'descripcion', 'redes_sociales', 'web', 'mail', 'telefono', 'imagen', 'latitud', 'longitud', 'tipo_id', 'dias_y_horarios', 'habilitado', 'created_at', 'updated_at', 'tipo']
                  ]);
+        $response->assertJsonMissing(['habilitado' => false]); // Asegura que no hay deshabilitadas
     }
 
     /**
@@ -34,7 +37,7 @@ class ActividadApiTest extends TestCase
     public function test_can_retrieve_single_actividad(): void
     {
         $tipo = Tipo::factory()->create();
-        $actividad = Actividad::factory()->create(['tipo_id' => $tipo->id]);
+        $actividad = Actividad::factory()->create(['tipo_id' => $tipo->id, 'habilitado' => true]);
 
         $response = $this->getJson('/api/actividades/' . $actividad->id);
 
@@ -45,6 +48,7 @@ class ActividadApiTest extends TestCase
                      'imagen' => $actividad->imagen,
                      'latitud' => $actividad->latitud,
                      'longitud' => $actividad->longitud,
+                     'habilitado' => true,
                      'tipo' => [
                          'id' => $tipo->id,
                          'tipo' => $tipo->tipo,
@@ -72,6 +76,7 @@ class ActividadApiTest extends TestCase
             'longitud' => -58.777,
             'tipo_id' => $tipo->id,
             'dias_y_horarios' => 'L-V 09-18',
+            'habilitado' => true,
         ];
 
         $response = $this->postJson('/api/actividades', $actividadData);
@@ -82,6 +87,7 @@ class ActividadApiTest extends TestCase
                      'imagen' => 'http://nuevo.com/imagen.jpg',
                      'latitud' => -38.555,
                      'longitud' => -58.777,
+                     'habilitado' => true,
                  ]);
 
         $this->assertDatabaseHas('actividades', [
@@ -89,6 +95,7 @@ class ActividadApiTest extends TestCase
             'imagen' => 'http://nuevo.com/imagen.jpg',
             'latitud' => -38.555,
             'longitud' => -58.777,
+            'habilitado' => true,
         ]);
     }
 
@@ -98,7 +105,7 @@ class ActividadApiTest extends TestCase
     public function test_can_update_actividad(): void
     {
         $tipo = Tipo::factory()->create();
-        $actividad = Actividad::factory()->create(['tipo_id' => $tipo->id]);
+        $actividad = Actividad::factory()->create(['tipo_id' => $tipo->id, 'habilitado' => true]);
         $nuevoTipo = Tipo::factory()->create();
 
         $updatedData = [
@@ -108,6 +115,7 @@ class ActividadApiTest extends TestCase
             'latitud' => -38.666,
             'longitud' => -58.888,
             'tipo_id' => $nuevoTipo->id,
+            'habilitado' => false,
         ];
 
         $response = $this->putJson('/api/actividades/' . $actividad->id, $updatedData);
@@ -118,6 +126,7 @@ class ActividadApiTest extends TestCase
                      'imagen' => 'http://actualizada.com/imagen.jpg',
                      'latitud' => -38.666,
                      'longitud' => -58.888,
+                     'habilitado' => false,
                  ]);
 
         $this->assertDatabaseHas('actividades', [
@@ -127,6 +136,7 @@ class ActividadApiTest extends TestCase
             'latitud' => -38.666,
             'longitud' => -58.888,
             'tipo_id' => $nuevoTipo->id,
+            'habilitado' => false,
         ]);
     }
 
@@ -141,7 +151,7 @@ class ActividadApiTest extends TestCase
         $response = $this->deleteJson('/api/actividades/' . $actividad->id);
 
         $response->assertStatus(200)
-                 ->assertJson(['message' => 'Actividad eliminado correctamente']); // Corregido: "eliminado" en lugar de "eliminada"
+                 ->assertJson(['message' => 'Actividad eliminado correctamente']);
 
         $this->assertDatabaseMissing('actividades', ['id' => $actividad->id]);
     }

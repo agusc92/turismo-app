@@ -16,15 +16,17 @@ class BalnearioApiTest extends TestCase
      */
     public function test_can_retrieve_list_of_balnearios(): void
     {
-        Balneario::factory()->count(3)->create();
+        Balneario::factory()->count(2)->create(['habilitado' => true]);
+        Balneario::factory()->create(['habilitado' => false]); // Un balneario deshabilitado
 
         $response = $this->getJson('/api/balnearios');
 
         $response->assertStatus(200)
-                 ->assertJsonCount(3)
+                 ->assertJsonCount(2) // Solo 2 habilitados
                  ->assertJsonStructure([
-                     '*' => ['id', 'nombre', 'direccion', 'telefono', 'redesSociales', 'servicios', 'mail', 'accesibilidad', 'fecha_desde_hasta', 'imagen', 'latitud', 'longitud', 'created_at', 'updated_at']
+                     '*' => ['id', 'nombre', 'direccion', 'telefono', 'redesSociales', 'servicios', 'mail', 'accesibilidad', 'fecha_desde_hasta', 'imagen', 'latitud', 'longitud', 'habilitado', 'created_at', 'updated_at']
                  ]);
+        $response->assertJsonMissing(['habilitado' => false]); // Asegura que no hay deshabilitados
     }
 
     /**
@@ -32,7 +34,7 @@ class BalnearioApiTest extends TestCase
      */
     public function test_can_retrieve_single_balneario(): void
     {
-        $balneario = Balneario::factory()->create();
+        $balneario = Balneario::factory()->create(['habilitado' => true]);
 
         $response = $this->getJson('/api/balnearios/' . $balneario->id);
 
@@ -43,6 +45,7 @@ class BalnearioApiTest extends TestCase
                      'imagen' => $balneario->imagen,
                      'latitud' => $balneario->latitud,
                      'longitud' => $balneario->longitud,
+                     'habilitado' => true,
                  ]);
     }
 
@@ -63,6 +66,7 @@ class BalnearioApiTest extends TestCase
             'imagen' => 'http://nuevo.com/imagen.jpg',
             'latitud' => -38.555,
             'longitud' => -58.777,
+            'habilitado' => true,
         ];
 
         $response = $this->postJson('/api/balnearios', $balnearioData);
@@ -73,6 +77,7 @@ class BalnearioApiTest extends TestCase
                      'imagen' => 'http://nuevo.com/imagen.jpg',
                      'latitud' => -38.555,
                      'longitud' => -58.777,
+                     'habilitado' => true,
                  ]);
 
         $this->assertDatabaseHas('balnearios', [
@@ -80,6 +85,7 @@ class BalnearioApiTest extends TestCase
             'imagen' => 'http://nuevo.com/imagen.jpg',
             'latitud' => -38.555,
             'longitud' => -58.777,
+            'habilitado' => true,
         ]);
     }
 
@@ -88,7 +94,7 @@ class BalnearioApiTest extends TestCase
      */
     public function test_can_update_balneario(): void
     {
-        $balneario = Balneario::factory()->create();
+        $balneario = Balneario::factory()->create(['habilitado' => true]);
 
         $updatedData = [
             'nombre' => 'Balneario Actualizado',
@@ -96,6 +102,7 @@ class BalnearioApiTest extends TestCase
             'imagen' => 'http://actualizada.com/imagen.jpg',
             'latitud' => -38.666,
             'longitud' => -58.888,
+            'habilitado' => false,
         ];
 
         $response = $this->putJson('/api/balnearios/' . $balneario->id, $updatedData);
@@ -106,6 +113,7 @@ class BalnearioApiTest extends TestCase
                      'imagen' => 'http://actualizada.com/imagen.jpg',
                      'latitud' => -38.666,
                      'longitud' => -58.888,
+                     'habilitado' => false,
                  ]);
 
         $this->assertDatabaseHas('balnearios', [
@@ -114,6 +122,7 @@ class BalnearioApiTest extends TestCase
             'imagen' => 'http://actualizada.com/imagen.jpg',
             'latitud' => -38.666,
             'longitud' => -58.888,
+            'habilitado' => false,
         ]);
     }
 

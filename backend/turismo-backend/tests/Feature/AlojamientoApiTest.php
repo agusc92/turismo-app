@@ -16,15 +16,17 @@ class AlojamientoApiTest extends TestCase
      */
     public function test_can_retrieve_list_of_alojamientos(): void
     {
-        Alojamiento::factory()->count(3)->create();
+        Alojamiento::factory()->count(2)->create(['habilitado' => true]);
+        Alojamiento::factory()->create(['habilitado' => false]); // Un alojamiento deshabilitado
 
         $response = $this->getJson('/api/alojamientos');
 
         $response->assertStatus(200)
-                 ->assertJsonCount(3)
+                 ->assertJsonCount(2) // Solo 2 habilitados
                  ->assertJsonStructure([
-                     '*' => ['id', 'nombre', 'direccion', 'telefono', 'redesSociales', 'paginaWeb', 'mail', 'mascotas', 'periodoApertura', 'tipo', 'imagen', 'latitud', 'longitud', 'created_at', 'updated_at']
+                     '*' => ['id', 'nombre', 'direccion', 'telefono', 'redesSociales', 'paginaWeb', 'mail', 'mascotas', 'periodoApertura', 'tipo', 'imagen', 'latitud', 'longitud', 'habilitado', 'created_at', 'updated_at']
                  ]);
+        $response->assertJsonMissing(['habilitado' => false]); // Asegura que no hay deshabilitados
     }
 
     /**
@@ -32,7 +34,7 @@ class AlojamientoApiTest extends TestCase
      */
     public function test_can_retrieve_single_alojamiento(): void
     {
-        $alojamiento = Alojamiento::factory()->create();
+        $alojamiento = Alojamiento::factory()->create(['habilitado' => true]);
 
         $response = $this->getJson('/api/alojamientos/' . $alojamiento->id);
 
@@ -43,6 +45,7 @@ class AlojamientoApiTest extends TestCase
                      'imagen' => $alojamiento->imagen,
                      'latitud' => $alojamiento->latitud,
                      'longitud' => $alojamiento->longitud,
+                     'habilitado' => true,
                  ]);
     }
 
@@ -64,6 +67,7 @@ class AlojamientoApiTest extends TestCase
             'imagen' => 'http://nuevo.com/imagen.jpg',
             'latitud' => -38.555,
             'longitud' => -58.777,
+            'habilitado' => true,
         ];
 
         $response = $this->postJson('/api/alojamientos', $alojamientoData);
@@ -74,6 +78,7 @@ class AlojamientoApiTest extends TestCase
                      'imagen' => 'http://nuevo.com/imagen.jpg',
                      'latitud' => -38.555,
                      'longitud' => -58.777,
+                     'habilitado' => true,
                  ]);
 
         $this->assertDatabaseHas('alojamientos', [
@@ -81,6 +86,7 @@ class AlojamientoApiTest extends TestCase
             'imagen' => 'http://nuevo.com/imagen.jpg',
             'latitud' => -38.555,
             'longitud' => -58.777,
+            'habilitado' => true,
         ]);
     }
 
@@ -89,7 +95,7 @@ class AlojamientoApiTest extends TestCase
      */
     public function test_can_update_alojamiento(): void
     {
-        $alojamiento = Alojamiento::factory()->create();
+        $alojamiento = Alojamiento::factory()->create(['habilitado' => true]);
 
         $updatedData = [
             'nombre' => 'Alojamiento Actualizado',
@@ -98,6 +104,7 @@ class AlojamientoApiTest extends TestCase
             'imagen' => 'http://actualizada.com/imagen.jpg',
             'latitud' => -38.666,
             'longitud' => -58.888,
+            'habilitado' => false,
         ];
 
         $response = $this->putJson('/api/alojamientos/' . $alojamiento->id, $updatedData);
@@ -108,6 +115,7 @@ class AlojamientoApiTest extends TestCase
                      'imagen' => 'http://actualizada.com/imagen.jpg',
                      'latitud' => -38.666,
                      'longitud' => -58.888,
+                     'habilitado' => false,
                  ]);
 
         $this->assertDatabaseHas('alojamientos', [
@@ -116,6 +124,7 @@ class AlojamientoApiTest extends TestCase
             'imagen' => 'http://actualizada.com/imagen.jpg',
             'latitud' => -38.666,
             'longitud' => -58.888,
+            'habilitado' => false,
         ]);
     }
 
