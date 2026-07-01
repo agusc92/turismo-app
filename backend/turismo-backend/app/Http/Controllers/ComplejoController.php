@@ -10,12 +10,12 @@ class ComplejoController extends Controller
 {
     #[OA\Get(
         path: "/api/complejos",
-        summary: "Obtener todos los complejos",
+        summary: "Obtener todos los complejos habilitados",
         tags: ["Complejos"],
         responses: [
             new OA\Response(
                 response: 200,
-                description: "Lista de complejos",
+                description: "Lista de complejos habilitados",
                 content: new OA\JsonContent(
                     type: "array",
                     items: new OA\Items(ref: "#/components/schemas/Complejo")
@@ -29,7 +29,7 @@ class ComplejoController extends Controller
     )]
     public function index()
     {
-        return response()->json(Complejo::all());
+        return response()->json(Complejo::where('habilitado', true)->get());
     }
 
     #[OA\Get(
@@ -101,6 +101,7 @@ class ComplejoController extends Controller
             'imagen' => 'nullable|string',
             'latitud' => 'nullable|numeric',
             'longitud' => 'nullable|numeric',
+            'habilitado' => 'nullable|boolean',
         ]);
 
         $complejo = Complejo::create($request->all());
@@ -160,6 +161,7 @@ class ComplejoController extends Controller
             'imagen' => 'nullable|string',
             'latitud' => 'nullable|numeric',
             'longitud' => 'nullable|numeric',
+            'habilitado' => 'nullable|boolean',
         ]);
 
         $complejo->update($request->all());
