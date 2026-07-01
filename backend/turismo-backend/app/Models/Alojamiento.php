@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use OpenApi\Attributes as OA;
 
 #[OA\Schema(
@@ -19,13 +20,14 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "paginaWeb", type: "string", nullable: true, description: "Página web del alojamiento"),
         new OA\Property(property: "mail", type: "string", format: "email", nullable: true, description: "Correo electrónico de contacto"),
         new OA\Property(property: "mascotas", type: "boolean", description: "Indica si se permiten mascotas"),
-        new OA\Property(property: "periodoApertura", type: "string", nullable: true, description: "Período de apertura (ej. 'Todo el año', 'Temporada alta')"),
-        new OA\Property(property: "tipo", type: "string", description: "Tipo de alojamiento (ej. 'Hotel', 'Cabaña')"),
-        new OA\Property(property: "imagen", type: "string", nullable: true, description: "URL de la imagen del alojamiento"),
-        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, description: "Latitud del alojamiento"),
-        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, description: "Longitud del alojamiento"),
-        new OA\Property(property: "created_at", type: "string", format: "date-time", description: "Fecha de creación"),
-        new OA\Property(property: "updated_at", type: "string", format: "date-time", description: "Fecha de última actualización")
+        new OA\Property(property: "periodoApertura", type: "string", nullable: true, description: "Período de apertura"),
+        new OA\Property(property: "tipo", type: "string", description: "Tipo de alojamiento"),
+        new OA\Property(property: "imagen", type: "string", nullable: true),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true),
+        new OA\Property(property: "habilitado", type: "boolean", description: "Indica si el alojamiento está habilitado"),
+        new OA\Property(property: "created_at", type: "string", format: "date-time"),
+        new OA\Property(property: "updated_at", type: "string", format: "date-time")
     ]
 )]
 #[OA\Schema(
@@ -34,18 +36,19 @@ use OpenApi\Attributes as OA;
     description: "Esquema para la creación de un alojamiento",
     required: ["nombre", "direccion", "mascotas", "tipo"],
     properties: [
-        new OA\Property(property: "nombre", type: "string", example: "Hotel Central"),
-        new OA\Property(property: "direccion", type: "string", example: "Calle 10 N° 500"),
-        new OA\Property(property: "telefono", type: "string", nullable: true, example: "2262554433"),
-        new OA\Property(property: "redesSociales", type: "string", nullable: true, example: "http://instagram.com/hotelcentral"),
-        new OA\Property(property: "paginaWeb", type: "string", nullable: true, example: "http://hotelcentral.com"),
-        new OA\Property(property: "mail", type: "string", format: "email", nullable: true, example: "reservas@hotelcentral.com"),
-        new OA\Property(property: "mascotas", type: "boolean", example: false),
-        new OA\Property(property: "periodoApertura", type: "string", nullable: true, example: "Todo el año"),
-        new OA\Property(property: "tipo", type: "string", example: "Hotel"),
-        new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/hotel.jpg"),
-        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.555),
-        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.777)
+        new OA\Property(property: "nombre", type: "string"),
+        new OA\Property(property: "direccion", type: "string"),
+        new OA\Property(property: "telefono", type: "string", nullable: true),
+        new OA\Property(property: "redesSociales", type: "string", nullable: true),
+        new OA\Property(property: "paginaWeb", type: "string", nullable: true),
+        new OA\Property(property: "mail", type: "string", format: "email", nullable: true),
+        new OA\Property(property: "mascotas", type: "boolean"),
+        new OA\Property(property: "periodoApertura", type: "string", nullable: true),
+        new OA\Property(property: "tipo", type: "string"),
+        new OA\Property(property: "imagen", type: "string", nullable: true),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true),
+        new OA\Property(property: "habilitado", type: "boolean", nullable: true)
     ]
 )]
 #[OA\Schema(
@@ -53,18 +56,19 @@ use OpenApi\Attributes as OA;
     title: "AlojamientoUpdateRequest",
     description: "Esquema para la actualización de un alojamiento",
     properties: [
-        new OA\Property(property: "nombre", type: "string", nullable: true, example: "Hotel del Parque"),
-        new OA\Property(property: "direccion", type: "string", nullable: true, example: "Av. 79 N° 1200"),
-        new OA\Property(property: "telefono", type: "string", nullable: true, example: "2262778899"),
-        new OA\Property(property: "redesSociales", type: "string", nullable: true, example: "http://facebook.com/hoteldelparque"),
-        new OA\Property(property: "paginaWeb", type: "string", nullable: true, example: "http://hoteldelparque.com"),
-        new OA\Property(property: "mail", type: "string", format: "email", nullable: true, example: "info@hoteldelparque.com"),
-        new OA\Property(property: "mascotas", type: "boolean", nullable: true, example: true),
-        new OA\Property(property: "periodoApertura", type: "string", nullable: true, example: "Temporada alta"),
-        new OA\Property(property: "tipo", type: "string", nullable: true, example: "Cabaña"),
-        new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/cabaña.jpg"),
-        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.666),
-        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.888)
+        new OA\Property(property: "nombre", type: "string", nullable: true),
+        new OA\Property(property: "direccion", type: "string", nullable: true),
+        new OA\Property(property: "telefono", type: "string", nullable: true),
+        new OA\Property(property: "redesSociales", type: "string", nullable: true),
+        new OA\Property(property: "paginaWeb", type: "string", nullable: true),
+        new OA\Property(property: "mail", type: "string", format: "email", nullable: true),
+        new OA\Property(property: "mascotas", type: "boolean", nullable: true),
+        new OA\Property(property: "periodoApertura", type: "string", nullable: true),
+        new OA\Property(property: "tipo", type: "string", nullable: true),
+        new OA\Property(property: "imagen", type: "string", nullable: true),
+        new OA\Property(property: "latitud", type: "number", format: "float", nullable: true),
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true),
+        new OA\Property(property: "habilitado", type: "boolean", nullable: true)
     ]
 )]
 class Alojamiento extends Model
@@ -85,12 +89,28 @@ class Alojamiento extends Model
         'tipo',
         'imagen',
         'latitud',
-        'longitud'
+        'longitud',
+        'habilitado',
     ];
 
     protected $casts = [
-        'mascotas' => 'boolean',
         'latitud' => 'float',
         'longitud' => 'float',
     ];
+
+    protected function mascotas(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN),
+            set: fn($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN)
+        );
+    }
+
+    protected function habilitado(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN),
+            set: fn($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN)
+        );
+    }
 }
