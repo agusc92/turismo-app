@@ -20,6 +20,8 @@ class ComplejoManager extends Component
     public string $direccion    = '';
     public string $mail         = '';
     public string $redesSociales = '';
+    public string $facebook = '';
+    public string $instagram = '';
     public string $telefono     = '';
     public string $servicio     = '';
     public string $adicional    = '';
@@ -38,6 +40,8 @@ class ComplejoManager extends Component
             'nombre'       => 'required|string|max:255',
             'direccion'    => 'required|string|max:255',
             'mail'         => 'nullable|email|max:255',
+            'facebook'       => 'nullable|url|max:500',
+            'instagram'      => 'nullable|url|max:500',
             'redesSociales'=> 'nullable|url|max:500',
             'telefono'     => 'nullable|string|max:50',
             'servicio'     => 'nullable|string',
@@ -52,7 +56,7 @@ class ComplejoManager extends Component
 
     public function openCreate(): void
     {
-        $this->reset(['nombre','direccion','mail','redesSociales','telefono','servicio','adicional','imagen','latitud','longitud','editingId']);
+        $this->reset(['nombre','direccion','mail','redesSociales','facebook','instagram','telefono','servicio','adicional','imagen','latitud','longitud','editingId']);
         $this->isEditing = false; $this->showModal = true; $this->resetValidation();
     }
 
@@ -63,7 +67,22 @@ class ComplejoManager extends Component
         $this->nombre       = $c->nombre;
         $this->direccion    = $c->direccion;
         $this->mail         = $c->mail ?? '';
-        $this->redesSociales= $c->redesSociales ?? '';
+        // Parse combined social field
+        $social = $c->redesSociales ?? '';
+        $this->facebook = '';
+        $this->instagram = '';
+        if ($social) {
+            $parts = explode('|', $social);
+            foreach ($parts as $part) {
+                $part = trim($part);
+                if (str_starts_with(strtolower($part), 'fb:')) {
+                    $this->facebook = trim(substr($part, 3));
+                } elseif (str_starts_with(strtolower($part), 'ig:')) {
+                    $username = trim(substr($part, 3));
+                    $this->instagram = $username ? 'https://www.instagram.com/' . $username . '/' : '';
+                }
+            }
+        }
         $this->telefono     = $c->telefono ?? '';
         $this->servicio     = $c->servicio ?? '';
         $this->adicional    = $c->adicional ?? '';
@@ -76,12 +95,26 @@ class ComplejoManager extends Component
     public function save(): void
     {
         $data = $this->validate();
+        // Combine social fields into single string
+        $socialParts = [];
+        if (!empty($data['instagram'])) {
+            $url = $data['instagram'];
+            $path = parse_url($url, PHP_URL_PATH);
+            $username = trim($path, '/');
+            $socialParts[] = 'ig: ' . $username;
+        }
+        if (!empty($data['facebook'])) {
+            $socialParts[] = 'fb: ' . $data['facebook'];
+        }
+        $data['redesSociales'] = $socialParts ? implode(' | ', $socialParts) : null;
+        unset($data['facebook'], $data['instagram']);
         $data['latitud']  = $data['latitud'] ? (float)$data['latitud'] : null;
         $data['longitud'] = $data['longitud'] ? (float)$data['longitud'] : null;
         foreach (['mail','redesSociales','telefono','servicio','adicional','imagen'] as $f)
             $data[$f] = $data[$f] ?: null;
 
         if ($this->isEditing) {
+            dd($data)
             Complejo::findOrFail($this->editingId)->update($data);
             $this->toast('Complejo actualizado.');
         } else {

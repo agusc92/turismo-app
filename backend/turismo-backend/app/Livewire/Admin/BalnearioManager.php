@@ -19,7 +19,8 @@ class BalnearioManager extends Component
     public string $nombre          = '';
     public string $direccion       = '';
     public string $telefono        = '';
-    public string $redesSociales   = '';
+    public string $facebook = '';
+    public string $instagram       = '';
     public string $servicios       = '';
     public string $mail            = '';
     public string $accesibilidad   = '';
@@ -39,7 +40,8 @@ class BalnearioManager extends Component
             'nombre'           => 'required|string|max:255',
             'direccion'        => 'required|string|max:255',
             'telefono'         => 'nullable|string|max:50',
-            'redesSociales'    => 'nullable|url|max:500',
+            'facebook'       => 'nullable|url|max:500',
+            'instagram'      => 'nullable|url|max:500',
             'servicios'        => 'nullable|string',
             'mail'             => 'nullable|email|max:255',
             'accesibilidad'    => 'nullable|string',
@@ -54,7 +56,7 @@ class BalnearioManager extends Component
 
     public function openCreate(): void
     {
-        $this->reset(['nombre','direccion','telefono','redesSociales','servicios','mail','accesibilidad','fecha_desde_hasta','imagen','latitud','longitud','editingId']);
+        $this->reset(['nombre','direccion','telefono','facebook','instagram','servicios','mail','accesibilidad','fecha_desde_hasta','imagen','latitud','longitud','editingId']);
         $this->isEditing = false; $this->showModal = true; $this->resetValidation();
     }
 
@@ -65,7 +67,22 @@ class BalnearioManager extends Component
         $this->nombre           = $b->nombre;
         $this->direccion        = $b->direccion;
         $this->telefono         = $b->telefono ?? '';
-        $this->redesSociales    = $b->redesSociales ?? '';
+        // Parse combined social field
+        $social = $b->redesSociales ?? '';
+        $this->facebook = '';
+        $this->instagram = '';
+        if ($social) {
+            $parts = explode('|', $social);
+            foreach ($parts as $part) {
+                $part = trim($part);
+                if (str_starts_with(strtolower($part), 'fb:')) {
+                    $this->facebook = trim(substr($part, 3));
+                } elseif (str_starts_with(strtolower($part), 'ig:')) {
+                    $username = trim(substr($part, 3));
+                    $this->instagram = $username ? 'https://www.instagram.com/' . $username . '/' : '';
+                }
+            }
+        }
         $this->servicios        = $b->servicios ?? '';
         $this->mail             = $b->mail ?? '';
         $this->accesibilidad    = $b->accesibilidad ?? '';
@@ -78,11 +95,32 @@ class BalnearioManager extends Component
 
     public function save(): void
     {
-        $data = $this->validate();
-        $data['latitud']  = $data['latitud'] ? (float)$data['latitud'] : null;
-        $data['longitud'] = $data['longitud'] ? (float)$data['longitud'] : null;
-        foreach (['telefono','redesSociales','servicios','mail','accesibilidad','fecha_desde_hasta','imagen'] as $f)
-            $data[$f] = $data[$f] ?: null;
+        $validated = $this->validate();
+
+        // Combine social fields into single string
+        $socialParts = [];
+        if (!empty($validated['instagram'])) {
+            $path     = parse_url($validated['instagram'], PHP_URL_PATH);
+            $username = trim($path, '/');
+            $socialParts[] = 'ig: ' . $username;
+        }
+        if (!empty($validated['facebook'])) {
+            $socialParts[] = 'fb: ' . $validated['facebook'];
+        }
+
+        $data = [
+            'nombre'            => $validated['nombre'],
+            'direccion'         => $validated['direccion'],
+            'telefono'          => $validated['telefono'] ?: null,
+            'redesSociales'     => $socialParts ? implode(' | ', $socialParts) : null,
+            'servicios'         => $validated['servicios'] ?: null,
+            'mail'              => $validated['mail'] ?: null,
+            'accesibilidad'     => $validated['accesibilidad'] ?: null,
+            'fecha_desde_hasta' => $validated['fecha_desde_hasta'] ?: null,
+            'imagen'            => $validated['imagen'] ?: null,
+            'latitud'           => $validated['latitud'] ? (float)$validated['latitud'] : null,
+            'longitud'          => $validated['longitud'] ? (float)$validated['longitud'] : null,
+        ];
 
         if ($this->isEditing) {
             Balneario::findOrFail($this->editingId)->update($data);

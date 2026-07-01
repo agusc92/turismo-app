@@ -78,7 +78,7 @@
     @if($usuarios->hasPages())
     <div class="pagination-wrap">
         <span>Mostrando {{ $usuarios->firstItem() }}–{{ $usuarios->lastItem() }} de {{ $usuarios->total() }}</span>
-        <div>{{ $usuarios->links() }}</div>
+        <div>{{ $usuarios->links('vendor.pagination.custom') }}</div>
     </div>
     @endif
 </div>

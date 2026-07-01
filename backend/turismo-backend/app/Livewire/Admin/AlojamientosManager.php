@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models\Tipo;
 use App\Models\Alojamiento;
 
 class AlojamientosManager extends Component
@@ -19,7 +20,8 @@ class AlojamientosManager extends Component
     public string $nombre         = '';
     public string $direccion      = '';
     public string $telefono       = '';
-    public string $redesSociales  = '';
+    public string $facebook        = '';
+    public string $instagram       = '';
     public string $paginaWeb      = '';
     public string $mail           = '';
     public bool   $mascotas       = false;
@@ -42,7 +44,8 @@ class AlojamientosManager extends Component
             'tipo'           => 'required|string|max:100',
             'mascotas'       => 'boolean',
             'telefono'       => 'nullable|string|max:50',
-            'redesSociales'  => 'nullable|url|max:500',
+            'facebook'       => 'nullable|url|max:500',
+            'instagram'      => 'nullable|url|max:500',
             'paginaWeb'      => 'nullable|url|max:500',
             'mail'           => 'nullable|email|max:255',
             'periodoApertura'=> 'nullable|string|max:255',
@@ -56,7 +59,7 @@ class AlojamientosManager extends Component
 
     public function openCreate(): void
     {
-        $this->reset(['nombre','direccion','telefono','redesSociales','paginaWeb','mail','mascotas','periodoApertura','tipo','imagen','latitud','longitud','editingId']);
+        $this->reset(['nombre','direccion','telefono','facebook','instagram','paginaWeb','mail','mascotas','periodoApertura','tipo','imagen','latitud','longitud','editingId']);
         $this->isEditing = false; $this->showModal = true; $this->resetValidation();
     }
 
@@ -67,7 +70,21 @@ class AlojamientosManager extends Component
         $this->nombre         = $a->nombre;
         $this->direccion      = $a->direccion;
         $this->telefono       = $a->telefono ?? '';
-        $this->redesSociales  = $a->redesSociales ?? '';
+        // Parse combined social field
+        $social = $a->redesSociales ?? '';
+        $this->facebook = '';
+        $this->instagram = '';
+        if ($social) {
+                            foreach ($parts as $part) {
+                    $part = trim($part);
+                    if (preg_match('/^fb:\s*(.+)$/i', $part, $match)) {
+                        $this->facebook = trim($match[1]);
+                    } elseif (preg_match('/^ig:\s*(.+)$/i', $part, $match)) {
+                        $username = trim($match[1]);
+                        $this->instagram = $username ? 'https://www.instagram.com/' . $username . '/' : '';
+                    }
+                }
+        }
         $this->paginaWeb      = $a->paginaWeb ?? '';
         $this->mail           = $a->mail ?? '';
         $this->mascotas       = (bool)$a->mascotas;
@@ -82,10 +99,25 @@ class AlojamientosManager extends Component
     public function save(): void
     {
         $data = $this->validate();
+        // Combine social fields into single string
+        $socialParts = [];
+        if (!empty($data['instagram'])) {
+            // Extract username from URL if full URL provided
+            $url = $data['instagram'];
+            $path = parse_url($url, PHP_URL_PATH);
+            $username = trim($path, '/');
+            $socialParts[] = 'ig: ' . $username;
+        }
+        if (!empty($data['facebook'])) {
+            $socialParts[] = 'fb: ' . $data['facebook'];
+        }
+        $data['redesSociales'] = $socialParts ? implode(' | ', $socialParts) : null;
         $data['latitud']  = $data['latitud'] ? (float)$data['latitud'] : null;
         $data['longitud'] = $data['longitud'] ? (float)$data['longitud'] : null;
-        foreach (['telefono','redesSociales','paginaWeb','mail','periodoApertura','imagen'] as $f)
+        foreach (['telefono','paginaWeb','mail','periodoApertura','imagen'] as $f)
             $data[$f] = $data[$f] ?: null;
+        // Remove temporary fields
+        unset($data['facebook'], $data['instagram']);
 
         if ($this->isEditing) {
             Alojamiento::findOrFail($this->editingId)->update($data);
@@ -121,6 +153,8 @@ class AlojamientosManager extends Component
             ->orderBy('nombre')
             ->paginate(12);
 
-        return view('livewire.admin.alojamientos-manager', compact('alojamientos'));
+        $tipos = Tipo::orderBy('tipo')->pluck('tipo');
+
+        return view('livewire.admin.alojamientos-manager', compact('alojamientos', 'tipos'));
     }
 }

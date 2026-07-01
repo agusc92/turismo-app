@@ -76,7 +76,7 @@
     @if($complejos->hasPages())
     <div class="pagination-wrap">
         <span>Mostrando {{ $complejos->firstItem() }}–{{ $complejos->lastItem() }} de {{ $complejos->total() }}</span>
-        <div>{{ $complejos->links() }}</div>
+        <div>{{ $complejos->links('vendor.pagination.custom') }}</div>
     </div>
     @endif
 </div>
@@ -121,10 +121,15 @@
                     <textarea wire:model="adicional" placeholder="Ej: Abierto todo el año, se aceptan mascotas…"></textarea>
                     @error('adicional') <span class="error-msg">{{ $message }}</span> @enderror
                 </div>
+                    <label class="form-group span-2">
+                        <label>Facebook (URL)</label>
                 <div class="form-group span-2">
-                    <label>Redes Sociales (URL)</label>
-                    <input type="url" wire:model="redesSociales" placeholder="https://instagram.com/…">
-                    @error('redesSociales') <span class="error-msg">{{ $message }}</span> @enderror
+                    <label>Facebook (URL)</label>
+                    <input type="url" wire:model="facebook" placeholder="https://facebook.com/..." />
+                </div>
+                <div class="form-group span-2">
+                    <label>Instagram (URL)</label>
+                    <input type="url" wire:model="instagram" placeholder="https://instagram.com/..." />
                 </div>
                 <div class="form-group span-2">
                     <label>URL de Imagen</label>

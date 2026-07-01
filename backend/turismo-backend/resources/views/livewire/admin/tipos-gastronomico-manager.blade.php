@@ -64,7 +64,7 @@
     @if($tipos->hasPages())
     <div class="pagination-wrap">
         <span>Mostrando {{ $tipos->firstItem() }}–{{ $tipos->lastItem() }} de {{ $tipos->total() }}</span>
-        <div>{{ $tipos->links() }}</div>
+        <div>{{ $tipos->links('vendor.pagination.custom') }}</div>
     </div>
     @endif
 </div>

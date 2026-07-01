@@ -64,7 +64,7 @@
     @if($gastronomicos->hasPages())
     <div class="pagination-wrap">
         <span>{{ $gastronomicos->firstItem() }}–{{ $gastronomicos->lastItem() }} de {{ $gastronomicos->total() }}</span>
-        <div>{{ $gastronomicos->links() }}</div>
+        <div>{{ $gastronomicos->links('vendor.pagination.custom') }}</div>
     </div>
     @endif
 </div>
@@ -96,10 +96,16 @@
                     <label>Horario</label>
                     <input type="text" wire:model="horario" placeholder="L-V 08:00-20:00">
                 </div>
-                <div class="form-group">
-                    <label>Redes Sociales (URL)</label>
-                    <input type="url" wire:model="redesSociales" placeholder="https://instagram.com/…">
-                </div>
+<div class="form-group">
+    <label>Facebook</label>
+    <input type="url" wire:model="facebook" placeholder="https://facebook.com/…">
+    @error('facebook') <span class="error-msg">{{ $message }}</span> @enderror
+</div>
+<div class="form-group">
+    <label>Instagram</label>
+    <input type="url" wire:model="instagram" placeholder="https://instagram.com/…">
+    @error('instagram') <span class="error-msg">{{ $message }}</span> @enderror
+</div>
                 <div class="form-group">
                     <label>Tienda Online (URL)</label>
                     <input type="url" wire:model="tiendaOnline" placeholder="https://…">
@@ -123,12 +129,19 @@
 
                 <div class="form-group span-2">
                     <label>Tipos Gastronómicos</label>
-                    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
-                        @foreach($tiposGastronomicos as $tg)
-                        <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-primary);cursor:pointer">
-                            <input type="checkbox" wire:model="tipo_ids" value="{{ $tg->id }}" style="width:auto">
-                            {{ $tg->tipo }}
-                        </label>
+                    <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+                        @foreach($tipo_ids as $idx => $selectedId)
+                        <div style="display:flex;align-items:center;gap:6px">
+                            <select wire:model="tipo_ids.{{ $idx }}" wire:change="maybeAddSelect({{ $idx }})" style="padding:4px 8px;border-radius:4px;border:1px solid var(--border);background:var(--bg-input);color:var(--text-primary)">
+                                <option value="">-- Seleccione un tipo --</option>
+                                @foreach($tiposGastronomicos as $tg)
+                                    <option value="{{ $tg->id }}" {{ $tg->id == $selectedId ? 'selected' : '' }}>{{ $tg->tipo }}</option>
+                                @endforeach
+                            </select>
+                            @if(count($tipo_ids) > 1)
+                                <button type="button" class="btn btn-danger btn-sm" wire:click="removeTipoSelect({{ $idx }})" style="padding:2px 6px">✖️</button>
+                            @endif
+                        </div>
                         @endforeach
                     </div>
                 </div>

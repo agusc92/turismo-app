@@ -22,6 +22,8 @@ class GastronomicoManager extends Component
     public string $direccion     = '';
     public string $telefono      = '';
     public string $redesSociales = '';
+    public string $facebook = '';
+    public string $instagram = '';
     public string $horario       = '';
     public string $tiendaOnline  = '';
     public string $extras        = '';
@@ -43,13 +45,15 @@ class GastronomicoManager extends Component
             'direccion'    => 'required|string|max:255',
             'telefono'     => 'nullable|string|max:50',
             'redesSociales'=> 'nullable|url|max:500',
+            'facebook'       => 'nullable|url|max:500',
+            'instagram'      => 'nullable|url|max:500',
             'horario'      => 'nullable|string|max:255',
             'tiendaOnline' => 'nullable|url|max:500',
             'extras'       => 'nullable|string',
             'imagen'       => 'nullable|url|max:500',
             'latitud'      => 'nullable|numeric',
             'longitud'     => 'nullable|numeric',
-            'tipo_ids'     => 'nullable|array',
+            'tipo_ids'     => 'required|array|min:1',
             'tipo_ids.*'   => 'exists:tipo_gastronomicos,id',
             'menu_ids'     => 'nullable|array',
             'menu_ids.*'   => 'exists:menus,id',
@@ -60,8 +64,9 @@ class GastronomicoManager extends Component
 
     public function openCreate(): void
     {
-        $this->reset(['nombre','direccion','telefono','redesSociales','horario','tiendaOnline','extras','imagen','latitud','longitud','tipo_ids','menu_ids','editingId']);
-        $this->tipo_ids = []; $this->menu_ids = [];
+        $this->reset(['nombre','direccion','telefono','redesSociales','facebook','instagram','horario','tiendaOnline','extras','imagen','latitud','longitud','menu_ids','editingId']);
+        $this->tipo_ids = [null];
+        $this->menu_ids = [];
         $this->isEditing = false; $this->showModal = true; $this->resetValidation();
     }
 
@@ -72,7 +77,22 @@ class GastronomicoManager extends Component
         $this->nombre       = $g->nombre;
         $this->direccion    = $g->direccion;
         $this->telefono     = $g->telefono ?? '';
-        $this->redesSociales= $g->redesSociales ?? '';
+        // Parse combined social field
+        $social = $g->redesSociales ?? '';
+        $this->facebook = '';
+        $this->instagram = '';
+        if ($social) {
+            $parts = explode('|', $social);
+            foreach ($parts as $part) {
+                $part = trim($part);
+                if (strpos(strtolower($part), 'fb:') === 0) {
+                    $this->facebook = trim(substr($part, 3));
+                } elseif (strpos(strtolower($part), 'ig:') === 0) {
+                    $username = trim(substr($part, 3));
+                    $this->instagram = $username ? 'https://www.instagram.com/' . $username . '/' : '';
+                }
+            }
+        }
         $this->horario      = $g->horario ?? '';
         $this->tiendaOnline = $g->tiendaOnline ?? '';
         $this->extras       = $g->extras ?? '';
@@ -84,15 +104,47 @@ class GastronomicoManager extends Component
         $this->isEditing    = true; $this->showModal = true; $this->resetValidation();
     }
 
+    public function maybeAddSelect(int $index): void
+    {
+        // If the current selection is not null and it's the last element, add a new empty select
+        if (!empty($this->tipo_ids[$index]) && $index === array_key_last($this->tipo_ids)) {
+            $this->tipo_ids[] = null;
+        }
+    }
+
+    public function removeTipoSelect(int $index): void
+    {
+        // Remove the select at given index
+        array_splice($this->tipo_ids, $index, 1);
+        // Ensure at least one empty select remains
+        if (empty($this->tipo_ids)) {
+            $this->tipo_ids[] = null;
+        }
+    }
+
     public function save(): void
     {
         $data = $this->validate();
-        $tipo_ids = $data['tipo_ids'] ?? [];
+        // Remove null or empty selections before syncing
+        $tipo_ids = array_filter($data['tipo_ids'] ?? [], fn($i) => $i);
         $menu_ids = $data['menu_ids'] ?? [];
         unset($data['tipo_ids'], $data['menu_ids']);
 
         $data['latitud']  = $data['latitud'] ? (float)$data['latitud'] : null;
         $data['longitud'] = $data['longitud'] ? (float)$data['longitud'] : null;
+        // Combine social fields into single string
+        $socialParts = [];
+        if (!empty($data['instagram'])) {
+            $url = $data['instagram'];
+            $path = parse_url($url, PHP_URL_PATH);
+            $username = trim($path, '/');
+            $socialParts[] = 'ig: ' . $username;
+        }
+        if (!empty($data['facebook'])) {
+            $socialParts[] = 'fb: ' . $data['facebook'];
+        }
+        $data['redesSociales'] = $socialParts ? implode(' | ', $socialParts) : null;
+        unset($data['facebook'], $data['instagram']);
         foreach (['telefono','redesSociales','horario','tiendaOnline','extras','imagen'] as $f)
             $data[$f] = $data[$f] ?: null;
 

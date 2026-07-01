@@ -341,7 +341,7 @@
         /* ── Pagination ── */
         .pagination-wrap { display: flex; align-items: center; justify-content: space-between; padding: 14px 22px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-muted); }
         .pagination { display: flex; gap: 4px; }
-        .page-btn { padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); cursor: pointer; font-size: 13px; transition: all var(--transition); }
+        .page-btn { display: inline-flex; align-items: center; justify-content: center; min-width: 32px; height: 32px; padding: 0 6px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); cursor: pointer; font-size: 13px; font-family: inherit; transition: all var(--transition); }
         .page-btn:hover { border-color: var(--border-hover); color: var(--text-primary); }
         .page-btn.active { background: var(--primary-glow); border-color: var(--primary); color: var(--primary); }
 

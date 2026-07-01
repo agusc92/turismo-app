@@ -61,7 +61,7 @@
     @if($alojamientos->hasPages())
     <div class="pagination-wrap">
         <span>{{ $alojamientos->firstItem() }}–{{ $alojamientos->lastItem() }} de {{ $alojamientos->total() }}</span>
-        <div>{{ $alojamientos->links() }}</div>
+        <div>{{ $alojamientos->links('vendor.pagination.custom') }}</div>
     </div>
     @endif
 </div>
@@ -82,8 +82,14 @@
                 </div>
                 <div class="form-group">
                     <label>Tipo *</label>
-                    <input type="text" wire:model="tipo" placeholder="Hotel, Cabaña, Hostel…">
-                    @error('tipo') <span class="error-msg">{{ $message }}</span> @enderror
+                    <select class="form-select" wire:model="tipo">
+    <option value="">Seleccionar tipo</option>
+    @foreach($tipos as $t)
+        <option value="{{ $t }}">{{ $t }}</option>
+    @endforeach
+</select>
+@error('tipo') <span class="error-msg">{{ $message }}</span> @enderror
+
                 </div>
                 <div class="form-group span-2">
                     <label>Dirección *</label>
@@ -99,10 +105,16 @@
                     <input type="email" wire:model="mail" placeholder="reservas@hotel.com">
                     @error('mail') <span class="error-msg">{{ $message }}</span> @enderror
                 </div>
-                <div class="form-group">
-                    <label>Redes Sociales (URL)</label>
-                    <input type="url" wire:model="redesSociales" placeholder="https://instagram.com/…">
-                </div>
+                <div class="form-group span-2">
+    <label>Facebook (URL)</label>
+    <input type="url" wire:model="facebook" placeholder="https://facebook.com/..." />
+    @error('facebook') <span class="error-msg">{{ $message }}</span> @enderror
+</div>
+<div class="form-group span-2">
+    <label>Instagram (URL)</label>
+    <input type="url" wire:model="instagram" placeholder="https://instagram.com/..." />
+    @error('instagram') <span class="error-msg">{{ $message }}</span> @enderror
+</div>
                 <div class="form-group">
                     <label>Página Web (URL)</label>
                     <input type="url" wire:model="paginaWeb" placeholder="https://…">

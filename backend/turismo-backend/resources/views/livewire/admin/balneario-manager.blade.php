@@ -55,7 +55,7 @@
     @if($balnearios->hasPages())
     <div class="pagination-wrap">
         <span>{{ $balnearios->firstItem() }}–{{ $balnearios->lastItem() }} de {{ $balnearios->total() }}</span>
-        <div>{{ $balnearios->links() }}</div>
+        <div>{{ $balnearios->links('vendor.pagination.custom') }}</div>
     </div>
     @endif
 </div>
@@ -88,10 +88,14 @@
                     <input type="email" wire:model="mail" placeholder="info@balneario.com">
                     @error('mail') <span class="error-msg">{{ $message }}</span> @enderror
                 </div>
-                <div class="form-group span-2">
-                    <label>Redes Sociales (URL)</label>
-                    <input type="url" wire:model="redesSociales" placeholder="https://instagram.com/…">
-                </div>
+                    <div class="form-group span-2">
+                        <label>Facebook (URL)</label>
+                        <input type="url" wire:model="facebook" placeholder="https://facebook.com/..." />
+                    </div>
+                    <div class="form-group span-2">
+                        <label>Instagram (URL)</label>
+                        <input type="url" wire:model="instagram" placeholder="https://instagram.com/..." />
+                    </div>
                 <div class="form-group span-2">
                     <label>Servicios</label>
                     <textarea wire:model="servicios" placeholder="Carpa, sombrillas, restaurante…"></textarea>
