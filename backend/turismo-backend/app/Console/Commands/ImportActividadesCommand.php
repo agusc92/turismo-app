@@ -71,6 +71,7 @@ class ImportActividadesCommand extends Command
             $diasYHorarios = $row['diasYHorarios'] ?? null;
             $latitud = isset($row['latitud']) && is_numeric($row['latitud']) ? (float)$row['latitud'] : null;
             $longitud = isset($row['longitud']) && is_numeric($row['longitud']) ? (float)$row['longitud'] : null;
+            $habilitado = filter_var($row['habilitado'] ?? true, FILTER_VALIDATE_BOOLEAN);
 
             $tipoId = null;
             if (isset($row['tipo']) && !empty($row['tipo'])) {
@@ -93,6 +94,7 @@ class ImportActividadesCommand extends Command
                     'longitud' => $longitud,
                     'tipo_id' => $tipoId,
                     'dias_y_horarios' => $diasYHorarios,
+                    'habilitado' => $habilitado,
                 ]);
                 $importedCount++;
             } catch (\Exception $e) {
