@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Evento;
+use App\Models\User; // Necesario para crear usuarios
 
 class EventoApiTest extends TestCase
 {
@@ -163,5 +164,36 @@ class EventoApiTest extends TestCase
                  ]);
         $this->assertTrue($response->json()[0]['destacado']);
         $this->assertTrue($response->json()[0]['habilitado']);
+    }
+
+    /**
+     * Test that an unauthenticated user cannot retrieve admin events.
+     */
+    public function test_unauthenticated_user_cannot_retrieve_admin_events(): void
+    {
+        $responseGuest = $this->getJson('/api/admin/eventos');
+        $responseGuest->assertStatus(401); // No autenticado
+    }
+
+    /**
+     * Test that admin can retrieve all events.
+     */
+    public function test_admin_can_retrieve_all_events(): void
+    {
+        $adminUser = User::factory()->create(['rol' => 'admin']);
+        $normalUser = User::factory()->create(['rol' => 'turista']);
+
+        Evento::factory()->count(2)->create(['habilitado' => true]);
+        Evento::factory()->create(['habilitado' => false]); // Un evento deshabilitado
+        Evento::factory()->create(['fecha' => '2020-01-01 00:00:00']); // Un evento pasado
+
+        // Admin puede ver todos los eventos
+        $responseAdmin = $this->actingAs($adminUser)->getJson('/api/admin/eventos');
+        $responseAdmin->assertStatus(200)
+                      ->assertJsonCount(4); // 2 habilitados + 1 deshabilitado + 1 pasado
+
+        // Usuario normal no puede acceder
+        $responseNormal = $this->actingAs($normalUser)->getJson('/api/admin/eventos');
+        $responseNormal->assertStatus(403); // Acceso denegado
     }
 }

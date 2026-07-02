@@ -5,17 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Evento;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
+use Carbon\Carbon; // Importar Carbon
 
 class EventoController extends Controller
 {
     #[OA\Get(
         path: "/api/eventos",
-        summary: "Obtener todos los eventos habilitados",
+        summary: "Obtener todos los eventos habilitados y futuros/actuales", // Actualizado
         tags: ["Eventos"],
         responses: [
             new OA\Response(
                 response: 200,
-                description: "Lista de eventos habilitados",
+                description: "Lista de eventos habilitados y futuros/actuales", // Actualizado
                 content: new OA\JsonContent(
                     type: "array",
                     items: new OA\Items(ref: "#/components/schemas/Evento")
@@ -29,7 +30,11 @@ class EventoController extends Controller
     )]
     public function index()
     {
-        return response()->json(Evento::where('habilitado', true)->get());
+        return response()->json(
+            Evento::where('habilitado', true)
+                  ->where('fecha', '>=', Carbon::today()) // Añadido filtro de fecha
+                  ->get()
+        );
     }
 
     #[OA\Get(
@@ -70,12 +75,12 @@ class EventoController extends Controller
 
     #[OA\Get(
         path: "/api/eventos/destacados",
-        summary: "Obtener eventos destacados",
+        summary: "Obtener eventos destacados y futuros/actuales", // Actualizado
         tags: ["Eventos"],
         responses: [
             new OA\Response(
                 response: 200,
-                description: "Lista de eventos destacados",
+                description: "Lista de eventos destacados y futuros/actuales", // Actualizado
                 content: new OA\JsonContent(
                     type: "array",
                     items: new OA\Items(ref: "#/components/schemas/Evento")
@@ -89,7 +94,45 @@ class EventoController extends Controller
     )]
     public function destacados()
     {
-        return Evento::where('destacado', true)->where('habilitado', true)->get();
+        return Evento::where('destacado', true)
+                     ->where('habilitado', true)
+                     ->where('fecha', '>=', Carbon::today()) // Añadido filtro de fecha
+                     ->get();
+    }
+
+    #[OA\Get(
+        path: "/api/admin/eventos",
+        summary: "Obtener todos los eventos (incluyendo deshabilitados y pasados) - Solo Admin",
+        tags: ["Admin", "Eventos"],
+        security: [
+            ["sanctum" => []]
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "Lista completa de eventos",
+                content: new OA\JsonContent(
+                    type: "array",
+                    items: new OA\Items(ref: "#/components/schemas/Evento")
+                )
+            ),
+            new OA\Response(
+                response: 401,
+                description: "No autenticado"
+            ),
+            new OA\Response(
+                response: 403,
+                description: "Acceso denegado (solo administradores)"
+            ),
+            new OA\Response(
+                response: "default",
+                description: "Ha ocurrido un error."
+            )
+        ]
+    )]
+    public function adminIndex()
+    {
+        return response()->json(Evento::all()); // Devuelve todos los eventos sin filtrar
     }
 
     #[OA\Post(
