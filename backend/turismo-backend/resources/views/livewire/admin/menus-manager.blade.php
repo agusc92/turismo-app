@@ -12,7 +12,7 @@
 <div class="card-header" style="background:var(--bg-card);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:20px;">
     <div class="search-bar">
         <span class="search-icon">🔍</span>
-        <input type="text" wire:model.live.debounce.300ms="search" placeholder="Buscar menú…">
+        <input name="search" style="padding-left: 35px;" type="text" wire:model.live.debounce.300ms="search" placeholder="Buscar…">
     </div>
     <button class="btn btn-primary" wire:click="openCreate">
         ＋ Nuevo Menú

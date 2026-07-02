@@ -114,7 +114,6 @@ class ComplejoManager extends Component
             $data[$f] = $data[$f] ?: null;
 
         if ($this->isEditing) {
-            dd($data)
             Complejo::findOrFail($this->editingId)->update($data);
             $this->toast('Complejo actualizado.');
         } else {

@@ -10,7 +10,7 @@
 <div class="card-header" style="background:var(--bg-card);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:20px;">
     <div class="search-bar">
         <span class="search-icon">🔍</span>
-        <input type="text" wire:model.live.debounce.300ms="search" placeholder="Buscar por nombre…">
+        <input name="search" style="padding-left: 35px;" type="text" wire:model.live.debounce.300ms="search" placeholder="Buscar por nombre o tipo…">
     </div>
     <button class="btn btn-primary" wire:click="openCreate">＋ Nueva Actividad</button>
 </div>
@@ -109,9 +109,14 @@
                     @error('mail') <span class="error-msg">{{ $message }}</span> @enderror
                 </div>
                 <div class="form-group">
-                    <label>Redes Sociales (URL)</label>
-                    <input type="url" wire:model="redes_sociales" placeholder="https://instagram.com/…">
-                    @error('redes_sociales') <span class="error-msg">{{ $message }}</span> @enderror
+                    <label>Facebook</label>
+                    <input type="url" wire:model="facebook" placeholder="https://facebook.com/…">
+                    @error('facebook') <span class="error-msg">{{ $message }}</span> @enderror
+                </div>
+                <div class="form-group">
+                    <label>Instagram</label>
+                    <input type="url" wire:model="instagram" placeholder="https://instagram.com/…">
+                    @error('instagram') <span class="error-msg">{{ $message }}</span> @enderror
                 </div>
                 <div class="form-group">
                     <label>Sitio Web (URL)</label>
@@ -141,7 +146,7 @@
             <button class="btn btn-secondary" wire:click="$set('showModal', false)">Cancelar</button>
             <button class="btn btn-primary" wire:click="save" wire:loading.attr="disabled">
                 <span wire:loading.remove>{{ $isEditing ? 'Guardar' : 'Crear' }}</span>
-                <span wire:loading><span class="spinner"></span></span>
+                <span wire:loading><span class="spinner"></span> Guardando…</span>
             </button>
         </div>
     </div>

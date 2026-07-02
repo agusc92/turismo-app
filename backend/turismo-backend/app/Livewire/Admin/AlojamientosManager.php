@@ -75,7 +75,8 @@ class AlojamientosManager extends Component
         $this->facebook = '';
         $this->instagram = '';
         if ($social) {
-                            foreach ($parts as $part) {
+                $parts = explode(' | ', $social);
+                foreach ($parts as $part) {
                     $part = trim($part);
                     if (preg_match('/^fb:\s*(.+)$/i', $part, $match)) {
                         $this->facebook = trim($match[1]);

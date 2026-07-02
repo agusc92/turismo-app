@@ -21,6 +21,8 @@ class ActividadesManager extends Component
     public string $direccion     = '';
     public string $descripcion   = '';
     public string $redes_sociales = '';
+    public string $facebook      = '';
+    public string $instagram     = '';
     public string $web           = '';
     public string $mail          = '';
     public string $telefono      = '';
@@ -43,6 +45,8 @@ class ActividadesManager extends Component
             'tipo_id'         => 'required|exists:tipos,id',
             'descripcion'     => 'nullable|string',
             'redes_sociales'  => 'nullable|url|max:500',
+            'facebook'       => 'nullable|url|max:500',
+            'instagram'      => 'nullable|url|max:500',
             'web'             => 'nullable|url|max:500',
             'mail'            => 'nullable|email|max:255',
             'telefono'        => 'nullable|string|max:50',
@@ -57,7 +61,7 @@ class ActividadesManager extends Component
 
     public function openCreate(): void
     {
-        $this->reset(['nombre','direccion','descripcion','redes_sociales','web','mail','telefono','imagen','latitud','longitud','dias_y_horarios','tipo_id','editingId']);
+        $this->reset(['nombre','direccion','descripcion','redes_sociales','facebook','instagram','web','mail','telefono','imagen','latitud','longitud','dias_y_horarios','tipo_id','editingId']);
         $this->isEditing = false;
         $this->showModal = true;
         $this->resetValidation();
@@ -70,7 +74,21 @@ class ActividadesManager extends Component
         $this->nombre          = $a->nombre;
         $this->direccion       = $a->direccion;
         $this->descripcion     = $a->descripcion ?? '';
-        $this->redes_sociales  = $a->redes_sociales ?? '';
+        $social = $a->redes_sociales ?? '';
+        $this->facebook = '';
+        $this->instagram = '';
+        if ($social) {
+            $parts = explode('|', $social);
+            foreach ($parts as $part) {
+                $part = trim($part);
+                if (strpos(strtolower($part), 'fb:') === 0) {
+                    $this->facebook = trim(substr($part, 3));
+                } elseif (strpos(strtolower($part), 'ig:') === 0) {
+                    $username = trim(substr($part, 3));
+                    $this->instagram = $username ? 'https://www.instagram.com/' . $username . '/' : '';
+                }
+            }
+        }
         $this->web             = $a->web ?? '';
         $this->mail            = $a->mail ?? '';
         $this->telefono        = $a->telefono ?? '';
@@ -87,8 +105,20 @@ class ActividadesManager extends Component
     public function save(): void
     {
         $data = $this->validate();
-        $data['latitud']        = $data['latitud'] ? (float)$data['latitud'] : null;
-        $data['longitud']       = $data['longitud'] ? (float)$data['longitud'] : null;
+        $data['latitud'] = $data['latitud'] ? (float)$data['latitud'] : null;
+        $data['longitud'] = $data['longitud'] ? (float)$data['longitud'] : null;
+        $socialParts = [];
+        if (!empty($data['instagram'])) {
+            $url = $data['instagram'];
+            $path = parse_url($url, PHP_URL_PATH);
+            $username = trim($path, '/');
+            $socialParts[] = 'ig: ' . $username;
+        }
+        if (!empty($data['facebook'])) {
+            $socialParts[] = 'fb: ' . $data['facebook'];
+        }
+        $data['redes_sociales'] = $socialParts ? implode(' | ', $socialParts) : null;
+        unset($data['facebook'], $data['instagram']);
         foreach (['descripcion','redes_sociales','web','mail','telefono','imagen','dias_y_horarios'] as $f)
             $data[$f] = $data[$f] ?: null;
 
@@ -122,8 +152,15 @@ class ActividadesManager extends Component
     public function render()
     {
         $actividades = Actividad::with('tipo')
-            ->where('nombre', 'like', '%' . $this->search . '%')
-            ->orWhere('direccion', 'like', '%' . $this->search . '%')
+            ->where(function($query) {
+                $query->where('nombre', 'like', '%' . $this->search . '%')
+                    ->orWhere('direccion', 'like', '%' . $this->search . '%')
+                    
+                    // AGREGAMOS LA BÚSQUEDA POR LA RELACIÓN "TIPO"
+                    ->orWhereHas('tipo', function($q) {
+                        $q->where('tipo', 'like', '%' . $this->search . '%');
+                    });
+            })
             ->orderBy('nombre')
             ->paginate(12);
 

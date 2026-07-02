@@ -10,7 +10,7 @@
 <div class="card-header" style="background:var(--bg-card);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:20px;">
     <div class="search-bar">
         <span class="search-icon">🔍</span>
-        <input type="text" wire:model.live.debounce.300ms="search" placeholder="Buscar por nombre…">
+        <input name="search" style="padding-left: 35px;" type="text" wire:model.live.debounce.300ms="search" placeholder="Buscar por nombre, tipo o menú…">
     </div>
     <button class="btn btn-primary" wire:click="openCreate">＋ Nuevo Gastronómico</button>
 </div>
@@ -47,6 +47,10 @@
                         @foreach($item->menus->take(2) as $m)
                             <span class="badge badge-purple" style="margin-right:3px">{{ $m->tipo }}</span>
                         @endforeach
+
+                        @if($item->menus->count() > 2) 
+                            <span class="muted">+{{ $item->menus->count() - 2 }}</span> 
+                        @endif
                     </td>
                     <td>
                         <div style="display:flex;gap:6px">
@@ -96,16 +100,16 @@
                     <label>Horario</label>
                     <input type="text" wire:model="horario" placeholder="L-V 08:00-20:00">
                 </div>
-<div class="form-group">
-    <label>Facebook</label>
-    <input type="url" wire:model="facebook" placeholder="https://facebook.com/…">
-    @error('facebook') <span class="error-msg">{{ $message }}</span> @enderror
-</div>
-<div class="form-group">
-    <label>Instagram</label>
-    <input type="url" wire:model="instagram" placeholder="https://instagram.com/…">
-    @error('instagram') <span class="error-msg">{{ $message }}</span> @enderror
-</div>
+                <div class="form-group">
+                    <label>Facebook</label>
+                    <input type="url" wire:model="facebook" placeholder="https://facebook.com/…">
+                    @error('facebook') <span class="error-msg">{{ $message }}</span> @enderror
+                </div>
+                <div class="form-group">
+                    <label>Instagram</label>
+                    <input type="url" wire:model="instagram" placeholder="https://instagram.com/…">
+                    @error('instagram') <span class="error-msg">{{ $message }}</span> @enderror
+                </div>
                 <div class="form-group">
                     <label>Tienda Online (URL)</label>
                     <input type="url" wire:model="tiendaOnline" placeholder="https://…">
@@ -143,7 +147,10 @@
                             @endif
                         </div>
                         @endforeach
+
                     </div>
+                    @error('tipo_ids') <span class="error-msg">{{ $message }}</span> @enderror
+                    @error('tipo_ids.*') <span class="error-msg">{{ $message }}</span> @enderror
                 </div>
 
                 <div class="form-group span-2">
@@ -156,6 +163,8 @@
                         </label>
                         @endforeach
                     </div>
+                    @error('menu_ids') <span class="error-msg">{{ $message }}</span> @enderror
+                    @error('menu_ids.*') <span class="error-msg">{{ $message }}</span> @enderror
                 </div>
             </div>
         </div>
@@ -163,7 +172,7 @@
             <button class="btn btn-secondary" wire:click="$set('showModal', false)">Cancelar</button>
             <button class="btn btn-primary" wire:click="save" wire:loading.attr="disabled">
                 <span wire:loading.remove>{{ $isEditing ? 'Guardar' : 'Crear' }}</span>
-                <span wire:loading><span class="spinner"></span></span>
+                <span wire:loading><span class="spinner"></span> Guardando…</span>
             </button>
         </div>
     </div>

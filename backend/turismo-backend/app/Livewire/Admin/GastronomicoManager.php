@@ -55,8 +55,20 @@ class GastronomicoManager extends Component
             'longitud'     => 'nullable|numeric',
             'tipo_ids'     => 'required|array|min:1',
             'tipo_ids.*'   => 'exists:tipo_gastronomicos,id',
-            'menu_ids'     => 'nullable|array',
+            'menu_ids'     => 'required|array|min:1',
             'menu_ids.*'   => 'exists:menus,id',
+        ];
+    }
+
+    protected function messages(): array
+    {
+        return [
+            'tipo_ids.required' => 'El tipo gastronómico es obligatorio.',
+            'tipo_ids.array'    => 'El formato de tipos no es válido.',
+            'tipo_ids.min'      => 'Debe seleccionar al menos un tipo gastronómico.',
+            'tipo_ids.*.exists' => 'El tipo seleccionado no existe en la base de datos.',
+            'menu_ids.required' => 'El menú es obligatorio.',
+            'menu_ids.min'      => 'Debe seleccionar al menos un menú.',
         ];
     }
 
@@ -124,9 +136,15 @@ class GastronomicoManager extends Component
 
     public function save(): void
     {
+        // 1. Limpiamos los nulos o strings vacíos ANTES de validar
+        $this->tipo_ids = array_filter($this->tipo_ids ?? [], fn($i) => !is_null($i) && $i !== '');
+
+        // 2. Ahora sí ejecutamos la validación con los datos limpios
         $data = $this->validate();
-        // Remove null or empty selections before syncing
-        $tipo_ids = array_filter($data['tipo_ids'] ?? [], fn($i) => $i);
+        
+        // El array_filter de abajo ya no es necesario porque lo hicimos arriba, 
+        // así que puedes dejarlo mapeado directamente:
+        $tipo_ids = $this->tipo_ids;
         $menu_ids = $data['menu_ids'] ?? [];
         unset($data['tipo_ids'], $data['menu_ids']);
 
@@ -185,8 +203,22 @@ class GastronomicoManager extends Component
 
     public function render()
     {
-        $gastronomicos = Gastronomico::with('tipos','menus')
-            ->where('nombre', 'like', '%' . $this->search . '%')
+        $gastronomicos = Gastronomico::with('tipos', 'menus')
+            ->where(function($query) {
+                // Buscamos por las propiedades directas del gastronómico
+                $query->where('nombre', 'like', '%' . $this->search . '%')
+                    ->orWhere('direccion', 'like', '%' . $this->search . '%')
+                    
+                    // Buscamos dentro de la relación Muchos a Muchos con "tipos"
+                    ->orWhereHas('tipos', function($q) {
+                        $q->where('tipo', 'like', '%' . $this->search . '%');
+                    })
+                    
+                    // Buscamos dentro de la relación Muchos a Muchos con "menus"
+                    ->orWhereHas('menus', function($q) {
+                        $q->where('tipo', 'like', '%' . $this->search . '%');
+                    });
+            })
             ->orderBy('nombre')
             ->paginate(12);
 

@@ -12,7 +12,7 @@
 <div class="card-header" style="background:var(--bg-card);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:20px;">
     <div class="search-bar">
         <span class="search-icon">🔍</span>
-        <input type="text" wire:model.live.debounce.300ms="search" placeholder="Buscar por nombre…">
+        <input name="search" style="padding-left: 35px;" type="text" wire:model.live.debounce.300ms="search" placeholder="Buscar por nombre…">
     </div>
     <button class="btn btn-primary" wire:click="openCreate">
         ＋ Nuevo Complejo
@@ -113,7 +113,7 @@
                 </div>
                 <div class="form-group span-2">
                     <label>Servicios</label>
-                    <textarea wire:model="servicio" placeholder="Ej: Wi-Fi, Piscina, Estacionamiento…"></textarea>
+                    <textarea wire:model="servicio" placeholder="Ej: Wi-Fi | Piscina | Estacionamiento…"></textarea>
                     @error('servicio') <span class="error-msg">{{ $message }}</span> @enderror
                 </div>
                 <div class="form-group span-2">
@@ -121,15 +121,15 @@
                     <textarea wire:model="adicional" placeholder="Ej: Abierto todo el año, se aceptan mascotas…"></textarea>
                     @error('adicional') <span class="error-msg">{{ $message }}</span> @enderror
                 </div>
-                    <label class="form-group span-2">
-                        <label>Facebook (URL)</label>
                 <div class="form-group span-2">
                     <label>Facebook (URL)</label>
                     <input type="url" wire:model="facebook" placeholder="https://facebook.com/..." />
+                    @error('facebook') <span class="error-msg">{{ $message }}</span> @enderror
                 </div>
                 <div class="form-group span-2">
                     <label>Instagram (URL)</label>
                     <input type="url" wire:model="instagram" placeholder="https://instagram.com/..." />
+                    @error('instagram') <span class="error-msg">{{ $message }}</span> @enderror
                 </div>
                 <div class="form-group span-2">
                     <label>URL de Imagen</label>
@@ -151,7 +151,7 @@
         <div class="modal-footer">
             <button class="btn btn-secondary" wire:click="$set('showModal', false)">Cancelar</button>
             <button class="btn btn-primary" wire:click="save" wire:loading.attr="disabled">
-                <span wire:loading.remove>{{ $isEditing ? 'Guardar cambios' : 'Crear complejo' }}</span>
+                <span wire:loading.remove>{{ $isEditing ? 'Guardar' : 'Crear' }}</span>
                 <span wire:loading><span class="spinner"></span> Guardando…</span>
             </button>
         </div>
