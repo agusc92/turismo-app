@@ -15,6 +15,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\GastronomicoMenuController;
 use App\Http\Controllers\TipoGastronomicoController;
 use App\Http\Controllers\ComplejoController;
+use App\Http\Middleware\AdminMiddleware; // Importar el middleware
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -50,5 +51,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', function (Request $request) {
         return $request->user();
+    });
+
+    // Admin routes
+    Route::middleware(AdminMiddleware::class)->group(function () { // Usar FQCN del middleware
+        Route::get('admin/eventos', [EventoController::class, 'adminIndex']);
     });
 });
