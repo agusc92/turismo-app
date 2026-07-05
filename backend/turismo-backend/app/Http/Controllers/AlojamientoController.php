@@ -29,7 +29,7 @@ class AlojamientoController extends Controller
     )]
     public function index()
     {
-        return response()->json(Alojamiento::where('habilitado', true)->get());
+        return response()->json(Alojamiento::with('tiposAlojamiento')->where('habilitado', true)->get());
     }
 
     #[OA\Get(
@@ -59,7 +59,7 @@ class AlojamientoController extends Controller
     )]
     public function show($id)
     {
-        $alojamiento = Alojamiento::find($id);
+        $alojamiento = Alojamiento::with('tiposAlojamiento')->find($id);
 
         if (!$alojamiento) {
             return response()->json(['message' => 'Alojamiento no encontrado'], 404);
@@ -99,16 +99,18 @@ class AlojamientoController extends Controller
             'mail' => 'nullable|email',
             'mascotas' => 'nullable|boolean',
             'periodoApertura' => 'nullable|string',
-            'tipo' => 'required|string',
+            'tipos_alojamiento_ids' => 'required|array',
+            'tipos_alojamiento_ids.*' => 'exists:tipo_alojamientos,id',
             'imagen' => 'nullable|string',
             'latitud' => 'nullable|numeric',
             'longitud' => 'nullable|numeric',
             'habilitado' => 'nullable|boolean',
         ]);
 
-        $alojamiento = Alojamiento::create($request->all());
+        $alojamiento = Alojamiento::create($request->except('tipos_alojamiento_ids'));
+        $alojamiento->tiposAlojamiento()->attach($request->input('tipos_alojamiento_ids'));
 
-        return response()->json($alojamiento, 201);
+        return response()->json($alojamiento->load('tiposAlojamiento'), 201);
     }
 
     #[OA\Put(
@@ -157,16 +159,21 @@ class AlojamientoController extends Controller
             'mail' => 'nullable|email',
             'mascotas' => 'nullable|boolean',
             'periodoApertura' => 'nullable|string',
-            'tipo' => 'sometimes|required|string',
+            'tipos_alojamiento_ids' => 'sometimes|required|array',
+            'tipos_alojamiento_ids.*' => 'exists:tipo_alojamientos,id',
             'imagen' => 'nullable|string',
             'latitud' => 'nullable|numeric',
             'longitud' => 'nullable|numeric',
             'habilitado' => 'nullable|boolean',
         ]);
 
-        $alojamiento->update($request->all());
+        $alojamiento->update($request->except('tipos_alojamiento_ids'));
 
-        return response()->json($alojamiento);
+        if ($request->has('tipos_alojamiento_ids')) {
+            $alojamiento->tiposAlojamiento()->sync($request->input('tipos_alojamiento_ids'));
+        }
+
+        return response()->json($alojamiento->load('tiposAlojamiento'));
     }
 
     #[OA\Delete(
