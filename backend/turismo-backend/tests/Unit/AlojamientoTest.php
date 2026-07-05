@@ -1,9 +1,10 @@
 <?php
 
 namespace Tests\Unit;
-
+use Illuminate\Support\Str;
 use Tests\TestCase;
 use App\Models\Alojamiento;
+use App\Models\TipoAlojamiento;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AlojamientoTest extends TestCase
@@ -24,7 +25,6 @@ class AlojamientoTest extends TestCase
             'mail' => 'reservas@hotelprueba.com',
             'mascotas' => true,
             'periodoApertura' => 'Todo el año',
-            'tipo' => 'Hotel',
             'imagen' => 'http://imagen.com/hotel.jpg',
             'latitud' => -38.555,
             'longitud' => -58.777,
@@ -42,7 +42,6 @@ class AlojamientoTest extends TestCase
         $this->assertEquals($data['mail'], $alojamiento->mail);
         $this->assertEquals($data['mascotas'], $alojamiento->mascotas);
         $this->assertEquals($data['periodoApertura'], $alojamiento->periodoApertura);
-        $this->assertEquals($data['tipo'], $alojamiento->tipo);
         $this->assertEquals($data['imagen'], $alojamiento->imagen);
         $this->assertEquals($data['latitud'], $alojamiento->latitud);
         $this->assertEquals($data['longitud'], $alojamiento->longitud);
@@ -61,11 +60,29 @@ class AlojamientoTest extends TestCase
     }
 
     /**
+     * Test the tiposAlojamiento relationship.
+     */
+    public function test_alojamiento_has_tipos_alojamiento_relationship(): void
+    {
+        $alojamiento = Alojamiento::factory()->create();
+        $tipoAlojamiento1 = TipoAlojamiento::factory()->create(['tipo' => 'Hotel-' . Str::random(8)]);
+        $tipoAlojamiento2 = TipoAlojamiento::factory()->create(['tipo' => 'Cabaña-' . Str::random(8)]);
+
+        $alojamiento->tiposAlojamiento()->attach([$tipoAlojamiento1->id, $tipoAlojamiento2->id]);
+
+        $alojamiento->load('tiposAlojamiento');
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $alojamiento->tiposAlojamiento);
+        $this->assertCount(2, $alojamiento->tiposAlojamiento);
+        $this->assertTrue($alojamiento->tiposAlojamiento->contains($tipoAlojamiento1));
+        $this->assertTrue($alojamiento->tiposAlojamiento->contains($tipoAlojamiento2));
+    }
+
+    /**
      * Test that 'mascotas' attribute is correctly cast to boolean.
      */
     public function test_mascotas_attribute_is_boolean(): void
     {
-        // Crear el modelo y luego refrescarlo para asegurar que los casts se apliquen correctamente
         $alojamiento = Alojamiento::factory()->create(['mascotas' => true])->refresh();
 
         // Test true values
@@ -100,7 +117,6 @@ class AlojamientoTest extends TestCase
      */
     public function test_latitud_attribute_is_float(): void
     {
-        // Crear el modelo a través del factory para asegurar que los casts se apliquen correctamente
         $alojamiento = Alojamiento::factory()->make();
 
         $alojamiento->latitud = "-38.555";
@@ -118,7 +134,6 @@ class AlojamientoTest extends TestCase
      */
     public function test_longitud_attribute_is_float(): void
     {
-        // Crear el modelo a través del factory para asegurar que los casts se apliquen correctamente
         $alojamiento = Alojamiento::factory()->make();
 
         $alojamiento->longitud = "-58.777";
@@ -136,7 +151,6 @@ class AlojamientoTest extends TestCase
      */
     public function test_habilitado_attribute_is_boolean(): void
     {
-        // Crear el modelo y luego refrescarlo para asegurar que los casts se apliquen correctamente
         $alojamiento = Alojamiento::factory()->create(['habilitado' => true])->refresh();
 
         // Test true values
@@ -152,6 +166,7 @@ class AlojamientoTest extends TestCase
         $this->assertFalse($alojamiento->habilitado);
         $alojamiento->habilitado = 'false';
         $this->assertFalse($alojamiento->habilitado);
+
         $alojamiento->habilitado = 0;
         $this->assertFalse($alojamiento->habilitado);
         $alojamiento->habilitado = null;
