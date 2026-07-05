@@ -14,8 +14,9 @@ use App\Http\Controllers\InfoUsuarioController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\GastronomicoMenuController;
 use App\Http\Controllers\TipoGastronomicoController;
+use App\Http\Controllers\TipoAlojamientoController;
 use App\Http\Controllers\ComplejoController;
-use App\Http\Middleware\AdminMiddleware; // Importar el middleware
+use App\Http\Middleware\AdminMiddleware;
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -30,7 +31,8 @@ Route::apiResource('users', UserController::class);
 Route::apiResource('info-usuarios', InfoUsuarioController::class);
 Route::apiResource('menus', MenuController::class);
 Route::apiResource('tipo-gastronomicos', TipoGastronomicoController::class);
-Route::apiResource('complejos', ComplejoController::class); // Añadimos esta línea
+Route::apiResource('tipos-alojamientos', TipoAlojamientoController::class);
+Route::apiResource('complejos', ComplejoController::class);
 
 // Evento nested routes
 Route::get('eventos/destacados', [EventoController::class, 'destacados']);
@@ -54,7 +56,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // Admin routes
-    Route::middleware(AdminMiddleware::class)->group(function () { // Usar FQCN del middleware
+    Route::middleware(AdminMiddleware::class)->group(function () { //  FQCN del middleware
         Route::get('admin/eventos', [EventoController::class, 'adminIndex']);
     });
 });
