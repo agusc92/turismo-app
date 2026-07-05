@@ -815,11 +815,11 @@
                 "tags": [
                     "Eventos"
                 ],
-                "summary": "Obtener todos los eventos",
+                "summary": "Obtener todos los eventos habilitados y futuros/actuales",
                 "operationId": "8df3c75a189cf773a3eb105ea46e145a",
                 "responses": {
                     "200": {
-                        "description": "Lista de eventos",
+                        "description": "Lista de eventos habilitados y futuros/actuales",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -984,11 +984,11 @@
                 "tags": [
                     "Eventos"
                 ],
-                "summary": "Obtener eventos destacados",
+                "summary": "Obtener eventos destacados y futuros/actuales",
                 "operationId": "11caa16cc782773011985daa91df9747",
                 "responses": {
                     "200": {
-                        "description": "Lista de eventos destacados",
+                        "description": "Lista de eventos destacados y futuros/actuales",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1004,6 +1004,45 @@
                         "description": "Ha ocurrido un error."
                     }
                 }
+            }
+        },
+        "/api/admin/eventos": {
+            "get": {
+                "tags": [
+                    "Admin",
+                    "Eventos"
+                ],
+                "summary": "Obtener todos los eventos (incluyendo deshabilitados y pasados) - Solo Admin",
+                "operationId": "a0b39496c02863642e2250bde71fac48",
+                "responses": {
+                    "200": {
+                        "description": "Lista completa de eventos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Evento"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    },
+                    "403": {
+                        "description": "Acceso denegado (solo administradores)"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/gastronomicos": {
@@ -1732,6 +1771,172 @@
                     },
                     "404": {
                         "description": "Tipo de menú no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/tipos-alojamiento": {
+            "get": {
+                "tags": [
+                    "Tipos de Alojamiento"
+                ],
+                "summary": "Obtener todos los tipos de alojamiento",
+                "operationId": "a81e199a0c94bedd41d84c9dfdc811f1",
+                "responses": {
+                    "200": {
+                        "description": "Lista de tipos de alojamiento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TipoAlojamiento"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tipos de Alojamiento"
+                ],
+                "summary": "Crear un nuevo tipo de alojamiento",
+                "operationId": "5cf74ab6386d553dfb2342b6b84ed07f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TipoAlojamientoRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tipo de alojamiento creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TipoAlojamiento"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/tipos-alojamiento/{id}": {
+            "get": {
+                "tags": [
+                    "Tipos de Alojamiento"
+                ],
+                "summary": "Obtener un tipo de alojamiento por ID",
+                "operationId": "356924cffe93f486b61cdf8176c22e70",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo de alojamiento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del tipo de alojamiento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TipoAlojamiento"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tipo de alojamiento no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tipos de Alojamiento"
+                ],
+                "summary": "Actualizar un tipo de alojamiento por ID",
+                "operationId": "fd0c04f4ed627372d74c63d167fed3fe",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo de alojamiento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TipoAlojamientoUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tipo de alojamiento actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TipoAlojamiento"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tipo de alojamiento no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tipos de Alojamiento"
+                ],
+                "summary": "Eliminar un tipo de alojamiento por ID",
+                "operationId": "32a3f59ff681d82f4e6d6f1d397f8d45",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo de alojamiento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tipo de alojamiento eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Tipo de alojamiento no encontrado"
                     }
                 }
             }
@@ -2516,10 +2721,6 @@
                         "type": "string",
                         "nullable": true
                     },
-                    "tipo": {
-                        "description": "Tipo de alojamiento",
-                        "type": "string"
-                    },
                     "imagen": {
                         "type": "string",
                         "nullable": true
@@ -2545,6 +2746,13 @@
                     "updated_at": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "tiposAlojamiento": {
+                        "description": "Tipos de alojamiento",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TipoAlojamiento"
+                        }
                     }
                 },
                 "type": "object"
@@ -2556,7 +2764,7 @@
                     "nombre",
                     "direccion",
                     "mascotas",
-                    "tipo"
+                    "tipos_alojamiento_ids"
                 ],
                 "properties": {
                     "nombre": {
@@ -2589,9 +2797,6 @@
                         "type": "string",
                         "nullable": true
                     },
-                    "tipo": {
-                        "type": "string"
-                    },
                     "imagen": {
                         "type": "string",
                         "nullable": true
@@ -2609,6 +2814,13 @@
                     "habilitado": {
                         "type": "boolean",
                         "nullable": true
+                    },
+                    "tipos_alojamiento_ids": {
+                        "description": "IDs de los tipos de alojamiento",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
                     }
                 },
                 "type": "object"
@@ -2650,10 +2862,6 @@
                         "type": "string",
                         "nullable": true
                     },
-                    "tipo": {
-                        "type": "string",
-                        "nullable": true
-                    },
                     "imagen": {
                         "type": "string",
                         "nullable": true
@@ -2671,6 +2879,13 @@
                     "habilitado": {
                         "type": "boolean",
                         "nullable": true
+                    },
+                    "tipos_alojamiento_ids": {
+                        "description": "IDs de los tipos de alojamiento",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
                     }
                 },
                 "type": "object"
@@ -3162,6 +3377,11 @@
                         "format": "float",
                         "nullable": true
                     },
+                    "habilitado": {
+                        "description": "Indica si el evento está habilitado/visible",
+                        "type": "boolean",
+                        "example": true
+                    },
                     "created_at": {
                         "description": "Fecha de creación",
                         "type": "string",
@@ -3227,6 +3447,11 @@
                         "format": "float",
                         "example": -58.777,
                         "nullable": true
+                    },
+                    "habilitado": {
+                        "type": "boolean",
+                        "example": true,
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -3281,6 +3506,11 @@
                         "type": "number",
                         "format": "float",
                         "example": -58.888,
+                        "nullable": true
+                    },
+                    "habilitado": {
+                        "type": "boolean",
+                        "example": false,
                         "nullable": true
                     }
                 },
@@ -3762,6 +3992,57 @@
                 },
                 "type": "object"
             },
+            "TipoAlojamiento": {
+                "title": "TipoAlojamiento",
+                "description": "Modelo de un tipo de alojamiento",
+                "properties": {
+                    "id": {
+                        "description": "ID único del tipo de alojamiento",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "tipo": {
+                        "description": "Nombre del tipo de alojamiento (ej. 'Hotel', 'Cabaña')",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Fecha de creación",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Fecha de última actualización",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "TipoAlojamientoRequest": {
+                "title": "TipoAlojamientoRequest",
+                "description": "Esquema para la creación de un tipo de alojamiento",
+                "required": [
+                    "tipo"
+                ],
+                "properties": {
+                    "tipo": {
+                        "type": "string",
+                        "example": "Hotel"
+                    }
+                },
+                "type": "object"
+            },
+            "TipoAlojamientoUpdateRequest": {
+                "title": "TipoAlojamientoUpdateRequest",
+                "description": "Esquema para la actualización de un tipo de alojamiento",
+                "properties": {
+                    "tipo": {
+                        "type": "string",
+                        "example": "Cabaña"
+                    }
+                },
+                "type": "object"
+            },
             "TipoGastronomico": {
                 "title": "TipoGastronomico",
                 "description": "Modelo de un tipo de gastronomía",
@@ -3957,6 +4238,10 @@
             "description": "Eventos"
         },
         {
+            "name": "Admin",
+            "description": "Admin"
+        },
+        {
             "name": "Gastronomicos",
             "description": "Gastronomicos"
         },
@@ -3967,6 +4252,10 @@
         {
             "name": "Menus",
             "description": "Menus"
+        },
+        {
+            "name": "Tipos de Alojamiento",
+            "description": "Tipos de Alojamiento"
         },
         {
             "name": "Tipos",

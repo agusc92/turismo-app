@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('mail')->nullable();
             $table->boolean('mascotas')->default(false);
             $table->text('periodoApertura')->nullable();
-            $table->text('tipo')->nullable();
             $table->string('imagen')->nullable();
             $table->decimal('latitud', 10, 7)->nullable();
             $table->decimal('longitud', 10, 7)->nullable();

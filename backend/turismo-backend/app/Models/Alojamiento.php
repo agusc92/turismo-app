@@ -21,20 +21,20 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "mail", type: "string", format: "email", nullable: true, description: "Correo electrónico de contacto"),
         new OA\Property(property: "mascotas", type: "boolean", description: "Indica si se permiten mascotas"),
         new OA\Property(property: "periodoApertura", type: "string", nullable: true, description: "Período de apertura"),
-        new OA\Property(property: "tipo", type: "string", description: "Tipo de alojamiento"),
         new OA\Property(property: "imagen", type: "string", nullable: true),
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true),
         new OA\Property(property: "longitud", type: "number", format: "float", nullable: true),
         new OA\Property(property: "habilitado", type: "boolean", description: "Indica si el alojamiento está habilitado"),
         new OA\Property(property: "created_at", type: "string", format: "date-time"),
-        new OA\Property(property: "updated_at", type: "string", format: "date-time")
+        new OA\Property(property: "updated_at", type: "string", format: "date-time"),
+        new OA\Property(property: "tiposAlojamiento", type: "array", items: new OA\Items(ref: "#/components/schemas/TipoAlojamiento"), description: "Tipos de alojamiento")
     ]
 )]
 #[OA\Schema(
     schema: "AlojamientoRequest",
     title: "AlojamientoRequest",
     description: "Esquema para la creación de un alojamiento",
-    required: ["nombre", "direccion", "mascotas", "tipo"],
+    required: ["nombre", "direccion", "mascotas", "tipos_alojamiento_ids"],
     properties: [
         new OA\Property(property: "nombre", type: "string"),
         new OA\Property(property: "direccion", type: "string"),
@@ -44,11 +44,11 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "mail", type: "string", format: "email", nullable: true),
         new OA\Property(property: "mascotas", type: "boolean"),
         new OA\Property(property: "periodoApertura", type: "string", nullable: true),
-        new OA\Property(property: "tipo", type: "string"),
         new OA\Property(property: "imagen", type: "string", nullable: true),
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true),
         new OA\Property(property: "longitud", type: "number", format: "float", nullable: true),
-        new OA\Property(property: "habilitado", type: "boolean", nullable: true)
+        new OA\Property(property: "habilitado", type: "boolean", nullable: true),
+        new OA\Property(property: "tipos_alojamiento_ids", type: "array", items: new OA\Items(type: "integer"), description: "IDs de los tipos de alojamiento")
     ]
 )]
 #[OA\Schema(
@@ -64,11 +64,11 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "mail", type: "string", format: "email", nullable: true),
         new OA\Property(property: "mascotas", type: "boolean", nullable: true),
         new OA\Property(property: "periodoApertura", type: "string", nullable: true),
-        new OA\Property(property: "tipo", type: "string", nullable: true),
         new OA\Property(property: "imagen", type: "string", nullable: true),
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true),
         new OA\Property(property: "longitud", type: "number", format: "float", nullable: true),
-        new OA\Property(property: "habilitado", type: "boolean", nullable: true)
+        new OA\Property(property: "habilitado", type: "boolean", nullable: true),
+        new OA\Property(property: "tipos_alojamiento_ids", type: "array", items: new OA\Items(type: "integer"), description: "IDs de los tipos de alojamiento")
     ]
 )]
 class Alojamiento extends Model
@@ -86,7 +86,6 @@ class Alojamiento extends Model
         'mail',
         'mascotas',
         'periodoApertura',
-        'tipo',
         'imagen',
         'latitud',
         'longitud',
@@ -112,5 +111,10 @@ class Alojamiento extends Model
             get: fn($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN),
             set: fn($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN)
         );
+    }
+
+    public function tiposAlojamiento()
+    {
+        return $this->belongsToMany(TipoAlojamiento::class, 'alojamiento_tipo_alojamiento', 'alojamiento_id', 'tipo_alojamiento_id');
     }
 }
