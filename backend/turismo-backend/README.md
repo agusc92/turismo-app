@@ -10,9 +10,9 @@
 [![Tests](https://img.shields.io/badge/Tests-PHPUnit-6C5293?style=for-the-badge&logo=phpunit&logoColor=white)](https://phpunit.de/)
 [![Swagger](https://img.shields.io/badge/API%20Docs-Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=white)](http://localhost:8000/api/documentation)
 
-# Backend de Turismo Necochea
+# Backend de Descubrí Necochea
 
-Este repositorio contiene el código fuente del backend de la aplicación de Turismo Necochea, desarrollado con Laravel. La API RESTful gestiona la información sobre alojamientos, gastronomía, eventos, actividades, balnearios, complejos y usuarios.
+Este repositorio contiene el código fuente del backend de la aplicación de Turismo Necochea ***"Descubrí Necochea"*** , desarrollado con Laravel. La API RESTful gestiona la información sobre alojamientos, gastronomía, eventos, actividades, balnearios, complejos y usuarios.
 
 ##  Puesta en Marcha
 
@@ -35,15 +35,18 @@ Para levantar el entorno de desarrollo completo (servidor web Nginx, PHP-FPM, ba
 
 3.  **Levanta los servicios de Docker Compose**:
     ```bash
-    docker-compose up -d
+    docker-compose up --build -d
     ```
-    Esto construirá las imágenes (si es la primera vez) y levantará los contenedores en segundo plano.
+    **Nota sobre `docker-compose up`**:
+    *   `docker-compose up --build -d`: Este comando construye las imágenes de Docker desde cero (si hay cambios en los `Dockerfile` o si es la primera vez que se ejecuta) y luego levanta los contenedores en segundo plano. Es crucial usar `--build` la primera vez o cuando se han realizado cambios en la configuración de los servicios (ej. `Dockerfile`, `docker-compose.yml`).
+    *   `docker-compose up -d`: Este comando levanta los contenedores en segundo plano utilizando las imágenes existentes. Si no hay imágenes construidas previamente o si las imágenes existentes están desactualizadas, puede que no funcione como se espera o use versiones antiguas.
 
-4.  **Instala las dependencias de Composer**:
-    Ejecuta Composer dentro del contenedor PHP para instalar todas las dependencias del proyecto.
-    ```bash
-    docker-compose exec php composer install
-    ```
+4.  **Instala las dependencias de Composer (¡Importante!):**
+    *   **Si es la primera vez o si has borrado la carpeta `vendor/`:** Debes ejecutar `composer install` directamente, ya que `php artisan` no puede funcionar sin las dependencias.
+        ```bash
+        docker-compose exec php composer install
+        ```
+    *   Si la carpeta `vendor/` ya existe, el comando `setup:dev` (paso 6) se encargará de verificar y actualizar las dependencias si es necesario.
     **Nota**: Si se han añadido o modificado dependencias en `composer.json` (ej. después de un `git pull`), es recomendable ejecutar `docker-compose exec php composer install` nuevamente para asegurar que todas las dependencias estén actualizadas.
 
 5.  **Genera la clave de la aplicación Laravel**:
@@ -51,17 +54,166 @@ Para levantar el entorno de desarrollo completo (servidor web Nginx, PHP-FPM, ba
     docker-compose exec php php artisan key:generate
     ```
 
-##  Base de Datos
+6.  ## Configuración de la Base de Datos y Setup del Entorno
 
-Después de levantar los servicios y instalar las dependencias, necesitas configurar la base de datos:
+    Hemos creado comandos Artisan para automatizar el setup de la base de datos, importación de datos y generación de documentación. Aquí se detallan los comandos generales y específicos para cada tarea.
 
--   **Ejecuta las migraciones**:
-    Esto creará las tablas en tu base de datos MySQL.
-    ```bash
-    docker-compose exec php php artisan migrate
-    ```
+    ### Comandos de Setup Integrados (Recomendado para Frontend/Setup Rápido)
 
-##  Testing
+    *   **`php artisan setup:dev`**:
+        Este comando es ideal para desarrolladores frontend o para un setup rápido. Realiza las siguientes acciones:
+        *   Instala/actualiza las dependencias de Composer.
+        *   Verifica que el autoloader de Composer funcione.
+        *   Limpia y ejecuta todas las migraciones de la base de datos (`migrate:fresh`).
+        *   Importa todos los datos iniciales desde los archivos CSV (`import:all`).
+        *   Genera la documentación de la API (Swagger/OpenAPI).
+        ```bash
+        docker-compose exec php php artisan setup:dev
+        ```
+
+    *   **`php artisan setup:full-dev`**:
+        Este comando hace todo lo que hace `setup:dev` y, además, ejecuta todos los tests del proyecto. Es útil para desarrolladores backend o para verificar la integridad completa del proyecto.
+        ```bash
+        docker-compose exec php php artisan setup:full-dev
+        ```
+
+    ### Comandos Individuales para Desarrolladores Backend
+
+    Para un control más granular, los desarrolladores backend pueden ejecutar los siguientes comandos de forma individual:
+
+    *   **Ejecutar Migraciones de Base de Datos**:
+        Para crear las tablas de la base de datos.
+        ```bash
+        docker-compose exec php php artisan migrate
+        ```
+
+    *   **Reiniciar Migraciones y Sembrar la Base de Datos (Fresh Migrate & Seed)**:
+        Elimina todas las tablas, vuelve a ejecutar las migraciones y luego ejecuta los seeders para poblar la base de datos con datos de prueba.
+        ```bash
+        docker-compose exec php php artisan migrate:fresh --seed
+        ```
+
+    *   **Ejecutar Seeders (Poblar Base de Datos)**:
+        Para poblar la base de datos con datos de prueba sin reiniciar las migraciones.
+        ```bash
+        docker-compose exec php php artisan db:seed
+        ```
+
+    *   **Importar Datos Masivos desde CSV**:
+        Para importar datos iniciales desde los archivos CSV.
+        ```bash
+        docker-compose exec php php artisan import:all
+        ```
+        (Ver sección "Importación Masiva de Datos (CSV)" para comandos individuales de importación).
+
+    *   **Generar Documentación de la API**:
+        Para regenerar la documentación de la API (Swagger/OpenAPI).
+        ```bash
+        docker-compose exec php php artisan l5-swagger:generate
+        ```
+        (Ver sección "Documentación de la API (Swagger UI)" para más detalles).
+
+    *   **Ejecutar Tests**:
+        Para ejecutar todos los tests del proyecto.
+        ```bash
+        docker-compose exec php php artisan test
+        ```
+        (Ver sección "Testing" para más opciones de ejecución de tests).
+
+## Acceder a la Aplicación
+
+Una vez completado el setup, el backend debería estar accesible en `http://localhost:8000` (o el puerto que hayas configurado).
+
+## Endpoints de la API
+
+Aquí se listan todos los endpoints principales de la API, organizados por recurso:
+
+*   **Autenticación**:
+    *   `POST /api/register` - Registro de un nuevo usuario.
+    *   `POST /api/login` - Inicio de sesión de usuario.
+    *   `POST /api/logout` - Cierre de sesión de usuario.
+    *   `GET /api/user` - Obtener información del usuario autenticado.
+
+*   **Usuarios**: Gestión de usuarios y sus perfiles (`InfoUsuario`).
+    *   `GET /api/users` - Listar todos los usuarios.
+    *   `GET /api/users/{id}` - Obtener un usuario específico.
+    *   `PUT /api/users/{id}` - Actualizar un usuario.
+    *   `DELETE /api/users/{id}` - Eliminar un usuario.
+
+*   **Alojamientos**: Gestión de alojamientos, que ahora incluyen una relación muchos a muchos con `TipoAlojamiento` a través de la tabla pivote `alojamiento_tipo_alojamiento`.
+    *   `GET /api/alojamientos` - Listar todos los alojamientos.
+    *   `GET /api/alojamientos/{id}` - Obtener un alojamiento específico.
+    *   `POST /api/alojamientos` - Crear un nuevo alojamiento (Requiere `tipos_alojamiento_ids` en el body).
+    *   `PUT /api/alojamientos/{id}` - Actualizar un alojamiento (Puede actualizar `tipos_alojamiento_ids`).
+    *   `DELETE /api/alojamientos/{id}` - Eliminar un alojamiento.
+
+*   **Tipos de Alojamiento**: Gestión de categorías específicas para alojamientos.
+    *   `GET /api/tipos-alojamientos` - Listar todos los tipos de alojamiento.
+    *   `GET /api/tipos-alojamientos/{id}` - Obtener un tipo de alojamiento específico.
+    *   `POST /api/tipos-alojamientos` - Crear un nuevo tipo de alojamiento.
+    *   `PUT /api/tipos-alojamientos/{id}` - Actualizar un tipo de alojamiento.
+    *   `DELETE /api/tipos-alojamientos/{id}` - Eliminar un tipo de alojamiento.
+
+*   **Gastronómicos**: Gestión de establecimientos gastronómicos, sus tipos y menús asociados.
+    *   `GET /api/gastronomicos` - Listar todos los establecimientos gastronómicos.
+    *   `GET /api/gastronomicos/{id}` - Obtener un establecimiento gastronómico específico.
+    *   `POST /api/gastronomicos` - Crear un nuevo establecimiento gastronómico.
+    *   `PUT /api/gastronomicos/{id}` - Actualizar un establecimiento gastronómico.
+    *   `DELETE /api/gastronomicos/{id}` - Eliminar un establecimiento gastronómico.
+
+*   **Tipos de Gastronomía**: Gestión de tipos específicos para establecimientos gastronómicos.
+    *   `GET /api/tipos-gastronomia` - Listar todos los tipos de gastronomía.
+    *   `GET /api/tipos-gastronomia/{id}` - Obtener un tipo de gastronomía específico.
+    *   `POST /api/tipos-gastronomia` - Crear un nuevo tipo de gastronomía.
+    *   `PUT /api/tipos-gastronomia/{id}` - Actualizar un tipo de gastronomía.
+    *   `DELETE /api/tipos-gastronomia/{id}` - Eliminar un tipo de gastronomía.
+
+*   **Menús**: Gestión de tipos de menús.
+    *   `GET /api/menus` - Listar todos los menús.
+    *   `GET /api/menus/{id}` - Obtener un menú específico.
+    *   `POST /api/menus` - Crear un nuevo menú.
+    *   `PUT /api/menus/{id}` - Actualizar un menú.
+    *   `DELETE /api/menus/{id}` - Eliminar un menú.
+
+*   **Eventos**: Gestión de eventos y eventos destacados.
+    *   `GET /api/eventos` - Listar todos los eventos.
+    *   `GET /api/eventos/{id}` - Obtener un evento específico.
+    *   `POST /api/eventos` - Crear un nuevo evento.
+    *   `PUT /api/eventos/{id}` - Actualizar un evento.
+    *   `DELETE /api/eventos/{id}` - Eliminar un evento.
+
+*   **Actividades**: Gestión de actividades y sus tipos.
+    *   `GET /api/actividades` - Listar todas las actividades.
+    *   `GET /api/actividades/{id}` - Obtener una actividad específica.
+    *   `POST /api/actividades` - Crear una nueva actividad.
+    *   `PUT /api/actividades/{id}` - Actualizar una actividad.
+    *   `DELETE /api/actividades/{id}` - Eliminar una actividad.
+
+*   **Tipos de Actividad**: Gestión de tipos específicos para actividades.
+    *   `GET /api/tipos-actividad` - Listar todos los tipos de actividad.
+    *   `GET /api/tipos-actividad/{id}` - Obtener un tipo de actividad específico.
+    *   `POST /api/tipos-actividad` - Crear un nuevo tipo de actividad.
+    *   `PUT /api/tipos-actividad/{id}` - Actualizar un tipo de actividad.
+    *   `DELETE /api/tipos-actividad/{id}` - Eliminar un tipo de actividad.
+
+*   **Balnearios**: Gestión de balnearios.
+    *   `GET /api/balnearios` - Listar todos los balnearios.
+    *   `GET /api/balnearios/{id}` - Obtener un balneario específico.
+    *   `POST /api/balnearios` - Crear un nuevo balneario.
+    *   `PUT /api/balnearios/{id}` - Actualizar un balneario.
+    *   `DELETE /api/balnearios/{id}` - Eliminar un balneario.
+
+*   **Complejos**: Gestión de complejos.
+    *   `GET /api/complejos` - Listar todos los complejos.
+    *   `GET /api/complejos/{id}` - Obtener un complejo específico.
+    *   `POST /api/complejos` - Crear un nuevo complejo.
+    *   `PUT /api/complejos/{id}` - Actualizar un complejo.
+    *   `DELETE /api/complejos/{id}` - Eliminar un complejo.
+
+*   **Documentación de la API**:
+    *   `GET /api/documentation` - Acceso a la interfaz de Swagger UI.
+
+## Testing
 
 El proyecto incluye tests unitarios y de característica para asegurar la calidad y el correcto funcionamiento de la API.
 
@@ -133,6 +285,7 @@ Se ha documentado exhaustivamente la API para las siguientes funcionalidades:
 *   **Complejos**: Gestión de complejos.
 *   **Tipos**: Gestión de tipos genéricos (usados en actividades e intereses de usuario).
 *   **Tipos de Gastronomía**: Gestión de tipos específicos para establecimientos gastronómicos.
+*   **Tipos de Alojamiento**: Gestión de tipos específicos para alojamientos.
 *   **Menús**: Gestión de tipos de menús.
 
 ##  Importación Masiva de Datos (CSV)
@@ -143,9 +296,9 @@ Puedes importar datos iniciales para varias entidades utilizando comandos Artisa
 
 1.  **Ubicación**: Coloca tus archivos CSV en el directorio `database/imports/` dentro de la raíz de tu proyecto backend.
     *   Ejemplo: `turismo-app/backend/turismo-backend/database/imports/complejos.csv`
-2.  **Formato**: Asegúrate de que la primera fila del CSV contenga los encabezados de las columnas y que los datos estén correctamente delimitados por comas y, si un campo contiene comas o saltos de línea, que esté encerrado entre comillas dobles.
+2.  **Formato General**: Asegúrate de que la primera fila del CSV contenga los encabezados de las columnas y que los datos estén correctamente delimitados por comas. Si un campo contiene comas o saltos de línea, debe estar encerrado entre comillas dobles.
 
-### **Comandos de Importación**
+### **Comandos de Importación y Especificaciones CSV**
 
 Puedes ejecutar comandos individuales o un comando maestro para importar todos los datos:
 
@@ -155,31 +308,101 @@ Puedes ejecutar comandos individuales o un comando maestro para importar todos l
     ```
     Este comando ejecutará secuencialmente todos los importadores.
 
-*   **Comandos individuales**:
-    *   **Complejos**:
-        ```bash
-        docker-compose exec php php artisan import:complejos
-        ```
-    *   **Eventos**:
-        ```bash
-        docker-compose exec php php artisan import:eventos
-        ```
-    *   **Balnearios**:
-        ```bash
-        docker-compose exec php php artisan import:balnearios
-        ```
-    *   **Alojamientos**:
-        ```bash
-        docker-compose exec php php artisan import:alojamientos
-        ```
-    *   **Actividades**:
-        ```bash
-        docker-compose exec php php artisan import:actividades
-        ```
-    *   **Gastronómicos**:
-        ```bash
-        docker-compose exec php php artisan import:gastronomicos
-        ```
+*   **`php artisan import:complejos`**
+    *   **Archivo CSV**: `database/imports/complejos.csv`
+    *   **Encabezados Esperados**:
+        *   `nombre` (string, **obligatorio**)
+        *   `direccion` (string, opcional)
+        *   `mail` (string, opcional)
+        *   `redesSociales` (string, opcional)
+        *   `telefono` (string, opcional)
+        *   `servicio` (string, opcional)
+        *   `adicional` (string, opcional)
+        *   `imagen` (string URL, opcional)
+        *   `latitud` (float, opcional)
+        *   `longitud` (float, opcional)
+        *   `habilitado` (booleano, opcional, por defecto `true`. Valores como "true", "1", "false", "0" son interpretados.)
+
+*   **`php artisan import:eventos`**
+    *   **Archivo CSV**: `database/imports/eventos.csv`
+    *   **Encabezados Esperados**:
+        *   `nombre` (string, **obligatorio**)
+        *   `dirección` (string, opcional. Se mapea a `direccion` en la DB)
+        *   `descripcion` (string, opcional)
+        *   `fecha` (string, opcional. Formato esperado: `DD/MM/YYYY`)
+        *   `lugar` (string, opcional)
+        *   `imagen` (string URL, opcional)
+        *   `destacado` (booleano, opcional, por defecto `false`. Valores como "true", "1", "false", "0" son interpretados.)
+        *   `latitud` (float, opcional)
+        *   `longitud` (float, opcional)
+        *   `habilitado` (booleano, opcional, por defecto `true`. Valores como "true", "1", "false", "0" son interpretados.)
+
+*   **`php artisan import:balnearios`**
+    *   **Archivo CSV**: `database/imports/balnearios.csv`
+    *   **Encabezados Esperados**:
+        *   `nombre` (string, **obligatorio**)
+        *   `direccion` (string, opcional)
+        *   `telefono` (string, opcional)
+        *   `redesSociales` (string, opcional)
+        *   `servicios` (string, opcional)
+        *   `mail` (string, opcional)
+        *   `accesibilidad` (string, opcional)
+        *   `fecha_desde_hasta` (string, opcional)
+        *   `imagen` (string URL, opcional)
+        *   `latitud` (float, opcional)
+        *   `longitud` (float, opcional)
+        *   `habilitado` (booleano, opcional, por defecto `true`. Valores como "true", "1", "false", "0" son interpretados.)
+
+*   **`php artisan import:actividades`**
+    *   **Archivo CSV**: `database/imports/actividades.csv`
+    *   **Encabezados Esperados**:
+        *   `nombre` (string, **obligatorio**)
+        *   `direccion` (string, opcional)
+        *   `descripcion` (string, opcional)
+        *   `redesSociales` (string, opcional)
+        *   `web` (string URL, opcional)
+        *   `mail` (string, opcional)
+        *   `telefono` (string, opcional)
+        *   `imagen` (string URL, opcional)
+        *   `diasYHorarios` (string, opcional)
+        *   `latitud` (float, opcional)
+        *   `longitud` (float, opcional)
+        *   `habilitado` (booleano, opcional, por defecto `true`. Valores como "true", "1", "false", "0" son interpretados.)
+        *   `tipo` (string, opcional. Si no existe, se crea un `Tipo` con este nombre.)
+
+*   **`php artisan import:alojamientos`**
+    *   **Archivo CSV**: `database/imports/alojamientos.csv`
+    *   **Encabezados Esperados**:
+        *   `nombre` (string, **obligatorio**)
+        *   `direccion` (string, opcional)
+        *   `telefono` (string, opcional)
+        *   `redesSociales` (string, opcional)
+        *   `web` (string URL, opcional)
+        *   `mail` (string, opcional)
+        *   `mascotas` (booleano, opcional. Se interpreta "si" como `true`, cualquier otro valor como `false`.)
+        *   `periodoApertura` (string, opcional)
+        *   `tipo` (string, opcional. Puede contener múltiples tipos separados por comas (ej. "Hotel, Cabaña"). Si un `TipoAlojamiento` no existe, se crea.)
+        *   `imagen` (string URL, opcional)
+        *   `latitud` (float, opcional)
+        *   `longitud` (float, opcional)
+        *   `habilitado` (booleano, opcional, por defecto `true`. Valores como "true", "1", "false", "0" son interpretados.)
+
+*   **`php artisan import:gastronomicos`**
+    *   **Archivo CSV**: `database/imports/gastronomia.csv`
+    *   **Encabezados Esperados**:
+        *   `nombre` (string, **obligatorio**. Las líneas con nombre vacío serán omitidas.)
+        *   `direccion` (string, opcional)
+        *   `telefono` (string, opcional)
+        *   `redesSociales` (string, opcional)
+        *   `horario` (string, opcional)
+        *   `tiendaOnline` (string URL, opcional)
+        *   `extras` (string, opcional)
+        *   `imagen` (string URL, opcional)
+        *   `latitud` (float, opcional)
+        *   `longitud` (float, opcional)
+        *   `habilitado` (booleano, opcional, por defecto `true`. Valores como "true", "1", "false", "0" son interpretados.)
+        *   `tipo` (string, opcional. Puede contener múltiples tipos separados por `|` (barra vertical). Si un `TipoGastronomico` no existe, se crea.)
+        *   `menues_especiales` (string, opcional. Puede contener múltiples nombres de menú separados por `|`. Si un `Menu` no existe, se crea.)
 
 **Nota**: Si ejecutas los comandos individuales, asegúrate de que los tipos y menús necesarios existan antes de importar actividades y gastronómicos, o que la lógica `firstOrCreate` en los comandos maneje su creación. El comando `import:all` ya considera un orden adecuado.
 
@@ -201,8 +424,9 @@ Los archivos fuente (`.drawio`) y sus exportaciones en imagen (`.png`) se encuen
 
 Para una comprensión más profunda del proyecto, consulta los siguientes documentos:
 
-*   [**Arquitectura del Proyecto**](docs/ARCHITECTURE.md): Detalles sobre la estructura de carpetas, convenciones de nombres y patrones de diseño.
+*   [**Arquitectura del Proyecto**](docs/ARCHITECTURE.md): Detalles sobre la estructura de carpetas, convenciones de nombres, patrones de diseño, variables de entorno clave, seguridad, logging y estrategia de despliegue.
 *   [**Guía de Contribución**](docs/CONTRIBUTING.md): Información sobre cómo contribuir, flujo de trabajo de Git y estándares de código.
+*   [**Guía de Uso de la API**](docs/API_GUIDELINES.md): Detalles sobre códigos de estado HTTP, filtrado, paginación, ordenamiento y ejemplos de request/response.
 
 ##  Detener los Servicios
 
