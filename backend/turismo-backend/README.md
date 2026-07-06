@@ -47,7 +47,7 @@ Para levantar el entorno de desarrollo completo (servidor web Nginx, PHP-FPM, ba
         docker-compose exec php composer install
         ```
     *   Si la carpeta `vendor/` ya existe, el comando `setup:dev` (paso 6) se encargará de verificar y actualizar las dependencias si es necesario.
-    **Nota**: Si se han añadido o modificado dependencias en `composer.json` (ej. después de un `git pull`), es recomendable ejecutar `docker-compose exec php composer install` nuevamente para asegurar que todas las dependencias estén actualizadas.
+        **Nota**: Si se han añadido o modificado dependencias en `composer.json` (ej. después de un `git pull`), es recomendable ejecutar `docker-compose exec php composer install` nuevamente para asegurar que todas las dependencias estén actualizadas.
 
 5.  **Genera la clave de la aplicación Laravel**:
     ```bash
@@ -58,7 +58,7 @@ Para levantar el entorno de desarrollo completo (servidor web Nginx, PHP-FPM, ba
 
     Hemos creado comandos Artisan para automatizar el setup de la base de datos, importación de datos y generación de documentación. Aquí se detallan los comandos generales y específicos para cada tarea.
 
-    ### Comandos de Setup Integrados (Recomendado para Frontend/Setup Rápido)
+    ### Comandos de Setup Integrados (Recomendado para Setup Rápido)
 
     *   **`php artisan setup:dev`**:
         Este comando es ideal para desarrolladores frontend o para un setup rápido. Realiza las siguientes acciones:
@@ -77,9 +77,9 @@ Para levantar el entorno de desarrollo completo (servidor web Nginx, PHP-FPM, ba
         docker-compose exec php php artisan setup:full-dev
         ```
 
-    ### Comandos Individuales para Desarrolladores Backend
+    ### Comandos Individuales para usar durante el desarrollo
 
-    Para un control más granular, los desarrolladores backend pueden ejecutar los siguientes comandos de forma individual:
+    Para un control más granular, los desarrolladores pueden ejecutar los siguientes comandos de forma individual:
 
     *   **Ejecutar Migraciones de Base de Datos**:
         Para crear las tablas de la base de datos.
@@ -140,7 +140,7 @@ Aquí se listan todos los endpoints principales de la API, organizados por recur
     *   `PUT /api/users/{id}` - Actualizar un usuario.
     *   `DELETE /api/users/{id}` - Eliminar un usuario.
 
-*   **Alojamientos**: Gestión de alojamientos, que ahora incluyen una relación muchos a muchos con `TipoAlojamiento` a través de la tabla pivote `alojamiento_tipo_alojamiento`.
+*   **Alojamientos**: Gestión de alojamientos, que incluyen una relación muchos a muchos con `TipoAlojamiento` a través de la tabla pivote `alojamiento_tipo_alojamiento`.
     *   `GET /api/alojamientos` - Listar todos los alojamientos.
     *   `GET /api/alojamientos/{id}` - Obtener un alojamiento específico.
     *   `POST /api/alojamientos` - Crear un nuevo alojamiento (Requiere `tipos_alojamiento_ids` en el body).
