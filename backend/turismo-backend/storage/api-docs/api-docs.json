@@ -351,6 +351,140 @@
                 }
             }
         },
+        "/api/alojamientos/{id}/tipos": {
+            "get": {
+                "tags": [
+                    "Alojamientos"
+                ],
+                "summary": "Obtener los tipos de alojamiento asociados a un alojamiento",
+                "operationId": "09741d1d0249dbaa1e8cd1cdc6d7782b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del alojamiento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de tipos de alojamiento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TipoAlojamiento"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Alojamiento no encontrado"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Alojamientos"
+                ],
+                "summary": "Asociar un tipo de alojamiento a un alojamiento",
+                "operationId": "11e7b6e2942143555985703af807b884",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del alojamiento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "tipo_alojamiento_id"
+                                ],
+                                "properties": {
+                                    "tipo_alojamiento_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tipo de alojamiento asociado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Alojamiento"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Alojamiento no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/alojamientos/{id}/tipos/{tipoId}": {
+            "delete": {
+                "tags": [
+                    "Alojamientos"
+                ],
+                "summary": "Desasociar un tipo de alojamiento de un alojamiento",
+                "operationId": "c15d244e92cb59a0ca033d7ff8a6b3bd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del alojamiento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "tipoId",
+                        "in": "path",
+                        "description": "ID del tipo de alojamiento a desasociar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tipo de alojamiento desasociado correctamente"
+                    },
+                    "404": {
+                        "description": "Alojamiento no encontrado"
+                    }
+                }
+            }
+        },
         "/api/register": {
             "post": {
                 "tags": [

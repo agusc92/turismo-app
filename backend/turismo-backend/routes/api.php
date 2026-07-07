@@ -48,6 +48,11 @@ Route::get('gastronomicos/{id}/menus', [GastronomicoMenuController::class, 'inde
 Route::post('gastronomicos/{id}/menus', [GastronomicoMenuController::class, 'store']);
 Route::delete('gastronomicos/{id}/menus/{menuId}', [GastronomicoMenuController::class, 'destroy']);
 
+// Alojamiento nested routes
+Route::get('alojamientos/{id}/tipos', [AlojamientoController::class, 'tipos']);
+Route::post('alojamientos/{id}/tipos', [AlojamientoController::class, 'addTipo']);
+Route::delete('alojamientos/{id}/tipos/{tipoId}', [AlojamientoController::class, 'removeTipo']);
+
 // Protected routes (require token)
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
