@@ -136,16 +136,9 @@
                     <input type="url" wire:model="imagen" placeholder="https://…">
                     @error('imagen') <span class="error-msg">{{ $message }}</span> @enderror
                 </div>
-                <div class="form-group">
-                    <label>Latitud</label>
-                    <input type="number" step="0.000001" wire:model="latitud" placeholder="-38.555">
-                    @error('latitud') <span class="error-msg">{{ $message }}</span> @enderror
-                </div>
-                <div class="form-group">
-                    <label>Longitud</label>
-                    <input type="number" step="0.000001" wire:model="longitud" placeholder="-58.777">
-                    @error('longitud') <span class="error-msg">{{ $message }}</span> @enderror
-                </div>
+
+                <x-mapa-selector />
+                
             </div>
         </div>
         <div class="modal-footer">

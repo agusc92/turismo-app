@@ -597,7 +597,10 @@
         </div>
     </div>
 </div>
-
+<!-- Enlace al CSS de Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<!-- Enlace al JS de Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 @livewireScripts
 </body>
 </html>

@@ -130,21 +130,15 @@
                             <input type="checkbox" wire:model="mascotas">
                             <span class="toggle-slider"></span>
                         </label>
-                        <span style="font-size:13px;color:var(--text-muted)">{{ $mascotas ? '🐾 Sí' : 'No' }}</span>
                     </div>
                 </div>
                 <div class="form-group span-2">
                     <label>URL de Imagen</label>
                     <input type="url" wire:model="imagen" placeholder="https://…">
                 </div>
-                <div class="form-group">
-                    <label>Latitud</label>
-                    <input type="number" step="0.000001" wire:model="latitud">
-                </div>
-                <div class="form-group">
-                    <label>Longitud</label>
-                    <input type="number" step="0.000001" wire:model="longitud">
-                </div>
+
+                <x-mapa-selector />
+
             </div>
         </div>
         <div class="modal-footer">

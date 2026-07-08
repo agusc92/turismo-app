@@ -127,24 +127,16 @@
                     <input type="url" wire:model="imagen" placeholder="https://…">
                     @error('imagen') <span class="error-msg">{{ $message }}</span> @enderror
                 </div>
-                <div class="form-group">
-                    <label>Latitud</label>
-                    <input type="number" step="0.000001" wire:model="latitud" placeholder="-38.555">
-                    @error('latitud') <span class="error-msg">{{ $message }}</span> @enderror
-                </div>
-                <div class="form-group">
-                    <label>Longitud</label>
-                    <input type="number" step="0.000001" wire:model="longitud" placeholder="-58.777">
-                    @error('longitud') <span class="error-msg">{{ $message }}</span> @enderror
-                </div>
+
+                <x-mapa-selector />
+
                 <div class="form-group span-2">
-                    <label>Destacado</label>
+                    <label>¿Destacado?</label>
                     <div class="toggle-wrap">
                         <label class="toggle">
                             <input type="checkbox" wire:model="destacado">
                             <span class="toggle-slider"></span>
                         </label>
-                        <span style="font-size:13px;color:var(--text-muted)">{{ $destacado ? 'Sí, es destacado' : 'No destacado' }}</span>
                     </div>
                 </div>
             </div>
