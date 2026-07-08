@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Alojamiento;
+use App\Models\TipoAlojamiento;
 use Illuminate\Support\Facades\File;
 
 class ImportAlojamientosCommand extends Command
@@ -67,13 +68,14 @@ class ImportAlojamientosCommand extends Command
             $mail = $row['mail'] ?? null;
             $mascotas = (isset($row['mascotas']) && strtolower($row['mascotas']) === 'si');
             $periodoApertura = $row['periodoApertura'] ?? null;
-            $tipo = $row['tipo'] ?? null;
+            $tipoString = $row['tipo'] ?? null;
             $imagen = $row['imagen'] ?? null;
             $latitud = isset($row['latitud']) && is_numeric($row['latitud']) ? (float)$row['latitud'] : null;
             $longitud = isset($row['longitud']) && is_numeric($row['longitud']) ? (float)$row['longitud'] : null;
+            $habilitado = filter_var($row['habilitado'] ?? true, FILTER_VALIDATE_BOOLEAN);
 
             try {
-                Alojamiento::create([
+                $alojamiento = Alojamiento::create([
                     'nombre' => $nombre,
                     'direccion' => $direccion,
                     'telefono' => $telefono,
@@ -82,11 +84,23 @@ class ImportAlojamientosCommand extends Command
                     'mail' => $mail,
                     'mascotas' => $mascotas,
                     'periodoApertura' => $periodoApertura,
-                    'tipo' => $tipo,
                     'imagen' => $imagen,
                     'latitud' => $latitud,
                     'longitud' => $longitud,
+                    'habilitado' => $habilitado,
                 ]);
+
+                // Relación tiposAlojamiento
+                if ($tipoString) {
+                    $tipoNames = array_map('trim', explode(',', $tipoString));
+                    $tipoIds = [];
+                    foreach ($tipoNames as $tipoName) {
+                        $tipoAlojamiento = TipoAlojamiento::firstOrCreate(['tipo' => $tipoName]);
+                        $tipoIds[] = $tipoAlojamiento->id;
+                    }
+                    $alojamiento->tiposAlojamiento()->attach($tipoIds);
+                }
+
                 $importedCount++;
             } catch (\Exception $e) {
                 $this->error("Error al importar alojamiento de la línea: " . $line . " - " . $e->getMessage());

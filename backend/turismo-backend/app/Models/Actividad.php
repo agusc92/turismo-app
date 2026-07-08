@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Tipo;
@@ -25,6 +26,7 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, description: "Longitud de la actividad"),
         new OA\Property(property: "tipo_id", type: "integer", format: "int64", description: "ID del tipo de actividad"),
         new OA\Property(property: "dias_y_horarios", type: "string", nullable: true, description: "Días y horarios de la actividad"),
+        new OA\Property(property: "habilitado", type: "boolean", description: "Indica si la actividad está habilitada/visible", example: true),
         new OA\Property(property: "created_at", type: "string", format: "date-time", description: "Fecha de creación"),
         new OA\Property(property: "updated_at", type: "string", format: "date-time", description: "Fecha de última actualización"),
         new OA\Property(property: "tipo", ref: "#/components/schemas/Tipo", description: "Objeto Tipo asociado a la actividad")
@@ -47,7 +49,8 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.555),
         new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.777),
         new OA\Property(property: "tipo_id", type: "integer", example: 1),
-        new OA\Property(property: "dias_y_horarios", type: "string", nullable: true, example: "L-V 10:00-18:00")
+        new OA\Property(property: "dias_y_horarios", type: "string", nullable: true, example: "L-V 10:00-18:00"),
+        new OA\Property(property: "habilitado", type: "boolean", nullable: true, example: true)
     ]
 )]
 #[OA\Schema(
@@ -66,7 +69,8 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.666),
         new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.888),
         new OA\Property(property: "tipo_id", type: "integer", nullable: true, example: 2),
-        new OA\Property(property: "dias_y_horarios", type: "string", nullable: true, example: "S-D 11:00-19:00")
+        new OA\Property(property: "dias_y_horarios", type: "string", nullable: true, example: "S-D 11:00-19:00"),
+        new OA\Property(property: "habilitado", type: "boolean", nullable: true, example: false)
     ]
 )]
 class Actividad extends Model
@@ -87,7 +91,8 @@ class Actividad extends Model
         'latitud',
         'longitud',
         'tipo_id',
-        'dias_y_horarios'
+        'dias_y_horarios',
+        'habilitado'
     ];
 
     protected $casts = [
@@ -98,5 +103,12 @@ class Actividad extends Model
     public function tipo()
     {
         return $this->belongsTo(Tipo::class, 'tipo_id');
+    }
+    protected function habilitado(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN),
+            set: fn($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN)
+        );
     }
 }

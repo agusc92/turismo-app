@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use OpenApi\Attributes as OA;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 #[OA\Schema(
     schema: "Balneario",
     title: "Balneario",
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
         new OA\Property(property: "imagen", type: "string", nullable: true, description: "URL de la imagen del balneario"),
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, description: "Latitud del balneario"),
         new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, description: "Longitud del balneario"),
+        new OA\Property(property: "habilitado", type: "boolean", description: "Indica si el balneario está habilitado/visible", example: true),
         new OA\Property(property: "created_at", type: "string", format: "date-time", description: "Fecha de creación"),
         new OA\Property(property: "updated_at", type: "string", format: "date-time", description: "Fecha de última actualización")
     ]
@@ -42,7 +44,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
         new OA\Property(property: "fecha_desde_hasta", type: "string", nullable: true, example: "Diciembre a Marzo"),
         new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/neptuno.jpg"),
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.555),
-        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.777)
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.777),
+        new OA\Property(property: "habilitado", type: "boolean", nullable: true, example: true)
     ]
 )]
 #[OA\Schema(
@@ -60,7 +63,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
         new OA\Property(property: "fecha_desde_hasta", type: "string", nullable: true, example: "Noviembre a Abril"),
         new OA\Property(property: "imagen", type: "string", nullable: true, example: "http://imagen.com/poseidon.jpg"),
         new OA\Property(property: "latitud", type: "number", format: "float", nullable: true, example: -38.666),
-        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.888)
+        new OA\Property(property: "longitud", type: "number", format: "float", nullable: true, example: -58.888),
+        new OA\Property(property: "habilitado", type: "boolean", nullable: true, example: false)
     ]
 )]
 class Balneario extends Model
@@ -79,11 +83,19 @@ class Balneario extends Model
         'fecha_desde_hasta',
         'imagen',
         'latitud',
-        'longitud'
+        'longitud',
+        'habilitado'
     ];
 
     protected $casts = [
         'latitud' => 'float',
         'longitud' => 'float',
     ];
+    protected function habilitado(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN),
+            set: fn ($value) => filter_var($value, FILTER_VALIDATE_BOOLEAN)
+        );
+    }
 }

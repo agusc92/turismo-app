@@ -32,6 +32,7 @@ class ActividadTest extends TestCase
             'longitud' => -58.777,
             'tipo_id' => $tipo->id, // Usar el ID del tipo creado
             'dias_y_horarios' => 'Lunes a Viernes de 10:00 a 18:00',
+            'habilitado' => true,
         ];
 
         $actividad = new Actividad();
@@ -49,6 +50,7 @@ class ActividadTest extends TestCase
         $this->assertEquals($data['longitud'], $actividad->longitud);
         $this->assertEquals($data['tipo_id'], $actividad->tipo_id);
         $this->assertEquals($data['dias_y_horarios'], $actividad->dias_y_horarios);
+        $this->assertEquals($data['habilitado'], $actividad->habilitado);
         $this->assertNull($actividad->id);
     }
 
@@ -66,7 +68,8 @@ class ActividadTest extends TestCase
      */
     public function test_latitud_attribute_is_float(): void
     {
-        $actividad = new Actividad();
+        // Crear el modelo a través del factory para asegurar que los casts se apliquen correctamente
+        $actividad = Actividad::factory()->make();
 
         $actividad->latitud = "-38.555";
         $this->assertIsFloat($actividad->latitud);
@@ -83,7 +86,8 @@ class ActividadTest extends TestCase
      */
     public function test_longitud_attribute_is_float(): void
     {
-        $actividad = new Actividad();
+        // Crear el modelo a través del factory para asegurar que los casts se apliquen correctamente
+        $actividad = Actividad::factory()->make();
 
         $actividad->longitud = "-58.777";
         $this->assertIsFloat($actividad->longitud);
@@ -108,5 +112,34 @@ class ActividadTest extends TestCase
         $this->assertInstanceOf(Tipo::class, $actividad->tipo);
         $this->assertEquals($tipo->id, $actividad->tipo->id);
         $this->assertEquals('Deporte', $actividad->tipo->tipo);
+    }
+
+    /**
+     * Test that 'habilitado' attribute is correctly cast to boolean.
+     */
+    public function test_habilitado_attribute_is_boolean(): void
+    {
+        // Crear el modelo y luego refrescarlo para asegurar que los casts se apliquen correctamente
+        $actividad = Actividad::factory()->create(['habilitado' => true])->refresh();
+
+        // Test true values
+        $actividad->habilitado = '1';
+        $this->assertTrue($actividad->habilitado);
+        $actividad->habilitado = 'true';
+        $this->assertTrue($actividad->habilitado);
+        $actividad->habilitado = 1;
+        $this->assertTrue($actividad->habilitado);
+
+        // Test false values
+        $actividad->habilitado = '0';
+        $this->assertFalse($actividad->habilitado);
+        $actividad->habilitado = 'false';
+        $this->assertFalse($actividad->habilitado);
+        $actividad->habilitado = 0;
+        $this->assertFalse($actividad->habilitado);
+        $actividad->habilitado = null;
+        $this->assertFalse($actividad->habilitado); // Laravel casts null to false for boolean
+        $actividad->habilitado = '';
+        $this->assertFalse($actividad->habilitado);
     }
 }

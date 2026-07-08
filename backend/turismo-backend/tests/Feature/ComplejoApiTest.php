@@ -16,15 +16,17 @@ class ComplejoApiTest extends TestCase
      */
     public function test_can_retrieve_list_of_complejos(): void
     {
-        Complejo::factory()->count(3)->create();
+        Complejo::factory()->count(2)->create(['habilitado' => true]);
+        Complejo::factory()->create(['habilitado' => false]); // Un complejo deshabilitado
 
         $response = $this->getJson('/api/complejos');
 
         $response->assertStatus(200)
-                 ->assertJsonCount(3)
+                 ->assertJsonCount(2) // Solo 2 habilitados
                  ->assertJsonStructure([
-                     '*' => ['id', 'nombre', 'direccion', 'mail', 'redesSociales', 'telefono', 'servicio', 'adicional', 'imagen', 'latitud', 'longitud', 'created_at', 'updated_at']
+                     '*' => ['id', 'nombre', 'direccion', 'mail', 'redesSociales', 'telefono', 'servicio', 'adicional', 'imagen', 'latitud', 'longitud', 'habilitado', 'created_at', 'updated_at']
                  ]);
+        $response->assertJsonMissing(['habilitado' => false]); // Asegura que no hay deshabilitados
     }
 
     /**
@@ -32,7 +34,7 @@ class ComplejoApiTest extends TestCase
      */
     public function test_can_retrieve_single_complejo(): void
     {
-        $complejo = Complejo::factory()->create();
+        $complejo = Complejo::factory()->create(['habilitado' => true]);
 
         $response = $this->getJson('/api/complejos/' . $complejo->id);
 
@@ -43,6 +45,7 @@ class ComplejoApiTest extends TestCase
                      'imagen' => $complejo->imagen,
                      'latitud' => $complejo->latitud,
                      'longitud' => $complejo->longitud,
+                     'habilitado' => true,
                  ]);
     }
 
@@ -62,6 +65,7 @@ class ComplejoApiTest extends TestCase
             'imagen' => 'http://imagen.com/nuevo_complejo.jpg',
             'latitud' => -38.555,
             'longitud' => -58.777,
+            'habilitado' => true,
         ];
 
         $response = $this->postJson('/api/complejos', $complejoData);
@@ -72,6 +76,7 @@ class ComplejoApiTest extends TestCase
                      'imagen' => 'http://imagen.com/nuevo_complejo.jpg',
                      'latitud' => -38.555,
                      'longitud' => -58.777,
+                     'habilitado' => true,
                  ]);
 
         $this->assertDatabaseHas('complejos', [
@@ -79,6 +84,7 @@ class ComplejoApiTest extends TestCase
             'imagen' => 'http://imagen.com/nuevo_complejo.jpg',
             'latitud' => -38.555,
             'longitud' => -58.777,
+            'habilitado' => true,
         ]);
     }
 
@@ -87,7 +93,7 @@ class ComplejoApiTest extends TestCase
      */
     public function test_can_update_complejo(): void
     {
-        $complejo = Complejo::factory()->create();
+        $complejo = Complejo::factory()->create(['habilitado' => true]);
 
         $updatedData = [
             'nombre' => 'Complejo Actualizado',
@@ -95,6 +101,7 @@ class ComplejoApiTest extends TestCase
             'imagen' => 'http://imagen.com/complejo_actualizado.jpg',
             'latitud' => -38.666,
             'longitud' => -58.888,
+            'habilitado' => false,
         ];
 
         $response = $this->putJson('/api/complejos/' . $complejo->id, $updatedData);
@@ -105,6 +112,7 @@ class ComplejoApiTest extends TestCase
                      'imagen' => 'http://imagen.com/complejo_actualizado.jpg',
                      'latitud' => -38.666,
                      'longitud' => -58.888,
+                     'habilitado' => false,
                  ]);
 
         $this->assertDatabaseHas('complejos', [
@@ -113,6 +121,7 @@ class ComplejoApiTest extends TestCase
             'imagen' => 'http://imagen.com/complejo_actualizado.jpg',
             'latitud' => -38.666,
             'longitud' => -58.888,
+            'habilitado' => false,
         ]);
     }
 

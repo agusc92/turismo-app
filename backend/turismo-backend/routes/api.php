@@ -14,7 +14,9 @@ use App\Http\Controllers\InfoUsuarioController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\GastronomicoMenuController;
 use App\Http\Controllers\TipoGastronomicoController;
+use App\Http\Controllers\TipoAlojamientoController;
 use App\Http\Controllers\ComplejoController;
+use App\Http\Middleware\AdminMiddleware;
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -29,7 +31,8 @@ Route::apiResource('users', UserController::class);
 Route::apiResource('info-usuarios', InfoUsuarioController::class);
 Route::apiResource('menus', MenuController::class);
 Route::apiResource('tipo-gastronomicos', TipoGastronomicoController::class);
-Route::apiResource('complejos', ComplejoController::class); // Añadimos esta línea
+Route::apiResource('tipos-alojamientos', TipoAlojamientoController::class);
+Route::apiResource('complejos', ComplejoController::class);
 
 // Evento nested routes
 Route::get('eventos/destacados', [EventoController::class, 'destacados']);
@@ -45,10 +48,20 @@ Route::get('gastronomicos/{id}/menus', [GastronomicoMenuController::class, 'inde
 Route::post('gastronomicos/{id}/menus', [GastronomicoMenuController::class, 'store']);
 Route::delete('gastronomicos/{id}/menus/{menuId}', [GastronomicoMenuController::class, 'destroy']);
 
+// Alojamiento nested routes
+Route::get('alojamientos/{id}/tipos', [AlojamientoController::class, 'tipos']);
+Route::post('alojamientos/{id}/tipos', [AlojamientoController::class, 'addTipo']);
+Route::delete('alojamientos/{id}/tipos/{tipoId}', [AlojamientoController::class, 'removeTipo']);
+
 // Protected routes (require token)
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', function (Request $request) {
         return $request->user();
+    });
+
+    // Admin routes
+    Route::middleware(AdminMiddleware::class)->group(function () { //  FQCN del middleware
+        Route::get('admin/eventos', [EventoController::class, 'adminIndex']);
     });
 });

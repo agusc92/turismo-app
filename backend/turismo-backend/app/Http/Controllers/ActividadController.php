@@ -10,12 +10,12 @@ class ActividadController extends Controller
 {
     #[OA\Get(
         path: "/api/actividades",
-        summary: "Obtener todas las actividades",
+        summary: "Obtener todas las actividades habilitadas",
         tags: ["Actividades"],
         responses: [
             new OA\Response(
                 response: 200,
-                description: "Lista de actividades",
+                description: "Lista de actividades habilitadas",
                 content: new OA\JsonContent(
                     type: "array",
                     items: new OA\Items(ref: "#/components/schemas/Actividad")
@@ -29,7 +29,7 @@ class ActividadController extends Controller
     )]
     public function index()
     {
-        return response()->json(Actividad::with('tipo')->get());
+        return response()->json(Actividad::with('tipo')->where('habilitado', true)->get());
     }
 
     #[OA\Get(
@@ -103,6 +103,7 @@ class ActividadController extends Controller
             'longitud' => 'nullable|numeric',
             'tipo_id' => 'required|exists:tipos,id',
             'dias_y_horarios' => 'nullable|string',
+            'habilitado' => 'nullable|boolean',
         ]);
 
         $actividad = Actividad::create($request->all());
@@ -160,6 +161,7 @@ class ActividadController extends Controller
             'longitud' => 'nullable|numeric',
             'tipo_id' => 'sometimes|required|exists:tipos,id',
             'dias_y_horarios' => 'nullable|string',
+            'habilitado' => 'nullable|boolean',
         ]);
 
         $actividad->update($request->all());

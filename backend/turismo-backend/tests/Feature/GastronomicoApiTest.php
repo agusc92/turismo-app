@@ -18,15 +18,17 @@ class GastronomicoApiTest extends TestCase
      */
     public function test_can_retrieve_list_of_gastronomicos(): void
     {
-        Gastronomico::factory()->count(3)->create();
+        Gastronomico::factory()->count(2)->create(['habilitado' => true]);
+        Gastronomico::factory()->create(['habilitado' => false]); // Un gastronómico deshabilitado
 
         $response = $this->getJson('/api/gastronomicos');
 
         $response->assertStatus(200)
-                 ->assertJsonCount(3)
+                 ->assertJsonCount(2) // Solo 2 habilitados
                  ->assertJsonStructure([
-                     '*' => ['id', 'nombre', 'direccion', 'telefono', 'redesSociales', 'tiendaOnline', 'extras', 'horario', 'imagen', 'latitud', 'longitud', 'created_at', 'updated_at', 'tipo', 'menu', 'menus', 'tipos']
+                     '*' => ['id', 'nombre', 'direccion', 'telefono', 'redesSociales', 'tiendaOnline', 'extras', 'horario', 'imagen', 'latitud', 'longitud', 'habilitado', 'created_at', 'updated_at', 'tipo', 'menu', 'menus', 'tipos']
                  ]);
+        $response->assertJsonMissing(['habilitado' => false]); // Asegura que no hay deshabilitados
     }
 
     /**
@@ -34,7 +36,7 @@ class GastronomicoApiTest extends TestCase
      */
     public function test_can_retrieve_single_gastronomico(): void
     {
-        $gastronomico = Gastronomico::factory()->create();
+        $gastronomico = Gastronomico::factory()->create(['habilitado' => true]);
         $tipo = TipoGastronomico::factory()->create(['tipo' => 'Restaurante']);
         $menu = Menu::factory()->create(['tipo' => 'Vegano']);
         $gastronomico->tipos()->attach($tipo->id);
@@ -49,6 +51,7 @@ class GastronomicoApiTest extends TestCase
                      'imagen' => $gastronomico->imagen,
                      'latitud' => $gastronomico->latitud,
                      'longitud' => $gastronomico->longitud,
+                     'habilitado' => true,
                  ])
                  ->assertJsonFragment(['tipo' => 'Restaurante'])
                  ->assertJsonFragment(['tipo' => 'Vegano']);
@@ -73,6 +76,7 @@ class GastronomicoApiTest extends TestCase
             'imagen' => 'http://nuevo.com/imagen.jpg',
             'latitud' => -38.555,
             'longitud' => -58.777,
+            'habilitado' => true,
             'tipo_ids' => [$tipo->id],
             'menu_ids' => [$menu->id],
         ];
@@ -85,6 +89,7 @@ class GastronomicoApiTest extends TestCase
                      'imagen' => 'http://nuevo.com/imagen.jpg',
                      'latitud' => -38.555,
                      'longitud' => -58.777,
+                     'habilitado' => true,
                  ]);
 
         $this->assertDatabaseHas('gastronomicos', [
@@ -92,6 +97,7 @@ class GastronomicoApiTest extends TestCase
             'imagen' => 'http://nuevo.com/imagen.jpg',
             'latitud' => -38.555,
             'longitud' => -58.777,
+            'habilitado' => true,
         ]);
         $this->assertDatabaseHas('gastronomico_tipo_gastronomico', ['gastronomico_id' => $response->json('id'), 'tipo_gastronomico_id' => $tipo->id]);
         $this->assertDatabaseHas('gastronomico_menus', ['gastronomico_id' => $response->json('id'), 'menu_id' => $menu->id]);
@@ -102,7 +108,7 @@ class GastronomicoApiTest extends TestCase
      */
     public function test_can_update_gastronomico(): void
     {
-        $gastronomico = Gastronomico::factory()->create();
+        $gastronomico = Gastronomico::factory()->create(['habilitado' => true]);
         $tipo1 = TipoGastronomico::factory()->create();
         $tipo2 = TipoGastronomico::factory()->create();
         $menu1 = Menu::factory()->create();
@@ -115,6 +121,7 @@ class GastronomicoApiTest extends TestCase
             'imagen' => 'http://actualizada.com/imagen.jpg',
             'latitud' => -38.666,
             'longitud' => -58.888,
+            'habilitado' => false,
             'tipo_ids' => [$tipo2->id], // Sincronizar a un nuevo tipo
             'menu_ids' => [], // Eliminar menús
         ];
@@ -127,6 +134,7 @@ class GastronomicoApiTest extends TestCase
                      'imagen' => 'http://actualizada.com/imagen.jpg',
                      'latitud' => -38.666,
                      'longitud' => -58.888,
+                     'habilitado' => false,
                  ]);
 
         $this->assertDatabaseHas('gastronomicos', [
@@ -135,6 +143,7 @@ class GastronomicoApiTest extends TestCase
             'imagen' => 'http://actualizada.com/imagen.jpg',
             'latitud' => -38.666,
             'longitud' => -58.888,
+            'habilitado' => false,
         ]);
         $this->assertDatabaseHas('gastronomico_tipo_gastronomico', ['gastronomico_id' => $gastronomico->id, 'tipo_gastronomico_id' => $tipo2->id]);
         $this->assertDatabaseMissing('gastronomico_tipo_gastronomico', ['gastronomico_id' => $gastronomico->id, 'tipo_gastronomico_id' => $tipo1->id]);

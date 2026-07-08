@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Evento;
+use App\Models\User; // Necesario para crear usuarios
 
 class EventoApiTest extends TestCase
 {
@@ -16,15 +17,17 @@ class EventoApiTest extends TestCase
      */
     public function test_can_retrieve_list_of_eventos(): void
     {
-        Evento::factory()->count(3)->create();
+        Evento::factory()->count(2)->create(['habilitado' => true]);
+        Evento::factory()->create(['habilitado' => false]); // Un evento deshabilitado
 
         $response = $this->getJson('/api/eventos');
 
         $response->assertStatus(200)
-                 ->assertJsonCount(3)
+                 ->assertJsonCount(2) // Solo 2 habilitados
                  ->assertJsonStructure([
-                     '*' => ['id', 'nombre', 'direccion', 'descripcion', 'fecha', 'lugar', 'imagen', 'destacado', 'latitud', 'longitud', 'created_at', 'updated_at']
+                     '*' => ['id', 'nombre', 'direccion', 'descripcion', 'fecha', 'lugar', 'imagen', 'destacado', 'latitud', 'longitud', 'habilitado', 'created_at', 'updated_at']
                  ]);
+        $response->assertJsonMissing(['habilitado' => false]); // Asegura que no hay deshabilitados
     }
 
     /**
@@ -32,7 +35,7 @@ class EventoApiTest extends TestCase
      */
     public function test_can_retrieve_single_evento(): void
     {
-        $evento = Evento::factory()->create();
+        $evento = Evento::factory()->create(['habilitado' => true]);
 
         $response = $this->getJson('/api/eventos/' . $evento->id);
 
@@ -42,6 +45,7 @@ class EventoApiTest extends TestCase
                      'nombre' => $evento->nombre,
                      'latitud' => $evento->latitud,
                      'longitud' => $evento->longitud,
+                     'habilitado' => true,
                  ]);
     }
 
@@ -60,6 +64,7 @@ class EventoApiTest extends TestCase
             'destacado' => true,
             'latitud' => -38.555,
             'longitud' => -58.777,
+            'habilitado' => true,
         ];
 
         $response = $this->postJson('/api/eventos', $eventoData);
@@ -69,12 +74,14 @@ class EventoApiTest extends TestCase
                      'nombre' => 'Nuevo Evento',
                      'latitud' => -38.555,
                      'longitud' => -58.777,
+                     'habilitado' => true,
                  ]);
 
         $this->assertDatabaseHas('eventos', [
             'nombre' => 'Nuevo Evento',
             'latitud' => -38.555,
             'longitud' => -58.777,
+            'habilitado' => true,
         ]);
     }
 
@@ -83,7 +90,7 @@ class EventoApiTest extends TestCase
      */
     public function test_can_update_evento(): void
     {
-        $evento = Evento::factory()->create();
+        $evento = Evento::factory()->create(['habilitado' => true]);
 
         $updatedData = [
             'nombre' => 'Evento Actualizado',
@@ -91,6 +98,7 @@ class EventoApiTest extends TestCase
             'destacado' => false,
             'latitud' => -38.666,
             'longitud' => -58.888,
+            'habilitado' => false,
         ];
 
         $response = $this->putJson('/api/eventos/' . $evento->id, $updatedData);
@@ -100,6 +108,7 @@ class EventoApiTest extends TestCase
                      'nombre' => 'Evento Actualizado',
                      'latitud' => -38.666,
                      'longitud' => -58.888,
+                     'habilitado' => false,
                  ]);
 
         $this->assertDatabaseHas('eventos', [
@@ -107,6 +116,7 @@ class EventoApiTest extends TestCase
             'nombre' => 'Evento Actualizado',
             'latitud' => -38.666,
             'longitud' => -58.888,
+            'habilitado' => false,
         ]);
     }
 
@@ -141,18 +151,49 @@ class EventoApiTest extends TestCase
      */
     public function test_can_retrieve_destacados_eventos(): void
     {
-        Evento::factory()->create(['destacado' => true]);
-        Evento::factory()->create(['destacado' => true]);
-        Evento::factory()->create(['destacado' => false]);
+        Evento::factory()->create(['destacado' => true, 'habilitado' => true]);
+        Evento::factory()->create(['destacado' => true, 'habilitado' => false]); // Destacado pero deshabilitado
+        Evento::factory()->create(['destacado' => false, 'habilitado' => true]);
 
         $response = $this->getJson('/api/eventos/destacados');
 
         $response->assertStatus(200)
-                 ->assertJsonCount(2)
+                 ->assertJsonCount(1) // Solo 1 destacado y habilitado
                  ->assertJsonStructure([
-                     '*' => ['id', 'nombre', 'destacado']
+                     '*' => ['id', 'nombre', 'destacado', 'habilitado']
                  ]);
         $this->assertTrue($response->json()[0]['destacado']);
-        $this->assertTrue($response->json()[1]['destacado']);
+        $this->assertTrue($response->json()[0]['habilitado']);
+    }
+
+    /**
+     * Test that an unauthenticated user cannot retrieve admin events.
+     */
+    public function test_unauthenticated_user_cannot_retrieve_admin_events(): void
+    {
+        $responseGuest = $this->getJson('/api/admin/eventos');
+        $responseGuest->assertStatus(401); // No autenticado
+    }
+
+    /**
+     * Test that admin can retrieve all events.
+     */
+    public function test_admin_can_retrieve_all_events(): void
+    {
+        $adminUser = User::factory()->create(['rol' => 'admin']);
+        $normalUser = User::factory()->create(['rol' => 'turista']);
+
+        Evento::factory()->count(2)->create(['habilitado' => true]);
+        Evento::factory()->create(['habilitado' => false]); // Un evento deshabilitado
+        Evento::factory()->create(['fecha' => '2020-01-01 00:00:00']); // Un evento pasado
+
+        // Admin puede ver todos los eventos
+        $responseAdmin = $this->actingAs($adminUser)->getJson('/api/admin/eventos');
+        $responseAdmin->assertStatus(200)
+                      ->assertJsonCount(4); // 2 habilitados + 1 deshabilitado + 1 pasado
+
+        // Usuario normal no puede acceder
+        $responseNormal = $this->actingAs($normalUser)->getJson('/api/admin/eventos');
+        $responseNormal->assertStatus(403); // Acceso denegado
     }
 }

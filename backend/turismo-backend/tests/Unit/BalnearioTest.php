@@ -4,9 +4,12 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Models\Balneario;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class BalnearioTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * Test that a Balneario instance can be created and has correct attributes.
      */
@@ -24,6 +27,7 @@ class BalnearioTest extends TestCase
             'imagen' => 'http://imagen.com/balneario.jpg',
             'latitud' => -38.555,
             'longitud' => -58.777,
+            'habilitado' => true,
         ];
 
         $balneario = new Balneario();
@@ -40,6 +44,7 @@ class BalnearioTest extends TestCase
         $this->assertEquals($data['imagen'], $balneario->imagen);
         $this->assertEquals($data['latitud'], $balneario->latitud);
         $this->assertEquals($data['longitud'], $balneario->longitud);
+        $this->assertEquals($data['habilitado'], $balneario->habilitado);
         $this->assertNull($balneario->id);
     }
 
@@ -57,7 +62,8 @@ class BalnearioTest extends TestCase
      */
     public function test_latitud_attribute_is_float(): void
     {
-        $balneario = new Balneario();
+        // Crear el modelo a través del factory para asegurar que los casts se apliquen correctamente
+        $balneario = Balneario::factory()->make();
 
         $balneario->latitud = "-38.555";
         $this->assertIsFloat($balneario->latitud);
@@ -74,7 +80,8 @@ class BalnearioTest extends TestCase
      */
     public function test_longitud_attribute_is_float(): void
     {
-        $balneario = new Balneario();
+        // Crear el modelo a través del factory para asegurar que los casts se apliquen correctamente
+        $balneario = Balneario::factory()->make();
 
         $balneario->longitud = "-58.777";
         $this->assertIsFloat($balneario->longitud);
@@ -84,5 +91,34 @@ class BalnearioTest extends TestCase
         $this->assertIsFloat($balneario->longitud);
         // Laravel y la DB pueden redondear, así que comparamos con un delta
         $this->assertEqualsWithDelta(-58.9876543, $balneario->longitud, 0.0000001);
+    }
+
+    /**
+     * Test that 'habilitado' attribute is correctly cast to boolean.
+     */
+    public function test_habilitado_attribute_is_boolean(): void
+    {
+        // Crear el modelo y luego refrescarlo para asegurar que los casts se apliquen correctamente
+        $balneario = Balneario::factory()->create(['habilitado' => true])->refresh();
+
+        // Test true values
+        $balneario->habilitado = '1';
+        $this->assertTrue($balneario->habilitado);
+        $balneario->habilitado = 'true';
+        $this->assertTrue($balneario->habilitado);
+        $balneario->habilitado = 1;
+        $this->assertTrue($balneario->habilitado);
+
+        // Test false values
+        $balneario->habilitado = '0';
+        $this->assertFalse($balneario->habilitado);
+        $balneario->habilitado = 'false';
+        $this->assertFalse($balneario->habilitado);
+        $balneario->habilitado = 0;
+        $this->assertFalse($balneario->habilitado);
+        $balneario->habilitado = null;
+        $this->assertFalse($balneario->habilitado); // Laravel casts null to false for boolean
+        $balneario->habilitado = '';
+        $this->assertFalse($balneario->habilitado);
     }
 }

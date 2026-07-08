@@ -80,4 +80,95 @@ Los diagramas visuales son una parte fundamental de la documentación de la arqu
 -   **Diagrama de Arquitectura/Componentes**: Ilustra la interconexión de los servicios del backend.
 -   **Diagrama de clases**: Muestra la conexión entre todas las tablas del modelo
 
+## 7. Variables de Entorno Clave
+
+Las variables de entorno son cruciales para configurar la aplicación en diferentes entornos (desarrollo, producción, testing). Se definen en el archivo `.env` (basado en `.env.example`) y son accedidas a través de la función `env()`. A continuación, se listan las más relevantes:
+
+*   **`APP_NAME`**: Nombre de la aplicación. Usado en notificaciones y logs.
+    *   `Por defecto`: `Laravel`
+*   **`APP_ENV`**: Entorno actual de la aplicación (ej. `local`, `production`, `testing`). Afecta la configuración de servicios y el manejo de errores.
+    *   `Por defecto`: `local`
+*   **`APP_KEY`**: Clave de aplicación única para cifrado. **Debe ser generada y mantenerse secreta.**
+    *   `Ejemplo`: `base64:ffkz1Jg18W0qBkxaBW+Y/dfl2cceRIP2tb5YEAnuroQ=`
+*   **`APP_DEBUG`**: Habilita o deshabilita el modo de depuración. `true` en desarrollo para ver errores detallados, `false` en producción por seguridad.
+    *   `Por defecto`: `true`
+*   **`APP_URL`**: URL base de la aplicación. Importante para la generación de URLs en la consola y en la API.
+    *   `Por defecto`: `http://localhost`
+*   **`DB_CONNECTION`**: Tipo de conexión a la base de datos.
+    *   `Por defecto`: `mysql`
+*   **`DB_HOST`**: Host de la base de datos.
+    *   `Por defecto`: `mysql` (nombre del servicio Docker)
+*   **`DB_PORT`**: Puerto de la base de datos.
+    *   `Por defecto`: `3306`
+*   **`DB_DATABASE`**: Nombre de la base de datos.
+    *   `Por defecto`: `turismo_db`
+*   **`DB_USERNAME`**: Usuario de la base de datos.
+    *   `Por defecto`: `turismo_user`
+*   **`DB_PASSWORD`**: Contraseña del usuario de la base de datos.
+    *   `Por defecto`: `turismo_pass`
+*   **`SANCTUM_STATEFUL_DOMAINS`**: Dominios desde los cuales se aceptarán cookies de autenticación stateful para Laravel Sanctum (útil para SPAs).
+    *   `Ejemplo`: `localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1`
+*   **`MAIL_MAILER`**: Driver de correo electrónico (ej. `smtp`, `sendmail`, `log`, `array`).
+    *   `Por defecto`: `log`
+*   **`MAIL_HOST`**: Host del servidor SMTP.
+    *   `Por defecto`: `127.0.0.1`
+*   **`MAIL_PORT`**: Puerto del servidor SMTP.
+    *   `Por defecto`: `2525`
+*   **`MAIL_USERNAME`**: Usuario para autenticación SMTP.
+*   **`MAIL_PASSWORD`**: Contraseña para autenticación SMTP.
+*   **`MAIL_FROM_ADDRESS`**: Dirección de correo electrónico "De" por defecto.
+*   **`AWS_ACCESS_KEY_ID`**: Clave de acceso de AWS (si se utilizan servicios S3, etc.).
+*   **`AWS_SECRET_ACCESS_KEY`**: Clave secreta de AWS.
+*   **`AWS_DEFAULT_REGION`**: Región por defecto de AWS.
+*   **`AWS_BUCKET`**: Nombre del bucket S3 de AWS.
+*   **`BCRYPT_ROUNDS`**: Número de rondas para el algoritmo de hashing Bcrypt. Un valor más alto aumenta la seguridad pero también el tiempo de procesamiento.
+    *   `Por defecto`: `12`
+*   **`LOG_CHANNEL`**: Canal de log por defecto.
+    *   `Por defecto`: `stack`
+
+## 8. Consideraciones de Seguridad
+
+La seguridad es un pilar fundamental en el desarrollo del backend. Se han implementado diversas medidas y se siguen las mejores prácticas de Laravel para proteger la aplicación y los datos de los usuarios.
+
+### Autenticación y Autorización
+-   **Laravel Sanctum**: Utilizado para la autenticación de la API. Permite la emisión de tokens API para la autenticación de solicitudes y también soporta la autenticación basada en cookies/sesiones para Single Page Applications (SPAs) a través de `SANCTUM_STATEFUL_DOMAINS`.
+-   **Hashing de Contraseñas**: Todas las contraseñas de usuario se almacenan de forma segura utilizando el algoritmo Bcrypt, con un número de rondas configurable (`BCRYPT_ROUNDS`) para aumentar la resistencia a ataques de fuerza bruta.
+-   **Middleware de Autorización**: Se utiliza middleware personalizado, como `AdminMiddleware`, para restringir el acceso a ciertas rutas o funcionalidades solo a usuarios con roles específicos (ej. administradores).
+
+### Validación de Entrada
+-   **Form Requests**: Se recomienda encarecidamente el uso de Form Requests para encapsular y centralizar la lógica de validación de las solicitudes HTTP. Esto asegura que solo los datos válidos y esperados lleguen a la lógica de negocio de los controladores.
+
+### Protección contra Vulnerabilidades Comunes
+Laravel, por diseño, proporciona protección contra muchas vulnerabilidades web comunes:
+-   **Inyección SQL**: Eloquent ORM y las consultas de base de datos de Laravel utilizan PDO binding para proteger contra la inyección SQL.
+-   **Cross-Site Scripting (XSS)**: Laravel escapa automáticamente el contenido en las vistas Blade, y se debe asegurar que cualquier salida de datos en la API también se maneje de forma segura.
+-   **Cross-Site Request Forgery (CSRF)**: Aunque principalmente relevante para aplicaciones web basadas en sesión, Laravel incluye protección CSRF. Para APIs puras con tokens, esto es menos crítico, pero `SANCTUM_STATEFUL_DOMAINS` lo considera para SPAs.
+
+## 9. Logging y Manejo de Errores
+
+Una gestión robusta de logs y errores es vital para la depuración, el monitoreo y la estabilidad de la aplicación.
+
+### Logging
+-   **Configuración**: El sistema de logging de Laravel se configura a través de `config/logging.php`. Por defecto, utiliza un canal `stack` que puede enviar logs a múltiples destinos (ej. `single` para un archivo, `daily` para archivos diarios, `syslog`, `slack`).
+-   **Canales**: El canal por defecto se define con la variable de entorno `LOG_CHANNEL`. En desarrollo, `single` o `daily` son comunes.
+-   **Nivel de Log**: La variable `LOG_LEVEL` en `.env` controla la verbosidad de los logs (ej. `debug`, `info`, `warning`, `error`).
+
+### Manejo de Errores
+-   **Excepciones**: Laravel centraliza el manejo de excepciones en `app/Exceptions/Handler.php`. Aquí se pueden personalizar cómo se reportan y renderizan las diferentes excepciones.
+-   **Modo Debug**: La variable `APP_DEBUG` en `.env` controla si los errores se muestran con detalles completos (útil en desarrollo) o como una página de error genérica (esencial en producción para evitar la exposición de información sensible).
+
+## 10. Estrategia de Despliegue (Alto Nivel)
+
+El proyecto está diseñado para ser desplegado utilizando contenedores Docker, lo que facilita la consistencia entre entornos de desarrollo y producción.
+
+-   **Contenedorización**: El uso de `docker-compose.yml` define los servicios necesarios (Nginx, PHP-FPM, MySQL, phpMyAdmin), permitiendo un despliegue portable y escalable.
+-   **CI/CD (Consideraciones)**: Aunque no se define un pipeline de CI/CD explícito en la documentación actual, la naturaleza contenedorizada del proyecto facilita su integración con herramientas de Integración Continua/Despliegue Continuo para automatizar pruebas, construcción de imágenes y despliegues.
+-   **Escalabilidad**: La arquitectura basada en microservicios (aunque aquí es un monolito dentro de Docker) y la contenedorización permiten escalar servicios individualmente si fuera necesario en un entorno de producción.
+
+## 11. Middleware Personalizado
+
+El proyecto utiliza middleware para interceptar y procesar solicitudes HTTP. Además de los middleware estándar de Laravel, se han implementado algunos personalizados para lógica de negocio específica.
+
+-   **`AdminMiddleware`**: Ubicado en `app/Http/Middleware/AdminMiddleware.php`. Este middleware se encarga de verificar si el usuario autenticado tiene el rol de "administrador" antes de permitir el acceso a ciertas rutas o grupos de rutas. Si el usuario no es administrador, se deniega el acceso, típicamente con una respuesta de error 403 (Forbidden).
+
 ---

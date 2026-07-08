@@ -70,6 +70,7 @@ class ImportBalneariosCommand extends Command
             $imagen = $row['imagen'] ?? null;
             $latitud = isset($row['latitud']) && is_numeric($row['latitud']) ? (float)$row['latitud'] : null;
             $longitud = isset($row['longitud']) && is_numeric($row['longitud']) ? (float)$row['longitud'] : null;
+            $habilitado = filter_var($row['habilitado'] ?? true, FILTER_VALIDATE_BOOLEAN);
 
             try {
                 Balneario::create([
@@ -84,6 +85,7 @@ class ImportBalneariosCommand extends Command
                     'imagen' => $imagen,
                     'latitud' => $latitud,
                     'longitud' => $longitud,
+                    'habilitado' => $habilitado,
                 ]);
                 $importedCount++;
             } catch (\Exception $e) {

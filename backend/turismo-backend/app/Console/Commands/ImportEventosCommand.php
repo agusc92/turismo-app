@@ -64,7 +64,7 @@ class ImportEventosCommand extends Command
             $fecha = null;
             if (isset($row['fecha']) && !empty($row['fecha'])) {
                 try {
-                    $fecha = Carbon::createFromFormat('d/m/Y', $row['fecha'])->format('Y-m-d H:i:s'); // Aseguramos formato datetime
+                    $fecha = Carbon::createFromFormat('d/m/Y', $row['fecha'])->format('Y-m-d H:i:s');
                 } catch (\Exception $e) {
                     $this->warn("No se pudo parsear la fecha '{$row['fecha']}' en la línea: " . $line . " - " . $e->getMessage());
                 }
@@ -72,6 +72,7 @@ class ImportEventosCommand extends Command
 
             $latitud = isset($row['latitud']) && is_numeric($row['latitud']) ? (float)$row['latitud'] : null;
             $longitud = isset($row['longitud']) && is_numeric($row['longitud']) ? (float)$row['longitud'] : null;
+            $habilitado = filter_var($row['habilitado'] ?? true, FILTER_VALIDATE_BOOLEAN);
 
             try {
                 Evento::create([
@@ -81,9 +82,10 @@ class ImportEventosCommand extends Command
                     'fecha' => $fecha,
                     'lugar' => $row['lugar'] ?? null,
                     'imagen' => $row['imagen'] ?? null,
-                    'destacado' => filter_var($row['destacado'] ?? false, FILTER_VALIDATE_BOOLEAN), // Asegurar que destacado sea booleano
+                    'destacado' => filter_var($row['destacado'] ?? false, FILTER_VALIDATE_BOOLEAN),
                     'latitud' => $latitud,
                     'longitud' => $longitud,
+                    'habilitado' => $habilitado,
                 ]);
                 $importedCount++;
             } catch (\Exception $e) {

@@ -32,6 +32,7 @@ class GastronomicoFactory extends Factory
             'imagen' => $this->faker->imageUrl(),
             'latitud' => $this->faker->latitude(-38.7, -38.5),
             'longitud' => $this->faker->longitude(-58.9, -58.6),
+            'habilitado' => $this->faker->boolean(),
         ];
     }
 }
