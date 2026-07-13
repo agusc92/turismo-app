@@ -30,6 +30,7 @@
                     <th>Dirección</th>
                     <th>Teléfono</th>
                     <th>Email</th>
+                    <th>Habilitado</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -54,6 +55,13 @@
                     <td class="muted">{{ $c->telefono ?: '—' }}</td>
                     <td class="muted">{{ $c->mail ?: '—' }}</td>
                     <td>
+                        @if($c->habilitado)
+                            <span class="badge badge-green">✔️</span>
+                        @else
+                            <span class="badge badge-red">❌</span>
+                        @endif
+                    </td>
+                    <td>
                         <div style="display:flex;gap:6px">
                             <button class="btn btn-success btn-sm" wire:click="openEdit({{ $c->id }})">✏️ Editar</button>
                             <button class="btn btn-danger btn-sm" wire:click="confirmDelete({{ $c->id }}, '{{ addslashes($c->nombre) }}')">🗑️</button>
@@ -62,7 +70,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6">
+                    <td colspan="7">
                         <div class="empty-state">
                             <div class="empty-icon">🏢</div>
                             <div class="empty-text">No hay complejos{{ $search ? ' que coincidan con la búsqueda' : '' }}</div>
@@ -100,6 +108,15 @@
                     <label>Dirección *</label>
                     <input type="text" wire:model="direccion" placeholder="Ej: Av. Costanera 1500">
                     @error('direccion') <span class="error-msg">{{ $message }}</span> @enderror
+                </div>
+                <div class="form-group span-2">
+                    <label>¿Está habilitado?</label>
+                    <div class="toggle-wrap">
+                        <label class="toggle">
+                            <input type="checkbox" wire:model="habilitado">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Email</label>

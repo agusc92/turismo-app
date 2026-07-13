@@ -28,6 +28,7 @@ class ComplejoManager extends Component
     public string $imagen       = '';
     public string $latitud      = '';
     public string $longitud     = '';
+    public bool   $habilitado   = false;
 
     public ?int $confirmId   = null;
     public string $confirmName = '';
@@ -49,6 +50,7 @@ class ComplejoManager extends Component
             'imagen'       => 'nullable|url|max:500',
             'latitud'      => 'nullable|numeric',
             'longitud'     => 'nullable|numeric',
+            'habilitado'   => 'boolean',
         ];
     }
 
@@ -56,7 +58,7 @@ class ComplejoManager extends Component
 
     public function openCreate(): void
     {
-        $this->reset(['nombre','direccion','mail','redesSociales','facebook','instagram','telefono','servicio','adicional','imagen','latitud','longitud','editingId']);
+        $this->reset(['nombre','direccion','mail','redesSociales','facebook','instagram','telefono','servicio','adicional','imagen','latitud','longitud','editingId','habilitado']);
         $this->isEditing = false; $this->showModal = true; $this->resetValidation();
     }
 
@@ -89,6 +91,7 @@ class ComplejoManager extends Component
         $this->imagen       = $c->imagen ?? '';
         $this->latitud      = $c->latitud ?? '';
         $this->longitud     = $c->longitud ?? '';
+        $this->habilitado   = (bool)$c->habilitado;
         $this->isEditing    = true; $this->showModal = true; $this->resetValidation();
     }
 

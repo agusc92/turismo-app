@@ -559,6 +559,9 @@
                 <a href="{{ route('admin.menus') }}" class="nav-item {{ request()->routeIs('admin.menus') ? 'active' : '' }}">
                     <span class="nav-icon">📋</span> Menús
                 </a>
+                <a href="{{ route('admin.tipo-alojamiento') }}" class="nav-item {{ request()->routeIs('admin.tipo-alojamiento') ? 'active' : '' }}">
+                    <span class="nav-icon">🏨</span> Tipos Alojamiento
+                </a>
             </div>
 
             <div class="nav-section">

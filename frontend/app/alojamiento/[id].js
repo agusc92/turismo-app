@@ -33,6 +33,8 @@ export default function AlojamientoDetail() {
 
     const itemId = item.id || item.idAlojamiento;
     const imageSource = getResourceImage('alojamiento', item);
+    const tiposArr = Array.isArray(item.tipos_alojamiento) ? item.tipos_alojamiento : (item.tipos_alojamiento ? [item.tipos_alojamiento] : []);
+    const tipos = tiposArr.map(t => (t.tipo || t).charAt(0).toUpperCase() + (t.tipo || t).slice(1)).join(' / ');
 
     return (
         <View style={styles.container}>
@@ -49,7 +51,7 @@ export default function AlojamientoDetail() {
 
                 <View style={styles.contentContainer}>
                     <Text style={styles.title}>{item.nombre}</Text>
-                    <Text style={styles.subtitle}>{item.tipo}</Text>
+                    {tipos ? <Text style={styles.subtitle}>{tipos}</Text> : null}
 
                     <SeccionDetalles titulo="Periodo de Apertura" subtitulo={item.periodoApertura} />
 

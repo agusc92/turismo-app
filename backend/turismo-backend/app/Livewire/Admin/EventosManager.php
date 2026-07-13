@@ -29,6 +29,7 @@ class EventosManager extends Component
     public bool   $destacado   = false;
     public string $latitud     = '';
     public string $longitud    = '';
+    public bool   $habilitado  = true;
 
     // Confirm
     public ?int    $confirmId   = null;
@@ -50,6 +51,7 @@ class EventosManager extends Component
             'destacado' => 'boolean',
             'latitud'   => 'nullable|numeric',
             'longitud'  => 'nullable|numeric',
+            'habilitado' => 'boolean',
         ];
     }
 
@@ -60,7 +62,7 @@ class EventosManager extends Component
 
     public function openCreate(): void
     {
-        $this->reset(['nombre','direccion','descripcion','fecha','lugar','imagen','destacado','latitud','longitud','editingId']);
+        $this->reset(['nombre','direccion','descripcion','fecha','lugar','imagen','destacado','latitud','longitud','habilitado','editingId']);
         $this->isEditing = false;
         $this->showModal = true;
         $this->resetValidation();
@@ -79,6 +81,7 @@ class EventosManager extends Component
         $this->destacado   = (bool) $evento->destacado;
         $this->latitud     = $evento->latitud ?? '';
         $this->longitud    = $evento->longitud ?? '';
+        $this->habilitado  = (bool) $evento->habilitado;
         $this->isEditing   = true;
         $this->showModal   = true;
         $this->resetValidation();

@@ -32,6 +32,7 @@ class GastronomicoManager extends Component
     public string $longitud      = '';
     public array  $tipo_ids      = [];
     public array  $menu_ids      = [];
+    public bool   $habilitado    = false;
 
     public ?int $confirmId   = null;
     public string $confirmName = '';
@@ -57,6 +58,7 @@ class GastronomicoManager extends Component
             'tipo_ids.*'   => 'exists:tipo_gastronomicos,id',
             'menu_ids'     => 'required|array|min:1',
             'menu_ids.*'   => 'exists:menus,id',
+            'habilitado'   => 'boolean',
         ];
     }
 
@@ -76,7 +78,7 @@ class GastronomicoManager extends Component
 
     public function openCreate(): void
     {
-        $this->reset(['nombre','direccion','telefono','redesSociales','facebook','instagram','horario','tiendaOnline','extras','imagen','latitud','longitud','menu_ids','editingId']);
+        $this->reset(['nombre','direccion','telefono','redesSociales','facebook','instagram','horario','tiendaOnline','extras','imagen','latitud','longitud','menu_ids','editingId','habilitado']);
         $this->tipo_ids = [null];
         $this->menu_ids = [];
         $this->isEditing = false; $this->showModal = true; $this->resetValidation();
@@ -113,6 +115,7 @@ class GastronomicoManager extends Component
         $this->longitud     = $g->longitud ?? '';
         $this->tipo_ids     = $g->tipos->pluck('id')->map(fn($i)=>(string)$i)->toArray();
         $this->menu_ids     = $g->menus->pluck('id')->map(fn($i)=>(string)$i)->toArray();
+        $this->habilitado   = (bool)$g->habilitado;
         $this->isEditing    = true; $this->showModal = true; $this->resetValidation();
     }
 

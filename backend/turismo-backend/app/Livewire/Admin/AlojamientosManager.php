@@ -4,7 +4,7 @@ namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Tipo;
+use App\Models\TipoAlojamiento;
 use App\Models\Alojamiento;
 
 class AlojamientosManager extends Component
@@ -26,10 +26,11 @@ class AlojamientosManager extends Component
     public string $mail           = '';
     public bool   $mascotas       = false;
     public string $periodoApertura = '';
-    public string $tipo           = '';
+    public array $tipo_ids = [];
     public string $imagen         = '';
     public string $latitud        = '';
     public string $longitud       = '';
+    public bool   $habilitado       = false;
 
     public ?int $confirmId   = null;
     public string $confirmName = '';
@@ -41,7 +42,8 @@ class AlojamientosManager extends Component
         return [
             'nombre'         => 'required|string|max:255',
             'direccion'      => 'required|string|max:255',
-            'tipo'           => 'required|string|max:100',
+            'tipo_ids'       => 'required|array|min:1',
+            'tipo_ids.*'     => 'exists:tipo_alojamientos,id',
             'mascotas'       => 'boolean',
             'telefono'       => 'nullable|string|max:50',
             'facebook'       => 'nullable|url|max:500',
@@ -52,6 +54,7 @@ class AlojamientosManager extends Component
             'imagen'         => 'nullable|url|max:500',
             'latitud'        => 'nullable|numeric',
             'longitud'       => 'nullable|numeric',
+            'habilitado'     => 'boolean',
         ];
     }
 
@@ -59,13 +62,17 @@ class AlojamientosManager extends Component
 
     public function openCreate(): void
     {
-        $this->reset(['nombre','direccion','telefono','facebook','instagram','paginaWeb','mail','mascotas','periodoApertura','tipo','imagen','latitud','longitud','editingId']);
-        $this->isEditing = false; $this->showModal = true; $this->resetValidation();
+        $this->reset(['nombre','direccion','telefono','facebook','instagram','paginaWeb','mail','mascotas','periodoApertura','tipo_ids','imagen','latitud','longitud','habilitado','editingId']);
+        $this->tipo_ids = [null]; // Inicializa con un selector vacío
+        $this->isEditing = false; 
+        $this->showModal = true; 
+        $this->resetValidation();
     }
 
     public function openEdit(int $id): void
     {
-        $a = Alojamiento::findOrFail($id);
+        // Cargamos el alojamiento incluyendo sus tipos
+        $a = Alojamiento::with('tiposAlojamiento')->findOrFail($id);
         $this->editingId      = $a->id;
         $this->nombre         = $a->nombre;
         $this->direccion      = $a->direccion;
@@ -90,16 +97,27 @@ class AlojamientosManager extends Component
         $this->mail           = $a->mail ?? '';
         $this->mascotas       = (bool)$a->mascotas;
         $this->periodoApertura = $a->periodoApertura ?? '';
-        $this->tipo           = $a->tipo;
+        
+        // Mapemaos los IDs de la relación pivot a nuestro array de strings
+        $this->tipo_ids       = $a->tiposAlojamiento->pluck('id')->map(fn($i)=>(string)$i)->toArray();
+        
         $this->imagen         = $a->imagen ?? '';
         $this->latitud        = $a->latitud ?? '';
         $this->longitud       = $a->longitud ?? '';
+        $this->habilitado       = (bool)$a->habilitado;
         $this->isEditing      = true; $this->showModal = true; $this->resetValidation();
     }
 
     public function save(): void
     {
+        // Limpiamos nulos o campos vacíos antes de la validación
+        $this->tipo_ids = array_filter($this->tipo_ids ?? [], fn($i) => !is_null($i) && $i !== '');
+
         $data = $this->validate();
+        
+        // Aislamos los IDs y los quitamos del array que va directo al update/create del alojamiento
+        $tipo_ids = $this->tipo_ids;
+        unset($data['tipo_ids']);
         // Combine social fields into single string
         $socialParts = [];
         if (!empty($data['instagram'])) {
@@ -121,10 +139,13 @@ class AlojamientosManager extends Component
         unset($data['facebook'], $data['instagram']);
 
         if ($this->isEditing) {
-            Alojamiento::findOrFail($this->editingId)->update($data);
+            $a = Alojamiento::findOrFail($this->editingId);
+            $a->update($data);
+            $a->tiposAlojamiento()->sync($tipo_ids); // Sincroniza la tabla intermedia
             $this->toast('Alojamiento actualizado.');
         } else {
-            Alojamiento::create($data);
+            $a = Alojamiento::create($data);
+            $a->tiposAlojamiento()->sync($tipo_ids); // Sincroniza la tabla intermedia
             $this->toast('Alojamiento creado.');
         }
         $this->showModal = false;
@@ -149,13 +170,34 @@ class AlojamientosManager extends Component
 
     public function render()
     {
-        $alojamientos = Alojamiento::where('nombre', 'like', '%' . $this->search . '%')
-            ->orWhere('tipo', 'like', '%' . $this->search . '%')
+        $alojamientos = Alojamiento::with('tiposAlojamiento')
+            ->where(function($query) {
+                $query->where('nombre', 'like', '%' . $this->search . '%')
+                      ->orWhereHas('tiposAlojamiento', function($q) {
+                          $q->where('tipo', 'like', '%' . $this->search . '%');
+                      });
+            })
             ->orderBy('nombre')
             ->paginate(12);
 
-        $tipos = Tipo::orderBy('tipo')->pluck('tipo');
+        // Cambiamos el pluck() para traer la colección de modelos necesarios para el select del modal
+        $tipos = TipoAlojamiento::orderBy('tipo')->get();
 
         return view('livewire.admin.alojamientos-manager', compact('alojamientos', 'tipos'));
+    }
+
+    public function maybeAddSelect(int $index): void
+    {
+        if (!empty($this->tipo_ids[$index]) && $index === array_key_last($this->tipo_ids)) {
+            $this->tipo_ids[] = null;
+        }
+    }
+
+    public function removeTipoSelect(int $index): void
+    {
+        array_splice($this->tipo_ids, $index, 1);
+        if (empty($this->tipo_ids)) {
+            $this->tipo_ids[] = null;
+        }
     }
 }

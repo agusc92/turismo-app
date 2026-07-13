@@ -20,7 +20,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>Imagen</th><th>Nombre</th><th>Tipo</th><th>Teléfono</th><th>Horarios</th><th>Acciones</th>
+                    <th>Imagen</th><th>Nombre</th><th>Tipo</th><th>Teléfono</th><th>Horarios</th><th>Habilitado</th><th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,6 +45,13 @@
                     </td>
                     <td class="muted">{{ $actividad->telefono ?: '—' }}</td>
                     <td class="muted" style="max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ $actividad->dias_y_horarios ?: '—' }}</td>
+                    <td>
+                        @if($actividad->habilitado)
+                            <span class="badge badge-green">✔️</span>
+                        @else
+                            <span class="badge badge-red">❌</span>
+                        @endif
+                    </td>
                     <td>
                         <div style="display:flex;gap:6px">
                             <button class="btn btn-success btn-sm" wire:click="openEdit({{ $actividad->id }})">✏️ Editar</button>
@@ -94,6 +101,15 @@
                     <label>Dirección *</label>
                     <input type="text" wire:model="direccion" placeholder="Playa Grande">
                     @error('direccion') <span class="error-msg">{{ $message }}</span> @enderror
+                </div>
+                <div class="form-group span-2">
+                    <label>¿Está habilitado?</label>
+                    <div class="toggle-wrap">
+                        <label class="toggle">
+                            <input type="checkbox" wire:model="habilitado">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
                 </div>
                 <div class="form-group span-2">
                     <label>Descripción</label>

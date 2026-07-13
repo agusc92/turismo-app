@@ -31,6 +31,7 @@ class ActividadesManager extends Component
     public string $longitud      = '';
     public string $dias_y_horarios = '';
     public string $tipo_id       = '';
+    public bool   $habilitado       = false;
 
     public ?int $confirmId   = null;
     public string $confirmName = '';
@@ -54,6 +55,7 @@ class ActividadesManager extends Component
             'latitud'         => 'nullable|numeric',
             'longitud'        => 'nullable|numeric',
             'dias_y_horarios' => 'nullable|string|max:255',
+            'habilitado'      => 'boolean',
         ];
     }
 
@@ -61,7 +63,7 @@ class ActividadesManager extends Component
 
     public function openCreate(): void
     {
-        $this->reset(['nombre','direccion','descripcion','redes_sociales','facebook','instagram','web','mail','telefono','imagen','latitud','longitud','dias_y_horarios','tipo_id','editingId']);
+        $this->reset(['nombre','direccion','descripcion','redes_sociales','facebook','instagram','web','mail','telefono','imagen','latitud','longitud','dias_y_horarios','tipo_id','editingId','habilitado']);
         $this->isEditing = false;
         $this->showModal = true;
         $this->resetValidation();
@@ -97,6 +99,7 @@ class ActividadesManager extends Component
         $this->longitud        = $a->longitud ?? '';
         $this->dias_y_horarios = $a->dias_y_horarios ?? '';
         $this->tipo_id         = $a->tipo_id ?? '';
+        $this->habilitado      = (bool)$a->habilitado;
         $this->isEditing       = true;
         $this->showModal       = true;
         $this->resetValidation();
@@ -119,7 +122,7 @@ class ActividadesManager extends Component
         }
         $data['redes_sociales'] = $socialParts ? implode(' | ', $socialParts) : null;
         unset($data['facebook'], $data['instagram']);
-        foreach (['descripcion','redes_sociales','web','mail','telefono','imagen','dias_y_horarios'] as $f)
+        foreach (['descripcion','redes_sociales','web','mail','telefono','imagen','dias_y_horarios','habilitado'] as $f)
             $data[$f] = $data[$f] ?: null;
 
         if ($this->isEditing) {

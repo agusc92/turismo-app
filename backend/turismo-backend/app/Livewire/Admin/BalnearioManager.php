@@ -28,6 +28,7 @@ class BalnearioManager extends Component
     public string $imagen          = '';
     public string $latitud         = '';
     public string $longitud        = '';
+    public bool   $habilitado       = false;
 
     public ?int $confirmId   = null;
     public string $confirmName = '';
@@ -49,6 +50,7 @@ class BalnearioManager extends Component
             'imagen'           => 'nullable|url|max:500',
             'latitud'          => 'nullable|numeric',
             'longitud'         => 'nullable|numeric',
+            'habilitado'       => 'boolean',
         ];
     }
 
@@ -56,7 +58,7 @@ class BalnearioManager extends Component
 
     public function openCreate(): void
     {
-        $this->reset(['nombre','direccion','telefono','facebook','instagram','servicios','mail','accesibilidad','fecha_desde_hasta','imagen','latitud','longitud','editingId']);
+        $this->reset(['nombre','direccion','telefono','facebook','instagram','servicios','mail','accesibilidad','fecha_desde_hasta','imagen','latitud','longitud','habilitado','editingId']);
         $this->isEditing = false; $this->showModal = true; $this->resetValidation();
     }
 
@@ -90,6 +92,7 @@ class BalnearioManager extends Component
         $this->imagen           = $b->imagen ?? '';
         $this->latitud          = $b->latitud ?? '';
         $this->longitud         = $b->longitud ?? '';
+        $this->habilitado       = (bool)$b->habilitado;
         $this->isEditing        = true; $this->showModal = true; $this->resetValidation();
     }
 
@@ -120,6 +123,7 @@ class BalnearioManager extends Component
             'imagen'            => $validated['imagen'] ?: null,
             'latitud'           => $validated['latitud'] ? (float)$validated['latitud'] : null,
             'longitud'          => $validated['longitud'] ? (float)$validated['longitud'] : null,
+            'habilitado'        => $validated['habilitado'] ?? false,
         ];
 
         if ($this->isEditing) {

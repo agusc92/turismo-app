@@ -11,9 +11,10 @@ export default function AlojamientosList() {
     const renderItem = ({ item }) => {
         const itemId = item.id || item.idAlojamiento;
         const imageSource = getResourceImage('alojamiento', item);
+        const tipo = item.tipos_alojamiento ? (Array.isArray(item.tipos_alojamiento) ? item.tipos_alojamiento.map(t => t.tipo).join(' / ') : item.tipos_alojamiento[0].tipo) : '';
 
         return (
-            <ItemCard item={item} subtitle={item.tipo} imageSource={imageSource} link={`/alojamiento/${itemId}`} />
+            <ItemCard item={item} subtitle={tipo} imageSource={imageSource} link={`/alojamiento/${itemId}`} />
         );
     };
 

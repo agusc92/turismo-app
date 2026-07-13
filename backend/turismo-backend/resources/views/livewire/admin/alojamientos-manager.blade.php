@@ -10,7 +10,7 @@
 <div class="card-header" style="background:var(--bg-card);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:20px;">
     <div class="search-bar">
         <span class="search-icon">🔍</span>
-        <input name="search" style="padding-left: 35px;" type="text" wire:model.live.debounce.300ms="search" placeholder="Buscar por nombre…">
+        <input name="search" style="padding-left: 35px;" type="text" wire:model.live.debounce.300ms="search" placeholder="Buscar por nombre, o tipo…">
     </div>
     <button class="btn btn-primary" wire:click="openCreate">＋ Nuevo Alojamiento</button>
 </div>
@@ -19,7 +19,7 @@
     <div class="table-wrap">
         <table>
             <thead>
-                <tr><th>Imagen</th><th>Nombre</th><th>Tipo</th><th>Mascotas</th><th>Período</th><th>Acciones</th></tr>
+                <tr><th>Imagen</th><th>Nombre</th><th>Tipo</th><th>Mascotas</th><th>Período</th><th>Habilitado</th><th>Acciones</th></tr>
             </thead>
             <tbody>
                 @forelse($alojamientos as $item)
@@ -36,7 +36,13 @@
                         <div style="font-weight:600">{{ $item->nombre }}</div>
                         <div class="muted">{{ $item->direccion }}</div>
                     </td>
-                    <td><span class="badge badge-purple">{{ $item->tipo }}</span></td>
+                    <td>
+                        @if($item->tiposAlojamiento->first())
+                            <span class="badge badge-purple">{{ $item->tiposAlojamiento->first()->tipo }}</span>
+                        @else
+                            <span class="muted">—</span>
+                        @endif
+                    </td>
                     <td>
                         @if($item->mascotas)
                             <span class="badge badge-green">🐾 Sí</span>
@@ -45,6 +51,13 @@
                         @endif
                     </td>
                     <td class="muted">{{ $item->periodoApertura ?: '—' }}</td>
+                    <td>
+                        @if($item->habilitado)
+                            <span class="badge badge-green">✔️</span>
+                        @else
+                            <span class="badge badge-red">❌</span>
+                        @endif
+                    </td>
                     <td>
                         <div style="display:flex;gap:6px">
                             <button class="btn btn-success btn-sm" wire:click="openEdit({{ $item->id }})">✏️ Editar</button>
@@ -80,21 +93,35 @@
                     <input type="text" wire:model="nombre" placeholder="Hotel Central">
                     @error('nombre') <span class="error-msg">{{ $message }}</span> @enderror
                 </div>
+                
                 <div class="form-group">
                     <label>Tipo *</label>
-                    <select class="form-select" wire:model="tipo">
-                    <option value="">Seleccionar tipo</option>
-                    @foreach($tipos as $t)
-                        <option value="{{ $t }}">{{ $t }}</option>
-                    @endforeach
-                </select>
-                @error('tipo') <span class="error-msg">{{ $message }}</span> @enderror
-
+                    {{-- Cambiamos el wire:model para que guarde el valor en la primera posición del array --}}
+                    <select class="form-select" wire:model="tipo_ids.0">
+                        <option value="">Seleccionar tipo</option>
+                        @foreach($tipos as $t)
+                            <option value="{{ $t->id }}">{{ $t->tipo }}</option>
+                        @endforeach
+                    </select>
+                    
+                    {{-- Ajustamos los nombres de los errores para que coincidan con la validación --}}
+                    @error('tipo_ids') <span class="error-msg" style="display:block; margin-top:5px;">{{ $message }}</span> @enderror
+                    @error('tipo_ids.*') <span class="error-msg" style="display:block; margin-top:5px;">Seleccione un tipo válido.</span> @enderror
                 </div>
+
                 <div class="form-group span-2">
                     <label>Dirección *</label>
                     <input type="text" wire:model="direccion" placeholder="Calle 10 Nº 500">
                     @error('direccion') <span class="error-msg">{{ $message }}</span> @enderror
+                </div>
+                <div class="form-group span-2">
+                    <label>¿Está habilitado?</label>
+                    <div class="toggle-wrap">
+                        <label class="toggle">
+                            <input type="checkbox" wire:model="habilitado">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Teléfono</label>

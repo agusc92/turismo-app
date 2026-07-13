@@ -19,7 +19,7 @@
     <div class="table-wrap">
         <table>
             <thead>
-                <tr><th>Imagen</th><th>Nombre</th><th>Servicios</th><th>Temporada</th><th>Accesibilidad</th><th>Acciones</th></tr>
+                <tr><th>Imagen</th><th>Nombre</th><th>Servicios</th><th>Temporada</th><th>Accesibilidad</th><th>Habilitado</th><th>Acciones</th></tr>
             </thead>
             <tbody>
                 @forelse($balnearios as $item)
@@ -40,6 +40,13 @@
                     <td class="muted">{{ $item->fecha_desde_hasta ?: '—' }}</td>
                     <td class="muted" style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ $item->accesibilidad ?: '—' }}</td>
                     <td>
+                        @if($item->habilitado)
+                            <span class="badge badge-green">✔️</span>
+                        @else
+                            <span class="badge badge-red">❌</span>
+                        @endif
+                    </td>
+                    <td>
                         <div style="display:flex;gap:6px">
                             <button class="btn btn-success btn-sm" wire:click="openEdit({{ $item->id }})">✏️ Editar</button>
                             <button class="btn btn-danger btn-sm" wire:click="confirmDelete({{ $item->id }}, '{{ addslashes($item->nombre) }}')">🗑️</button>
@@ -47,7 +54,7 @@
                     </td>
                 </tr>
                 @empty
-                <tr><td colspan="6"><div class="empty-state"><div class="empty-icon">🏖️</div><div class="empty-text">No hay balnearios</div></div></td></tr>
+                <tr><td colspan="7"><div class="empty-state"><div class="empty-icon">🏖️</div><div class="empty-text">No hay balnearios</div></div></td></tr>
                 @endforelse
             </tbody>
         </table>
@@ -78,6 +85,15 @@
                     <label>Dirección *</label>
                     <input type="text" wire:model="direccion" placeholder="Av. 2 y Calle 87">
                     @error('direccion') <span class="error-msg">{{ $message }}</span> @enderror
+                </div>
+                <div class="form-group span-2">
+                    <label>¿Está habilitado?</label>
+                    <div class="toggle-wrap">
+                        <label class="toggle">
+                            <input type="checkbox" wire:model="habilitado">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Teléfono</label>

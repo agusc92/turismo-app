@@ -19,7 +19,7 @@
     <div class="table-wrap">
         <table>
             <thead>
-                <tr><th>Imagen</th><th>Nombre</th><th>Tipos</th><th>Horario</th><th>Menús</th><th>Acciones</th></tr>
+                <tr><th>Imagen</th><th>Nombre</th><th>Tipos</th><th>Horario</th><th>Menús</th><th>Habilitado</th><th>Acciones</th></tr>
             </thead>
             <tbody>
                 @forelse($gastronomicos as $item)
@@ -50,6 +50,13 @@
 
                         @if($item->menus->count() > 2) 
                             <span class="muted">+{{ $item->menus->count() - 2 }}</span> 
+                        @endif
+                    </td>
+                    <td>
+                        @if($item->habilitado)
+                            <span class="badge badge-green">✔️</span>
+                        @else
+                            <span class="badge badge-red">❌</span>
                         @endif
                     </td>
                     <td>
@@ -91,6 +98,15 @@
                     <label>Dirección *</label>
                     <input type="text" wire:model="direccion" placeholder="Av. Principal 789">
                     @error('direccion') <span class="error-msg">{{ $message }}</span> @enderror
+                </div>
+                <div class="form-group span-2">
+                    <label>¿Está habilitado?</label>
+                    <div class="toggle-wrap">
+                        <label class="toggle">
+                            <input type="checkbox" wire:model="habilitado">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Teléfono</label>
