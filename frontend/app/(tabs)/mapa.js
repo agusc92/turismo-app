@@ -3,14 +3,16 @@ import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, ScrollView
 import WebView from 'react-native-webview';
 import * as Location from 'expo-location';
 import { API_URL } from '../../api';
+import { Colors } from "../../constants/Styles";
+import { useRouter } from 'expo-router';
 
 // Categorías con color y emoji para los pines del mapa
 const CATEGORIAS = [
-    { key: 'gastronomicos', label: 'Gastronomía', color: '#E05A2B', emoji: '🍽️', ruta: 'gastronomicos' },
-    { key: 'balnearios', label: 'Balnearios', color: '#0EA5E9', emoji: '🏖️', ruta: 'balnearios' },
-    { key: 'alojamientos', label: 'Alojamientos', color: '#7C3AED', emoji: '🏨', ruta: 'alojamientos' },
-    { key: 'actividades', label: 'Actividades', color: '#16A34A', emoji: '🎯', ruta: 'actividades' },
-    { key: 'complejos', label: 'Complejos', color: '#D97706', emoji: '🏕️', ruta: 'complejos' },
+    { key: 'gastronomico', label: 'Gastronomía', color: Colors.textColor, emoji: '🍽️', ruta: 'gastronomicos' },
+    { key: 'balneario', label: 'Balnearios', color: Colors.textColor, emoji: '🏖️', ruta: 'balnearios' },
+    { key: 'alojamiento', label: 'Alojamientos', color: Colors.textColor, emoji: '🏨', ruta: 'alojamientos' },
+    { key: 'actividad', label: 'Actividades', color: Colors.textColor, emoji: '🎯', ruta: 'actividades' },
+    { key: 'complejo', label: 'Complejos', color: Colors.textColor, emoji: '🏕️', ruta: 'complejos' },
 ];
 
 // Radio de búsqueda en km (muestra todos los lugares dentro de este radio)
@@ -29,6 +31,7 @@ function calcularDistanciaKm(lat1, lon1, lat2, lon2) {
 }
 
 export default function Mapa() {
+    const router = useRouter();
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const [loadingLocation, setLoadingLocation] = useState(true);
@@ -120,12 +123,14 @@ export default function Mapa() {
 
     // ─── 4. Construir el HTML con Leaflet ──────────────────────────────────────
     const markersJS = lugaresFiltrados.map(l => {
+        const id = l.id; // ID único del elemento para saber a cuál navegar
         const nombre = (l.nombre || 'Sin nombre').replace(/'/g, "\\'").replace(/"/g, '&quot;');
         const direccion = (l.direccion || '').replace(/'/g, "\\'");
         const emoji = l._emoji;
         const color = l._color;
         const lat = parseFloat(l.latitud);
         const lng = parseFloat(l.longitud);
+        const categoriaRuta = l._categoria; // 'alojamientos', 'gastronomicos', etc.
 
         return `
             (function(){
@@ -136,9 +141,17 @@ export default function Mapa() {
                     iconAnchor: [17,34],
                     popupAnchor: [0,-36]
                 });
+                
+                // Agregamos un contenedor interactivo con estilo de link y un onclick nativo del WebView
+                var popupContent = '<div onclick="enviarNavegacion(\\'${categoriaRuta}\\', ${id})" style="font-family:sans-serif;min-width:150px;cursor:pointer;">' +
+                    '<b style="color:${color};font-size:14px;text-decoration:underline;">${nombre} ➔</b><br>' +
+                    '<span style="font-size:12px;color:#555;">${direccion}</span><br>' +
+                    '<span style="font-size:11px;background:${color};color:white;padding:2px 6px;border-radius:10px;display:inline-block;margin-top:4px;">${emoji} ${l._label}</span>' +
+                '</div>';
+
                 L.marker([${lat}, ${lng}], {icon: icon})
                     .addTo(map)
-                    .bindPopup('<div style="font-family:sans-serif;min-width:150px"><b style="color:${color};font-size:14px;">${nombre}</b><br><span style="font-size:12px;color:#555;">${direccion}</span><br><span style="font-size:11px;background:${color};color:white;padding:2px 6px;border-radius:10px;">${emoji} ${l._label}</span></div>');
+                    .bindPopup(popupContent);
             })();
         `;
     }).join('\n');
@@ -180,6 +193,19 @@ export default function Mapa() {
     <body>
         <div id="map"></div>
         <script>
+            // FUNCIÓN NUEVA: Envía los datos del click a React Native
+            function enviarNavegacion(categoria, id) {
+                var payload = JSON.stringify({
+                    type: 'NAVIGATE_TO_DETAIL',
+                    categoria: categoria,
+                    id: id
+                });
+                if (window.ReactNativeWebView) {
+                    window.ReactNativeWebView.postMessage(payload);
+                }
+            }
+
+            // Inicialización del mapa...
             var map = L.map('map', { zoomControl: true }).setView([${location.latitude}, ${location.longitude}], 14);
 
             L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -231,6 +257,19 @@ export default function Mapa() {
                 scrollEnabled={false}
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
+
+                // PROP NUEVA: Escucha los clicks del mapa
+                onMessage={(event) => {
+                    try {
+                        const data = JSON.parse(event.nativeEvent.data);
+
+                        if (data.type === 'NAVIGATE_TO_DETAIL') {
+                            router.push(`/${data.categoria}/${data.id}`);
+                        }
+                    } catch (error) {
+                        console.warn("Error leyendo mensaje del WebView:", error);
+                    }
+                }}
             />
 
             {/* Badge de resultados */}
