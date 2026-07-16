@@ -142,7 +142,7 @@
                 <x-mapa-selector />
 
                 <div class="form-group span-2">
-                    <label>Tipos Gastronómicos</label>
+                    <label>Tipos Gastronómicos*</label>
                     <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
                         @foreach($tipo_ids as $idx => $selectedId)
                         <div style="display:flex;align-items:center;gap:6px">
@@ -164,7 +164,7 @@
                 </div>
 
                 <div class="form-group span-2">
-                    <label>Menús disponibles</label>
+                    <label>Menús disponibles*</label>
                     <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
                         @foreach($menus as $menu)
                         <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-primary);cursor:pointer">
