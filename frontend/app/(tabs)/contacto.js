@@ -12,17 +12,15 @@ const { width } = Dimensions.get('window');
 
 export default function ContactoScreen() {
     const contactInfo = {
-        phone: '+54 2262 514758',
-        whatsapp: '5492262431155',
+        phone: '+54 2262 425665',
+        whatsapp: '+54 2262 431155',
         email: 'turismo@necochea.tur.ar',
         instagram: 'necocheatur',
         facebook: 'necocheatur',
-        youtube: 'necocheaturismo',
+        youtube: 'necocheatur',
         tiktok: 'necocheatur',
         website: 'https://necochea.tur.ar',
         address: 'Av. 2 y Calle 87, Necochea, Buenos Aires',
-        hoursWeek: 'Lunes a Viernes de 8:00 a 20:00 hs.',
-        hoursWeekend: 'Sábados, Domingos y Feriados de 9:00 a 19:00 hs.'
     };
 
     const handleOpenURL = async (url, errorMessage = 'No se pudo abrir el enlace.') => {
@@ -71,11 +69,8 @@ export default function ContactoScreen() {
                     <View style={styles.logoContainer}>
                         <Logo />
                     </View>
-                    <Text style={styles.headerTitle}>Turismo Necochea</Text>
+                    <Text style={styles.headerTitle}>Necochea</Text>
                     <Text style={styles.headerSubtitle}>Secretaría de Turismo</Text>
-                    <Text style={styles.headerDescription}>
-                        Planificá tu estadía en nuestras hermosas playas. Estamos a tu disposición para brindarte toda la información que necesites.
-                    </Text>
                 </LinearGradient>
 
                 <View style={styles.content}>
@@ -86,7 +81,7 @@ export default function ContactoScreen() {
                         iconColor="#25D366"
                         iconBgColor="#E8F8EF"
                         label="WhatsApp"
-                        value="+54 9 2262 431155"
+                        value={contactInfo.whatsapp}
                         onPress={() => handleOpenURL(`https://wa.me/${contactInfo.whatsapp}`, 'No se pudo abrir WhatsApp. Asegúrese de tener la aplicación instalada.')}
                     />
 
@@ -95,7 +90,7 @@ export default function ContactoScreen() {
                         iconColor="#007AFF"
                         iconBgColor="#EAF2FD"
                         label="Teléfono de Informes"
-                        value="+54 2262 431155"
+                        value={contactInfo.phone}
                         onPress={() => handleOpenURL(`tel:${contactInfo.phone.replace(/\s+/g, '')}`, 'No se puede realizar la llamada desde este dispositivo.')}
                     />
 
@@ -113,7 +108,7 @@ export default function ContactoScreen() {
                         iconColor="#5B4282"
                         iconBgColor="#F1EFFF"
                         label="Sitio Web Oficial"
-                        value="necochea.tur.ar"
+                        value={contactInfo.website}
                         onPress={() => handleOpenURL(contactInfo.website, 'No se pudo abrir el sitio web.')}
                     />
 
@@ -155,24 +150,6 @@ export default function ContactoScreen() {
                         </View>
                     </TouchableOpacity>
 
-                    <Text style={styles.sectionTitle}>Horarios de Atención</Text>
-
-                    <View style={styles.hoursCard}>
-                        <View style={styles.hourRow}>
-                            <Ionicons name="time-outline" size={20} color="#36274E" style={styles.hourIcon} />
-                            <View style={styles.hourTextContainer}>
-                                <Text style={styles.hourDays}>Lunes a Viernes</Text>
-                                <Text style={styles.hourTime}>{contactInfo.hoursWeek}</Text>
-                            </View>
-                        </View>
-                        <View style={[styles.hourRow, { borderTopWidth: 1, borderTopColor: '#EBE9F0', paddingTop: 12, marginTop: 12 }]}>
-                            <Ionicons name="calendar-outline" size={20} color="#36274E" style={styles.hourIcon} />
-                            <View style={styles.hourTextContainer}>
-                                <Text style={styles.hourDays}>Sábados, Domingos y Feriados</Text>
-                                <Text style={styles.hourTime}>{contactInfo.hoursWeekend}</Text>
-                            </View>
-                        </View>
-                    </View>
                 </View>
             </ScrollView>
         </View>
@@ -294,35 +271,4 @@ const styles = StyleSheet.create({
         fontFamily: 'Gotham-Bold',
         color: '#FAFAFD',
     },
-    hoursCard: {
-        backgroundColor: '#FFF',
-        borderRadius: 16,
-        padding: 16,
-        elevation: 2,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.05,
-        shadowRadius: 3,
-    },
-    hourRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    hourIcon: {
-        marginRight: 12,
-    },
-    hourTextContainer: {
-        flex: 1,
-    },
-    hourDays: {
-        fontSize: 14,
-        fontFamily: 'Gotham-Bold',
-        color: Colors.textColor,
-        marginBottom: 2,
-    },
-    hourTime: {
-        fontSize: 13,
-        fontFamily: 'Gotham-Book',
-        color: Colors.textColorLight,
-    }
 });
