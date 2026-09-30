@@ -80,6 +80,6 @@ class TiposManager extends Component
             ->orderBy('tipo')
             ->paginate(15);
 
-        return view('livewire.admin.tipos-manager', compact('tipos'));
+        return view('livewire.admin.tipos-actividad-manager', compact('tipos'));
     }
 }

@@ -12,7 +12,7 @@
         ['icon' => '🍽️', 'label' => 'Gastronómicos', 'count' => \App\Models\Gastronomico::count(),     'route' => 'admin.gastronomicos'],
         ['icon' => '🏢', 'label' => 'Complejos',      'count' => \App\Models\Complejo::count(),         'route' => 'admin.complejos'],
         ['icon' => '👥', 'label' => 'Usuarios',       'count' => \App\Models\User::count(),             'route' => 'admin.usuarios'],
-        ['icon' => '🏷️', 'label' => 'Tipos',         'count' => \App\Models\Tipo::count(),             'route' => 'admin.tipos'],
+        ['icon' => '🏷️', 'label' => 'Tipos Actividad', 'count' => \App\Models\Tipo::count(),             'route' => 'admin.tipos'],
         ['icon' => '🍴', 'label' => 'Tipos Gastron.', 'count' => \App\Models\TipoGastronomico::count(), 'route' => 'admin.tipo-gastronomico'],
         ['icon' => '📋', 'label' => 'Menús',          'count' => \App\Models\Menu::count(),             'route' => 'admin.menus'],
         ['icon' => '🏨', 'label' => 'Tipos Alojamiento', 'count' => \App\Models\TipoAlojamiento::count(), 'route' => 'admin.tipo-alojamiento'],
