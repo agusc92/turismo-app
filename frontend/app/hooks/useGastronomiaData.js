@@ -1,7 +1,29 @@
+/** 
+ * @fileoverview Custom Hook para la gestión de datos de Gastronomía y sus Menús.
+ * Centraliza las peticiones HTTP a la API y el procesamiento de la información.
+ * 
+ * Se encarga de:
+ * 1. Obtener de forma paralela el listado de locales gastronómicos, tipos de gastronomía y menús.
+ * 2. Sanitizar/normalizar el formato de los tipos y menús recibidos (objetos o cadenas simples).
+ * 3. Manejar el estado de carga (`loading`) global para la UI.
+ *
+ * @module useGastronomiaData
+ * @requires react
+ */
+
 import { useState, useEffect } from 'react';
 import { API_URL } from '../../api';
 
-export  const useGastronomiaData = () => {
+/**
+ * Custom Hook que consulta y gestiona los datos de gastronomía y sus menús.
+ * 
+ * @returns {Object} Objeto con los datos procesados y el estado de carga.
+ * @returns {Array} return.dataGastronomica - Listado completo de locales gastronómicos.
+ * @returns {Array} return.tipoGastronomico - Listado parseado y limpio de tipos de gastronomía.
+ * @returns {Array} return.menu - Listado parseado y limpio de menús especiales.
+ * @returns {boolean} return.loading - Flag indicando si la petición sigue en curso.
+ */
+export const useGastronomiaData = () => {
     const [dataGastronomica, setDataGastronomica] = useState([]);
     const [tipoGastronomico, setTipoGastronomico] = useState([]);
     const [menu, setMenu] = useState([]);

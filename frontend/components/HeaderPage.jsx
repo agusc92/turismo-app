@@ -1,3 +1,19 @@
+/**
+ * @fileoverview Componente de encabezado reutilizable para las pantallas de la aplicación.
+ * Implementa una maquetación simétrica de tres columnas que garantiza
+ * el centrado óptimo del título y logo, la navegación de retroceso y la activación condicional
+ * de modal o selector de filtros.
+ * 
+ * @module components/HeaderPage
+ * @requires react-native.View
+ * @requires react-native.Text
+ * @requires react-native.StyleSheet
+ * @requires react-native.TouchableOpacity
+ * @requires @expo/vector-icons.Ionicons
+ * @requires ../assets/images.Logo
+ * @requires ../constants/Styles.Colors
+ */
+
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Logo } from "../assets/images";
 import { Colors } from "../constants/Styles";
@@ -7,7 +23,7 @@ export default function HeaderPage({ title, logo = false, canGoBack = false, onB
     return (
         <View style={styles.headerWrapper}>
 
-            {/* 1. COLUMNA IZQUIERDA: Botón de atrás (o caja vacía para mantener el equilibrio) */}
+            {/* 1. COLUMNA IZQUIERDA: Botón de navegación hacia atrás o reserva de espacio simétrico */}
             <View style={styles.columnLeft}>
                 {canGoBack ? (
                     <TouchableOpacity onPress={onBackPress} style={styles.backButton}>
@@ -28,7 +44,7 @@ export default function HeaderPage({ title, logo = false, canGoBack = false, onB
                 </Text>
             </View>
 
-            {/* 3. COLUMNA DERECHA: Botón de filtro si aplica, o caja vacía para contrapeso Flex */}
+            {/* 3. COLUMNA DERECHA: Botón de filtro si aplica, o reserva de espacio simétrico */}
             <View style={styles.columnRight}>
                 {filter && setShowPicker && (
                     <TouchableOpacity onPress={() => setShowPicker(true)} style={styles.headerIcon}>

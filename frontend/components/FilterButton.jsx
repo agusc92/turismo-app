@@ -1,3 +1,15 @@
+/**
+ * @fileoverview Componente de botón reusable para la selección de filtros en listados.
+ * Presenta el texto de la opción seleccionada y un icono de flecha para desplegar opciones.
+ * Se utiliza en el listado de recursos que puedan ser filtrados.
+ * 
+ * @module components/FilterButton
+ * @requires react-native.StyleSheet
+ * @requires react-native.Text
+ * @requires react-native.TouchableOpacity
+ * @requires @expo/vector-icons.Ionicons
+ */
+
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 

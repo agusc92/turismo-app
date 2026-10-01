@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Vista de listado para la categoría de Eventos.
+ * @requires expo-router
+ * @requires @react-native-community/datetimepicker
+ */
+
 import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, Platform, ActivityIndicator } from 'react-native';
 import { Tabs, Stack } from 'expo-router';
@@ -7,8 +13,12 @@ import ItemCard from '../../components/ItemCard';
 import { getResourceImage } from '../../assets/images';
 import HeaderPage from '../../components/HeaderPage';
 import { router } from 'expo-router';
-// Si logramos instalar datetimepicker, lo usamos, si no, fallará. 
-// Como alternativa, podriamos usar un mock o un select simple.
+
+/**
+ * Componente funcional principal que renderiza el listado de eventos.
+ * 
+ * @returns {JSX.Element} Interfaz de lista filtrable por fecha con estados de carga y lista vacía.
+ */
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function EventosList() {
@@ -41,14 +51,15 @@ export default function EventosList() {
         return str.charAt(0).toUpperCase() + str.slice(1);
     };
 
-    // Filtro simulado, usando 'fecha' del mokup si logramos parsearla
+    /**
+     * Lógica de filtrado, compara las fechas ignorando la hora y 
+     * devuelve solo los eventos que ocurran en o después de la fecha seleccionada.
+     */
     const filteredEventos = eventos.filter(evento => {
         if (!filterActive) return true;
 
-        // La fecha en mokup es "2026-04-20 12:30:00"
         const eventDate = new Date(evento.fecha.replace(" ", "T"));
 
-        // Solo mostramos eventos a partir de la fecha seleccionada (ignorando horas)
         eventDate.setHours(0, 0, 0, 0);
         const selectedDate = new Date(date);
         selectedDate.setHours(0, 0, 0, 0);
@@ -63,6 +74,7 @@ export default function EventosList() {
         setFilterActive(true);
     };
 
+    //Restablece los parámetros de filtrado y muestra la lista completa de eventos.
     const clearFilter = () => {
         setFilterActive(false);
         setDate(new Date());

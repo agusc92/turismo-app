@@ -1,3 +1,15 @@
+/**
+ * @fileoverview Componente reutilizable de botón de red social.
+ * Resuelve y renderiza el icono gráfico correspondiente desde los recursos estáticos 
+ * locales a partir de una clave identificadora, proporcionando un contenedor interactivo.
+ * Se utiliza en la seccion de "contacto".
+ * @module components/SocialButton
+ * @requires react
+ * @requires react-native.TouchableOpacity
+ * @requires react-native.Image
+ * @requires react-native.StyleSheet
+ */
+
 import React from 'react';
 import { TouchableOpacity, Image, StyleSheet } from 'react-native';
 

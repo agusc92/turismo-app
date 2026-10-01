@@ -1,3 +1,18 @@
+/**
+ * @fileoverview Componente de tarjeta reutilizable para la presentación de ítems en listados.
+ * Muestra una imagen del item, su nombre y un subtítulo descriptivo, y permite la navegación
+ * hacia la vista de detalles al ser presionado.
+ * Se utiliza en la Home.
+ * 
+ * @module components/ItemCard
+ * @requires react-native.TouchableOpacity
+ * @requires react-native.Image
+ * @requires react-native.Text
+ * @requires react-native.StyleSheet
+ * @requires react-native.View
+ * @requires expo-router.router
+ */
+
 import { Link } from "expo-router";
 import { Image, Pressable, Text, StyleSheet, View } from "react-native";
 import { Colors } from "../constants/Styles";
@@ -28,7 +43,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
-        overflow: 'hidden', // Importante para que la imagen respete los bordes redondeados
+        overflow: 'hidden',
     },
     image: {
         height: 120,
@@ -40,6 +55,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Gotham-Black',
         color: Colors.textColor,
         marginBottom: 8,
-        marginLeft: 4, // Para que no quede tan pegado al borde izquierdo del contenedor
+        marginLeft: 4,
     }
 });

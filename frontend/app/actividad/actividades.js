@@ -1,3 +1,15 @@
+/**
+ * @fileoverview Vista de Lista genérica para una categoría de recursos (ej. Actividades).
+ * Este archivo establece el patrón estructural para las pantallas de listado (como alojamientos.js, 
+ * complejos.js, etc.). Se encarga de:
+ * 1. Obtener los datos generales a través de un custom hook.
+ * 2. Proveer un sistema de filtrado en el cliente mediante un selector modal (Bottom Sheet).
+ * 3. Renderizar los elementos en una lista optimizada (FlatList) con tarjetas de resumen.
+ *
+ * @requires expo-router
+ * @requires react-native
+ */
+
 import { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, ActivityIndicator } from 'react-native';
 import { Stack } from 'expo-router';
@@ -6,6 +18,15 @@ import { useActividadesData } from '../hooks/useActividadesData';
 import ItemCard from "../../components/ItemCard";
 import { getResourceImage } from '../../assets/images';
 import FilterButton from '../../components/FilterButton';
+
+/**
+ * Componente funcional principal que renderiza el listado de elementos y sus filtros.
+ * 
+ * @nota Para replicar esta plantilla en otras secciones, se debe reemplazar el hook `useActividadesData`, 
+ * la clave del recurso en `getResourceImage` y la ruta dinámica del link en `ItemCard`.
+ * 
+ * @returns {JSX.Element} Interfaz de lista filtrable con estados de carga y lista vacía.
+ */
 
 export default function ActividadesList() {
     const { actividades, tipoActividades, loading } = useActividadesData();
@@ -23,6 +44,10 @@ export default function ActividadesList() {
         return matchesTipo;
     });
 
+    /**
+     * Renderiza un selector modal (Bottom Sheet) personalizado para aplicar filtros.
+     * @returns {JSX.Element} Componente Modal superpuesto.
+     */
     const renderCustomPicker = (title, items, selectedItem, onSelect, onClose) => {
         const pickerItems = items.map(t => ({ tipo: t }));
 
@@ -83,7 +108,7 @@ export default function ActividadesList() {
                     onPress={() => setShowTipoModal(true)}
                 />
             </View>
-
+            {/* Modal de selección de tipos */}
             {showTipoModal && renderCustomPicker(
                 "Seleccionar Tipo",
                 tipoActividades,

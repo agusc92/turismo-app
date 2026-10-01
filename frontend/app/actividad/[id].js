@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Vista de detalle dinámico para un recurso específico (ej. Actividad).
+ * Este archivo actúa como plantilla general para las rutas dinámicas `[id].js` de Expo Router, 
+ * las cuales se repiten estructuralmente en cada categoría de la aplicación.
+ * 
+ * Se encarga de:
+ * 1. Capturar el ID dinámico de la URL.
+ * 2. Realizar el fetch de datos a la API mediante el hook reutilizable `useFetchDetalle`.
+ * 3. Gestionar la UI en sus tres estados: carga, error/no encontrado, y éxito.
+ *
+ * @requires expo-router
+ * @requires react-native
+ */
+
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, Stack } from 'expo-router';
 import { useFetchDetalle } from '../hooks/useFetchDetalle';
@@ -7,10 +21,16 @@ import ContactoDetalles from '../../components/ContactoDetalles';
 import TransparentHeader from "../../components/TransparentHeader";
 import { getResourceImage } from '../../assets/images';
 
+/**
+ * Componente funcional para renderizar la pantalla de detalles de un ítem.
+ * @returns {JSX.Element} La pantalla de carga, el mensaje de error o la vista renderizada del recurso.
+ */
 export default function ActividadDetalle() {
+    // 1. Captura el parámetro de la ruta (ej. /actividades/4)
     const { id } = useLocalSearchParams();
+    // 2. Fetch de datos centralizado
     const { data: actividad, loading } = useFetchDetalle('actividades', id);
-
+    // Estado: Cargando
     if (loading) {
         return (
             <View style={styles.errorContainer}>
@@ -19,7 +39,7 @@ export default function ActividadDetalle() {
             </View>
         );
     }
-
+    // Estado: Error o ID no encontrado
     if (!actividad) {
         return (
             <View style={styles.errorContainer}>
@@ -28,11 +48,8 @@ export default function ActividadDetalle() {
             </View>
         );
     }
-
+    // Estado: Éxito. Resuelve la imagen (remota de la API o fallback local).
     const imageSource = getResourceImage('actividad', actividad);
-
-    // Helper para formatear la dirección
-    const direccionText = actividad.direccion ? `Calle ${actividad.direccion}` : 'Dirección no disponible';
 
     return (
         <View style={styles.container}>

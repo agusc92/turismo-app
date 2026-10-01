@@ -1,3 +1,11 @@
+/**
+ * @fileoverview Pantalla con informacion de contacto de la secretaria de turismo de Necochea.
+ * @requires react-native
+ * @requires expo-router
+ * @requires expo-linear-gradient
+ * @requires @expo/vector-icons
+ */
+
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Linking, Alert, Dimensions, Platform } from 'react-native';
 import { Stack, Tabs } from 'expo-router';
@@ -8,7 +16,6 @@ import { Logo } from '../../assets/images';
 import ContactButton from '../../components/ContactButton';
 import SocialButton from '../../components/SocialButton';
 
-const { width } = Dimensions.get('window');
 
 export default function ContactoScreen() {
     const contactInfo = {

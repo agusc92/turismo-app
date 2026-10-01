@@ -1,15 +1,33 @@
+/**
+ * @fileoverview Layout principal de la aplicación.
+ * Se encarga de cargar las fuentes personalizadas, gestionar el estado 
+ * del SplashScreen durante la carga, y definir el enrutador principal (Stack) 
+ * con un encabezado (header) de navegación global y dinámico.
+ *
+ * @requires expo-router
+ * @requires expo-font
+ * @requires expo-splash-screen
+ */
+
 import { Stack } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { Colors } from "../constants/Styles";
-import { StatusBar } from "expo-status-bar";
 import HeaderPage from "../components/HeaderPage";
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+
+
 SplashScreen.preventAutoHideAsync();
 
+/**
+ * Componente Layout principal.
+ * renderiza el sistema de navegación por pila (Stack).
+ *
+ * @returns {JSX.Element | null} El contenedor de navegación o null si las fuentes están cargando.
+ */
 export default function Layout() {
 
     const [loaded, error] = useFonts({
@@ -32,17 +50,22 @@ export default function Layout() {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backgroundLight }}>
 
+        <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backgroundLight }}>
             <Stack
                 screenOptions={{
+                    /**
+                     * Renderizador de header.
+                     * En la home muestra el logo (Turismo Necochea)
+                     * En las demás pantallas muestra el título de la pantalla y el botón de retroceso
+                     */
                     header: (props) => {
                         const currentTitle = props.options.title || props.route.name;
 
-                        // 💡 Detectamos si hay una pantalla antes en el Stack
+                        // Detectamos si hay una pantalla antes en el Stack
                         const hasBackButton = props.back ? true : false;
 
-                        // 💡 Si no hay botón de atrás, asumimos que es la Home de las Tabs y mostramos el Logo
+                        // Si no hay botón de atrás, asumimos que es la Home de las Tabs y mostramos el Logo
                         const showLogo = !hasBackButton;
 
                         return (
@@ -51,9 +74,9 @@ export default function Layout() {
                             ]}>
                                 <HeaderPage
                                     title={currentTitle}
-                                    logo={showLogo} // 👈 Automático: Logo en Home, Flecha en las sub-pantallas
-                                    canGoBack={hasBackButton} // 👈 Le avisa si debe renderizar la flecha
-                                    onBackPress={() => props.navigation.goBack()} // 👈 Acción nativa para ir atrás
+                                    logo={showLogo}
+                                    canGoBack={hasBackButton}
+                                    onBackPress={() => props.navigation.goBack()}
                                 />
                             </View>
                         );

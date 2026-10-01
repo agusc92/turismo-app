@@ -1,4 +1,11 @@
-
+/**
+ * @fileoverview Pantalla principal (Inicio) de la aplicación de turismo de Necochea.
+ * Contiene la configuración de la pestaña principal, el carrusel de eventos 
+ * destacados y el menú de navegación hacia las distintas categorías de la app.
+ * 
+ * @requires react-native
+ * @requires expo-router
+ */
 import { View, Text, StyleSheet, ScrollView, Image, Dimensions } from "react-native";
 import { ScreenLayout } from "../components/ScreenLayout";
 import { Tabs } from 'expo-router';
@@ -8,16 +15,24 @@ import MenuCard from "../components/MenuCard";
 
 import Carousel from "../components/Carousel";
 
-const { width } = Dimensions.get('window');
-
+/**
+ * Componente funcional Home.
+ * Representa el punto de entrada principal del usuario al abrir la aplicación.
+ * 
+ * @returns {JSX.Element} La vista renderizada de la pantalla de inicio.
+ */
 export default function Home() {
 
     return (
         <ScreenLayout>
+            {/* 
+              * Configuración de la cabecera (Header) específica para esta pestaña.
+              * Reemplaza el header por defecto de Expo Router por un componente personalizado.
+              */}
             <Tabs.Screen options={{
                 title: "Inicio",
                 headerShown: true,
-                
+
                 header: () => (
                     <View style={styles.customHeaderContainer}>
                         <HeaderPage title="Necochea" logo={true} />
@@ -26,10 +41,14 @@ export default function Home() {
             }} />
 
             <ScrollView style={styles.pageContent} showsVerticalScrollIndicator={false}>
+                {/* Sección de eventos destacados */}
                 <Text style={styles.sectionTitle}>Eventos destacados</Text>
 
                 <Carousel />
-
+                {/* 
+                  * Grilla del menú principal. 
+                  * Cada MenuCard actúa como enlace a una sección específica usando expo-router.
+                  */}
                 <View style={styles.menuContainer}>
                     <MenuCard title="Alojamiento" image='https://files.catbox.moe/gq2xwv.webp' href="/alojamiento/alojamientos" />
                     <MenuCard title="Gastronomía" image='https://files.catbox.moe/7v2awu.webp' href="/gastronomico/gastronomico" />
@@ -43,7 +62,10 @@ export default function Home() {
         </ScreenLayout>
     );
 }
-
+/**
+ * Hojas de estilo para la pantalla Home.
+ * @constant {StyleSheet.NamedStyles}
+ */
 const styles = StyleSheet.create({
     customHeaderContainer: {
         backgroundColor: Colors.backgroundLight,

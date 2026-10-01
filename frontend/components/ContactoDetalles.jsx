@@ -1,8 +1,23 @@
+/**
+ * @fileoverview Componente de presentación para desplegar la sección de información de contacto.
+ * Procesa cadenas formateadas de redes sociales (Facebook, Instagram, X) y evalúa
+ * condicionalmente la presencia de teléfono/WhatsApp, correo electrónico y tienda online.
+ * Se utiliza en el detalle de cada recurso (gastronomia, actividad, etc)
+ * 
+ * @module components/ContactoDetalles
+ * @requires react-native.View
+ * @requires react-native.Text
+ * @requires react-native.StyleSheet
+ * @requires @expo/vector-icons.Ionicons
+ * @requires ../constants/Styles.Colors
+ */
+
 import { View, Text, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../constants/Styles";
 
 export default function ContactoDetalles({ item }) {
+    // Extracción y parseo de identificadores de redes sociales desde la cadena delimitada
     let fb = '', ig = '', tw = '';
     if (item.redesSociales) {
         const redesList = item.redesSociales.split('|').map(r => r.trim());
@@ -13,6 +28,7 @@ export default function ContactoDetalles({ item }) {
         });
     }
 
+    //Rendering condicional de los canales de contacto disponibles
     return (
         <>
             <View style={styles.section}>

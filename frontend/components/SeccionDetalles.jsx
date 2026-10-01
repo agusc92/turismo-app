@@ -1,3 +1,14 @@
+/**
+ * @fileoverview Componente de sección reutilizable para la presentación de detalles de un recurso.
+ * Muestra un título de sección y texto descriptivo o secundario, con estilos consistentes.
+ * Se utiliza dentro de la seccion detalle de los recursos (gastronomico, actividades,etc)
+ * @module components/SeccionDetalles
+ * @requires react-native.View
+ * @requires react-native.Text
+ * @requires react-native.StyleSheet
+ * @exports SeccionDetalles
+ */
+
 import { View, Text, StyleSheet } from 'react-native';
 import { Colors } from '../constants/Styles';
 

@@ -1,3 +1,18 @@
+/**
+ * Componente de tarjeta reutilizable para la presentación de ítems en listados.
+ * Muestra una imagen del item, su nombre y un subtítulo descriptivo, y permite la navegación
+ * hacia la vista de detalles al ser presionado.
+ * Se utiliza en pantallas tipo recursos.js en forma de lista. por ejemplo: (gastronomia, actividades, etc).
+ * 
+ * @module components/ItemCard
+ * @requires react-native.TouchableOpacity
+ * @requires react-native.Image
+ * @requires react-native.Text
+ * @requires react-native.StyleSheet
+ * @requires react-native.View
+ * @requires expo-router.router
+ */
+
 import { TouchableOpacity, Image, Text, StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 

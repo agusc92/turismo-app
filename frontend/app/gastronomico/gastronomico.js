@@ -1,3 +1,11 @@
+/**
+ * @fileoverview Vista de listado para la categoría de Gastronomía.
+ * Esta pantalla implementa distintos filtros, el de tipo de gastronomía y menú.
+ *
+ * @requires expo-router
+ * @requires react-native
+ */
+
 import { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, ActivityIndicator } from 'react-native';
 import { Stack } from 'expo-router';
@@ -7,6 +15,10 @@ import { getResourceImage } from '../../assets/images';
 import { useGastronomiaData } from '../hooks/useGastronomiaData';
 import FilterButton from '../../components/FilterButton';
 
+/**
+ * Componente funcional principal que renderiza el listado de locales gastronómicos. 
+ * @returns {JSX.Element} Interfaz de lista filtrable con estados de carga y lista vacía.
+ */
 export default function GastronomicoList() {
     const { dataGastronomica, tipoGastronomico, menu, loading } = useGastronomiaData();
 
@@ -16,7 +28,8 @@ export default function GastronomicoList() {
     const [showTipoModal, setShowTipoModal] = useState(false);
     const [showMenuModal, setShowMenuModal] = useState(false);
 
-    // Filter logic
+    //Lógica de filtrado.
+    //Evalúa si cada elemento cumple con los criterios seleccionados de 'Tipo' y 'Menú'.
     const filteredData = dataGastronomica.filter(item => {
         let matchesTipo = true;
         let matchesMenu = true;
@@ -41,6 +54,7 @@ export default function GastronomicoList() {
         );
     }
 
+    //Renderiza un selector modal.
     const renderCustomPicker = (title, items, labelKey, valueKey, selectedItem, onSelect, onClose) => (
         <Modal visible={true} transparent={true} animationType="fade">
             <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={onClose}>
@@ -94,7 +108,7 @@ export default function GastronomicoList() {
                     onPress={() => setShowMenuModal(true)}
                 />
             </View>
-
+            {/* Modales correspondientes a cada filtro */}
             {showTipoModal && renderCustomPicker(
                 "Seleccionar Tipo",
                 tipoGastronomico,
@@ -115,12 +129,13 @@ export default function GastronomicoList() {
                 () => setShowMenuModal(false)
             )}
 
+            {/* Renderizado del listado de locales gastronómicos */}
             <FlatList
                 data={filteredData}
                 keyExtractor={(item) => (item.id || item.idGastronomico || Math.random()).toString()}
                 contentContainerStyle={styles.listContainer}
                 renderItem={({ item }) => {
-                    let subtitle = 'Gastronomía'; //necesitamos los tipos para meterlos aca
+                    let subtitle = 'Gastronomía';
                     if (item.tipo && Array.isArray(item.tipo) && item.tipo.length > 0) {
                         subtitle = item.tipo.map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(' • ');
                     } else if (item.tipo && typeof item.tipo === 'string') {

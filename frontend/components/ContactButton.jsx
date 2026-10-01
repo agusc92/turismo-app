@@ -1,3 +1,19 @@
+/**
+ * @fileoverview Componente reutilizable de botón/tarjeta de contacto.
+ * Diseñado para presentar de forma estructurada e interactiva canales de comunicación 
+ * (teléfono, email, redes sociales, sitio web) con un icono dinámico, etiquetas y acción al presionar.
+ * Se utiliza en la pantalla "contacto".
+ * 
+ * @module components/ContactButton
+ * @requires react
+ * @requires react-native.TouchableOpacity
+ * @requires react-native.View
+ * @requires react-native.Text
+ * @requires react-native.StyleSheet
+ * @requires @expo/vector-icons.Ionicons
+ * @requires ../constants/Styles.Colors
+ */
+
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';

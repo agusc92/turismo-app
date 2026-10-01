@@ -1,9 +1,20 @@
+/**
+ * @fileoverview Configuración del enrutador de pestañas inferiores (Bottom Tabs).
+ * Define las rutas principales de navegación (Inicio, Mapa, Contacto) y 
+ * personaliza la apariencia de la barra inferior
+ *
+ * @requires expo-router
+ * @requires @expo/vector-icons
+ */
+
 import { Tabs } from 'expo-router';
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-// Componente CustomTabItem eliminado
-
+/**
+ * Componente de diseño para la navegación principal por pestañas.
+ * @returns {JSX.Element} El contenedor del enrutador de pestañas.
+ */
 export default function TabLayout() {
     return (
         <Tabs

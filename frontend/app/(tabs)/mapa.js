@@ -1,3 +1,15 @@
+/**
+ * @fileoverview Pantalla de Mapa interactivo.
+ * Utiliza `react-native-webview` para inyectar un mapa de Leaflet (OpenStreetMap).
+ * Integra geolocalización del usuario, consumo de múltiples endpoints de la API 
+ * en paralelo, filtrado por cercanía y un puente de comunicación bidireccional 
+ * para navegar a los detalles de cada lugar desde los popups del mapa web.
+ *
+ * @requires react-native-webview
+ * @requires expo-location
+ * @requires expo-router
+ */
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, ScrollView } from 'react-native';
 import WebView from 'react-native-webview';
@@ -6,7 +18,10 @@ import { API_URL } from '../../api';
 import { Colors } from "../../constants/Styles";
 import { useRouter } from 'expo-router';
 
-// Categorías con color y emoji para los pines del mapa
+/**
+ * Configuración centralizada de las categorías mostradas en el mapa.
+ * @constant {CategoriaMapa[]}
+ */
 const CATEGORIAS = [
     { key: 'gastronomico', label: 'Gastronomía', color: Colors.textColor, emoji: '🍽️', ruta: 'gastronomicos' },
     { key: 'balneario', label: 'Balnearios', color: Colors.textColor, emoji: '🏖️', ruta: 'balnearios' },
@@ -18,6 +33,15 @@ const CATEGORIAS = [
 // Radio de búsqueda en km (muestra todos los lugares dentro de este radio)
 const RADIO_KM = 10;
 
+/**
+ * Calcula la distancia entre dos coordenadas geográficas utilizando la fórmula de Haversine.
+ * 
+ * @param {number} lat1 - Latitud del punto origen.
+ * @param {number} lon1 - Longitud del punto origen.
+ * @param {number} lat2 - Latitud del punto destino.
+ * @param {number} lon2 - Longitud del punto destino.
+ * @returns {number} La distancia calculada en kilómetros.
+ */
 function calcularDistanciaKm(lat1, lon1, lat2, lon2) {
     const R = 6371;
     const dLat = ((lat2 - lat1) * Math.PI) / 180;
@@ -30,6 +54,11 @@ function calcularDistanciaKm(lat1, lon1, lat2, lon2) {
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+/**
+ * Componente principal del Mapa.
+ * 
+ * @returns {JSX.Element} Vista que contiene el mapa web embebido y controles nativos superpuestos.
+ */
 export default function Mapa() {
     const router = useRouter();
     const [location, setLocation] = useState(null);
@@ -121,7 +150,10 @@ export default function Mapa() {
         return dist <= RADIO_KM;
     });
 
-    // ─── 4. Construir el HTML con Leaflet ──────────────────────────────────────
+    /**
+     * Construcción dinámica de los scripts de Leaflet.
+     * Convierte los lugares filtrados en cadenas JS para inyectar marcadores en el HTML.
+     */
     const markersJS = lugaresFiltrados.map(l => {
         const id = l.id; // ID único del elemento para saber a cuál navegar
         const nombre = (l.nombre || 'Sin nombre').replace(/'/g, "\\'").replace(/"/g, '&quot;');

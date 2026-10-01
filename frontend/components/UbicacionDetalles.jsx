@@ -1,3 +1,14 @@
+/**
+ * @fileoverview Componente de ubicación reutilizable para la presentación de información geográfica.
+ * Muestra la dirección y un mapa interactivo del lugar.
+ * Se utiliza en la página de detalle de los recursos.
+ * @module components/UbicacionDetalles
+ * @requires react-native.View
+ * @requires react-native.Text
+ * @requires react-native.StyleSheet
+ * @exports UbicacionDetalles
+ */
+
 import { View, Text, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import WebView from "react-native-webview";
