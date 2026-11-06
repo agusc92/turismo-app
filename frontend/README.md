@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="dark.png#gh-dark-mode-only" width="400">
-  <img src="light.png#gh-light-mode-only" width="400">
+  <img src="docs/dark.png#gh-dark-mode-only" width="400">
+  <img src="docs/light.png#gh-light-mode-only" width="400">
 </p>
 
 [![React Native](https://img.shields.io/badge/React_Native-0.83.2-20232a?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactnative.dev/)
