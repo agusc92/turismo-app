@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="public/dark.png#gh-dark-mode-only" width="400">
-  <img src="public/light.png#gh-light-mode-only" width="400">
+  <img src="dark.png#gh-dark-mode-only" width="400">
+  <img src="light.png#gh-light-mode-only" width="400">
 </p>
 
 [![React Native](https://img.shields.io/badge/React_Native-0.83.2-20232a?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactnative.dev/)
@@ -10,6 +10,8 @@
 [![EAS Build](https://img.shields.io/badge/EAS_Build-Configured-4630EB?style=for-the-badge&logo=expo&logoColor=white)](https://expo.dev/eas)
 
 # Frontend de Descubrí Necochea
+
+Este repositorio contiene el código fuente del frontend de la aplicación de Turismo Necochea "Descubrí Necochea" , desarrollado con React Native y Expo. La APP Movil muestra la información sobre alojamientos, gastronomía, eventos, actividades, balnearios y complejos obtenidos desde la API.
 
 ## Índice
 

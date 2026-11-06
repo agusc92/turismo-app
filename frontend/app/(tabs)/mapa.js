@@ -25,8 +25,8 @@ import { useRouter } from 'expo-router';
 const CATEGORIAS = [
     { key: 'gastronomico', label: 'Gastronomía', color: Colors.textColor, emoji: '🍽️', ruta: 'gastronomicos' },
     { key: 'balneario', label: 'Balnearios', color: Colors.textColor, emoji: '🏖️', ruta: 'balnearios' },
-    { key: 'alojamiento', label: 'Alojamientos', color: Colors.textColor, emoji: '🏨', ruta: 'alojamientos' },
-    { key: 'actividad', label: 'Actividades', color: Colors.textColor, emoji: '🎯', ruta: 'actividades' },
+    { key: 'alojamiento', label: 'Alojamientos', color: Colors.textColor, emoji: '🏢', ruta: 'alojamientos' },
+    { key: 'actividad', label: 'Actividades', color: Colors.textColor, emoji: '🎳', ruta: 'actividades' },
     { key: 'complejo', label: 'Complejos', color: Colors.textColor, emoji: '🏕️', ruta: 'complejos' },
 ];
 
@@ -188,7 +188,7 @@ export default function Mapa() {
         `;
     }).join('\n');
 
-    const mapHtml = `
+    const mapHtml  = `
     <!DOCTYPE html>
     <html>
     <head>
@@ -240,10 +240,10 @@ export default function Mapa() {
             // Inicialización del mapa...
             var map = L.map('map', { zoomControl: true }).setView([${location.latitude}, ${location.longitude}], 14);
 
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-                maxZoom: 19,
-                attribution: '© OpenStreetMap'
-            }).addTo(map);
+           
+ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri'
+}).addTo(map);
 
             // Pin del usuario con animación de pulso
             var userIcon = L.divIcon({

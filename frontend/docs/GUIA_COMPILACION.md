@@ -64,7 +64,8 @@ El perfil `preview` genera un **.apk** para pruebas y el perfil `production` gen
 ```json
 {
   "cli": {
-    "version": ">= 9.0.0"
+    "version": ">= 19.0.5",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -78,10 +79,14 @@ El perfil `preview` genera un **.apk** para pruebas y el perfil `production` gen
       }
     },
     "production": {
+      "autoIncrement": true,
       "android": {
         "buildType": "app-bundle"
       }
     }
+  },
+  "submit": {
+    "production": {}
   }
 }
 ```
