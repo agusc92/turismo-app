@@ -34,6 +34,7 @@ class ImportAllDataCommand extends Command
         $this->call('import:actividades');
         $this->call('import:gastronomicos');
         $this->call('import:contactos');
+        $this->call('import:admin');
 
         $this->info('Todos los comandos de importación han sido ejecutados.');
         return Command::SUCCESS;
