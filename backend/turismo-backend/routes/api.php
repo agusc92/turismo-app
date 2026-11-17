@@ -16,6 +16,7 @@ use App\Http\Controllers\GastronomicoMenuController;
 use App\Http\Controllers\TipoGastronomicoController;
 use App\Http\Controllers\TipoAlojamientoController;
 use App\Http\Controllers\ComplejoController;
+use App\Http\Controllers\ContactController;
 use App\Http\Middleware\AdminMiddleware;
 
 // Public routes
@@ -52,6 +53,15 @@ Route::delete('gastronomicos/{id}/menus/{menuId}', [GastronomicoMenuController::
 Route::get('alojamientos/{id}/tipos', [AlojamientoController::class, 'tipos']);
 Route::post('alojamientos/{id}/tipos', [AlojamientoController::class, 'addTipo']);
 Route::delete('alojamientos/{id}/tipos/{tipoId}', [AlojamientoController::class, 'removeTipo']);
+
+// Contact nested routes
+Route::get('contactos', [ContactController::class, 'show']);
+Route::put('contactos', [ContactController::class, 'update']);
+
+// Imagen nested routes
+Route::get('imagenes', [ImagenController::class, 'index']);
+Route::post('imagenes', [ImagenController::class, 'store']);
+Route::delete('imagenes/{id}', [ImagenController::class, 'destroy']);
 
 // Protected routes (require token)
 Route::middleware('auth:sanctum')->group(function () {

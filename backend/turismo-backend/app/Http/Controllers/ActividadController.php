@@ -101,7 +101,7 @@ class ActividadController extends Controller
             'imagen' => 'nullable|string',
             'latitud' => 'nullable|numeric',
             'longitud' => 'nullable|numeric',
-            'tipo_id' => 'required|exists:tipos,id',
+            'tipo_id' => 'required|exists:tipo_actividades,id',
             'dias_y_horarios' => 'nullable|string',
             'habilitado' => 'nullable|boolean',
         ]);
@@ -159,7 +159,7 @@ class ActividadController extends Controller
             'imagen' => 'nullable|string',
             'latitud' => 'nullable|numeric',
             'longitud' => 'nullable|numeric',
-            'tipo_id' => 'sometimes|required|exists:tipos,id',
+            'tipo_id' => 'sometimes|required|exists:tipo_actividades,id',
             'dias_y_horarios' => 'nullable|string',
             'habilitado' => 'nullable|boolean',
         ]);

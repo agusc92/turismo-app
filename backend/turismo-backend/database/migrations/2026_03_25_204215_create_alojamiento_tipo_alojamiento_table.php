@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('alojamiento_tipo_alojamiento', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('alojamiento_id')->constrained('alojamientos')->onDelete('cascade');
-            $table->foreignId('tipo_alojamiento_id')->constrained('tipo_alojamientos')->onDelete('cascade');
+            $table->foreignId('alojamiento_id')->constrained('alojamientos')->onDelete('restrict');
+            $table->foreignId('tipo_alojamiento_id')->constrained('tipo_alojamientos')->onDelete('restrict');
             $table->timestamps();
         });
     }

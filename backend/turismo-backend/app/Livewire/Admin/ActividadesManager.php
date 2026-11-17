@@ -43,7 +43,7 @@ class ActividadesManager extends Component
         return [
             'nombre'          => 'required|string|max:255',
             'direccion'       => 'required|string|max:255',
-            'tipo_id'         => 'required|exists:tipos,id',
+            'tipo_id'         => 'required|exists:tipo_actividades,id',
             'descripcion'     => 'nullable|string',
             'redes_sociales'  => 'nullable|url|max:500',
             'facebook'       => 'nullable|url|max:500',

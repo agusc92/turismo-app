@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('mail')->nullable();
             $table->text('telefono')->nullable();
             $table->text('imagen')->nullable();
-            $table->foreignId('tipo_id')->constrained('tipos')->onDelete('cascade');
+            $table->foreignId('tipo_id')->constrained('tipo_actividades')->onDelete('restrict');
             $table->text('dias_y_horarios')->nullable();
             $table->decimal('latitud', 10, 7)->nullable();
             $table->decimal('longitud', 10, 7)->nullable();

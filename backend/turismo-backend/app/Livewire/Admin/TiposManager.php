@@ -25,7 +25,7 @@ class TiposManager extends Component
 
     protected function rules(): array
     {
-        return ['tipo' => 'required|string|max:100|unique:tipos,tipo' . ($this->isEditing ? ',' . $this->editingId : '')];
+        return ['tipo' => 'required|string|max:100|unique:tipo_actividades,tipo' . ($this->isEditing ? ',' . $this->editingId : '')];
     }
 
     public function updatingSearch(): void { $this->resetPage(); }
