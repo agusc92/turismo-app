@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\TipoAlojamiento;
+use Illuminate\Database\QueryException;
 
 class TiposAlojamientoManager extends Component
 {
@@ -82,14 +83,33 @@ class TiposAlojamientoManager extends Component
 
     public function delete(): void
     {
-        if ($this->confirmId) {
-            $t = TipoAlojamiento::findOrFail($this->confirmId);
-            // Desvinculamos de la tabla intermedia antes de borrar para evitar inconsistencias
-            $t->alojamientos()->detach(); 
-            $t->delete();
+        if (!$this->confirmId) {
+            return;
         }
-        $this->toast('Tipo de alojamiento eliminado.');
-        $this->showConfirm = false; 
+
+        $tipo = TipoAlojamiento::findOrFail($this->confirmId);
+
+        if ($tipo->alojamientos()->exists()) {
+            $this->showConfirm = false;
+            $this->confirmId = null;
+            $this->toast(
+                'El tipo de alojamiento no puede eliminarse porque está siendo utilizado por uno o más recursos.',
+                'error'
+            );
+            return;
+        }
+
+        try {
+            $tipo->delete();
+            $this->toast('Tipo de alojamiento eliminado.');
+        } catch (QueryException $e) {
+            $this->toast(
+                'El tipo de alojamiento no puede eliminarse porque está siendo utilizado por uno o más recursos.',
+                'error'
+            );
+        }
+
+        $this->showConfirm = false;
         $this->confirmId = null;
     }
 

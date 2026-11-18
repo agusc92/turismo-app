@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Menu;
+use Illuminate\Database\QueryException;
 
 class MenusManager extends Component
 {
@@ -63,9 +64,34 @@ class MenusManager extends Component
 
     public function delete(): void
     {
-        if ($this->confirmId) Menu::findOrFail($this->confirmId)->delete();
-        $this->toast('Menú eliminado.');
-        $this->showConfirm = false; $this->confirmId = null;
+        if (!$this->confirmId) {
+            return;
+        }
+
+        $menu = Menu::findOrFail($this->confirmId);
+
+        if ($menu->gastronomicos()->exists()) {
+            $this->showConfirm = false;
+            $this->confirmId = null;
+            $this->toast(
+                'El menú no puede eliminarse porque está siendo utilizado por uno o más recursos.',
+                'error'
+            );
+            return;
+        }
+
+        try {
+            $menu->delete();
+            $this->toast('Menú eliminado.');
+        } catch (QueryException $e) {
+            $this->toast(
+                'El menú no puede eliminarse porque está siendo utilizado por uno o más recursos.',
+                'error'
+            );
+        }
+
+        $this->showConfirm = false;
+        $this->confirmId = null;
     }
 
     private function toast(string $msg, string $type = 'success'): void

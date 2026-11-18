@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Tipo;
+use Illuminate\Database\QueryException;
 
 class TiposManager extends Component
 {
@@ -63,9 +64,38 @@ class TiposManager extends Component
 
     public function delete(): void
     {
-        if ($this->confirmId) Tipo::findOrFail($this->confirmId)->delete();
-        $this->toast('Tipo eliminado.');
-        $this->showConfirm = false; $this->confirmId = null;
+        if (!$this->confirmId) {
+            return;
+        }
+
+        $tipo = Tipo::findOrFail($this->confirmId);
+
+        // La base de datos utiliza ON DELETE RESTRICT. Avisamos antes de
+        // intentar borrar para evitar una excepción innecesaria.
+        if ($tipo->actividades()->exists() || $tipo->usuarios()->exists()) {
+            $this->showConfirm = false;
+            $this->confirmId = null;
+            $this->toast(
+                'El tipo no puede eliminarse porque está siendo utilizado por uno o más recursos.',
+                'error'
+            );
+            return;
+        }
+
+        try {
+            $tipo->delete();
+            $this->toast('Tipo eliminado.');
+        } catch (QueryException $e) {
+            // Cubre posibles relaciones creadas entre la comprobación y el
+            // DELETE, sin dejar que Livewire rompa la página.
+            $this->toast(
+                'El tipo no puede eliminarse porque está siendo utilizado por uno o más recursos.',
+                'error'
+            );
+        }
+
+        $this->showConfirm = false;
+        $this->confirmId = null;
     }
 
     private function toast(string $msg, string $type = 'success'): void
