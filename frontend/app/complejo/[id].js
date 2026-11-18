@@ -50,7 +50,7 @@ export default function ComplejoDetail() {
 
                     <ContactoDetalles item={item} />
 
-                    <UbicacionDetalles direccion={item.direccion} />
+                    <UbicacionDetalles data={item} />
                 </View>
             </ScrollView>
 

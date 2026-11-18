@@ -62,7 +62,7 @@ export default function AlojamientoDetail() {
                     {item.mapaLink && <UbicacionDetalles direccion={item.mapaLink} />}
                     <ContactoDetalles item={item} />
 
-                    <UbicacionDetalles direccion={item.direccion} />
+                    <UbicacionDetalles data={item} />
                 </View>
             </ScrollView>
         </View>

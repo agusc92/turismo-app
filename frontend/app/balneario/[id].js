@@ -62,7 +62,7 @@ export default function BalnearioDetail() {
 
                     <ContactoDetalles item={item} />
 
-                    <UbicacionDetalles direccion={item.direccion} />
+                    <UbicacionDetalles data={item} />
                 </View>
             </ScrollView>
 
