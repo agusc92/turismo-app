@@ -32,7 +32,7 @@ class GastronomicoManager extends Component
     public string $longitud      = '';
     public array  $tipo_ids      = [];
     public array  $menu_ids      = [];
-    public bool   $habilitado    = false;
+    public bool   $habilitado    = true;
 
     public ?int $confirmId   = null;
     public string $confirmName = '';

@@ -31,7 +31,7 @@ class ActividadesManager extends Component
     public string $longitud      = '';
     public string $dias_y_horarios = '';
     public string $tipo_id       = '';
-    public bool   $habilitado       = false;
+    public bool   $habilitado       = true;
 
     public ?int $confirmId   = null;
     public string $confirmName = '';
