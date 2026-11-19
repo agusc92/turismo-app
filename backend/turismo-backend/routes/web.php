@@ -22,6 +22,8 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
     Route::get('/tipo-gastronomico', fn() => view('admin.tipo-gastronomico'))->name('admin.tipo-gastronomico');
     Route::get('/menus',             fn() => view('admin.menus'))->name('admin.menus');
     Route::get('/tipo-alojamiento',  fn() => view('admin.tipo-alojamiento'))->name('admin.tipo-alojamiento');
+    Route::get('/imagenes',           fn() => view('admin.imagenes'))->name('admin.imagenes');
+    Route::get('/contactos',          fn() => view('admin.contactos'))->name('admin.contactos');
 });
 
 // Default

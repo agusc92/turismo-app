@@ -115,7 +115,7 @@ class InfoUsuarioController extends Controller
             'estadia' => 'nullable|string',
             'integrantes' => 'nullable|integer', // Añadida regla 'integer'
             'intereses' => 'nullable|array',
-            'intereses.*' => 'exists:tipos,id', // Añadida regla 'exists' para los IDs de intereses
+            'intereses.*' => 'exists:tipo_actividades,id',
         ]);
 
         $info->update($request->all());

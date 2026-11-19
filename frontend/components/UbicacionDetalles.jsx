@@ -14,7 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import WebView from "react-native-webview";
 import { Colors } from "../constants/Styles";
 
-export default function UbicacionDetalles({ direccion }) {
+export default function UbicacionDetalles({ data }) {
     return (
         <>
             {/* Ubicación */}
@@ -22,15 +22,15 @@ export default function UbicacionDetalles({ direccion }) {
                 <Text style={styles.sectionTitle}>Ubicación</Text>
                 <View style={styles.contactRow}>
                     <Ionicons name="location-outline" size={20} color="#31204D" style={styles.contactIcon} />
-                    <Text style={styles.contactText}>{direccion ? String(direccion) : 'No especificada'}</Text>
+                    <Text style={styles.contactText}>{data.direccion ? String(data.direccion) : 'No especificada'}</Text>
                 </View>
             </View>
 
             {/* Mapa */}
-            {direccion ? (
+            {data.latitud ? (
                 <View style={styles.mapWrap}>
                     <WebView
-                        source={{ html: `<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /><style>body { margin: 0; padding: 0; }</style><iframe width="100%" height="100%" frameborder="0" style="border:0;" src="https://www.google.com/maps?q=${encodeURIComponent(direccion + ', Necochea, Argentina')}&output=embed" allowfullscreen></iframe>` }}
+                        source={{ html: `<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /><style>body { margin: 0; padding: 0; }</style><iframe width="100%" height="100%" frameborder="0" style="border:0;" src="https://www.google.com/maps?q=${encodeURIComponent(data.latitud + ', ' + data.longitud )}&output=embed" allowfullscreen></iframe>` }}
                         style={styles.mapImage}
                         scrollEnabled={false}
                         bounces={false}

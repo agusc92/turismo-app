@@ -74,7 +74,7 @@ export default function GastronomicoDetalle() {
 
                     <ContactoDetalles item={item} />
 
-                    <UbicacionDetalles direccion={item.direccion} />
+                    <UbicacionDetalles data={item} />
 
                 </View>
             </ScrollView>

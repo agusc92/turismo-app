@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\TipoGastronomico;
+use Illuminate\Database\QueryException;
 
 class TiposGastronomicoManager extends Component
 {
@@ -63,9 +64,34 @@ class TiposGastronomicoManager extends Component
 
     public function delete(): void
     {
-        if ($this->confirmId) TipoGastronomico::findOrFail($this->confirmId)->delete();
-        $this->toast('Tipo gastronómico eliminado.');
-        $this->showConfirm = false; $this->confirmId = null;
+        if (!$this->confirmId) {
+            return;
+        }
+
+        $tipo = TipoGastronomico::findOrFail($this->confirmId);
+
+        if ($tipo->gastronomicos()->exists()) {
+            $this->showConfirm = false;
+            $this->confirmId = null;
+            $this->toast(
+                'El tipo gastronómico no puede eliminarse porque está siendo utilizado por uno o más recursos.',
+                'error'
+            );
+            return;
+        }
+
+        try {
+            $tipo->delete();
+            $this->toast('Tipo gastronómico eliminado.');
+        } catch (QueryException $e) {
+            $this->toast(
+                'El tipo gastronómico no puede eliminarse porque está siendo utilizado por uno o más recursos.',
+                'error'
+            );
+        }
+
+        $this->showConfirm = false;
+        $this->confirmId = null;
     }
 
     private function toast(string $msg, string $type = 'success'): void

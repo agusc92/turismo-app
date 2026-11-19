@@ -40,6 +40,8 @@ class Tipo extends Model
 {
     use HasFactory;
 
+    protected $table = 'tipo_actividades';
+
     protected $fillable = ['tipo'];
 
     public function actividades()

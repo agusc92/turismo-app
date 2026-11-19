@@ -16,6 +16,7 @@
         ['icon' => '🍴', 'label' => 'Tipos Gastron.', 'count' => \App\Models\TipoGastronomico::count(), 'route' => 'admin.tipo-gastronomico'],
         ['icon' => '📋', 'label' => 'Menús',          'count' => \App\Models\Menu::count(),             'route' => 'admin.menus'],
         ['icon' => '🏨', 'label' => 'Tipos Alojamiento', 'count' => \App\Models\TipoAlojamiento::count(), 'route' => 'admin.tipo-alojamiento'],
+        ['icon' => '📞', 'label' => 'Contacto',        'count' => \App\Models\Contact::count(),         'route' => 'admin.contactos'],
     ];
 @endphp
 

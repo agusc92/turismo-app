@@ -28,7 +28,7 @@ class ComplejoManager extends Component
     public string $imagen       = '';
     public string $latitud      = '';
     public string $longitud     = '';
-    public bool   $habilitado   = false;
+    public bool   $habilitado   = true;
 
     public ?int $confirmId   = null;
     public string $confirmName = '';

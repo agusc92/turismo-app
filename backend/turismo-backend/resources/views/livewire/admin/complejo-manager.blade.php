@@ -91,7 +91,7 @@
 
 {{-- Create / Edit Modal --}}
 @if($showModal)
-<div class="modal-overlay" wire:click.self="$set('showModal', false)">
+<div class="modal-overlay" >
     <div class="modal modal-lg">
         <div class="modal-header">
             <span class="modal-title">{{ $isEditing ? '✏️ Editar Complejo' : '＋ Nuevo Complejo' }}</span>
@@ -171,7 +171,7 @@
 
 {{-- Delete Confirm --}}
 @if($showConfirm)
-<div class="modal-overlay" wire:click.self="$set('showConfirm', false)">
+<div class="modal-overlay" >
     <div class="modal confirm-modal">
         <div class="modal-body" style="padding:32px;text-align:center">
             <div class="confirm-icon">🗑️</div>

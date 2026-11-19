@@ -58,7 +58,7 @@ class TipoApiTest extends TestCase
                      'tipo' => 'Nuevo Tipo',
                  ]);
 
-        $this->assertDatabaseHas('tipos', ['tipo' => 'Nuevo Tipo']);
+        $this->assertDatabaseHas('tipo_actividades', ['tipo' => 'Nuevo Tipo']);
     }
 
     /**
@@ -79,7 +79,7 @@ class TipoApiTest extends TestCase
                      'tipo' => 'Tipo Actualizado',
                  ]);
 
-        $this->assertDatabaseHas('tipos', ['id' => $tipo->id, 'tipo' => 'Tipo Actualizado']);
+        $this->assertDatabaseHas('tipo_actividades', ['id' => $tipo->id, 'tipo' => 'Tipo Actualizado']);
     }
 
     /**
@@ -94,7 +94,7 @@ class TipoApiTest extends TestCase
         $response->assertStatus(200)
                  ->assertJson(['message' => 'Tipo eliminado correctamente']);
 
-        $this->assertDatabaseMissing('tipos', ['id' => $tipo->id]);
+        $this->assertDatabaseMissing('tipo_actividades', ['id' => $tipo->id]);
     }
 
     /**

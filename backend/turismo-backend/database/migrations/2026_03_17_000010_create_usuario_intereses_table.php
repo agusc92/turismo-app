@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('usuario_intereses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('info_usuario_id')->constrained('info_usuarios')->onDelete('cascade');
-            $table->foreignId('tipo_id')->constrained('tipos')->onDelete('cascade');
+            $table->foreignId('info_usuario_id')->constrained('info_usuarios')->onDelete('restrict');
+            $table->foreignId('tipo_id')->constrained('tipo_actividades')->onDelete('restrict');
             $table->timestamps();
         });
     }

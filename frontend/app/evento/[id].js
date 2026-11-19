@@ -51,7 +51,7 @@ export default function EventoDetalle() {
                         <Text style={styles.description}>{evento.descripcion}</Text>
                     </View>
 
-                    <UbicacionDetalles direccion={evento.direccion} />
+                    <UbicacionDetalles data={evento} />
                 </View>
             </ScrollView>
 

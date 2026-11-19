@@ -69,7 +69,7 @@ export default function ActividadDetalle() {
 
                     <ContactoDetalles item={actividad} />
 
-                    <UbicacionDetalles direccion={actividad.direccion} />
+                    <UbicacionDetalles data={actividad} />
                 </View>
 
             </ScrollView>
