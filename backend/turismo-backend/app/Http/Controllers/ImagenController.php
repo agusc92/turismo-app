@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Imagen;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Storage;
 
 class ImagenController extends Controller
 {
@@ -21,20 +20,18 @@ class ImagenController extends Controller
     public function store(Request $request): JsonResponse
     {
         $request->validate([
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'url' => 'required|url|max:255',
             'titulo' => 'nullable|string|max:255',
         ]);
 
-        $path = $request->file('imagen')->store('imagenes', 'public');
-
         $imagen = Imagen::create([
-            'url' => Storage::url($path),
+            'url' => $request->url,
             'titulo' => $request->titulo,
         ]);
 
         return response()->json([
             'success' => true,
-            'message' => 'Imagen subida correctamente',
+            'message' => 'Imagen agregada correctamente',
             'data' => $imagen
         ], 201);
     }

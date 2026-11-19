@@ -1,0 +1,128 @@
+<div>
+    {{-- Toast --}}
+    <div class="toast-container" id="toast-container">
+        @if($toastMsg)
+        <div class="toast toast-{{ $toastType }}" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3500)">
+            {{ $toastType === 'success' ? '✅' : '❌' }} {{ $toastMsg }}
+        </div>
+        @endif
+    </div>
+
+    {{-- Header --}}
+    <div class="card-header" style="background:var(--bg-card);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:20px;">
+        <div class="search-bar">
+            <span class="search-icon">🔍</span>
+            <input name="search" style="padding-left:35px;" type="text" wire:model.live.debounce.300ms="search" placeholder="Buscar por título o URL…">
+        </div>
+        <button class="btn btn-primary" wire:click="openCreate">＋ Nueva imagen</button>
+    </div>
+
+    {{-- Table --}}
+    <div class="card">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Título</th>
+                        <th>URL</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($imagenes as $imagen)
+                    <tr wire:key="imagen-{{ $imagen->id }}">
+                        <td>
+                            <img src="{{ $imagen->url }}" class="table-img" alt="{{ $imagen->titulo ?: 'Imagen del menú principal' }}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <div class="table-img-placeholder" style="display:none">🖼️</div>
+                        </td>
+                        <td>
+                            <div style="font-weight:600">{{ $imagen->titulo ?: 'Sin título' }}</div>
+                        </td>
+                        <td class="muted" style="max-width:420px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ $imagen->url }}</td>
+                        <td>
+                            <div style="display:flex;gap:6px">
+                                <button class="btn btn-success btn-sm" wire:click="openEdit({{ $imagen->id }})">✏️ Editar</button>
+                                <button class="btn btn-danger btn-sm" wire:click="confirmDelete({{ $imagen->id }}, '{{ addslashes($imagen->titulo ?: 'esta imagen') }}')">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="4">
+                            <div class="empty-state">
+                                <div class="empty-icon">🖼️</div>
+                                <div class="empty-text">No hay imágenes{{ $search ? ' que coincidan con la búsqueda' : '' }}</div>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        @if($imagenes->hasPages())
+        <div class="pagination-wrap">
+            <span>Mostrando {{ $imagenes->firstItem() }}–{{ $imagenes->lastItem() }} de {{ $imagenes->total() }}</span>
+            <div>{{ $imagenes->links('vendor.pagination.custom') }}</div>
+        </div>
+        @endif
+    </div>
+
+    {{-- Create / Edit Modal --}}
+    @if($showModal)
+    <div class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">{{ $isEditing ? '✏️ Editar imagen' : '＋ Nueva imagen' }}</span>
+                <button class="modal-close" wire:click="$set('showModal', false)">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grid form-grid-1">
+                    <div class="form-group">
+                        <label>Título</label>
+                        <input type="text" wire:model="titulo" placeholder="Ej: Playa principal">
+                        @error('titulo') <span class="error-msg">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="form-group">
+                        <label>URL de la imagen *</label>
+                        <input type="url" wire:model="url" placeholder="https://ejemplo.com/imagen.jpg">
+                        @error('url') <span class="error-msg">{{ $message }}</span> @enderror
+                    </div>
+                    @if($url)
+                    <div style="text-align:center;margin-top:4px">
+                        <img src="{{ $url }}" alt="Previsualización" style="max-width:100%;max-height:180px;border-radius:var(--radius-sm);object-fit:cover" onerror="this.style.display='none'">
+                    </div>
+                    @endif
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" wire:click="$set('showModal', false)">Cancelar</button>
+                <button class="btn btn-primary" wire:click="save" wire:loading.attr="disabled">
+                    <span wire:loading.remove>{{ $isEditing ? 'Guardar cambios' : 'Agregar imagen' }}</span>
+                    <span wire:loading><span class="spinner"></span> Guardando…</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    {{-- Delete Confirm --}}
+    @if($showConfirm)
+    <div class="modal-overlay">
+        <div class="modal confirm-modal">
+            <div class="modal-body" style="padding:32px;text-align:center">
+                <div class="confirm-icon">🗑️</div>
+                <div class="modal-title" style="margin-bottom:10px">Eliminar imagen</div>
+                <div class="confirm-text">
+                    ¿Seguro que querés eliminar <span class="confirm-name">{{ $confirmName }}</span>?
+                    <br>Esta acción no se puede deshacer.
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:center">
+                <button class="btn btn-secondary" wire:click="$set('showConfirm', false)">Cancelar</button>
+                <button class="btn btn-danger" wire:click="delete">Sí, eliminar</button>
+            </div>
+        </div>
+    </div>
+    @endif
+</div>
