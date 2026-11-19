@@ -68,6 +68,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            text-decoration: none;
         }
         .brand-icon {
             width: 36px; height: 36px;
@@ -509,13 +510,13 @@
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-brand">
-            <div class="brand-logo">
+            <a class="brand-logo" href="{{ route('admin.dashboard') }}">
                 <div class="brand-icon">🌊</div>
                 <div>
                     <div class="brand-text">TurismoApp</div>
                     <div class="brand-sub">Panel de Admin</div>
                 </div>
-            </div>
+            </a>
         </div>
 
         <nav class="sidebar-nav">
@@ -564,6 +565,9 @@
                 </a>
                 <a href="{{ route('admin.imagenes') }}" class="nav-item {{ request()->routeIs('admin.imagenes') ? 'active' : '' }}">
                     <span class="nav-icon">🖼️</span> Imágenes (menú inicial)
+                </a>
+                <a href="{{ route('admin.contactos') }}" class="nav-item {{ request()->routeIs('admin.contactos') ? 'active' : '' }}">
+                    <span class="nav-icon">📞</span> Datos de contacto
                 </a>
             </div>
 

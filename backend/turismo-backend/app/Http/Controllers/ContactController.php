@@ -82,15 +82,15 @@ class ContactController extends Controller
         $contact = Contact::first() ?? new Contact();
 
         $validated = $request->validate([
-            'Telefono' => 'nullable|string|max:255',
-            'Whatsapp' => 'nullable|string|max:255',
-            'Email' => 'nullable|email|max:255',
-            'Web' => 'nullable|string|max:255',
-            'Instagram' => 'nullable|string|max:255',
-            'Facebook' => 'nullable|string|max:255',
-            'Youtube' => 'nullable|string|max:255',
-            'Tiktok' => 'nullable|string|max:255',
-            'Direccion' => 'nullable|string|max:255',
+            'telefono' => 'nullable|string|max:255',
+            'whatsapp' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'web' => 'nullable|string|max:255',
+            'instagram' => 'nullable|string|max:255',
+            'facebook' => 'nullable|string|max:255',
+            'youtube' => 'nullable|string|max:255',
+            'tiktok' => 'nullable|string|max:255',
+            'direccion' => 'nullable|string|max:255',
         ]);
 
         $contact->fill($validated);

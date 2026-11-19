@@ -10,8 +10,12 @@ return new class extends Migration
     {
         Schema::create('imagenes', function (Blueprint $table) {
             $table->id();
-            $table->string('url');
-            $table->string('titulo')->nullable();
+            $table->string('actividades')->nullable();
+            $table->string('gastronomicos')->nullable();
+            $table->string('eventos')->nullable();
+            $table->string('alojamientos')->nullable();
+            $table->string('complejos')->nullable();
+            $table->string('balnearios')->nullable();
             $table->timestamps();
         });
     }

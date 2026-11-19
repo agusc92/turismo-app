@@ -13,27 +13,34 @@ class ImagenController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => Imagen::all()
+            'data' => Imagen::first()
         ]);
     }
 
     public function store(Request $request): JsonResponse
     {
         $request->validate([
-            'url' => 'required|url|max:255',
-            'titulo' => 'nullable|string|max:255',
+            'actividades' => 'nullable|url|max:255',
+            'gastronomicos' => 'nullable|url|max:255',
+            'eventos' => 'nullable|url|max:255',
+            'alojamientos' => 'nullable|url|max:255',
+            'complejos' => 'nullable|url|max:255',
+            'balnearios' => 'nullable|url|max:255',
         ]);
 
-        $imagen = Imagen::create([
-            'url' => $request->url,
-            'titulo' => $request->titulo,
-        ]);
+        $imagen = Imagen::updateOrCreate(
+            ['id' => Imagen::value('id') ?? 1],
+            $request->only([
+            'actividades', 'gastronomicos', 'eventos',
+            'alojamientos', 'complejos', 'balnearios',
+            ])
+        );
 
         return response()->json([
             'success' => true,
             'message' => 'Imagen agregada correctamente',
             'data' => $imagen
-        ], 201);
+        ]);
     }
 
     public function destroy($id): JsonResponse

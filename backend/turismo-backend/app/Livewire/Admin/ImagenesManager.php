@@ -4,110 +4,62 @@ namespace App\Livewire\Admin;
 
 use App\Models\Imagen;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class ImagenesManager extends Component
 {
-    use WithPagination;
-
-    public string $search = '';
-    public bool $showModal = false;
-    public bool $showConfirm = false;
-    public bool $isEditing = false;
-
-    public ?int $editingId = null;
-    public string $url = '';
-    public string $titulo = '';
-
-    public ?int $confirmId = null;
-    public string $confirmName = '';
+    public string $actividades = '';
+    public string $gastronomicos = '';
+    public string $eventos = '';
+    public string $alojamientos = '';
+    public string $complejos = '';
+    public string $balnearios = '';
     public string $toastMsg = '';
     public string $toastType = 'success';
 
     protected function rules(): array
     {
         return [
-            'url' => 'required|url|max:255',
-            'titulo' => 'nullable|string|max:255',
+            'actividades' => 'nullable|url|max:255',
+            'gastronomicos' => 'nullable|url|max:255',
+            'eventos' => 'nullable|url|max:255',
+            'alojamientos' => 'nullable|url|max:255',
+            'complejos' => 'nullable|url|max:255',
+            'balnearios' => 'nullable|url|max:255',
         ];
     }
 
-    public function updatingSearch(): void
+    public function mount(): void
     {
-        $this->resetPage();
-    }
+        $imagen = Imagen::first();
 
-    public function openCreate(): void
-    {
-        $this->reset(['url', 'titulo', 'editingId']);
-        $this->isEditing = false;
-        $this->showModal = true;
-        $this->resetValidation();
-    }
+        if (!$imagen) {
+            return;
+        }
 
-    public function openEdit(int $id): void
-    {
-        $imagen = Imagen::findOrFail($id);
-        $this->editingId = $imagen->id;
-        $this->url = $imagen->url;
-        $this->titulo = $imagen->titulo ?? '';
-        $this->isEditing = true;
-        $this->showModal = true;
-        $this->resetValidation();
+        foreach (['actividades', 'gastronomicos', 'eventos', 'alojamientos', 'complejos', 'balnearios'] as $field) {
+            $this->{$field} = (string) ($imagen->{$field} ?? '');
+        }
     }
 
     public function save(): void
     {
         $data = $this->validate();
-        $data['titulo'] = $data['titulo'] ?: null;
 
-        if ($this->isEditing) {
-            Imagen::findOrFail($this->editingId)->update($data);
-            $this->toast('Imagen actualizada.');
-        } else {
-            Imagen::create($data);
-            $this->toast('Imagen agregada.');
+        foreach (array_keys($data) as $field) {
+            $data[$field] = $data[$field] ?: null;
         }
 
-        $this->showModal = false;
-    }
+        Imagen::updateOrCreate(
+            ['id' => Imagen::value('id') ?? 1],
+            $data
+        );
 
-    public function confirmDelete(int $id, string $nombre): void
-    {
-        $this->confirmId = $id;
-        $this->confirmName = $nombre;
-        $this->showConfirm = true;
-    }
-
-    public function delete(): void
-    {
-        if (!$this->confirmId) {
-            return;
-        }
-
-        Imagen::findOrFail($this->confirmId)->delete();
-        $this->toast('Imagen eliminada.');
-        $this->showConfirm = false;
-        $this->confirmId = null;
-    }
-
-    private function toast(string $msg, string $type = 'success'): void
-    {
-        $this->toastMsg = $msg;
-        $this->toastType = $type;
-        $this->dispatch('show-toast');
+        $this->toastMsg = 'Imágenes actualizadas.';
+        $this->toastType = 'success';
     }
 
     public function render()
     {
-        $imagenes = Imagen::query()
-            ->when($this->search, function ($query) {
-                $query->where('titulo', 'like', '%' . $this->search . '%')
-                    ->orWhere('url', 'like', '%' . $this->search . '%');
-            })
-            ->latest()
-            ->paginate(12);
-
-        return view('livewire.admin.imagenes-manager', compact('imagenes'));
+        return view('livewire.admin.imagenes-manager');
     }
 }

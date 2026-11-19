@@ -9,7 +9,11 @@ class Imagen extends Model
     protected $table = 'imagenes';
 
     protected $fillable = [
-        'url',
-        'titulo',
+        'actividades',
+        'gastronomicos',
+        'eventos',
+        'alojamientos',
+        'complejos',
+        'balnearios',
     ];
 }

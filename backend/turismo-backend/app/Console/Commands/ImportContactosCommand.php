@@ -47,15 +47,15 @@ class ImportContactosCommand extends Command
                 Contact::updateOrCreate(
                     ['id' => 1], // O sin condición si querés que pise el registro global
                     [
-                        'Telefono' => $row['Telefono'] ?? null,
-                        'Whatsapp' => $row['Whatsapp'] ?? null,
-                        'Email' => $row['Email'] ?? null,
-                        'Web' => $row['Web'] ?? null,
-                        'Instagram' => $row['Instagram'] ?? null,
-                        'Facebook' => $row['Facebook'] ?? null,
-                        'Youtube' => $row['Youtube'] ?? null,
-                        'Tiktok' => $row['Tiktok'] ?? null,
-                        'Direccion' => $row['Direccion'] ?? null,
+                        'telefono' => $row['telefono'] ?? $row['Telefono'] ?? null,
+                        'whatsapp' => $row['whatsapp'] ?? $row['Whatsapp'] ?? null,
+                        'email' => $row['email'] ?? $row['Email'] ?? null,
+                        'web' => $row['web'] ?? $row['Web'] ?? null,
+                        'instagram' => $row['instagram'] ?? $row['Instagram'] ?? null,
+                        'facebook' => $row['facebook'] ?? $row['Facebook'] ?? null,
+                        'youtube' => $row['youtube'] ?? $row['Youtube'] ?? null,
+                        'tiktok' => $row['tiktok'] ?? $row['Tiktok'] ?? null,
+                        'direccion' => $row['direccion'] ?? $row['Direccion'] ?? null,
                     ]
                 );
                 $importedCount++;

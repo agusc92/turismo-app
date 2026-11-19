@@ -83,6 +83,26 @@
         }
         input::placeholder { color: var(--text-faint); }
 
+        .password-wrap { position: relative; }
+        .password-wrap input { padding-right: 46px; }
+        .toggle-password {
+            position: absolute;
+            top: 50%; right: 10px;
+            transform: translateY(-50%);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px; height: 30px;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .toggle-password:hover,
+        .toggle-password:focus-visible { color: var(--primary); background: var(--primary-glow); }
+
         .error-alert {
             background: rgba(248,113,113,0.1);
             border: 1px solid rgba(248,113,113,0.3);
@@ -150,6 +170,7 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Contraseña</label>
+                    <div class="password-wrap">
                     <input
                         type="password"
                         id="password"
@@ -158,6 +179,8 @@
                         autocomplete="current-password"
                         required
                     >
+                        <button type="button" class="toggle-password" id="toggle-password" aria-label="Mostrar contraseña" aria-pressed="false">🙉</button>
+                    </div>
                 </div>
                 <button type="submit" class="btn-login">Ingresar al Panel</button>
             </form>
@@ -167,5 +190,18 @@
             TurismoApp © {{ date('Y') }} · Panel de Administración
         </div>
     </div>
+
+    <script>
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('toggle-password');
+
+        togglePassword.addEventListener('click', () => {
+            const isHidden = passwordInput.type === 'password';
+            passwordInput.type = isHidden ? 'text' : 'password';
+            togglePassword.textContent = isHidden ? '🙈' : '🙉';
+            togglePassword.setAttribute('aria-label', isHidden ? 'Ocultar contraseña' : 'Mostrar contraseña');
+            togglePassword.setAttribute('aria-pressed', String(isHidden));
+        });
+    </script>
 </body>
 </html>
