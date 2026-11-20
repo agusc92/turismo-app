@@ -6,29 +6,19 @@
  * @requires @expo/vector-icons
  */
 
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Linking, Alert, Dimensions, Platform } from 'react-native';
-import { Stack, Tabs } from 'expo-router';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, Alert, Platform } from 'react-native';
+import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constants/Styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Logo } from '../../assets/images';
 import ContactButton from '../../components/ContactButton';
 import SocialButton from '../../components/SocialButton';
+import { useContacto } from '../hooks/useContacto';
 
 
 export default function ContactoScreen() {
-    const contactInfo = {
-        phone: '+54 2262 425665',
-        whatsapp: '+54 2262 431155',
-        email: 'turismo@necochea.tur.ar',
-        instagram: 'necocheatur',
-        facebook: 'necocheatur',
-        youtube: 'necocheatur',
-        tiktok: 'necocheatur',
-        website: 'https://necochea.tur.ar',
-        address: 'Av. 2 y Calle 87, Necochea, Buenos Aires',
-    };
+    const contactInfo = useContacto();
 
     const handleOpenURL = async (url, errorMessage = 'No se pudo abrir el enlace.') => {
         try {

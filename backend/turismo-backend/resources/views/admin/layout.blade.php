@@ -424,6 +424,12 @@
         textarea { resize: vertical; min-height: 80px; }
         select option { background: var(--bg-card); }
 
+        /* Ícono del selector de fecha en blanco para el tema oscuro */
+        input[type="date"] {
+            color-scheme: dark;
+        }
+        
+
         .toggle-wrap { display: flex; align-items: center; gap: 10px; }
         .toggle {
             position: relative;
