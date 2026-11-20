@@ -16,6 +16,7 @@ use App\Http\Controllers\GastronomicoMenuController;
 use App\Http\Controllers\TipoGastronomicoController;
 use App\Http\Controllers\TipoAlojamientoController;
 use App\Http\Controllers\ComplejoController;
+use App\Http\Controllers\ImagenController;
 use App\Http\Controllers\ContactController;
 use App\Http\Middleware\AdminMiddleware;
 
