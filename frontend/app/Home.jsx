@@ -6,14 +6,16 @@
  * @requires react-native
  * @requires expo-router
  */
-import { View, Text, StyleSheet, ScrollView, Image, Dimensions } from "react-native";
-import { ScreenLayout } from "../components/ScreenLayout";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Tabs } from 'expo-router';
+import { ScreenLayout } from "../components/ScreenLayout";
 import { Colors } from "../constants/Styles";
 import HeaderPage from "../components/HeaderPage";
 import MenuCard from "../components/MenuCard";
-
 import Carousel from "../components/Carousel";
+import { getResourceImage } from "../assets/images";
+import { useImagenesHome } from "./hooks/useImagenesHome";
+
 
 /**
  * Componente funcional Home.
@@ -22,6 +24,8 @@ import Carousel from "../components/Carousel";
  * @returns {JSX.Element} La vista renderizada de la pantalla de inicio.
  */
 export default function Home() {
+    const { imagenes } = useImagenesHome();
+    const getHomeImage = (image, type) => typeof image === "string" && image.trim() ? image : getResourceImage(type);
 
     return (
         <ScreenLayout>
@@ -32,7 +36,6 @@ export default function Home() {
             <Tabs.Screen options={{
                 title: "Inicio",
                 headerShown: true,
-
                 header: () => (
                     <View style={styles.customHeaderContainer}>
                         <HeaderPage title="Necochea" logo={true} />
@@ -43,29 +46,21 @@ export default function Home() {
             <ScrollView style={styles.pageContent} showsVerticalScrollIndicator={false}>
                 {/* Sección de eventos destacados */}
                 <Text style={styles.sectionTitle}>Eventos destacados</Text>
-
                 <Carousel />
-                {/* 
-                  * Grilla del menú principal. 
-                  * Cada MenuCard actúa como enlace a una sección específica usando expo-router.
-                  */}
+
                 <View style={styles.menuContainer}>
-                    <MenuCard title="Alojamiento" image='https://files.catbox.moe/gq2xwv.webp' href="/alojamiento/alojamientos" />
-                    <MenuCard title="Gastronomía" image='https://files.catbox.moe/7v2awu.webp' href="/gastronomico/gastronomico" />
-                    <MenuCard title="Balnearios" image='https://files.catbox.moe/j1nwb0.webp' href="/balneario/balnearios" />
-                    <MenuCard title="Actividades" image='https://files.catbox.moe/fhgglt.JPG' href="/actividad/actividades" />
-                    <MenuCard title="Eventos" image='https://imgs.search.brave.com/sSfnVSEYmGz8p78KR8cDIUTL7zMLg6dVvTqbfFuwhX0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9uZWNv/Y2hlYS50dXIuYXIv/d3AtY29udGVudC91/cGxvYWRzLzIwMjYv/MDMvMTYtMDMtRk9U/Ty1wcm9tby1OZWNv/Y2hlYS1lbi1BeWFj/dWNoby5qcGVn' href="/evento/eventos" />
-                    <MenuCard title="Complejos" image='https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=500&auto=format&fit=crop&q=60' href="/complejo/complejos" />
+                    <MenuCard title="Alojamiento" image={getHomeImage(imagenes?.alojamientos, "alojamiento")} href="/alojamiento/alojamientos" />
+                    <MenuCard title="Gastronomía" image={getHomeImage(imagenes?.gastronomicos, "gastronomico")} href="/gastronomico/gastronomico" />
+                    <MenuCard title="Balnearios" image={getHomeImage(imagenes?.balnearios, "balneario")} href="/balneario/balnearios" />
+                    <MenuCard title="Actividades" image={getHomeImage(imagenes?.actividades, "actividad")} href="/actividad/actividades" />
+                    <MenuCard title="Eventos" image={getHomeImage(imagenes?.eventos, "evento")} href="/evento/eventos" />
+                    <MenuCard title="Complejos" image={getHomeImage(imagenes?.complejos, "complejo")} href="/complejo/complejos" />
                 </View>
             </ScrollView>
-
         </ScreenLayout>
     );
 }
-/**
- * Hojas de estilo para la pantalla Home.
- * @constant {StyleSheet.NamedStyles}
- */
+
 const styles = StyleSheet.create({
     customHeaderContainer: {
         backgroundColor: Colors.backgroundLight,
@@ -73,12 +68,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-    },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: Colors.backgroundLight,
     },
     pageContent: {
         backgroundColor: Colors.backgroundLight,

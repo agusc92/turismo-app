@@ -24,7 +24,7 @@ export default function MenuCard({ title, image, href }) {
             <Pressable style={styles.wrapper}>
                 <Text style={styles.title}>{capitalizado}</Text>
                 <View style={styles.card}>
-                    <Image source={{ uri: image }} style={styles.image} />
+                    <Image source={typeof image === "string" ? { uri: image } : image} style={styles.image} />
                 </View>
             </Pressable>
         </Link>
